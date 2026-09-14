@@ -37,11 +37,15 @@ const BROWSE_PITCH = 0.1;
 const FOCUS_PITCH = 0.16;
 /** How far a drag may lean the browsing camera to the side (radians). */
 const LEAN_MAX = 0.2;
-/** Orbit range around a focused item: most of the way round, from a bit below to well above. */
-const ORBIT_YAW_MAX = 1.35;
-const ORBIT_PITCH = { min: -0.3, max: 0.8 };
+/**
+ * Orbit range around a focused item: turn it about 70° either way and look from a little
+ * below to well above, but never spin it or lose it; the framed view is always one ←/→ away.
+ */
+const ORBIT_YAW_MAX = 1.2;
+const ORBIT_PITCH = { min: -0.2, max: 0.7 };
 const BROWSE_ZOOM = { min: 0.3, max: 1.5 };
-const FOCUS_ZOOM = { min: 0.55, max: 2.2 };
+/** Wheel around a focused item nudges the framed distance, it does not dolly off into the void. */
+const FOCUS_ZOOM = { min: 0.7, max: 1.8 };
 /** Share of the free viewport a focused item may fill (height, then width for wide things). */
 const FOCUS_FILL = { h: 0.52, w: 0.6 };
 

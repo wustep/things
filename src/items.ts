@@ -186,7 +186,6 @@ async function buildGlb(url: string, orientation?: ModelOrientation): Promise<Bu
   object.add(model);
 
   applyOrientation(model, orientation);
-  polishGlbMaterials(model);
 
   const box = new THREE.Box3().setFromObject(object);
   const size = box.getSize(new THREE.Vector3());
@@ -256,54 +255,6 @@ function shouldFaceCamera(model: THREE.Object3D): boolean {
   return size.z > size.x * 1.18;
 }
 
-/**
- * Push Meshy GLBs toward a solid product-photo read: smooth shading, sharper mips, a bit more
- * env response, and a soft clearcoat so plastic / painted surfaces catch light without looking
- * like a faceted CAD preview.
- */
-function polishGlbMaterials(root: THREE.Object3D) {
-  // Upgrade each unique material once — Meshy GLBs often share one material across primitives.
-  const upgraded = new Map<THREE.Material, THREE.MeshPhysicalMaterial>();
-  root.traverse((o) => {
-    if (!(o instanceof THREE.Mesh)) return;
-    const list = Array.isArray(o.material) ? o.material : [o.material];
-    const next = list.map((m) => {
-      if (!(m instanceof THREE.MeshStandardMaterial)) return m;
-      let mat = upgraded.get(m);
-      if (!mat) {
-        if (m instanceof THREE.MeshPhysicalMaterial) {
-          mat = m;
-        } else {
-          mat = new THREE.MeshPhysicalMaterial();
-          mat.copy(m);
-          upgraded.set(m, mat);
-          m.dispose();
-        }
-        upgraded.set(mat, mat);
-        mat.flatShading = false;
-        mat.side = THREE.FrontSide;
-        mat.envMapIntensity = Math.max(mat.envMapIntensity, 1.05);
-        if (!mat.metalnessMap) mat.metalness = Math.min(mat.metalness, 0.35);
-        if (!mat.roughnessMap) mat.roughness = THREE.MathUtils.clamp(mat.roughness, 0.35, 0.82);
-        else mat.roughness = THREE.MathUtils.clamp(mat.roughness, 0.45, 1);
-        mat.clearcoat = Math.max(mat.clearcoat, 0.18);
-        mat.clearcoatRoughness = Math.min(mat.clearcoatRoughness || 0.4, 0.4);
-        for (const key of ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'aoMap', 'emissiveMap'] as const) {
-          const tex = mat[key];
-          if (!(tex instanceof THREE.Texture)) continue;
-          tex.anisotropy = maxAnisotropy;
-          tex.generateMipmaps = true;
-          tex.minFilter = THREE.LinearMipmapLinearFilter;
-          tex.magFilter = THREE.LinearFilter;
-          tex.needsUpdate = true;
-        }
-        mat.needsUpdate = true;
-      }
-      return mat;
-    });
-    o.material = Array.isArray(o.material) ? next : next[0];
-  });
-}
 
 // ---------- textures ----------
 

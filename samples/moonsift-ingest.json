@@ -154,5 +154,19 @@
     "url": "https://www.amazon.com/dp/B0CNQB7B5G",
     "section": "Misc",
     "title": "Orient Bambino Version 9"
+  },
+  {
+    "url": "https://www.amazon.com/Nord-88-Key-Digital-Pianos-Stage-STAGE4-88/dp/B0C4FM4MJK",
+    "title": "Stage 4 88",
+    "brand": "Nord",
+    "section": "Misc",
+    "image": "https://m.media-amazon.com/images/I/51mv+-kJ+qL.jpg",
+    "images": [
+      "https://m.media-amazon.com/images/I/41RJNljHcTL.jpg",
+      "https://m.media-amazon.com/images/I/41bluKn34tL.jpg",
+      "https://m.media-amazon.com/images/I/41W842N7mNL.jpg",
+      "https://m.media-amazon.com/images/I/51y+hzh3nUL.jpg",
+      "https://m.media-amazon.com/images/I/51h1uC7qcbL.jpg"
+    ]
   }
 ]

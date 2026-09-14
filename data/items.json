@@ -912,5 +912,142 @@
       }
     },
     "addedAt": "2026-09-14T07:29:29.627Z"
+  },
+  {
+    "id": "amazon-b05badce",
+    "url": "https://www.amazon.com/Nord-88-Key-Digital-Pianos-Stage-STAGE4-88/dp/B0C4FM4MJK",
+    "domain": "amazon.com",
+    "title": "Stage 4 88",
+    "brand": "Nord",
+    "price": "$5,999.00",
+    "section": "Misc",
+    "description": "Buy Nord Stage 4 88-Key Fully-Weighted Keyboard: Stage Digital Pianos - Amazon.com ✓ FREE DELIVERY possible on eligible purchases",
+    "images": [
+      "/items/amazon-b05badce/ref-0.jpg",
+      "/items/amazon-b05badce/ref-1.jpg",
+      "/items/amazon-b05badce/ref-2.jpg",
+      "/items/amazon-b05badce/ref-3.jpg",
+      "/items/amazon-b05badce/ref-4.jpg",
+      "/items/amazon-b05badce/ref-5.jpg"
+    ],
+    "asset": {
+      "kind": "glb",
+      "url": "/items/amazon-b05badce/model.glb",
+      "palette": [
+        "#75292f",
+        "#292d33",
+        "#6d6c72",
+        "#ffffff"
+      ],
+      "refs": [
+        "/items/amazon-b05badce/ref-0.jpg",
+        "/items/amazon-b05badce/ref-5.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "box",
+        "texture": "/items/amazon-b05badce/primary.png",
+        "aspect": 1,
+        "palette": [
+          "#75292f",
+          "#292d33",
+          "#6d6c72",
+          "#ffffff"
+        ]
+      }
+    },
+    "addedAt": "2026-09-14T07:46:07.373Z"
+  },
+  {
+    "id": "amazon-55b97045",
+    "url": "https://www.amazon.com/Owala-FreeSip-Insulated-Stainless-BPA-Free/dp/B0FFTN5KCN",
+    "domain": "amazon.com",
+    "title": "FreeSip Putting Green 24oz",
+    "brand": "Owala",
+    "price": "$29.99",
+    "section": "Misc",
+    "description": "Amazon.com: Owala FreeSip Stainless Steel Water Bottle 24 oz Putting Green : Sports & Outdoors",
+    "images": [
+      "/items/amazon-55b97045/ref-0.jpg",
+      "/items/amazon-55b97045/ref-1.jpg",
+      "/items/amazon-55b97045/ref-2.jpg",
+      "/items/amazon-55b97045/ref-3.jpg",
+      "/items/amazon-55b97045/ref-4.jpg",
+      "/items/amazon-55b97045/ref-5.jpg"
+    ],
+    "asset": {
+      "kind": "glb",
+      "url": "/items/amazon-55b97045/model.glb",
+      "palette": [
+        "#00a158",
+        "#006f33",
+        "#908778",
+        "#dad1c4"
+      ],
+      "refs": [
+        "/items/amazon-55b97045/ref-0.jpg",
+        "/items/amazon-55b97045/ref-1.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "card",
+        "texture": "/items/amazon-55b97045/primary.png",
+        "aspect": 0.293,
+        "palette": [
+          "#00a158",
+          "#006f33",
+          "#908778",
+          "#dad1c4"
+        ]
+      }
+    },
+    "addedAt": "2026-09-14T07:45:56.266Z"
+  },
+  {
+    "id": "roli-0e3366f5",
+    "url": "https://roli.com/us/product/airwave-create",
+    "domain": "roli.com",
+    "title": "Airwave",
+    "brand": "ROLI",
+    "price": "$349",
+    "section": "Misc",
+    "description": "Explore new dimensions of sound with Airwave, the revolutionary device that enhances musical expression through natural gestures. Connected to Piano M or Seaboard, Airwave enables you to interact with your instrument in mid-air using a range of movements such as Air Raise, Air Tilt, Air Glide, Air Slide, and Air Flex. Powered by ROLI Vision's advanced infrared tracking, Airwave captures every nuan",
+    "images": [
+      "/items/roli-0e3366f5/ref-1.jpg",
+      "/items/roli-0e3366f5/ref-0.jpg",
+      "/items/roli-0e3366f5/ref-2.jpg",
+      "/items/roli-0e3366f5/ref-3.jpg",
+      "/items/roli-0e3366f5/ref-4.jpg",
+      "/items/roli-0e3366f5/ref-5.jpg"
+    ],
+    "asset": {
+      "kind": "glb",
+      "url": "/items/roli-0e3366f5/model.glb",
+      "palette": [
+        "#72716e",
+        "#2f2e32",
+        "#cccccc",
+        "#ffffff"
+      ],
+      "refs": [
+        "/items/roli-0e3366f5/ref-1.jpg",
+        "/items/roli-0e3366f5/ref-5.jpg",
+        "/items/roli-0e3366f5/ref-2.jpg",
+        "/items/roli-0e3366f5/ref-3.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "card",
+        "texture": "/items/roli-0e3366f5/primary.png",
+        "aspect": 0.6219,
+        "palette": [
+          "#72716e",
+          "#2f2e32",
+          "#cccccc",
+          "#ffffff"
+        ]
+      }
+    },
+    "addedAt": "2026-09-14T07:50:57.269Z"
   }
 ]

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Things: a black-void shelf of products you drop in by URL." />
+    <title>Things</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <canvas id="stage" aria-label="A shelf of things floating in the dark"></canvas>
+
+    <div class="brand" aria-hidden="true">Things<span id="count"></span></div>
+
+    <section id="empty" class="empty" aria-live="polite">
+      <p class="empty-title">Nothing here yet.</p>
+      <p id="empty-hint" class="empty-hint" hidden>Paste or drop a product URL to put it on the shelf.</p>
+      <pre class="empty-cmd">npm run ingest -- https://example.com/product</pre>
+    </section>
+
+    <aside id="caption" class="caption" aria-live="polite">
+      <div id="caption-title" class="caption-title"></div>
+      <div id="caption-meta" class="caption-meta"></div>
+    </aside>
+
+    <div id="status" class="status" role="status"></div>
+    <div id="drop" class="drop" aria-hidden="true"><span>Drop to add</span></div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -17,6 +17,8 @@ export interface ModelAsset {
   kind: 'glb';
   url: string;
   palette: string[];
+  /** Public paths of the reference images the mesh was generated from, front view first. */
+  refs?: string[];
   /** Kept so the viewer can fall back if the GLB fails to load. */
   fallback: ProceduralAsset;
 }
@@ -31,6 +33,8 @@ export interface Item {
   brand?: string;
   price?: string;
   description?: string;
+  /** Shelf grouping, e.g. a Moonsift collection section ("Office", "Home"). */
+  section?: string;
   /** Public paths to reference images, primary first. */
   images: string[];
   asset: Asset;

@@ -5,7 +5,7 @@ import { createJimp } from '@jimp/core';
 import type { Bitmap } from '@jimp/types';
 import decodeAvif, { init as initAvif } from '@jsquash/avif/decode.js';
 import decodeWebp, { init as initWebp } from '@jsquash/webp/decode.js';
-import { defaultFormats, defaultPlugins } from 'jimp';
+import { compareHashes, defaultFormats, defaultPlugins } from 'jimp';
 
 /** Stock jimp plus WebP and AVIF decoding: most product CDNs serve those to modern clients. */
 const Jimp = createJimp({
@@ -59,12 +59,34 @@ export interface ProcessedPrimary {
   removedFraction: number;
   /** Pixel area of the subject's bounding box before the final downscale; bigger = sharper texture. */
   subjectArea: number;
+  /**
+   * Share of the opaque pixels that belong to the single largest connected piece. Near 1 for a
+   * photo of one object; well below for a group shot (two colourways side by side, a size chart).
+   * 1 when nothing was keyed out, since then it is all one piece.
+   */
+  dominance: number;
 }
 
-type Img = Awaited<ReturnType<typeof Jimp.fromBuffer>>;
+export type DecodedImage = Awaited<ReturnType<typeof Jimp.fromBuffer>>;
+type Img = DecodedImage;
 
 export async function decode(buffer: Buffer): Promise<Img> {
   return Jimp.fromBuffer(buffer);
+}
+
+/**
+ * Perceptual hash of a decoded image. The same photo at different sizes (a CDN's thumbnail
+ * ladder) hashes alike; a different angle of the product does not.
+ */
+export function perceptualHash(img: Img): string {
+  return img.clone().pHash();
+}
+
+/** 0 = identical-looking, 1 = nothing alike. Below this, two references are the same photo. */
+export const NEAR_DUPLICATE = 0.1;
+
+export function hashDistance(a: string, b: string): number {
+  return compareHashes(a, b);
 }
 
 /** Downscale a reference image to a sane size and re-encode as JPEG. */
@@ -91,6 +113,7 @@ export async function processPrimary(buffer: Buffer, maxSide = 1024): Promise<Pr
   const removedFraction = removed / (width * height);
 
   const box = opaqueBounds(data, width, height);
+  const dominance = removed > 0 ? largestPieceShare(data, width, height) : 1;
   const pad = Math.round(Math.max(box.w, box.h) * 0.04);
   const x = Math.max(0, box.x - pad);
   const y = Math.max(0, box.y - pad);
@@ -109,7 +132,42 @@ export async function processPrimary(buffer: Buffer, maxSide = 1024): Promise<Pr
     palette,
     removedFraction,
     subjectArea: box.w * box.h,
+    dominance,
   };
+}
+
+/** Largest 4-connected opaque region as a fraction of all opaque pixels. */
+function largestPieceShare(data: Buffer, w: number, h: number): number {
+  const seen = new Uint8Array(w * h);
+  const opaque = (i: number) => data[i * 4 + 3] > 24;
+  let total = 0;
+  let largest = 0;
+  const stack: number[] = [];
+  for (let start = 0; start < w * h; start++) {
+    if (seen[start] || !opaque(start)) continue;
+    seen[start] = 1;
+    stack.push(start);
+    let size = 0;
+    while (stack.length) {
+      const i = stack.pop()!;
+      size++;
+      const x = i % w;
+      const y = (i - x) / w;
+      const visit = (j: number) => {
+        if (!seen[j] && opaque(j)) {
+          seen[j] = 1;
+          stack.push(j);
+        }
+      };
+      if (x > 0) visit(i - 1);
+      if (x < w - 1) visit(i + 1);
+      if (y > 0) visit(i - w);
+      if (y < h - 1) visit(i + w);
+    }
+    total += size;
+    if (size > largest) largest = size;
+  }
+  return total === 0 ? 1 : largest / total;
 }
 
 function fit(img: Img, maxSide: number) {

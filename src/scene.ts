@@ -7,7 +7,8 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import type { Item } from '../shared/types.ts';
 import { buildItemNode, setMaxAnisotropy, type ItemNode, type NodeKind } from './items.ts';
-import { extents, layoutSlots, maxPerRow, type Slot } from './layout.ts';
+import { layoutShelf, maxPerRow, type Group, type Shelf, type Slot } from './layout.ts';
+import { groupItems } from './sections.ts';
 
 export interface StageEvents {
   hover(node: ItemNode | null): void;
@@ -37,8 +38,14 @@ export class Stage {
   private hovered: ItemNode | null = null;
   private pressed: { x: number; y: number } | null = null;
   private frameDistance = 8;
+  /** Where the orbit target should ease to while the camera is ours (whole shelf or one section). */
+  private readonly goal = new THREE.Vector3(0, 0.4, 0);
   private autoFrame = true;
+  /** Item ids in layout order (grouped by section). */
   private order: string[] = [];
+  private groups: Group[] = [];
+  private layout: Shelf = layoutShelf([], 1);
+  private focus: string | null = null;
   private readonly motion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   constructor(
@@ -106,7 +113,10 @@ export class Stage {
     }
     for (const id of this.targets.keys()) if (!ids.has(id)) this.targets.delete(id);
 
-    this.order = items.map((i) => i.id);
+    const groups = groupItems(items);
+    this.groups = groups.map((g) => ({ label: g.label, count: g.items.length }));
+    this.order = groups.flatMap((g) => g.items.map((i) => i.id));
+    this.focus = null;
     this.autoFrame = true;
     this.relayout();
 
@@ -134,6 +144,18 @@ export class Stage {
           }
         }),
     );
+  }
+
+  /**
+   * Frame one section (its label) or the whole shelf (null, or the section already focused).
+   * Returns what is focused now.
+   */
+  focusSection(label: string | null): string | null {
+    const known = label !== null && this.groups.some((g) => g.label === label);
+    this.focus = known && this.focus !== label ? label : null;
+    this.autoFrame = true;
+    this.reframe();
+    return this.focus;
   }
 
   // ---------- frame ----------
@@ -188,38 +210,46 @@ export class Stage {
     node.glow.material.opacity = 0.2 + 0.22 * h;
   }
 
+  /** Slide the orbit target (and the camera with it) toward the goal, and settle the distance. */
   private easeCamera(dt: number) {
+    const k = 1 - Math.exp(-dt * 2.2);
+    const pan = this.goal.clone().sub(this.controls.target).multiplyScalar(k);
+    if (pan.lengthSq() > 1e-8) {
+      this.controls.target.add(pan);
+      this.camera.position.add(pan);
+    }
     const offset = this.camera.position.clone().sub(this.controls.target);
     const d = offset.length();
     if (Math.abs(d - this.frameDistance) < 0.005) return;
-    const nd = d + (this.frameDistance - d) * (1 - Math.exp(-dt * 2.2));
+    const nd = d + (this.frameDistance - d) * k;
     this.camera.position.copy(this.controls.target).add(offset.multiplyScalar(nd / d));
   }
 
   /** Assign shelf slots for the current viewport shape, then frame the camera on them. */
   private relayout() {
-    const perRow = maxPerRow(this.camera.aspect);
-    const slots = layoutSlots(this.order.length, perRow);
-    this.order.forEach((id, i) => this.targets.set(id, slots[i]));
-    if (this.autoFrame) this.updateFrameDistance(perRow);
+    this.layout = layoutShelf(this.groups, maxPerRow(this.camera.aspect));
+    this.order.forEach((id, i) => this.targets.set(id, this.layout.slots[i]));
+    if (this.autoFrame) this.reframe();
   }
 
-  /** Pull back just far enough that the whole shelf fits, whatever the viewport. */
-  private updateFrameDistance(perRow: number) {
-    const n = this.order.length;
-    const e = extents(n, perRow);
-    if (n === 0) {
+  /** Pull back just far enough that the focused section, or the whole shelf, fits the viewport. */
+  private reframe() {
+    if (this.order.length === 0) {
       this.frameDistance = 8;
+      this.goal.set(0, 0.4, 0);
       return;
     }
-    const halfW = e.halfWidth + 0.95;
-    const halfH = e.halfHeight + 0.95;
+    const band = this.focus === null ? undefined : this.layout.bands.find((b) => b.label === this.focus);
+    const extent = band ?? { ...this.layout, y: 0 };
+    const halfW = extent.halfWidth + 0.95;
+    const halfH = extent.halfHeight + 0.95;
     const vfov = THREE.MathUtils.degToRad(this.camera.fov);
     const hfov = 2 * Math.atan(Math.tan(vfov / 2) * this.camera.aspect);
     const byWidth = halfW / Math.tan(hfov / 2);
     const byHeight = halfH / Math.tan(vfov / 2);
     this.frameDistance = THREE.MathUtils.clamp(Math.max(byWidth, byHeight) + 0.9, 4.5, 60);
-    this.controls.target.y = e.rows > 1 ? 0.5 : 0.4;
+    // Items stand up from their slot, so the visual centre sits a little above the shelf line.
+    this.goal.set(0, extent.y + (extent.rows > 1 ? 0.5 : 0.4), 0);
   }
 
   private resize = () => {
@@ -245,6 +275,9 @@ export class Stage {
     });
     c.addEventListener('pointerleave', (e) => {
       if (e.pointerType === 'touch') return;
+      // Moving onto the product card must not clear the hover it belongs to.
+      const to = e.relatedTarget as Element | null;
+      if (to?.closest?.('[data-keep-hover]')) return;
       this.pointer.set(2, 2);
       this.pointerDirty = true;
     });

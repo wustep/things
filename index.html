@@ -13,6 +13,7 @@
     <canvas id="stage" aria-label="A shelf of things floating in the dark"></canvas>
 
     <div class="brand" aria-hidden="true">Things<span id="count"></span></div>
+    <nav id="sections" class="sections" aria-label="Sections" hidden></nav>
 
     <section id="empty" class="empty" aria-live="polite">
       <p class="empty-title">Nothing here yet.</p>
@@ -20,10 +21,18 @@
       <pre class="empty-cmd">npm run ingest -- https://example.com/product</pre>
     </section>
 
-    <aside id="caption" class="caption" aria-live="polite">
-      <div id="caption-title" class="caption-title"></div>
-      <div id="caption-meta" class="caption-meta"></div>
-    </aside>
+    <a id="card" class="card" href="#" target="_blank" rel="noopener noreferrer" aria-live="polite" aria-hidden="true" data-keep-hover>
+      <img id="card-thumb" class="card-thumb" alt="" decoding="async" />
+      <span class="card-body">
+        <span id="card-brand" class="card-brand" hidden></span>
+        <span id="card-title" class="card-title"></span>
+        <span class="card-foot">
+          <span id="card-price" class="card-price" hidden></span>
+          <span id="card-domain" class="card-domain"></span>
+        </span>
+      </span>
+      <span class="card-open" aria-hidden="true">&#8599;</span>
+    </a>
 
     <div id="status" class="status" role="status"></div>
     <div id="drop" class="drop" aria-hidden="true"><span>Drop to add</span></div>

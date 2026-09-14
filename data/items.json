@@ -6,28 +6,44 @@
     "title": "Analog Complete Kit",
     "brand": "Ugmonk",
     "price": "$179.00",
+    "section": "Office",
     "description": "Get the complete Analog kit and take your productivity to the next level! The kit includes: Desktop Card Holder (Walnut) The wood card holder keeps your Today card in front of you while the open-back is designed to store your completed cards. Travel Case (Walnut) The wood card holder keeps your Today card in front of you while the open-back is designed to store your completed cards. 3 Monthly Card",
     "images": [
-      "/items/ugmonk-5117191f/ref-1.jpg",
       "/items/ugmonk-5117191f/ref-0.jpg",
+      "/items/ugmonk-5117191f/ref-1.jpg",
       "/items/ugmonk-5117191f/ref-2.jpg",
       "/items/ugmonk-5117191f/ref-3.jpg",
       "/items/ugmonk-5117191f/ref-4.jpg",
       "/items/ugmonk-5117191f/ref-5.jpg"
     ],
     "asset": {
-      "kind": "procedural",
-      "shape": "box",
-      "texture": "/items/ugmonk-5117191f/primary.png",
-      "aspect": 1.4183,
+      "kind": "glb",
+      "url": "/items/ugmonk-5117191f/model.glb",
       "palette": [
         "#75482f",
-        "#a57a59",
+        "#a67a59",
         "#b2b0af",
-        "#fafafa"
-      ]
+        "#fbfafa"
+      ],
+      "refs": [
+        "/items/ugmonk-5117191f/ref-0.jpg",
+        "/items/ugmonk-5117191f/ref-4.jpg",
+        "/items/ugmonk-5117191f/ref-1.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "box",
+        "texture": "/items/ugmonk-5117191f/primary.png",
+        "aspect": 1.4183,
+        "palette": [
+          "#75482f",
+          "#a67a59",
+          "#b2b0af",
+          "#fbfafa"
+        ]
+      }
     },
-    "addedAt": "2026-09-14T04:51:07.478Z"
+    "addedAt": "2026-09-14T06:52:36.523Z"
   },
   {
     "id": "ugmonk-ef1055c7",
@@ -36,6 +52,7 @@
     "title": "Analog Card Bar",
     "brand": "Ugmonk",
     "price": "$59",
+    "section": "Office",
     "description": "Precision milled from solid aluminum, the Card Bar offers an elegant solution for displaying multiple Analog Task Cards, Weekly Cards, Note Cards, and Capture Cards. The two slots give you versatility to move your cards around in various configurations, and the front also conveniently doubles as pen tray. The substantial weight (almost 1lb) and rubber pad on the bottom keeps it firmly in place on ",
     "images": [
       "/items/ugmonk-ef1055c7/ref-1.jpg",
@@ -46,48 +63,76 @@
       "/items/ugmonk-ef1055c7/ref-5.jpg"
     ],
     "asset": {
-      "kind": "procedural",
-      "shape": "card",
-      "texture": "/items/ugmonk-ef1055c7/primary.png",
-      "aspect": 0.9375,
+      "kind": "glb",
+      "url": "/items/ugmonk-ef1055c7/model.glb",
       "palette": [
-        "#726f6e",
+        "#736f6d",
         "#b2aeab",
-        "#d3d1d3",
+        "#d3d1d4",
         "#faf9fa"
-      ]
+      ],
+      "refs": [
+        "/items/ugmonk-ef1055c7/ref-1.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "card",
+        "texture": "/items/ugmonk-ef1055c7/primary.png",
+        "aspect": 0.9385,
+        "palette": [
+          "#736f6d",
+          "#b2aeab",
+          "#d3d1d4",
+          "#faf9fa"
+        ]
+      }
     },
-    "addedAt": "2026-09-14T04:51:18.395Z"
+    "addedAt": "2026-09-14T05:28:45.125Z"
   },
   {
     "id": "ergonofis-cb36d4e7",
     "url": "https://ergonofis.com/en-us/products/sway-standing-desk?_pos=3&_psq=ergonifis&_ss=e&_v=1.0&variant=43994522255609",
     "domain": "ergonofis.com",
-    "title": "Ergonofis Sway Standing Desk",
+    "title": "Sway Standing Desk",
     "brand": "ergonofis",
     "price": "$1755",
+    "section": "Office",
     "description": "Crafted from premium solid wood, the Sway Standing Desk offers lasting durability and a distinctive, timeless design. Every detail—from the seamless finishes to the intuitive swipe technology for height adjustment—is designed to elevate both comfort and functionality. Ideal for those seeking a desk that looks as good as it performs, the Sway combines refined craftsmanship with ergonomic innovation",
     "images": [
-      "/items/ergonofis-cb36d4e7/ref-0.jpg",
       "/items/ergonofis-cb36d4e7/ref-1.jpg",
+      "/items/ergonofis-cb36d4e7/ref-0.jpg",
       "/items/ergonofis-cb36d4e7/ref-2.jpg",
       "/items/ergonofis-cb36d4e7/ref-3.jpg",
       "/items/ergonofis-cb36d4e7/ref-4.jpg",
       "/items/ergonofis-cb36d4e7/ref-5.jpg"
     ],
     "asset": {
-      "kind": "procedural",
-      "shape": "card",
-      "texture": "/items/ergonofis-cb36d4e7/primary.png",
-      "aspect": 1.5284,
+      "kind": "glb",
+      "url": "/items/ergonofis-cb36d4e7/model.glb",
       "palette": [
         "#ceb296",
         "#919191",
         "#525252",
         "#2c2c2c"
-      ]
+      ],
+      "refs": [
+        "/items/ergonofis-cb36d4e7/ref-1.jpg",
+        "/items/ergonofis-cb36d4e7/ref-0.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "card",
+        "texture": "/items/ergonofis-cb36d4e7/primary.png",
+        "aspect": 1.5284,
+        "palette": [
+          "#ceb296",
+          "#919191",
+          "#525252",
+          "#2c2c2c"
+        ]
+      }
     },
-    "addedAt": "2026-09-14T04:48:48.199Z"
+    "addedAt": "2026-09-14T05:28:44.440Z"
   },
   {
     "id": "amzn-f76e128e",
@@ -95,6 +140,7 @@
     "domain": "amazon.com",
     "title": "Logitech MX Master 3S",
     "price": "$89.99",
+    "section": "Office",
     "description": "Amazon.com: Logitech MX Master 3S Bluetooth Wireless Mouse No Receiver - Graphite | MagSpeed Scrolling, 8K DPI tracking, Quiet clicks, Programmable buttons, Bluetooth, Windows PC, Mac, Linux, Chrome : Electronics",
     "images": [
       "/items/amzn-f76e128e/ref-0.jpg",
@@ -105,18 +151,106 @@
       "/items/amzn-f76e128e/ref-5.jpg"
     ],
     "asset": {
-      "kind": "procedural",
-      "shape": "card",
-      "texture": "/items/amzn-f76e128e/primary.png",
-      "aspect": 1.6742,
+      "kind": "glb",
+      "url": "/items/amzn-f76e128e/model.glb",
       "palette": [
-        "#0e0f11",
-        "#4c4e51",
-        "#afafb0",
-        "#f6f6f6"
-      ]
+        "#0d0f10",
+        "#4b4e51",
+        "#b0b0b1",
+        "#f1f1f1"
+      ],
+      "refs": [
+        "/items/amzn-f76e128e/ref-0.jpg",
+        "/items/amzn-f76e128e/ref-1.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "card",
+        "texture": "/items/amzn-f76e128e/primary.png",
+        "aspect": 1.7589,
+        "palette": [
+          "#0d0f10",
+          "#4b4e51",
+          "#b0b0b1",
+          "#f1f1f1"
+        ]
+      }
     },
-    "addedAt": "2026-09-14T04:48:52.345Z"
+    "addedAt": "2026-09-14T05:28:45.175Z"
+  },
+  {
+    "id": "jossandmain-cc12a72d",
+    "url": "https://www.jossandmain.com/furniture/pdp/joss-main-alix-78-recessed-arm-chesterfield-sofa-j111809464.html",
+    "domain": "jossandmain.com",
+    "title": "Joss & Main Alix 78'' Recessed Arm Chesterfield Sofa",
+    "price": "$1899",
+    "section": "Home",
+    "images": [
+      "/items/jossandmain-cc12a72d/ref-0.jpg"
+    ],
+    "asset": {
+      "kind": "glb",
+      "url": "/items/jossandmain-cc12a72d/model.glb",
+      "palette": [
+        "#27281b",
+        "#565946",
+        "#90908c",
+        "#cccccb"
+      ],
+      "refs": [
+        "/items/jossandmain-cc12a72d/ref-0.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "card",
+        "texture": "/items/jossandmain-cc12a72d/primary.png",
+        "aspect": 1.5479,
+        "palette": [
+          "#27281b",
+          "#565946",
+          "#90908c",
+          "#cccccb"
+        ]
+      }
+    },
+    "addedAt": "2026-09-14T05:28:41.300Z"
+  },
+  {
+    "id": "westelm-0d4a26d0",
+    "url": "https://www.westelm.com/products/calgary-tiered-bookshelf-h6978/",
+    "domain": "westelm.com",
+    "title": "Calgary Tiered Bookshelf",
+    "price": "$1199",
+    "section": "Home",
+    "images": [
+      "/items/westelm-0d4a26d0/ref-0.jpg"
+    ],
+    "asset": {
+      "kind": "glb",
+      "url": "/items/westelm-0d4a26d0/model.glb",
+      "palette": [
+        "#51290a",
+        "#8f6f50",
+        "#d0b491",
+        "#e7dbc6"
+      ],
+      "refs": [
+        "/items/westelm-0d4a26d0/ref-0.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "box",
+        "texture": "/items/westelm-0d4a26d0/primary.png",
+        "aspect": 1,
+        "palette": [
+          "#51290a",
+          "#8f6f50",
+          "#d0b491",
+          "#e7dbc6"
+        ]
+      }
+    },
+    "addedAt": "2026-09-14T05:30:46.260Z"
   },
   {
     "id": "amzn-c91e1f10",
@@ -124,6 +258,7 @@
     "domain": "amazon.com",
     "title": "Yamazaki Home Tower Laundry Basket",
     "price": "$78.00",
+    "section": "Home",
     "description": "Buy Yamazaki Home Laundry Basket - Foldable Storage Hamper Organizer Steel One Size White: Hampers - Amazon.com ✓ FREE DELIVERY possible on eligible purchases",
     "images": [
       "/items/amzn-c91e1f10/ref-0.jpg",
@@ -134,47 +269,113 @@
       "/items/amzn-c91e1f10/ref-5.jpg"
     ],
     "asset": {
-      "kind": "procedural",
-      "shape": "card",
-      "texture": "/items/amzn-c91e1f10/primary.png",
-      "aspect": 0.5742,
+      "kind": "glb",
+      "url": "/items/amzn-c91e1f10/model.glb",
       "palette": [
-        "#292629",
-        "#d3d1d4",
+        "#848385",
+        "#302e2f",
+        "#d2d1d3",
         "#f6f6f6"
-      ]
+      ],
+      "refs": [
+        "/items/amzn-c91e1f10/ref-0.jpg",
+        "/items/amzn-c91e1f10/ref-5.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "card",
+        "texture": "/items/amzn-c91e1f10/primary.png",
+        "aspect": 0.6025,
+        "palette": [
+          "#848385",
+          "#302e2f",
+          "#d2d1d3",
+          "#f6f6f6"
+        ]
+      }
     },
-    "addedAt": "2026-09-14T04:48:57.188Z"
+    "addedAt": "2026-09-14T05:31:34.834Z"
   },
   {
     "id": "bludot-9c7c4924",
     "url": "https://www.bludot.com/products/perch-outdoor-lounge-chair?variant=44723226968243",
     "domain": "bludot.com",
-    "title": "Blu Dot Perch Outdoor Lounge Chair",
+    "title": "Perch Outdoor Lounge Chair",
     "brand": "Blu Dot",
     "price": "$1,595.00",
+    "section": "Home",
     "description": "Rectangular FSC®-certified teak slats and a matte white or grey aluminum frame cut a stylish and airy swath, whether it be the Riviera or the suburbs of Reno. Perch makes every day look like vacation. Beautiful to behold from the back side, the side side or the front side, the collection is made lounge-worthy with cushions covered in mildew and fade resistant Sunbrella® fabric.",
     "images": [
       "/items/bludot-9c7c4924/ref-0.jpg",
       "/items/bludot-9c7c4924/ref-1.jpg",
       "/items/bludot-9c7c4924/ref-2.jpg",
       "/items/bludot-9c7c4924/ref-3.jpg",
-      "/items/bludot-9c7c4924/ref-4.jpg",
-      "/items/bludot-9c7c4924/ref-5.jpg"
+      "/items/bludot-9c7c4924/ref-4.jpg"
     ],
     "asset": {
-      "kind": "procedural",
-      "shape": "card",
-      "texture": "/items/bludot-9c7c4924/primary.png",
-      "aspect": 0.9248,
+      "kind": "glb",
+      "url": "/items/bludot-9c7c4924/model.glb",
       "palette": [
-        "#93694c",
-        "#b7ab9a",
+        "#93684c",
+        "#b7aa9a",
         "#d9d2c8",
         "#fefefe"
-      ]
+      ],
+      "refs": [
+        "/items/bludot-9c7c4924/ref-0.jpg",
+        "/items/bludot-9c7c4924/ref-3.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "card",
+        "texture": "/items/bludot-9c7c4924/primary.png",
+        "aspect": 0.9248,
+        "palette": [
+          "#93684c",
+          "#b7aa9a",
+          "#d9d2c8",
+          "#fefefe"
+        ]
+      }
     },
-    "addedAt": "2026-09-14T04:49:03.823Z"
+    "addedAt": "2026-09-14T05:31:26.934Z"
+  },
+  {
+    "id": "roomandboard-ce472b14",
+    "url": "https://www.roomandboard.com/catalog/office/conference-room-tables/ventura-conference-tables/284351?CHAR_284351_VENTURA_COLL_WOOD=WA",
+    "domain": "roomandboard.com",
+    "title": "Ventura Dining Table",
+    "price": "$2799",
+    "section": "Home",
+    "images": [
+      "/items/roomandboard-ce472b14/ref-0.jpg"
+    ],
+    "asset": {
+      "kind": "glb",
+      "url": "/items/roomandboard-ce472b14/model.glb",
+      "palette": [
+        "#3c2417",
+        "#6b4836",
+        "#887064",
+        "#cabab1"
+      ],
+      "refs": [
+        "/items/roomandboard-ce472b14/ref-0.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "card",
+        "texture": "/items/roomandboard-ce472b14/primary.png",
+        "aspect": 2.2443,
+        "palette": [
+          "#3c2417",
+          "#6b4836",
+          "#887064",
+          "#cabab1"
+        ]
+      }
+    },
+    "addedAt": "2026-09-14T05:30:37.967Z"
   },
   {
     "id": "amzn-e8da67b1",
@@ -182,6 +383,7 @@
     "domain": "amazon.com",
     "title": "simplehuman 60L Trash Can",
     "price": "$149.98",
+    "section": "Home",
     "images": [
       "/items/amzn-e8da67b1/ref-0.jpg",
       "/items/amzn-e8da67b1/ref-1.jpg",
@@ -191,26 +393,43 @@
       "/items/amzn-e8da67b1/ref-5.jpg"
     ],
     "asset": {
-      "kind": "procedural",
-      "shape": "card",
-      "texture": "/items/amzn-e8da67b1/primary.png",
-      "aspect": 0.876,
+      "kind": "glb",
+      "url": "/items/amzn-e8da67b1/model.glb",
       "palette": [
         "#727272",
         "#b0b0b0",
         "#d3d3d3",
         "#0a0a0a"
-      ]
+      ],
+      "refs": [
+        "/items/amzn-e8da67b1/ref-0.jpg",
+        "/items/amzn-e8da67b1/ref-2.jpg",
+        "/items/amzn-e8da67b1/ref-4.jpg",
+        "/items/amzn-e8da67b1/ref-5.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "card",
+        "texture": "/items/amzn-e8da67b1/primary.png",
+        "aspect": 0.876,
+        "palette": [
+          "#727272",
+          "#b0b0b0",
+          "#d3d3d3",
+          "#0a0a0a"
+        ]
+      }
     },
-    "addedAt": "2026-09-14T04:49:06.596Z"
+    "addedAt": "2026-09-14T06:49:10.333Z"
   },
   {
     "id": "theartifox-f5289f2b",
     "url": "https://theartifox.com/collections/side/products/side-white-oak",
     "domain": "theartifox.com",
-    "title": "ARTIFOX Side Table (White Oak)",
+    "title": "Side Table (White Oak)",
     "brand": "ARTIFOX",
     "price": "$1190",
+    "section": "Home",
     "description": "Shipping Estimate - 6 to 8 weeks This well-rounded white oak side table fits perfectly in the workspace, lounging space or sleeping space. Dock storage on top for your phone, tablet or accessories all with cables managed below. Drawer storage for books, tech or everyday objects. This well-rounded side table fits perfectly in the workspace, lounging space or sleeping space. Dock storage on top for ",
     "images": [
       "/items/theartifox-f5289f2b/ref-0.jpg",
@@ -221,26 +440,40 @@
       "/items/theartifox-f5289f2b/ref-5.jpg"
     ],
     "asset": {
-      "kind": "procedural",
-      "shape": "card",
-      "texture": "/items/theartifox-f5289f2b/primary.png",
-      "aspect": 0.6729,
+      "kind": "glb",
+      "url": "/items/theartifox-f5289f2b/model.glb",
       "palette": [
         "#29190e",
         "#6c4c35",
         "#b38e70",
         "#b4b1af"
-      ]
+      ],
+      "refs": [
+        "/items/theartifox-f5289f2b/ref-0.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "card",
+        "texture": "/items/theartifox-f5289f2b/primary.png",
+        "aspect": 0.6729,
+        "palette": [
+          "#29190e",
+          "#6c4c35",
+          "#b38e70",
+          "#b4b1af"
+        ]
+      }
     },
-    "addedAt": "2026-09-14T04:49:10.299Z"
+    "addedAt": "2026-09-14T06:49:12.156Z"
   },
   {
     "id": "amzn-a0753bc5",
     "url": "https://amzn.to/3LE6jtS",
     "domain": "amazon.com",
-    "title": "solaround Acrylic Record Player Stand",
+    "title": "Acrylic Record Player Stand",
     "brand": "solaround",
     "price": "$219.00",
+    "section": "Home",
     "description": "Amazon.com: solaround Acrylic Record Player Stand, with Vinyl Storage, Turntable Stand, Vinyl Record Storage Table for Living Room (Clear, 31.5'' x 15.7'' x 29'') : Home & Kitchen",
     "images": [
       "/items/amzn-a0753bc5/ref-0.jpg",
@@ -251,26 +484,78 @@
       "/items/amzn-a0753bc5/ref-5.jpg"
     ],
     "asset": {
-      "kind": "procedural",
-      "shape": "card",
-      "texture": "/items/amzn-a0753bc5/primary.png",
-      "aspect": 0.7638,
+      "kind": "glb",
+      "url": "/items/amzn-a0753bc5/model.glb",
       "palette": [
         "#ba010c",
         "#121110",
         "#d3d4d3",
         "#f9f9f8"
-      ]
+      ],
+      "refs": [
+        "/items/amzn-a0753bc5/ref-0.jpg",
+        "/items/amzn-a0753bc5/ref-1.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "card",
+        "texture": "/items/amzn-a0753bc5/primary.png",
+        "aspect": 0.7638,
+        "palette": [
+          "#ba010c",
+          "#121110",
+          "#d3d4d3",
+          "#f9f9f8"
+        ]
+      }
     },
-    "addedAt": "2026-09-14T04:49:15.040Z"
+    "addedAt": "2026-09-14T06:49:10.338Z"
+  },
+  {
+    "id": "roomandboard-03a90ea7",
+    "url": "https://www.roomandboard.com/catalog/dining-and-kitchen/chairs/errol-leather-chair",
+    "domain": "roomandboard.com",
+    "title": "Errol Dining Chair",
+    "price": "$529.00",
+    "section": "Home",
+    "images": [
+      "/items/roomandboard-03a90ea7/ref-0.jpg"
+    ],
+    "asset": {
+      "kind": "glb",
+      "url": "/items/roomandboard-03a90ea7/model.glb",
+      "palette": [
+        "#936851",
+        "#b3b1b0",
+        "#353737",
+        "#ffffff"
+      ],
+      "refs": [
+        "/items/roomandboard-03a90ea7/ref-0.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "card",
+        "texture": "/items/roomandboard-03a90ea7/primary.png",
+        "aspect": 0.7252,
+        "palette": [
+          "#936851",
+          "#b3b1b0",
+          "#353737",
+          "#ffffff"
+        ]
+      }
+    },
+    "addedAt": "2026-09-14T06:49:13.436Z"
   },
   {
     "id": "amzn-f530eeab",
     "url": "https://amzn.to/3ZixSfw",
     "domain": "amazon.com",
-    "title": "BLUEAIR Air Purifier",
+    "title": "Air Purifier",
     "brand": "BLUEAIR",
     "price": "$139",
+    "section": "Home",
     "description": "Buy BLUEAIR Air Purifiers for Home Bedroom Dorm up to 1,138 Ft², Blue 511i Max | WiFi, Auto Mode, Compact, Quiet 19dB HEPASilent Filtration, AHAM Verified, Washable Pre-Filter, Captures Pet Hair, Allergens: Travel-Size Air Purifiers - Amazon.com ✓ FREE DELIVERY possible on eligible purchases",
     "images": [
       "/items/amzn-f530eeab/ref-0.jpg",
@@ -281,26 +566,41 @@
       "/items/amzn-f530eeab/ref-5.jpg"
     ],
     "asset": {
-      "kind": "procedural",
-      "shape": "card",
-      "texture": "/items/amzn-f530eeab/primary.png",
-      "aspect": 0.7674,
+      "kind": "glb",
+      "url": "/items/amzn-f530eeab/model.glb",
       "palette": [
         "#909090",
         "#525252",
         "#cecece",
         "#fcfdfd"
-      ]
+      ],
+      "refs": [
+        "/items/amzn-f530eeab/ref-0.jpg",
+        "/items/amzn-f530eeab/ref-4.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "card",
+        "texture": "/items/amzn-f530eeab/primary.png",
+        "aspect": 0.7674,
+        "palette": [
+          "#909090",
+          "#525252",
+          "#cecece",
+          "#fcfdfd"
+        ]
+      }
     },
-    "addedAt": "2026-09-14T04:49:18.496Z"
+    "addedAt": "2026-09-14T06:52:27.982Z"
   },
   {
     "id": "amzn-1fc53358",
     "url": "https://amzn.to/4jTkxUE",
     "domain": "amazon.com",
-    "title": "Anker Charging Station",
+    "title": "Charging Station",
     "brand": "Anker",
     "price": "$78.48",
+    "section": "Home",
     "description": "Amazon.com: Anker MagGo 3-in-1 MagSafe-Compatible Qi2 15W Foldable Charging Station | Qi2-Certified Wireless Charging Stand for iPhone 17 - 12 Series, AirPods, Apple Watch Ultra(Non-Battery, Adapter Included) : Cell Phones & Accessories",
     "images": [
       "/items/amzn-1fc53358/ref-0.jpg",
@@ -311,26 +611,41 @@
       "/items/amzn-1fc53358/ref-5.jpg"
     ],
     "asset": {
-      "kind": "procedural",
-      "shape": "card",
-      "texture": "/items/amzn-1fc53358/primary.png",
-      "aspect": 1,
+      "kind": "glb",
+      "url": "/items/amzn-1fc53358/model.glb",
       "palette": [
         "#919191",
         "#020302",
         "#cfcdcc",
         "#2b2c2c"
-      ]
+      ],
+      "refs": [
+        "/items/amzn-1fc53358/ref-0.jpg",
+        "/items/amzn-1fc53358/ref-3.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "card",
+        "texture": "/items/amzn-1fc53358/primary.png",
+        "aspect": 1,
+        "palette": [
+          "#919191",
+          "#020302",
+          "#cfcdcc",
+          "#2b2c2c"
+        ]
+      }
     },
-    "addedAt": "2026-09-14T04:49:22.017Z"
+    "addedAt": "2026-09-14T06:52:52.584Z"
   },
   {
     "id": "peakdesign-8f476d14",
     "url": "https://www.peakdesign.com/products/roller-pro?Color=Sage",
     "domain": "peakdesign.com",
-    "title": "Peak Design Roller Pro Carry-On",
+    "title": "Roller Pro Carry-On",
     "brand": "Peak Design",
     "price": "$599.95",
+    "section": "Misc",
     "description": "Meet the next leap in luggage. Roller Pro Carry-On is a 4-wheeled travel roller in a class of its own, built differently from the ground up to hold more...",
     "images": [
       "/items/peakdesign-8f476d14/ref-0.jpg",
@@ -341,26 +656,43 @@
       "/items/peakdesign-8f476d14/ref-5.jpg"
     ],
     "asset": {
-      "kind": "procedural",
-      "shape": "card",
-      "texture": "/items/peakdesign-8f476d14/primary.png",
-      "aspect": 0.7451,
+      "kind": "glb",
+      "url": "/items/peakdesign-8f476d14/model.glb",
       "palette": [
         "#727869",
         "#4f5547",
         "#151613",
         "#cecece"
-      ]
+      ],
+      "refs": [
+        "/items/peakdesign-8f476d14/ref-0.jpg",
+        "/items/peakdesign-8f476d14/ref-2.jpg",
+        "/items/peakdesign-8f476d14/ref-3.jpg",
+        "/items/peakdesign-8f476d14/ref-1.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "card",
+        "texture": "/items/peakdesign-8f476d14/primary.png",
+        "aspect": 0.7451,
+        "palette": [
+          "#727869",
+          "#4f5547",
+          "#151613",
+          "#cecece"
+        ]
+      }
     },
-    "addedAt": "2026-09-14T04:49:28.870Z"
+    "addedAt": "2026-09-14T06:53:25.324Z"
   },
   {
     "id": "amzn-0f80deec",
     "url": "https://amzn.to/4qPvSXO",
     "domain": "amazon.com",
-    "title": "Timex Weekender Fairfield",
+    "title": "Weekender Fairfield",
     "brand": "Timex",
     "price": "$59.99",
+    "section": "Misc",
     "description": "Buy Timex 'Weekender Fairfield' Quartz Brass and Nylon Casual Watch, Color:Blue (Model: TW2P908009J) and other Wrist Watches at Amazon.com. Our wide selection is eligible for free shipping and free returns.",
     "images": [
       "/items/amzn-0f80deec/ref-0.jpg",
@@ -371,18 +703,34 @@
       "/items/amzn-0f80deec/ref-5.jpg"
     ],
     "asset": {
-      "kind": "procedural",
-      "shape": "card",
-      "texture": "/items/amzn-0f80deec/primary.png",
-      "aspect": 0.628,
+      "kind": "glb",
+      "url": "/items/amzn-0f80deec/model.glb",
       "palette": [
         "#2a9652",
         "#333747",
         "#8e8e8f",
         "#f2f2f2"
-      ]
+      ],
+      "refs": [
+        "/items/amzn-0f80deec/ref-0.jpg",
+        "/items/amzn-0f80deec/ref-3.jpg",
+        "/items/amzn-0f80deec/ref-4.jpg",
+        "/items/amzn-0f80deec/ref-5.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "card",
+        "texture": "/items/amzn-0f80deec/primary.png",
+        "aspect": 0.628,
+        "palette": [
+          "#2a9652",
+          "#333747",
+          "#8e8e8f",
+          "#f2f2f2"
+        ]
+      }
     },
-    "addedAt": "2026-09-14T04:49:33.049Z"
+    "addedAt": "2026-09-14T06:53:27.480Z"
   },
   {
     "id": "jamescookartworkshop-b0e89a91",
@@ -390,6 +738,7 @@
     "domain": "jamescookartworkshop.com",
     "title": "James Cook Artwork Shop",
     "brand": "James Cook Artwork Shop",
+    "section": "Misc",
     "description": "James Cook Artwork Shop",
     "images": [
       "/items/jamescookartworkshop-b0e89a91/ref-0.jpg",
@@ -400,18 +749,34 @@
       "/items/jamescookartworkshop-b0e89a91/ref-5.jpg"
     ],
     "asset": {
-      "kind": "procedural",
-      "shape": "box",
-      "texture": "/items/jamescookartworkshop-b0e89a91/primary.png",
-      "aspect": 0.7998,
+      "kind": "glb",
+      "url": "/items/jamescookartworkshop-b0e89a91/model.glb",
       "palette": [
         "#d00708",
         "#b48d74",
         "#362f2c",
         "#0d0b0b"
-      ]
+      ],
+      "refs": [
+        "/items/jamescookartworkshop-b0e89a91/ref-0.jpg",
+        "/items/jamescookartworkshop-b0e89a91/ref-4.jpg",
+        "/items/jamescookartworkshop-b0e89a91/ref-2.jpg",
+        "/items/jamescookartworkshop-b0e89a91/ref-3.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "box",
+        "texture": "/items/jamescookartworkshop-b0e89a91/primary.png",
+        "aspect": 0.7998,
+        "palette": [
+          "#d00708",
+          "#b48d74",
+          "#362f2c",
+          "#0d0b0b"
+        ]
+      }
     },
-    "addedAt": "2026-09-14T04:49:43.784Z"
+    "addedAt": "2026-09-14T06:53:49.418Z"
   },
   {
     "id": "us-nothing-db5358fa",
@@ -419,6 +784,7 @@
     "domain": "us.nothing.tech",
     "title": "Nothing Headphone (1)",
     "price": "$299",
+    "section": "Misc",
     "images": [
       "/items/us-nothing-db5358fa/ref-0.jpg",
       "/items/us-nothing-db5358fa/ref-1.jpg",
@@ -428,18 +794,33 @@
       "/items/us-nothing-db5358fa/ref-5.jpg"
     ],
     "asset": {
-      "kind": "procedural",
-      "shape": "card",
-      "texture": "/items/us-nothing-db5358fa/primary.png",
-      "aspect": 0.7119,
+      "kind": "glb",
+      "url": "/items/us-nothing-db5358fa/model.glb",
       "palette": [
         "#8b8e92",
         "#4a4d50",
         "#101112",
         "#ffffff"
-      ]
+      ],
+      "refs": [
+        "/items/us-nothing-db5358fa/ref-0.jpg",
+        "/items/us-nothing-db5358fa/ref-2.jpg",
+        "/items/us-nothing-db5358fa/ref-1.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "card",
+        "texture": "/items/us-nothing-db5358fa/primary.png",
+        "aspect": 0.7119,
+        "palette": [
+          "#8b8e92",
+          "#4a4d50",
+          "#101112",
+          "#ffffff"
+        ]
+      }
     },
-    "addedAt": "2026-09-14T04:49:54.860Z"
+    "addedAt": "2026-09-14T07:29:29.664Z"
   },
   {
     "id": "remsen-f65a1f42",
@@ -448,6 +829,7 @@
     "title": "The Pill Container",
     "brand": "Remsen",
     "price": "$195.00",
+    "section": "Misc",
     "description": "A pill case that combines minimalist beauty with mindful functionality. Equipped with a sleek, grooved lid with a mirrored underside for added utility. Constructed with robust materials for unmatched long-term durability. Comes with an easily removable translucent inner cover for secure storage. Prioritizes aesthetics, ergonomics, and practicality for everyday use.",
     "images": [
       "/items/remsen-f65a1f42/ref-0.jpg",
@@ -458,26 +840,41 @@
       "/items/remsen-f65a1f42/ref-5.jpg"
     ],
     "asset": {
-      "kind": "procedural",
-      "shape": "box",
-      "texture": "/items/remsen-f65a1f42/primary.png",
-      "aspect": 0.7402,
+      "kind": "glb",
+      "url": "/items/remsen-f65a1f42/model.glb",
       "palette": [
         "#8e562d",
         "#b78854",
         "#ccb48b",
         "#ecebe7"
-      ]
+      ],
+      "refs": [
+        "/items/remsen-f65a1f42/ref-0.jpg",
+        "/items/remsen-f65a1f42/ref-3.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "box",
+        "texture": "/items/remsen-f65a1f42/primary.png",
+        "aspect": 0.7402,
+        "palette": [
+          "#8e562d",
+          "#b78854",
+          "#ccb48b",
+          "#ecebe7"
+        ]
+      }
     },
-    "addedAt": "2026-09-14T04:49:57.103Z"
+    "addedAt": "2026-09-14T07:28:54.556Z"
   },
   {
     "id": "journeyofficial-67ef95f6",
     "url": "https://journeyofficial.com/products/loc8-finder-wallet-and-stand",
     "domain": "journeyofficial.com",
-    "title": "Journey MagSafe Finder Wallet and Stand",
+    "title": "MagSafe Finder Wallet and Stand",
     "brand": "Journey",
     "price": "$89.99",
+    "section": "Misc",
     "description": "LOC8 MagSafe Finder Wallet and Stand is your ultimate iPhone companion. With built-in tracker and Apple's Find My network compatibility, you can bid farewell to lost wallets. Safeguard up to 5 cards, secure your ID, and enjoy the convenience of a trackable and stand-equipped accessory. Never lose your essentials again; stay connected, organized, and worry-free.",
     "images": [
       "/items/journeyofficial-67ef95f6/ref-0.jpg",
@@ -488,17 +885,32 @@
       "/items/journeyofficial-67ef95f6/ref-5.jpg"
     ],
     "asset": {
-      "kind": "procedural",
-      "shape": "card",
-      "texture": "/items/journeyofficial-67ef95f6/primary.png",
-      "aspect": 0.6177,
+      "kind": "glb",
+      "url": "/items/journeyofficial-67ef95f6/model.glb",
       "palette": [
         "#6c6e70",
         "#b0afae",
         "#2f3132",
         "#0d0e0d"
-      ]
+      ],
+      "refs": [
+        "/items/journeyofficial-67ef95f6/ref-0.jpg",
+        "/items/journeyofficial-67ef95f6/ref-2.jpg",
+        "/items/journeyofficial-67ef95f6/ref-4.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "card",
+        "texture": "/items/journeyofficial-67ef95f6/primary.png",
+        "aspect": 0.6177,
+        "palette": [
+          "#6c6e70",
+          "#b0afae",
+          "#2f3132",
+          "#0d0e0d"
+        ]
+      }
     },
-    "addedAt": "2026-09-14T04:50:00.584Z"
+    "addedAt": "2026-09-14T07:29:29.627Z"
   }
 ]

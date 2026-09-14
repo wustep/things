@@ -1,34 +1,113 @@
-/** The little chrome there is: wordmark count, empty state, caption, status line, drop overlay. */
-import type { ItemNode } from './items.ts';
+/** The little chrome there is: wordmark count, section labels, empty state, product card, status line, drop overlay. */
+import { sameText, titleWithoutBrand } from '../shared/text.ts';
+import type { Item } from '../shared/types.ts';
+import { assetUrl } from './data.ts';
 import { extractUrls, ingestAvailable, ingestUrls } from './ingest-client.ts';
+import type { ItemNode } from './items.ts';
+import type { SectionGroup } from './sections.ts';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 
+/** How long the card stays after the pointer leaves an item, so it can be reached and clicked. */
+const CARD_LINGER_MS = 800;
+
 export class Hud {
   private readonly count = $('count');
+  private readonly sections = $('sections');
   private readonly empty = $('empty');
   private readonly emptyHint = $('empty-hint');
-  private readonly caption = $('caption');
-  private readonly captionTitle = $('caption-title');
-  private readonly captionMeta = $('caption-meta');
+  private readonly card = $<HTMLAnchorElement>('card');
+  private readonly cardThumb = $<HTMLImageElement>('card-thumb');
+  private readonly cardBrand = $('card-brand');
+  private readonly cardTitle = $('card-title');
+  private readonly cardPrice = $('card-price');
+  private readonly cardDomain = $('card-domain');
   private readonly status = $('status');
   private readonly drop = $('drop');
   private statusTimer: number | undefined;
+  private cardTimer: number | undefined;
+
+  /** Called with a section label when one is clicked in the chrome. */
+  onSectionPick: ((label: string) => void) | undefined;
+
+  constructor() {
+    // Crossing from an item to the card takes a moment; hold the card while the pointer is on it.
+    this.card.addEventListener('pointerenter', () => window.clearTimeout(this.cardTimer));
+    this.card.addEventListener('pointerleave', (e) => {
+      if (e.pointerType !== 'touch') this.scheduleCardHide();
+    });
+    this.sections.addEventListener('click', (e) => {
+      const label = (e.target as HTMLElement).closest<HTMLElement>('[data-section]')?.dataset.section;
+      if (label) this.onSectionPick?.(label);
+    });
+  }
 
   setCount(n: number) {
     this.count.textContent = n > 0 ? String(n) : '';
     this.empty.classList.toggle('is-visible', n === 0);
   }
 
+  /** Section labels with live counts; hidden when nothing on the shelf has a section. */
+  setSections(groups: SectionGroup[]) {
+    const named = groups.filter((g): g is SectionGroup & { label: string } => !!g.label);
+    this.sections.replaceChildren(
+      ...named.map((g) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'section';
+        button.dataset.section = g.label;
+        button.append(g.label, ' ');
+        const n = document.createElement('span');
+        n.className = 'section-count';
+        n.textContent = String(g.items.length);
+        button.append(n);
+        return button;
+      }),
+    );
+    this.sections.hidden = named.length === 0;
+  }
+
+  /** Brighten the label of the section the pointer is on. */
+  setHotSection(label: string | null) {
+    for (const el of this.sections.children) el.classList.toggle('is-hot', (el as HTMLElement).dataset.section === label);
+  }
+
+  /** Mark the section the camera is framing. */
+  setActiveSection(label: string | null) {
+    for (const el of this.sections.children) el.classList.toggle('is-active', (el as HTMLElement).dataset.section === label);
+  }
+
+  /** Show the product card for an item, or let it fade once the pointer has had time to reach it. */
   setCaption(node: ItemNode | null) {
+    window.clearTimeout(this.cardTimer);
     if (!node) {
-      this.caption.classList.remove('is-visible');
+      this.scheduleCardHide();
       return;
     }
-    const { title, brand, price, domain } = node.item;
-    this.captionTitle.textContent = title;
-    this.captionMeta.textContent = [brand, price, domain].filter(Boolean).join('  ·  ');
-    this.caption.classList.add('is-visible');
+    const { title, brand, price, domain, url } = node.item;
+    this.card.href = url;
+    const thumb = assetUrl(textureOf(node.item));
+    if (this.cardThumb.getAttribute('src') !== thumb) this.cardThumb.src = thumb;
+    // Brand once only: it has its own line, so it comes out of the title. When the brand *is*
+    // the whole title (a shop page rather than a product), the title line alone carries it.
+    const shownTitle = titleWithoutBrand(title, brand);
+    const showBrand = !!brand && !sameText(brand, shownTitle);
+    this.cardBrand.textContent = showBrand ? brand : '';
+    this.cardBrand.hidden = !showBrand;
+    this.cardTitle.textContent = shownTitle;
+    this.cardPrice.textContent = price ?? '';
+    this.cardPrice.hidden = !price;
+    this.cardDomain.textContent = domain;
+    this.card.classList.add('is-visible');
+    this.card.setAttribute('aria-hidden', 'false');
+  }
+
+  private scheduleCardHide() {
+    window.clearTimeout(this.cardTimer);
+    this.cardTimer = window.setTimeout(() => {
+      this.card.classList.remove('is-visible');
+      this.card.setAttribute('aria-hidden', 'true');
+    }, CARD_LINGER_MS);
   }
 
   say(text: string, opts: { error?: boolean; sticky?: boolean } = {}) {
@@ -51,6 +130,11 @@ export class Hud {
   enablePasteHint(on: boolean) {
     this.emptyHint.hidden = !on;
   }
+}
+
+/** The keyed cut-out, which every item has even when a GLB is on top. */
+function textureOf(item: Item): string {
+  return item.asset.kind === 'glb' ? item.asset.fallback.texture : item.asset.texture;
 }
 
 /**
@@ -149,7 +233,9 @@ function humanize(line: string): { text: string; failed: boolean } | null {
   if ((m = s.match(/^ref (\d+)\/(\d+)/))) return { text: `Pulling reference ${m[1]} of ${m[2]}…`, failed: false };
   if (s.startsWith('primary cut-out')) return { text: 'Cutting out the subject…', failed: false };
   if (s.startsWith('page fetch failed')) return { text: 'Page blocked the fetch; trying its images anyway…', failed: false };
+  if (s.startsWith('meshy refs:')) return { text: 'Sending reference photos to Meshy…', failed: false };
   if (s.startsWith('meshy')) return { text: `Meshy ${s.slice(6)}`, failed: false };
+  if (s.startsWith('model.glb')) return { text: 'Slimming the model for the web…', failed: false };
   if (s.startsWith('mesh generation failed')) return { text: 'Mesh generation failed; keeping the procedural shape', failed: false };
   if ((m = s.match(/^done\s+\S+\s+(.+?)(?:\s{2,}|$)/))) return { text: `Added ${m[1]}`, failed: false };
   if ((m = s.match(/^skip\s+\S+\s+already ingested: (.+)/))) return { text: `Already on the shelf: ${m[1]}`, failed: false };

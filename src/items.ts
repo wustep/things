@@ -189,7 +189,7 @@ async function buildGlb(url: string, orientation?: ModelOrientation): Promise<Bu
 
   const box = new THREE.Box3().setFromObject(object);
   const size = box.getSize(new THREE.Vector3());
-  const scale = fitScale(size);
+  const scale = fitScale(size) * clamp(orientation?.scale ?? 1, 0.25, 4);
   object.scale.setScalar(scale);
   box.setFromObject(object);
   const center = box.getCenter(new THREE.Vector3());

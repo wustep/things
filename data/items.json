@@ -1,1 +1,106 @@
-[]
+[
+  {
+    "id": "aesop-7c27d2d1",
+    "url": "https://www.aesop.com/hand-body/hand-washes-balms/resurrection-aromatique-hand-wash/BT13.html",
+    "domain": "aesop.com",
+    "title": "Resurrection Aromatique Hand Wash",
+    "brand": "Aesop",
+    "price": "$49",
+    "description": "Enhanced with botanical extracts noted for their purifying and hydrating properties—including Mandarin Rind, Rosemary Leaf and Cedar Atlas—the formulation provides a gentle but thorough cleanse to leave hard-working hands feeling refreshed. A fixture by the basins of some of the world’s best-appointed restaurants, hotels and homes, it is ideal for hands prone to dryness and subjected to frequent w",
+    "images": [
+      "/items/aesop-7c27d2d1/ref-0.jpg",
+      "/items/aesop-7c27d2d1/ref-1.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "cylinder",
+      "texture": "/items/aesop-7c27d2d1/primary.png",
+      "aspect": 0.5068,
+      "palette": [
+        "#f28d02",
+        "#4e1802",
+        "#110b0a",
+        "#f7f7ec"
+      ]
+    },
+    "addedAt": "2026-09-14T03:26:24.584Z"
+  },
+  {
+    "id": "lego-06466fbe",
+    "url": "https://www.lego.com/en-us/product/bonsai-tree-10281",
+    "domain": "lego.com",
+    "title": "Bonsai Tree",
+    "brand": "LEGO",
+    "price": "$49.99",
+    "description": "Let your creativity bloom",
+    "images": [
+      "/items/lego-06466fbe/ref-0.jpg",
+      "/items/lego-06466fbe/ref-1.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/lego-06466fbe/primary.png",
+      "aspect": 1.3351,
+      "palette": [
+        "#015008",
+        "#6c2c10",
+        "#0d0606",
+        "#f0afd0"
+      ]
+    },
+    "addedAt": "2026-09-14T03:26:28.212Z"
+  },
+  {
+    "id": "teenage-643f6596",
+    "url": "https://teenage.engineering/store/tp-7/",
+    "domain": "teenage.engineering",
+    "title": "TP–7 field recorder",
+    "brand": "teenage engineering",
+    "price": "$120",
+    "description": "TP–7 – ultra-portable audio recorder. record, edit, trim and layer whatever sound, with zero friction in the highest possible quality.",
+    "images": [
+      "/items/teenage-643f6596/ref-0.jpg",
+      "/items/teenage-643f6596/ref-1.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/teenage-643f6596/primary.png",
+      "aspect": 0.6582,
+      "palette": [
+        "#060b0f",
+        "#727272",
+        "#b2b2b2",
+        "#e7e8e8"
+      ]
+    },
+    "addedAt": "2026-09-14T03:26:34.767Z"
+  },
+  {
+    "id": "store-stonemaiergames-4c5045d0",
+    "url": "https://store.stonemaiergames.com/products/wingspan",
+    "domain": "store.stonemaiergames.com",
+    "title": "Wingspan",
+    "brand": "Stonemaier Games",
+    "price": "$55",
+    "description": "Wingspan is a competitive, medium-weight, card-driven, engine-building board game for 1-5 players from Stonemaier Games. It plays in 40-90 minutes. This is the current version of Wingspan, which includes the swift-start pack. You are bird enthusiasts—researchers, bird watchers, ornithologists, and collectors—seeking to discover and attract the best birds to your network of wildlife preserves. Each",
+    "images": [
+      "/items/store-stonemaiergames-4c5045d0/ref-0.jpg",
+      "/items/store-stonemaiergames-4c5045d0/ref-1.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "box",
+      "texture": "/items/store-stonemaiergames-4c5045d0/primary.png",
+      "aspect": 0.7939,
+      "palette": [
+        "#6faed3",
+        "#8c8c85",
+        "#b1d3d0",
+        "#f8f9fa"
+      ]
+    },
+    "addedAt": "2026-09-14T03:33:10.363Z"
+  }
+]

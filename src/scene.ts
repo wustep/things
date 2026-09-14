@@ -56,7 +56,11 @@ export class Stage {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.setClearColor(0x000000, 1);
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
-    this.renderer.toneMapping = THREE.NoToneMapping; // photos stay true to the product page
+    // Khronos PBR Neutral: made for product renders — hue and saturation survive, only the
+    // brightest highlights roll off. Photo cut-outs opt out (toneMapped: false) so they stay
+    // exactly as the product page had them.
+    this.renderer.toneMapping = THREE.NeutralToneMapping;
+    this.renderer.toneMappingExposure = 1;
     setMaxAnisotropy(this.renderer.capabilities.getMaxAnisotropy());
 
     this.camera = new THREE.PerspectiveCamera(38, 1, 0.1, 200);
@@ -318,18 +322,24 @@ export class Stage {
 
   // ---------- dressing ----------
 
+  /**
+   * A white studio, not a moody one: product photos are shot under big neutral softboxes, so
+   * the meshes get the same. Lighting is mostly the room environment (even, colourless, shows
+   * steel as steel); a white key and a soft fill only add shape. Tinted lights are out — a warm
+   * key and a blue rim were shifting every hue on the shelf. The void itself stays black: the
+   * environment lights things, it is never drawn.
+   */
   private addLights() {
-    this.scene.add(new THREE.HemisphereLight(0xe6ebf7, 0x08080c, 0.4));
-    const key = new THREE.DirectionalLight(0xfff1de, 1.7);
+    this.scene.add(new THREE.HemisphereLight(0xffffff, 0x2a2a2e, 0.35));
+    const key = new THREE.DirectionalLight(0xffffff, 0.9);
     key.position.set(3, 6, 5);
-    const rim = new THREE.DirectionalLight(0xc2d3ff, 0.9);
-    rim.position.set(-5, 3, -4);
-    this.scene.add(key, rim);
+    const fill = new THREE.DirectionalLight(0xffffff, 0.3);
+    fill.position.set(-4, 2.5, 3);
+    this.scene.add(key, fill);
 
-    // Image-based lighting for GLBs and the procedural box / cylinder sides. Background stays black.
     const pmrem = new THREE.PMREMGenerator(this.renderer);
     this.scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-    this.scene.environmentIntensity = 0.45;
+    this.scene.environmentIntensity = 1.3;
     pmrem.dispose();
   }
 }

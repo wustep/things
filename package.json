@@ -1,0 +1,30 @@
+{
+  "name": "things",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Things: a black-void 3D shelf for products you drop in by URL.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit -p tsconfig.json && vite build",
+    "preview": "vite preview",
+    "ingest": "tsx scripts/ingest.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.scripts.json"
+  },
+  "dependencies": {
+    "three": "^0.170.0"
+  },
+  "devDependencies": {
+    "@jimp/core": "^1.6.1",
+    "@jimp/types": "^1.6.1",
+    "@jsquash/avif": "^1.3.0",
+    "@jsquash/webp": "^1.5.0",
+    "@types/node": "^22.10.0",
+    "@types/three": "^0.170.0",
+    "cheerio": "^1.0.0",
+    "jimp": "^1.6.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.0",
+    "vite": "^6.0.0"
+  }
+}

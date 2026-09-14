@@ -29,13 +29,15 @@ export async function generateGlb(images: MeshImage[], log: (msg: string) => voi
   const headers = { authorization: `Bearer ${key}`, 'content-type': 'application/json' };
   const deadline = Date.now() + timeoutMs;
 
+  const noRemesh = process.env.MESHY_NO_REMESH === '1';
   const body = JSON.stringify({
     image_urls: images.slice(0, MAX_MESH_IMAGES).map((i) => `data:${i.mime};base64,${i.data.toString('base64')}`),
     ai_model: 'latest',
-    should_remesh: true,
+    // Docs: highest-quality raw mesh when should_remesh is false; otherwise target_polycount applies.
+    should_remesh: !noRemesh,
     should_texture: true,
     enable_pbr: true,
-    target_polycount: 20000,
+    ...(noRemesh ? {} : { target_polycount: 60000 }),
     target_formats: ['glb'],
   });
 

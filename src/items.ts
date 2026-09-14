@@ -5,7 +5,7 @@
  */
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import type { Item, ProceduralAsset, ProceduralShape } from '../shared/types.ts';
+import type { Item, ModelOrientation, ProceduralAsset, ProceduralShape } from '../shared/types.ts';
 import { assetUrl } from './data.ts';
 
 /** Every item is fitted into this footprint (world units) so the shelf reads evenly. */
@@ -50,7 +50,7 @@ export async function buildItemNode(item: Item): Promise<ItemNode> {
   let built: Built;
   if (item.asset.kind === 'glb') {
     try {
-      built = await buildGlb(item.asset.url);
+      built = await buildGlb(item.asset.url, item.asset.orientation);
     } catch (err) {
       console.warn(`[things] ${item.id}: GLB failed to load, using the procedural fallback`, err);
       built = await buildProcedural(item.asset.fallback, item.title);
@@ -178,15 +178,15 @@ function buildCylinder(image: HTMLImageElement, aspect: number, palette: string[
 
 // ---------- glb ----------
 
-async function buildGlb(url: string): Promise<Built> {
+async function buildGlb(url: string, orientation?: ModelOrientation): Promise<Built> {
   const gltf = await gltfLoader.loadAsync(assetUrl(url));
   const model = gltf.scene;
   // Presentation wrapper so source transforms stay intact while we upright / face / fit.
   const object = new THREE.Group();
   object.add(model);
 
-  uprightIfNeeded(model);
-  faceTowardCamera(model);
+  applyOrientation(model, orientation);
+  polishGlbMaterials(model);
 
   const box = new THREE.Box3().setFromObject(object);
   const size = box.getSize(new THREE.Vector3());
@@ -215,27 +215,94 @@ function fitScale(size: THREE.Vector3): number {
   return Math.min(FIT.w / Math.max(size.x, 1e-6), FIT.h / Math.max(size.y, 1e-6), FIT.d / Math.max(size.z, 1e-6));
 }
 
-/**
- * Meshy / CAD exports sometimes arrive Z-up. Tip them so the tall axis is Y before we fit.
- * Only when Z clearly dominates and Y is the short axis (lying on its back).
- */
-function uprightIfNeeded(model: THREE.Object3D) {
-  model.updateMatrixWorld(true);
-  const size = new THREE.Box3().setFromObject(model).getSize(new THREE.Vector3());
-  if (size.z >= size.x && size.z > size.y * 1.15) {
+function applyOrientation(model: THREE.Object3D, orientation?: ModelOrientation) {
+  const upright = orientation?.upright ?? 'auto';
+  const face = orientation?.face ?? 'auto';
+  if (upright === 'tip' || (upright === 'auto' && shouldTipUpright(model))) {
     model.rotateX(-Math.PI / 2);
     model.updateMatrixWorld(true);
+  } else if (upright === 'tip-rev') {
+    model.rotateX(Math.PI / 2);
+    model.updateMatrixWorld(true);
   }
-}
-
-/** Yaw so the broader horizontal face looks toward +Z (the camera side of the shelf). */
-function faceTowardCamera(model: THREE.Object3D) {
-  model.updateMatrixWorld(true);
-  const size = new THREE.Box3().setFromObject(model).getSize(new THREE.Vector3());
-  if (size.z > size.x * 1.12) {
+  if (face === 'auto' && shouldFaceCamera(model)) {
     model.rotateY(Math.PI / 2);
     model.updateMatrixWorld(true);
   }
+  const pitchDeg = orientation?.pitchDeg ?? 0;
+  const yawDeg = orientation?.yawDeg ?? 0;
+  const rollDeg = orientation?.rollDeg ?? 0;
+  if (pitchDeg) model.rotateX(THREE.MathUtils.degToRad(pitchDeg));
+  if (yawDeg) model.rotateY(THREE.MathUtils.degToRad(yawDeg));
+  if (rollDeg) model.rotateZ(THREE.MathUtils.degToRad(rollDeg));
+  if (pitchDeg || yawDeg || rollDeg) model.updateMatrixWorld(true);
+}
+
+/**
+ * Meshy / CAD exports sometimes arrive lying on their back (tall axis along Z). Tip only when Z
+ * clearly dominates both footprint axes — nearly-cubic or disc-like meshes stay put (a pill
+ * case tipped on edge is worse than a slightly deep AABB).
+ */
+function shouldTipUpright(model: THREE.Object3D): boolean {
+  model.updateMatrixWorld(true);
+  const size = new THREE.Box3().setFromObject(model).getSize(new THREE.Vector3());
+  return size.z > size.y * 1.35 && size.z > size.x * 1.15;
+}
+
+/** Yaw so the broader horizontal face looks toward +Z (the camera side of the shelf). */
+function shouldFaceCamera(model: THREE.Object3D): boolean {
+  model.updateMatrixWorld(true);
+  const size = new THREE.Box3().setFromObject(model).getSize(new THREE.Vector3());
+  return size.z > size.x * 1.18;
+}
+
+/**
+ * Push Meshy GLBs toward a solid product-photo read: smooth shading, sharper mips, a bit more
+ * env response, and a soft clearcoat so plastic / painted surfaces catch light without looking
+ * like a faceted CAD preview.
+ */
+function polishGlbMaterials(root: THREE.Object3D) {
+  // Upgrade each unique material once — Meshy GLBs often share one material across primitives.
+  const upgraded = new Map<THREE.Material, THREE.MeshPhysicalMaterial>();
+  root.traverse((o) => {
+    if (!(o instanceof THREE.Mesh)) return;
+    const list = Array.isArray(o.material) ? o.material : [o.material];
+    const next = list.map((m) => {
+      if (!(m instanceof THREE.MeshStandardMaterial)) return m;
+      let mat = upgraded.get(m);
+      if (!mat) {
+        if (m instanceof THREE.MeshPhysicalMaterial) {
+          mat = m;
+        } else {
+          mat = new THREE.MeshPhysicalMaterial();
+          mat.copy(m);
+          upgraded.set(m, mat);
+          m.dispose();
+        }
+        upgraded.set(mat, mat);
+        mat.flatShading = false;
+        mat.side = THREE.FrontSide;
+        mat.envMapIntensity = Math.max(mat.envMapIntensity, 1.05);
+        if (!mat.metalnessMap) mat.metalness = Math.min(mat.metalness, 0.35);
+        if (!mat.roughnessMap) mat.roughness = THREE.MathUtils.clamp(mat.roughness, 0.35, 0.82);
+        else mat.roughness = THREE.MathUtils.clamp(mat.roughness, 0.45, 1);
+        mat.clearcoat = Math.max(mat.clearcoat, 0.18);
+        mat.clearcoatRoughness = Math.min(mat.clearcoatRoughness || 0.4, 0.4);
+        for (const key of ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'aoMap', 'emissiveMap'] as const) {
+          const tex = mat[key];
+          if (!(tex instanceof THREE.Texture)) continue;
+          tex.anisotropy = maxAnisotropy;
+          tex.generateMipmaps = true;
+          tex.minFilter = THREE.LinearMipmapLinearFilter;
+          tex.magFilter = THREE.LinearFilter;
+          tex.needsUpdate = true;
+        }
+        mat.needsUpdate = true;
+      }
+      return mat;
+    });
+    o.material = Array.isArray(o.material) ? next : next[0];
+  });
 }
 
 // ---------- textures ----------

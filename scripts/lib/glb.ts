@@ -43,7 +43,12 @@ export async function slimGlb(glb: Buffer, log?: (msg: string) => void): Promise
     }
   }
 
-  await doc.transform(dedup(), prune(), quantize());
+  await doc.transform(
+    dedup(),
+    prune(),
+    // Keep normals precise — aggressive normal quantization is a big part of the faceted look.
+    quantize({ quantizePosition: 14, quantizeNormal: 16, quantizeTexcoord: 12, quantizeColor: 8 }),
+  );
   return Buffer.from(await io.writeBinary(doc));
 }
 

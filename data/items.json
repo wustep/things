@@ -97,7 +97,7 @@
     "brand": "ergonofis",
     "price": "$1755",
     "section": "Office",
-    "description": "Crafted from premium solid wood, the Sway Standing Desk offers lasting durability and a distinctive, timeless design. Every detail—from the seamless finishes to the intuitive swipe technology for height adjustment—is designed to elevate both comfort and functionality. Ideal for those seeking a desk that looks as good as it performs, the Sway combines refined craftsmanship with ergonomic innovation",
+    "description": "Crafted from premium solid wood, the Sway Standing Desk offers lasting durability and a distinctive, timeless design. Every detail\u2014from the seamless finishes to the intuitive swipe technology for height adjustment\u2014is designed to elevate both comfort and functionality. Ideal for those seeking a desk that looks as good as it performs, the Sway combines refined craftsmanship with ergonomic innovation",
     "images": [
       "/items/ergonofis-cb36d4e7/ref-1.jpg",
       "/items/ergonofis-cb36d4e7/ref-0.jpg",
@@ -259,7 +259,7 @@
     "title": "Yamazaki Home Tower Laundry Basket",
     "price": "$78.00",
     "section": "Home",
-    "description": "Buy Yamazaki Home Laundry Basket - Foldable Storage Hamper Organizer Steel One Size White: Hampers - Amazon.com ✓ FREE DELIVERY possible on eligible purchases",
+    "description": "Buy Yamazaki Home Laundry Basket - Foldable Storage Hamper Organizer Steel One Size White: Hampers - Amazon.com \u2713 FREE DELIVERY possible on eligible purchases",
     "images": [
       "/items/amzn-c91e1f10/ref-0.jpg",
       "/items/amzn-c91e1f10/ref-1.jpg",
@@ -304,7 +304,7 @@
     "brand": "Blu Dot",
     "price": "$1,595.00",
     "section": "Home",
-    "description": "Rectangular FSC®-certified teak slats and a matte white or grey aluminum frame cut a stylish and airy swath, whether it be the Riviera or the suburbs of Reno. Perch makes every day look like vacation. Beautiful to behold from the back side, the side side or the front side, the collection is made lounge-worthy with cushions covered in mildew and fade resistant Sunbrella® fabric.",
+    "description": "Rectangular FSC\u00ae-certified teak slats and a matte white or grey aluminum frame cut a stylish and airy swath, whether it be the Riviera or the suburbs of Reno. Perch makes every day look like vacation. Beautiful to behold from the back side, the side side or the front side, the collection is made lounge-worthy with cushions covered in mildew and fade resistant Sunbrella\u00ae fabric.",
     "images": [
       "/items/bludot-9c7c4924/ref-0.jpg",
       "/items/bludot-9c7c4924/ref-1.jpg",
@@ -336,6 +336,11 @@
           "#d9d2c8",
           "#fefefe"
         ]
+      },
+      "orientation": {
+        "upright": "keep",
+        "face": "keep",
+        "yawDeg": 0
       }
     },
     "addedAt": "2026-09-14T05:31:26.934Z"
@@ -544,6 +549,11 @@
           "#353737",
           "#ffffff"
         ]
+      },
+      "orientation": {
+        "upright": "keep",
+        "face": "keep",
+        "yawDeg": 35
       }
     },
     "addedAt": "2026-09-14T06:49:13.436Z"
@@ -556,7 +566,7 @@
     "brand": "BLUEAIR",
     "price": "$139",
     "section": "Home",
-    "description": "Buy BLUEAIR Air Purifiers for Home Bedroom Dorm up to 1,138 Ft², Blue 511i Max | WiFi, Auto Mode, Compact, Quiet 19dB HEPASilent Filtration, AHAM Verified, Washable Pre-Filter, Captures Pet Hair, Allergens: Travel-Size Air Purifiers - Amazon.com ✓ FREE DELIVERY possible on eligible purchases",
+    "description": "Buy BLUEAIR Air Purifiers for Home Bedroom Dorm up to 1,138 Ft\u00b2, Blue 511i Max | WiFi, Auto Mode, Compact, Quiet 19dB HEPASilent Filtration, AHAM Verified, Washable Pre-Filter, Captures Pet Hair, Allergens: Travel-Size Air Purifiers - Amazon.com \u2713 FREE DELIVERY possible on eligible purchases",
     "images": [
       "/items/amzn-f530eeab/ref-0.jpg",
       "/items/amzn-f530eeab/ref-1.jpg",
@@ -620,9 +630,15 @@
         "#2b2c2c"
       ],
       "refs": [
+        "/items/amzn-1fc53358/ref-1.jpg",
         "/items/amzn-1fc53358/ref-0.jpg",
         "/items/amzn-1fc53358/ref-3.jpg"
       ],
+      "orientation": {
+        "upright": "tip",
+        "face": "keep",
+        "yawDeg": 0
+      },
       "fallback": {
         "kind": "procedural",
         "shape": "card",
@@ -636,7 +652,7 @@
         ]
       }
     },
-    "addedAt": "2026-09-14T06:52:52.584Z"
+    "addedAt": "2026-09-14T08:37:25.650Z"
   },
   {
     "id": "peakdesign-8f476d14",
@@ -863,6 +879,11 @@
           "#ccb48b",
           "#ecebe7"
         ]
+      },
+      "orientation": {
+        "upright": "keep",
+        "face": "keep",
+        "yawDeg": 0
       }
     },
     "addedAt": "2026-09-14T07:28:54.556Z"
@@ -921,7 +942,7 @@
     "brand": "Nord",
     "price": "$5,999.00",
     "section": "Misc",
-    "description": "Buy Nord Stage 4 88-Key Fully-Weighted Keyboard: Stage Digital Pianos - Amazon.com ✓ FREE DELIVERY possible on eligible purchases",
+    "description": "Buy Nord Stage 4 88-Key Fully-Weighted Keyboard: Stage Digital Pianos - Amazon.com \u2713 FREE DELIVERY possible on eligible purchases",
     "images": [
       "/items/amazon-b05badce/ref-0.jpg",
       "/items/amazon-b05badce/ref-1.jpg",

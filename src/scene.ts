@@ -56,7 +56,9 @@ export class Stage {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.setClearColor(0x000000, 1);
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
-    this.renderer.toneMapping = THREE.NoToneMapping; // photos stay true to the product page
+    // ACES keeps product photos honest while letting GLB PBR catch soft studio highlights.
+    this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    this.renderer.toneMappingExposure = 1.12;
     setMaxAnisotropy(this.renderer.capabilities.getMaxAnisotropy());
 
     this.camera = new THREE.PerspectiveCamera(38, 1, 0.1, 200);
@@ -69,6 +71,8 @@ export class Stage {
     this.controls.enablePan = false;
     this.controls.rotateSpeed = 0.5;
     this.controls.zoomSpeed = 0.6;
+    // Dolly along the pointer ray and slide the orbit target so zoom feels anchored under the cursor.
+    this.controls.zoomToCursor = true;
     this.controls.minDistance = 2.5;
     this.controls.maxDistance = 60;
     this.controls.minPolarAngle = Math.PI * 0.3;
@@ -317,17 +321,20 @@ export class Stage {
   // ---------- dressing ----------
 
   private addLights() {
-    this.scene.add(new THREE.HemisphereLight(0xe6ebf7, 0x08080c, 0.4));
-    const key = new THREE.DirectionalLight(0xfff1de, 1.7);
-    key.position.set(3, 6, 5);
-    const rim = new THREE.DirectionalLight(0xc2d3ff, 0.9);
-    rim.position.set(-5, 3, -4);
-    this.scene.add(key, rim);
+    // Soft wrap + a warm key and cool rim so meshes read solid on black without hard facet edges.
+    this.scene.add(new THREE.HemisphereLight(0xf2f5ff, 0x0a0a10, 0.62));
+    const key = new THREE.DirectionalLight(0xfff3e4, 1.35);
+    key.position.set(3.2, 7, 5.5);
+    const fill = new THREE.DirectionalLight(0xdde7ff, 0.55);
+    fill.position.set(-4, 2.5, 3);
+    const rim = new THREE.DirectionalLight(0xb8c9ff, 0.85);
+    rim.position.set(-5.5, 4, -5);
+    this.scene.add(key, fill, rim);
 
     // Image-based lighting for GLBs and the procedural box / cylinder sides. Background stays black.
     const pmrem = new THREE.PMREMGenerator(this.renderer);
-    this.scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-    this.scene.environmentIntensity = 0.45;
+    this.scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.03).texture;
+    this.scene.environmentIntensity = 0.9;
     pmrem.dispose();
   }
 }

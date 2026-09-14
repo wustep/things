@@ -21,7 +21,7 @@
       <pre class="empty-cmd">npm run ingest -- https://example.com/product</pre>
     </section>
 
-    <a id="card" class="card" href="#" target="_blank" rel="noopener noreferrer" aria-live="polite" aria-hidden="true" data-keep-hover>
+    <button id="card" class="card" type="button" aria-live="polite" aria-hidden="true" data-keep-hover>
       <img id="card-thumb" class="card-thumb" alt="" decoding="async" />
       <span class="card-body">
         <span id="card-brand" class="card-brand" hidden></span>
@@ -32,7 +32,32 @@
         </span>
       </span>
       <span class="card-open" aria-hidden="true">&#8599;</span>
-    </a>
+    </button>
+
+    <aside id="detail" class="detail" aria-label="Item details" aria-hidden="true">
+      <figure class="detail-photos">
+        <img id="detail-photo" class="detail-photo" alt="" decoding="async" />
+        <button id="detail-photo-prev" class="photo-step photo-step-prev" type="button" aria-label="Previous photo">&#8249;</button>
+        <button id="detail-photo-next" class="photo-step photo-step-next" type="button" aria-label="Next photo">&#8250;</button>
+        <figcaption id="detail-thumbs" class="detail-thumbs" role="tablist" aria-label="Photos"></figcaption>
+      </figure>
+      <div class="detail-body">
+        <p class="detail-kicker"><span id="detail-section"></span><span id="detail-index"></span></p>
+        <p id="detail-brand" class="detail-brand" hidden></p>
+        <h2 id="detail-title" class="detail-title"></h2>
+        <p class="detail-foot">
+          <span id="detail-price" class="detail-price" hidden></span>
+          <span id="detail-domain" class="detail-domain"></span>
+        </p>
+        <p id="detail-desc" class="detail-desc" hidden></p>
+        <a id="detail-open" class="detail-open" href="#" target="_blank" rel="noopener noreferrer">Open product page <span aria-hidden="true">&#8599;</span></a>
+      </div>
+      <nav class="detail-nav" aria-label="Next and previous thing">
+        <button id="detail-prev" class="detail-step" type="button"><kbd aria-hidden="true">&larr;</kbd><span id="detail-prev-title" class="detail-step-title"></span></button>
+        <button id="detail-next" class="detail-step detail-step-next" type="button"><span id="detail-next-title" class="detail-step-title"></span><kbd aria-hidden="true">&rarr;</kbd></button>
+      </nav>
+      <button id="detail-close" class="detail-close" type="button" aria-label="Back to the shelf (Esc)">&times;</button>
+    </aside>
 
     <div id="status" class="status" role="status"></div>
     <div id="drop" class="drop" aria-hidden="true"><span>Drop to add</span></div>

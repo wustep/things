@@ -13,10 +13,14 @@ npm install
 npm run dev          # http://localhost:5173
 ```
 
-The dev server starts with the shelf in `data/items.json`. Drag to orbit, scroll to zoom,
-hover (or tap) a thing for its card, click the thing or the card to open the product page.
-Items with a `section` are grouped into their own shelves, and on wider screens the section
-labels under the wordmark show live counts; click one to frame that section.
+The dev server starts with the shelf in `data/items.json`. Scroll (or drag, or ↑/↓) to ride
+up and down the shelves; hover a thing for its caption. Click a thing to inspect it: the
+camera comes in close beside a card with its photos, price, description and a link to the
+product page, and from there ← / → step to the previous or next thing along the shelf. Drag
+turns the thing you are looking at, scroll zooms it, Esc or a click on the void goes back to
+the shelf. The focused thing is in the URL hash, so a link to `/#<id>` opens on it. Items with a
+`section` are grouped into their own shelves, and on wider screens the section labels under the
+wordmark show live counts and which section is in view; click one to frame that section.
 
 ## Add things
 
@@ -99,6 +103,12 @@ Each Meshy task takes a few minutes and costs credits (30 per model at the time 
 batches are best run with `--parallel`; the account's concurrent-task limit is respected by
 waiting and retrying.
 
+A mesh sometimes arrives lying on its back or facing sideways. The viewer tips and turns it by
+a heuristic on its bounding box; when that lands wrong, set `asset.orientation` on the item in
+`data/items.json`: `upright` (`auto` | `keep` | `tip` | `tip-rev`), `face` (`auto` | `keep`),
+`yawDeg` / `pitchDeg` / `rollDeg` for the final pose, and `scale` (default 1) when something
+thin the model grew, like a cable, would otherwise shrink the body to make room for itself.
+
 `--remesh` gives items that are already on the shelf a model without fetching anything again:
 the photos and cut-out on disk are reused, only the GLB is made (and batch overrides for
 `title`, `brand`, `price` and `section` still apply). Items that already have a model are
@@ -140,11 +150,11 @@ and redeploy.
 index.html            entry
 src/                  viewer (Vite + Three.js)
   main.ts             boot, HMR hook for data/items.json
-  scene.ts            the void: renderer, orbit, dust, picking, animation, section framing
-  items.ts            Item -> card / box / cylinder / GLB
+  scene.ts            the void: renderer, lights, the camera rail and item focus, dust, picking, animation
+  items.ts            Item -> card / box / cylinder / GLB (orientation overrides, fit)
   layout.ts           shelf slots, one block of shelves per section
   sections.ts         group items by section (layout and chrome counts share it)
-  ui.ts               product card, section labels, empty state, paste / drop intake
+  ui.ts               hover caption, detail panel with photo viewer, section labels, empty state, paste / drop intake
 scripts/ingest.ts     CLI ingest
 scripts/lib/          fetch, extract, images (keying, hashing, palette), asset (shape), meshy, glb (slimming), dev-ingest (Vite plugin)
 shared/types.ts       Item / Asset types shared by both sides

@@ -15,8 +15,8 @@ export interface StageEvents {
   select(node: ItemNode): void;
 }
 
-/** Idle yaw amplitude (radians) per kind; GLBs turn continuously instead. */
-const SWAY: Record<NodeKind, number> = { card: 0.14, box: 0.42, cylinder: 0.95, glb: 0 };
+/** Idle yaw amplitude (radians) per kind; keeps the front toward the camera. */
+const SWAY: Record<NodeKind, number> = { card: 0.14, box: 0.42, cylinder: 0.95, glb: 0.28 };
 const CLICK_SLOP_PX = 6;
 
 export class Stage {
@@ -197,14 +197,9 @@ export class Stage {
     node.hoverAmount += ((node === this.hovered ? 1 : 0) - node.hoverAmount) * (1 - Math.exp(-dt * 9));
     const h = node.hoverAmount;
 
-    let yaw: number;
-    if (node.kind === 'glb') {
-      yaw = this.motion ? t * (0.35 - 0.25 * h) + node.phase : node.phase;
-    } else {
-      const idle = this.motion ? Math.sin(t * 0.32 + node.phase) * SWAY[node.kind] : 0;
-      yaw = idle * (1 - h); // ease toward facing the viewer while hovered
-    }
-    node.pivot.rotation.y = yaw;
+    // Gentle sway around the facing direction; settle to face the viewer on hover.
+    const idle = this.motion ? Math.sin(t * 0.32 + node.phase) * SWAY[node.kind] : 0;
+    node.pivot.rotation.y = idle * (1 - h);
     node.pivot.position.y = this.motion ? Math.sin(t * 0.55 + node.phase) * 0.025 : 0;
     node.pivot.scale.setScalar(1 + 0.06 * h);
     node.glow.material.opacity = 0.2 + 0.22 * h;
@@ -240,16 +235,17 @@ export class Stage {
       return;
     }
     const band = this.focus === null ? undefined : this.layout.bands.find((b) => b.label === this.focus);
-    const extent = band ?? { ...this.layout, y: 0 };
-    const halfW = extent.halfWidth + 0.95;
-    const halfH = extent.halfHeight + 0.95;
+    const extent = band ?? { ...this.layout, y: 0, rows: this.layout.rows };
+    // Pad for item footprint (~FIT) plus breathing room so a section zoom does not clip the band.
+    const halfW = extent.halfWidth + 1.85;
+    const halfH = extent.halfHeight + 1.65;
     const vfov = THREE.MathUtils.degToRad(this.camera.fov);
     const hfov = 2 * Math.atan(Math.tan(vfov / 2) * this.camera.aspect);
     const byWidth = halfW / Math.tan(hfov / 2);
     const byHeight = halfH / Math.tan(vfov / 2);
-    this.frameDistance = THREE.MathUtils.clamp(Math.max(byWidth, byHeight) + 0.9, 4.5, 60);
+    this.frameDistance = THREE.MathUtils.clamp(Math.max(byWidth, byHeight) * 1.06 + 0.6, 5, 60);
     // Items stand up from their slot, so the visual centre sits a little above the shelf line.
-    this.goal.set(0, extent.y + (extent.rows > 1 ? 0.5 : 0.4), 0);
+    this.goal.set(0, extent.y + (extent.rows > 1 ? 0.45 : 0.55), 0);
   }
 
   private resize = () => {

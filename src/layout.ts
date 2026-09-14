@@ -32,10 +32,10 @@ export interface Shelf {
 }
 
 /** Spacing between item bases along the shelf and between shelves. */
-export const SPACING = 2.0;
-export const ROW_HEIGHT = 2.05;
+export const SPACING = 1.55;
+export const ROW_HEIGHT = 1.55;
 /** Extra room between one section's last shelf and the next section's first. */
-export const SECTION_GAP = 0.9;
+export const SECTION_GAP = 0.4;
 /** The shelf bows gently around the viewer; larger = flatter. */
 const RADIUS = 12;
 

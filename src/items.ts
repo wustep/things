@@ -9,7 +9,7 @@ import type { Item, ProceduralAsset, ProceduralShape } from '../shared/types.ts'
 import { assetUrl } from './data.ts';
 
 /** Every item is fitted into this footprint (world units) so the shelf reads evenly. */
-const FIT = { w: 1.3, h: 1.1, d: 0.9 };
+const FIT = { w: 1.2, h: 1.05, d: 1.1 };
 const MAX_TEXTURE = 1024;
 
 export type NodeKind = ProceduralShape | 'glb';
@@ -180,16 +180,25 @@ function buildCylinder(image: HTMLImageElement, aspect: number, palette: string[
 
 async function buildGlb(url: string): Promise<Built> {
   const gltf = await gltfLoader.loadAsync(assetUrl(url));
-  const object = gltf.scene;
+  const model = gltf.scene;
+  // Presentation wrapper so source transforms stay intact while we upright / face / fit.
+  const object = new THREE.Group();
+  object.add(model);
+
+  uprightIfNeeded(model);
+  faceTowardCamera(model);
+
   const box = new THREE.Box3().setFromObject(object);
   const size = box.getSize(new THREE.Vector3());
-  const scale = Math.min(FIT.w / (size.x || 1), FIT.h / (size.y || 1), FIT.d / (size.z || 1));
+  const scale = fitScale(size);
   object.scale.setScalar(scale);
   box.setFromObject(object);
   const center = box.getCenter(new THREE.Vector3());
   object.position.set(-center.x, -box.min.y, -center.z);
+
+  const fitted = box.getSize(new THREE.Vector3());
   const disposables: { dispose(): void }[] = [];
-  object.traverse((o) => {
+  model.traverse((o) => {
     if (o instanceof THREE.Mesh) {
       disposables.push(o.geometry);
       for (const m of Array.isArray(o.material) ? o.material : [o.material]) {
@@ -198,7 +207,35 @@ async function buildGlb(url: string): Promise<Built> {
       }
     }
   });
-  return { object, kind: 'glb', size: { w: size.x * scale, h: size.y * scale, d: size.z * scale }, disposables };
+  return { object, kind: 'glb', size: { w: fitted.x, h: fitted.y, d: fitted.z }, disposables };
+}
+
+/** Uniform scale that nests the AABB inside FIT. */
+function fitScale(size: THREE.Vector3): number {
+  return Math.min(FIT.w / Math.max(size.x, 1e-6), FIT.h / Math.max(size.y, 1e-6), FIT.d / Math.max(size.z, 1e-6));
+}
+
+/**
+ * Meshy / CAD exports sometimes arrive Z-up. Tip them so the tall axis is Y before we fit.
+ * Only when Z clearly dominates and Y is the short axis (lying on its back).
+ */
+function uprightIfNeeded(model: THREE.Object3D) {
+  model.updateMatrixWorld(true);
+  const size = new THREE.Box3().setFromObject(model).getSize(new THREE.Vector3());
+  if (size.z >= size.x && size.z > size.y * 1.15) {
+    model.rotateX(-Math.PI / 2);
+    model.updateMatrixWorld(true);
+  }
+}
+
+/** Yaw so the broader horizontal face looks toward +Z (the camera side of the shelf). */
+function faceTowardCamera(model: THREE.Object3D) {
+  model.updateMatrixWorld(true);
+  const size = new THREE.Box3().setFromObject(model).getSize(new THREE.Vector3());
+  if (size.z > size.x * 1.12) {
+    model.rotateY(Math.PI / 2);
+    model.updateMatrixWorld(true);
+  }
 }
 
 // ---------- textures ----------

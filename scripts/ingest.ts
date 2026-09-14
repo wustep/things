@@ -254,7 +254,7 @@ async function remeshOne(entry: BatchEntry, existing: Item, opts: Options): Prom
     if (!existsSync(full)) continue;
     const jpg = await readFile(full);
     // The photos on disk all passed the download filters; treat them as the page's own.
-    refs.push({ file, buffer: jpg, jpg, declared: true, hash: '', pixels: 0 });
+    refs.push({ file, buffer: jpg, jpg, declared: true, hash: '', pixels: 0, aspect: 0 });
   }
   if (refs.length === 0) throw new Error('no reference photos on disk; re-ingest with --force');
 
@@ -312,6 +312,8 @@ interface Ref {
   declared: boolean;
   hash: string;
   pixels: number;
+  /** width / height, to tell a CDN's smaller copy of a photo from a different photo that hashes alike. */
+  aspect: number;
 }
 
 /**
@@ -408,17 +410,25 @@ async function downloadReferences(
       seen.add(sha);
       const img = await decode(buffer);
       const { width, height } = img.bitmap;
-      if (width < 200 || height < 200) continue; // thumbnails, icons
+      // Thumbnails and icons are small on both sides. Judge by area rather than the short side
+      // alone: a full-length keyboard or a sofa shot at 500×190 is a real product photo (the
+      // Nord's were all thrown away this way and Meshy got the panel close-ups instead).
+      if (width * height < 200 * 200 || Math.min(width, height) < 120) continue;
       if (width / height > 4 || height / width > 4) continue; // banners
       const hash = perceptualHash(img);
       const pixels = width * height;
+      const aspect = width / height;
       const declared = i < declaredCount;
-      const twin = refs.find((r) => hashDistance(r.hash, hash) < NEAR_DUPLICATE);
+      // A twin is the same photo at another size, so its proportions match. Without that check
+      // a product whose shots all share one palette (a red keyboard's full view and its panel
+      // close-ups) collapses into a single ref, and the "larger version" that wins is a
+      // different picture.
+      const twin = refs.find((r) => hashDistance(r.hash, hash) < NEAR_DUPLICATE && sameAspect(r.aspect, aspect));
       if (twin) {
         if (pixels > twin.pixels * 1.2) {
           const { jpg } = await normalizeReference(buffer);
           await writeFile(path.join(dir, twin.file), jpg);
-          Object.assign(twin, { buffer, jpg, hash, pixels, declared: twin.declared || declared });
+          Object.assign(twin, { buffer, jpg, hash, pixels, aspect, declared: twin.declared || declared });
           log(`${twin.file} upgraded to ${width}x${height}  ${url.slice(0, 90)}`);
         }
         continue;
@@ -426,13 +436,18 @@ async function downloadReferences(
       const { jpg } = await normalizeReference(buffer);
       const file = `ref-${refs.length}.jpg`;
       await writeFile(path.join(dir, file), jpg);
-      refs.push({ file, buffer, jpg, declared, hash, pixels });
+      refs.push({ file, buffer, jpg, declared, hash, pixels, aspect });
       log(`ref ${refs.length}/${maxRefs}  ${width}x${height}  ${url.slice(0, 90)}`);
     } catch {
       /* skip broken images */
     }
   }
   return refs;
+}
+
+/** Within a few percent: a CDN pads or crops a pixel row here and there, never the whole shape. */
+function sameAspect(a: number, b: number): boolean {
+  return Math.abs(a - b) / Math.max(a, b) < 0.06;
 }
 
 function looksLikeImage(buf: Buffer): boolean {

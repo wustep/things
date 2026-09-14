@@ -1,4 +1,7 @@
-/** The little chrome there is: wordmark count, section labels, empty state, product card, status line, drop overlay. */
+/**
+ * The little chrome there is: wordmark count, section labels, empty state, the hover caption,
+ * the detail panel for a focused item (photos, facts, previous / next), status line, drop overlay.
+ */
 import { sameText, titleWithoutBrand } from '../shared/text.ts';
 import type { Item } from '../shared/types.ts';
 import { assetUrl } from './data.ts';
@@ -8,7 +11,7 @@ import type { SectionGroup } from './sections.ts';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 
-/** How long the card stays after the pointer leaves an item, so it can be reached and clicked. */
+/** How long the caption stays after the pointer leaves an item, so it can be reached and clicked. */
 const CARD_LINGER_MS = 800;
 
 export class Hud {
@@ -16,30 +19,162 @@ export class Hud {
   private readonly sections = $('sections');
   private readonly empty = $('empty');
   private readonly emptyHint = $('empty-hint');
-  private readonly card = $<HTMLAnchorElement>('card');
+  private readonly card = $<HTMLButtonElement>('card');
   private readonly cardThumb = $<HTMLImageElement>('card-thumb');
   private readonly cardBrand = $('card-brand');
   private readonly cardTitle = $('card-title');
   private readonly cardPrice = $('card-price');
   private readonly cardDomain = $('card-domain');
+  private readonly detail = $('detail');
+  private readonly photo = $<HTMLImageElement>('detail-photo');
+  private readonly thumbs = $('detail-thumbs');
+  private readonly detailSection = $('detail-section');
+  private readonly detailIndex = $('detail-index');
+  private readonly detailBrand = $('detail-brand');
+  private readonly detailTitle = $('detail-title');
+  private readonly detailPrice = $('detail-price');
+  private readonly detailDomain = $('detail-domain');
+  private readonly detailDesc = $('detail-desc');
+  private readonly detailOpen = $<HTMLAnchorElement>('detail-open');
+  private readonly prevTitle = $('detail-prev-title');
+  private readonly nextTitle = $('detail-next-title');
   private readonly status = $('status');
   private readonly drop = $('drop');
   private statusTimer: number | undefined;
   private cardTimer: number | undefined;
+  private captioned: Item | null = null;
+  private shown: Item | null = null;
+  private photos: string[] = [];
+  private photoAt = 0;
+  private inset = { right: 0, bottom: 0 };
 
   /** Called with a section label when one is clicked in the chrome. */
   onSectionPick: ((label: string) => void) | undefined;
+  /** The hover caption was clicked: inspect that item. */
+  onCaptionPick: ((item: Item) => void) | undefined;
+  /** Previous (-1) / next (+1) from the detail panel. */
+  onStep: ((step: 1 | -1) => void) | undefined;
+  /** The detail panel's close button. */
+  onClose: (() => void) | undefined;
 
   constructor() {
-    // Crossing from an item to the card takes a moment; hold the card while the pointer is on it.
+    // Crossing from an item to the caption takes a moment; hold it while the pointer is on it.
     this.card.addEventListener('pointerenter', () => window.clearTimeout(this.cardTimer));
     this.card.addEventListener('pointerleave', (e) => {
       if (e.pointerType !== 'touch') this.scheduleCardHide();
+    });
+    this.card.addEventListener('click', () => {
+      if (this.captioned) this.onCaptionPick?.(this.captioned);
     });
     this.sections.addEventListener('click', (e) => {
       const label = (e.target as HTMLElement).closest<HTMLElement>('[data-section]')?.dataset.section;
       if (label) this.onSectionPick?.(label);
     });
+    $('detail-prev').addEventListener('click', () => this.onStep?.(-1));
+    $('detail-next').addEventListener('click', () => this.onStep?.(1));
+    $('detail-close').addEventListener('click', () => this.onClose?.());
+    $('detail-photo-prev').addEventListener('click', () => this.showPhoto(this.photoAt - 1));
+    $('detail-photo-next').addEventListener('click', () => this.showPhoto(this.photoAt + 1));
+    this.photo.addEventListener('click', () => this.showPhoto(this.photoAt + 1));
+    this.thumbs.addEventListener('click', (e) => {
+      const at = (e.target as HTMLElement).closest<HTMLElement>('[data-photo]')?.dataset.photo;
+      if (at !== undefined) this.showPhoto(Number(at));
+    });
+    window.addEventListener('resize', () => this.measure());
+  }
+
+  /** Show the detail panel for a focused item, with its neighbours in shelf order for the step buttons. */
+  showDetail(item: Item, index: number, total: number, prev: Item | undefined, next: Item | undefined) {
+    const changed = this.shown?.id !== item.id;
+    this.shown = item;
+    this.hideCaption();
+    const { title, brand, price, domain, url, description, section } = item;
+    const shownTitle = titleWithoutBrand(title, brand);
+    const showBrand = !!brand && !sameText(brand, shownTitle);
+    this.detailSection.textContent = section ?? '';
+    this.detailIndex.textContent = total > 1 ? `${index + 1} / ${total}` : '';
+    this.detailBrand.textContent = showBrand ? brand : '';
+    this.detailBrand.hidden = !showBrand;
+    this.detailTitle.textContent = shownTitle;
+    this.detailPrice.textContent = price ?? '';
+    this.detailPrice.hidden = !price;
+    this.detailDomain.textContent = domain;
+    this.detailDesc.textContent = description ?? '';
+    this.detailDesc.hidden = !description;
+    this.detailOpen.href = url;
+    this.prevTitle.textContent = prev ? titleWithoutBrand(prev.title, prev.brand) : '';
+    this.nextTitle.textContent = next ? titleWithoutBrand(next.title, next.brand) : '';
+    $('detail-prev').hidden = !prev;
+    $('detail-next').hidden = !next;
+
+    if (changed) {
+      // Reference photos, primary first; the keyed cut-out stands in when there are none.
+      this.photos = item.images.length ? item.images : [textureOf(item)];
+      this.thumbs.replaceChildren(
+        ...this.photos.map((src, i) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'detail-thumb';
+          b.dataset.photo = String(i);
+          b.setAttribute('role', 'tab');
+          b.setAttribute('aria-label', `Photo ${i + 1} of ${this.photos.length}`);
+          const img = document.createElement('img');
+          img.src = assetUrl(src);
+          img.alt = '';
+          img.decoding = 'async';
+          img.loading = 'lazy';
+          b.append(img);
+          return b;
+        }),
+      );
+      this.thumbs.hidden = this.photos.length < 2;
+      this.showPhoto(0);
+      this.detail.scrollTop = 0;
+    }
+    this.detail.classList.add('is-visible');
+    this.detail.setAttribute('aria-hidden', 'false');
+    this.measure();
+  }
+
+  hideDetail() {
+    if (!this.shown) return;
+    this.shown = null;
+    this.detail.classList.remove('is-visible');
+    this.detail.setAttribute('aria-hidden', 'true');
+    this.measure();
+  }
+
+  /** Share of the viewport the detail panel covers on the right and at the bottom (0 while hidden). */
+  insets(): { right: number; bottom: number } {
+    return this.inset;
+  }
+
+  private measure() {
+    if (!this.shown) {
+      this.inset = { right: 0, bottom: 0 };
+      return;
+    }
+    const r = this.detail.getBoundingClientRect();
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    // Docked right (desktop) or a bottom sheet (narrow screens): whichever edge it hugs.
+    const docked = r.height >= h * 0.8 || r.width < w * 0.6;
+    this.inset = docked ? { right: Math.max(0, (w - r.left) / w), bottom: 0 } : { right: 0, bottom: Math.max(0, (h - r.top) / h) };
+  }
+
+  private showPhoto(at: number) {
+    const n = this.photos.length;
+    if (n === 0) return;
+    this.photoAt = ((at % n) + n) % n;
+    const src = assetUrl(this.photos[this.photoAt]);
+    if (this.photo.getAttribute('src') !== src) this.photo.src = src;
+    for (const el of this.thumbs.children) {
+      const on = (el as HTMLElement).dataset.photo === String(this.photoAt);
+      el.classList.toggle('is-current', on);
+      el.setAttribute('aria-selected', String(on));
+    }
+    this.thumbs.children[this.photoAt]?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    $('detail-photo-prev').hidden = $('detail-photo-next').hidden = n < 2;
   }
 
   setCount(n: number) {
@@ -77,15 +212,18 @@ export class Hud {
     for (const el of this.sections.children) el.classList.toggle('is-active', (el as HTMLElement).dataset.section === label);
   }
 
-  /** Show the product card for an item, or let it fade once the pointer has had time to reach it. */
+  /**
+   * Show the hover caption for an item, or let it fade once the pointer has had time to reach
+   * it. While an item is focused the detail panel says it all, so the caption stays away.
+   */
   setCaption(node: ItemNode | null) {
     window.clearTimeout(this.cardTimer);
-    if (!node) {
+    if (!node || this.shown) {
       this.scheduleCardHide();
       return;
     }
-    const { title, brand, price, domain, url } = node.item;
-    this.card.href = url;
+    this.captioned = node.item;
+    const { title, brand, price, domain } = node.item;
     const thumb = assetUrl(textureOf(node.item));
     if (this.cardThumb.getAttribute('src') !== thumb) this.cardThumb.src = thumb;
     // Brand once only: it has its own line, so it comes out of the title. When the brand *is*
@@ -104,10 +242,13 @@ export class Hud {
 
   private scheduleCardHide() {
     window.clearTimeout(this.cardTimer);
-    this.cardTimer = window.setTimeout(() => {
-      this.card.classList.remove('is-visible');
-      this.card.setAttribute('aria-hidden', 'true');
-    }, CARD_LINGER_MS);
+    this.cardTimer = window.setTimeout(() => this.hideCaption(), CARD_LINGER_MS);
+  }
+
+  private hideCaption() {
+    window.clearTimeout(this.cardTimer);
+    this.card.classList.remove('is-visible');
+    this.card.setAttribute('aria-hidden', 'true');
   }
 
   say(text: string, opts: { error?: boolean; sticky?: boolean } = {}) {

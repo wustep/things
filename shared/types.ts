@@ -35,6 +35,12 @@ export interface ModelOrientation {
   pitchDeg?: number;
   /** Extra roll (degrees) about Z after upright/face. */
   rollDeg?: number;
+  /**
+   * Multiplier on the automatic fit (default 1). Above 1 lets a thin outlier the mesh grew (a
+   * modelled cable, an antenna) overflow the footprint instead of shrinking the body to make
+   * room for it.
+   */
+  scale?: number;
 }
 
 export interface ModelAsset {

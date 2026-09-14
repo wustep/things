@@ -163,6 +163,11 @@
         "/items/amzn-f76e128e/ref-0.jpg",
         "/items/amzn-f76e128e/ref-1.jpg"
       ],
+      "orientation": {
+        "upright": "keep",
+        "face": "keep",
+        "yawDeg": 45
+      },
       "fallback": {
         "kind": "procedural",
         "shape": "card",
@@ -340,7 +345,7 @@
       "orientation": {
         "upright": "keep",
         "face": "keep",
-        "yawDeg": 0
+        "yawDeg": 30
       }
     },
     "addedAt": "2026-09-14T05:31:26.934Z"
@@ -456,6 +461,11 @@
       "refs": [
         "/items/theartifox-f5289f2b/ref-0.jpg"
       ],
+      "orientation": {
+        "upright": "keep",
+        "face": "keep",
+        "yawDeg": 25
+      },
       "fallback": {
         "kind": "procedural",
         "shape": "card",
@@ -635,9 +645,10 @@
         "/items/amzn-1fc53358/ref-3.jpg"
       ],
       "orientation": {
-        "upright": "tip",
+        "upright": "keep",
         "face": "keep",
-        "yawDeg": 0
+        "yawDeg": 180,
+        "scale": 1.7
       },
       "fallback": {
         "kind": "procedural",
@@ -883,7 +894,7 @@
       "orientation": {
         "upright": "keep",
         "face": "keep",
-        "yawDeg": 0
+        "yawDeg": -45
       }
     },
     "addedAt": "2026-09-14T07:28:54.556Z"
@@ -952,32 +963,18 @@
       "/items/amazon-b05badce/ref-5.jpg"
     ],
     "asset": {
-      "kind": "glb",
-      "url": "/items/amazon-b05badce/model.glb",
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/amazon-b05badce/primary.png",
+      "aspect": 3.0751,
       "palette": [
-        "#75292f",
-        "#292d33",
-        "#6d6c72",
-        "#ffffff"
-      ],
-      "refs": [
-        "/items/amazon-b05badce/ref-0.jpg",
-        "/items/amazon-b05badce/ref-5.jpg"
-      ],
-      "fallback": {
-        "kind": "procedural",
-        "shape": "box",
-        "texture": "/items/amazon-b05badce/primary.png",
-        "aspect": 1,
-        "palette": [
-          "#75292f",
-          "#292d33",
-          "#6d6c72",
-          "#ffffff"
-        ]
-      }
+        "#8e1224",
+        "#2b2c2f",
+        "#b2b1b1",
+        "#e6e5e5"
+      ]
     },
-    "addedAt": "2026-09-14T07:46:07.373Z"
+    "addedAt": "2026-09-14T09:16:20.704Z"
   },
   {
     "id": "roli-0e3366f5",
@@ -1036,9 +1033,9 @@
     "section": "Misc",
     "description": "Amazon.com: Owala FreeSip Stainless Steel Water Bottle 24 oz Orange/Green (Camo Cool) : Sports & Outdoors",
     "images": [
+      "/items/amazon-3f443256/ref-1.jpg",
       "/items/amazon-3f443256/ref-2.jpg",
       "/items/amazon-3f443256/ref-0.jpg",
-      "/items/amazon-3f443256/ref-1.jpg",
       "/items/amazon-3f443256/ref-3.jpg",
       "/items/amazon-3f443256/ref-4.jpg",
       "/items/amazon-3f443256/ref-5.jpg"
@@ -1047,10 +1044,10 @@
       "kind": "glb",
       "url": "/items/amazon-3f443256/model.glb",
       "palette": [
-        "#f99430",
-        "#f0cb8f",
-        "#756653",
-        "#fdfdfc"
+        "#fea646",
+        "#382a0e",
+        "#88946f",
+        "#aeb794"
       ],
       "refs": [
         "/items/amazon-3f443256/ref-2.jpg",
@@ -1058,16 +1055,21 @@
         "/items/amazon-3f443256/ref-3.jpg",
         "/items/amazon-3f443256/ref-1.jpg"
       ],
+      "orientation": {
+        "upright": "keep",
+        "face": "keep",
+        "yawDeg": 30
+      },
       "fallback": {
         "kind": "procedural",
         "shape": "card",
         "texture": "/items/amazon-3f443256/primary.png",
-        "aspect": 0.9834,
+        "aspect": 0.293,
         "palette": [
-          "#f99430",
-          "#f0cb8f",
-          "#756653",
-          "#fdfdfc"
+          "#fea646",
+          "#382a0e",
+          "#88946f",
+          "#aeb794"
         ]
       }
     },

@@ -189,7 +189,7 @@ async function buildGlb(url: string, orientation?: ModelOrientation): Promise<Bu
 
   const box = new THREE.Box3().setFromObject(object);
   const size = box.getSize(new THREE.Vector3());
-  const scale = fitScale(size);
+  const scale = fitScale(size) * clamp(orientation?.scale ?? 1, 0.25, 4);
   object.scale.setScalar(scale);
   box.setFromObject(object);
   const center = box.getCenter(new THREE.Vector3());
@@ -202,7 +202,15 @@ async function buildGlb(url: string, orientation?: ModelOrientation): Promise<Bu
       disposables.push(o.geometry);
       for (const m of Array.isArray(o.material) ? o.material : [o.material]) {
         disposables.push(m);
-        for (const v of Object.values(m)) if (v instanceof THREE.Texture) disposables.push(v);
+        for (const v of Object.values(m)) {
+          if (!(v instanceof THREE.Texture)) continue;
+          disposables.push(v);
+          // Sharper at grazing angles (desks, keyboards seen from the shelf camera). The texture
+          // has not reached the GPU yet, so this is free — and the material itself is left
+          // exactly as Meshy wrote it: swapping classes or nudging metalness is what blanked
+          // meshes before, and the baked PBR reads truest untouched under neutral light.
+          v.anisotropy = maxAnisotropy;
+        }
       }
     }
   });

@@ -1,34 +1,31 @@
 import './style.css';
 import { initialItems, normalizeItems } from './data.ts';
 import { Stage } from './scene.ts';
-import { groupItems } from './sections.ts';
 import { Hud, setupUrlIntake } from './ui.ts';
+import type { Item } from '../shared/types.ts';
 
 const hud = new Hud();
-const stage = new Stage(document.getElementById('stage') as HTMLCanvasElement, {
-  hover: (node) => {
-    hud.setCaption(node);
-    hud.setHotSection(node?.item.section ?? null);
-  },
-  select: (node) => window.open(node.item.url, '_blank', 'noopener,noreferrer'),
-});
-hud.onSectionPick = (label) => hud.setActiveSection(stage.focusSection(label));
-
-function show(items: typeof initialItems) {
-  hud.setCount(items.length);
-  hud.setSections(groupItems(items));
-  hud.setActiveSection(null);
-  void stage.setItems(items);
-}
-
-stage.start();
-show(initialItems);
-void setupUrlIntake(hud);
-
-// Dev: when `npm run ingest` (or a pasted URL) rewrites data/items.json, Vite pushes the new
-// list here and the shelf rebuilds in place. Production builds bake the list in at build time.
-if (import.meta.hot) {
-  import.meta.hot.accept('../data/items.json', (mod) => {
-    if (mod) show(normalizeItems(mod.default));
+let stage: Stage | undefined;
+try {
+  stage = new Stage(document.getElementById('stage') as HTMLCanvasElement, {
+    hover: node => hud.hover(node?.item || null),
+    select: node => hud.inspect(node.item),
+    loading: (loaded, total, failed) => hud.loading(loaded, total, failed),
+    labels: points => hud.positionLabels(points),
+    unavailable: () => hud.noWebGL(),
   });
+  stage.start();
+} catch (error) { console.warn('[things] 3D unavailable', error); hud.noWebGL(); }
+let visibleKey = '';
+hud.onSceneChange = (items, visible) => {
+  stage?.setVisible(visible);
+  const key = JSON.stringify(items.map(i => [i.id, i.addedAt, i.section]));
+  if (key !== visibleKey) { visibleKey = key; void stage?.setItems(items); }
+};
+hud.onReset = () => stage?.reset();
+let items: Item[] = initialItems;
+hud.setItems(items);
+void setupUrlIntake(hud);
+if (import.meta.hot) {
+  import.meta.hot.accept('../data/items.json', mod => { if (mod) { items = normalizeItems(mod.default); hud.setItems(items); } });
 }

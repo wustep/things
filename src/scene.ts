@@ -1,360 +1,249 @@
-/**
- * The void: a black scene with a shelf of items, soft orbit controls, a little drifting dust,
- * and pointer picking for hover / select.
- */
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import type { Item } from '../shared/types.ts';
-import { buildItemNode, setMaxAnisotropy, type ItemNode, type NodeKind } from './items.ts';
-import { layoutShelf, maxPerRow, type Group, type Shelf, type Slot } from './layout.ts';
-import { groupItems } from './sections.ts';
+import { buildItemNode, setMaxAnisotropy, type ItemNode } from './items.ts';
+import { layoutShelf, type Slot } from './layout.ts';
 
 export interface StageEvents {
   hover(node: ItemNode | null): void;
   select(node: ItemNode): void;
+  loading(loaded: number, total: number, failed: number): void;
+  labels(points: { id: string; x: number; y: number; visible: boolean }[]): void;
+  unavailable(): void;
 }
 
-/** Idle yaw amplitude (radians) per kind; keeps the front toward the camera. */
-const SWAY: Record<NodeKind, number> = { card: 0.14, box: 0.42, cylinder: 0.95, glb: 0.28 };
-const CLICK_SLOP_PX = 6;
-
+/** A small, demand-rendered display case. Objects stay planted; the viewer supplies the motion. */
 export class Stage {
   readonly renderer: THREE.WebGLRenderer;
   readonly scene = new THREE.Scene();
-  readonly camera: THREE.PerspectiveCamera;
+  readonly camera = new THREE.PerspectiveCamera(36, 1, .1, 100);
   readonly controls: OrbitControls;
-
-  private readonly world = new THREE.Group();
-  private readonly shelf = new THREE.Group();
-  private readonly dust: THREE.Points;
+  private readonly objects = new THREE.Group();
+  private readonly shelves = new THREE.Group();
   private readonly nodes = new Map<string, ItemNode>();
-  private readonly targets = new Map<string, Slot>();
-  private readonly pending = new Set<string>();
+  private readonly slots = new Map<string, Slot>();
   private readonly raycaster = new THREE.Raycaster();
-  private readonly pointer = new THREE.Vector2(2, 2); // off-screen until the pointer moves
-  private readonly clock = new THREE.Clock();
-  private pointerDirty = false;
   private hovered: ItemNode | null = null;
-  private pressed: { x: number; y: number } | null = null;
-  private frameDistance = 8;
-  /** Where the orbit target should ease to while the camera is ours (whole shelf or one section). */
-  private readonly goal = new THREE.Vector3(0, 0.4, 0);
+  private items: Item[] = [];
+  private revision = 0;
+  private visible = true;
+  private frame = 0;
+  private activeUntil = 0;
+  private lastTime = 0;
   private autoFrame = true;
-  /** Item ids in layout order (grouped by section). */
-  private order: string[] = [];
-  private groups: Group[] = [];
-  private layout: Shelf = layoutShelf([], 1);
-  private focus: string | null = null;
-  private readonly motion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  private readonly targetCamera = new THREE.Vector3();
+  private readonly targetLook = new THREE.Vector3();
+  private width = 1;
+  private height = 1;
+  private keyIndex = -1;
+  private readonly reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  constructor(
-    readonly canvas: HTMLCanvasElement,
-    private readonly events: StageEvents,
-  ) {
-    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, powerPreference: 'high-performance' });
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    this.renderer.setClearColor(0x000000, 1);
+  constructor(readonly canvas: HTMLCanvasElement, private readonly events: StageEvents) {
+    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'low-power' });
+    this.renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+    this.renderer.setClearColor(0x101110, 0);
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
-    this.renderer.toneMapping = THREE.NoToneMapping; // photos stay true to the product page
+    this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    this.renderer.toneMappingExposure = 1.25;
     setMaxAnisotropy(this.renderer.capabilities.getMaxAnisotropy());
-
-    this.camera = new THREE.PerspectiveCamera(38, 1, 0.1, 200);
-    this.camera.position.set(0.3, 1.1, this.frameDistance);
-
+    this.camera.position.set(.2, 2, 11);
     this.controls = new OrbitControls(this.camera, canvas);
-    this.controls.target.set(0, 0.4, 0);
-    this.controls.enableDamping = true;
-    this.controls.dampingFactor = 0.06;
+    this.controls.enableDamping = !this.reduced.matches;
+    this.controls.dampingFactor = .12;
     this.controls.enablePan = false;
-    this.controls.rotateSpeed = 0.5;
-    this.controls.zoomSpeed = 0.6;
-    // Dolly along the pointer ray and slide the orbit target so zoom feels anchored under the cursor.
-    this.controls.zoomToCursor = true;
-    this.controls.minDistance = 2.5;
-    this.controls.maxDistance = 60;
-    this.controls.minPolarAngle = Math.PI * 0.3;
-    this.controls.maxPolarAngle = Math.PI * 0.62;
-    this.controls.minAzimuthAngle = -Math.PI * 0.34;
-    this.controls.maxAzimuthAngle = Math.PI * 0.34;
-    this.controls.addEventListener('start', () => {
-      this.autoFrame = false; // the viewer took the camera; stop re-framing on their behalf
-      canvas.classList.add('is-dragging');
-    });
-    this.controls.addEventListener('end', () => canvas.classList.remove('is-dragging'));
-
-    this.scene.background = new THREE.Color(0x000000);
-    this.scene.add(this.world);
-    this.world.add(this.shelf);
+    this.controls.rotateSpeed = .45;
+    this.controls.zoomSpeed = .55;
+    this.controls.minDistance = 3;
+    this.controls.maxDistance = 20;
+    this.controls.minPolarAngle = Math.PI * .29;
+    this.controls.maxPolarAngle = Math.PI * .53;
+    this.controls.minAzimuthAngle = -.65;
+    this.controls.maxAzimuthAngle = .65;
+    this.controls.addEventListener('start', () => { this.autoFrame = false; canvas.classList.add('is-dragging'); this.setHovered(null); this.invalidate(); });
+    this.controls.addEventListener('end', () => { canvas.classList.remove('is-dragging'); this.invalidate(); });
+    this.controls.addEventListener('change', () => this.invalidate(120));
+    this.reduced.addEventListener('change', () => { this.controls.enableDamping = !this.reduced.matches; this.invalidate(); });
+    this.scene.add(this.objects, this.shelves);
     this.addLights();
-    this.dust = makeDust();
-    this.world.add(this.dust);
-
     this.bindPointer();
-    window.addEventListener('resize', this.resize);
+    new ResizeObserver(() => this.resize()).observe(canvas.parentElement!);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { cancelAnimationFrame(this.frame); this.frame = 0; }
+      else this.invalidate();
+    });
+    canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); this.events.unavailable(); });
     this.resize();
   }
 
-  start() {
-    this.clock.start();
-    this.renderer.setAnimationLoop(this.tick);
+  start() { this.invalidate(); }
+  setVisible(visible: boolean) {
+    this.visible = visible;
+    if (!visible) { cancelAnimationFrame(this.frame); this.frame = 0; }
+    else { this.resize(); this.invalidate(); }
   }
-
-  /** Reconcile the shelf with a new item list: drop what left, build what arrived, re-layout all. */
   async setItems(items: Item[]) {
-    const ids = new Set(items.map((i) => i.id));
+    const revision = ++this.revision;
+    this.items = items;
+    this.keyIndex = -1;
+    this.setHovered(null);
     for (const [id, node] of this.nodes) {
-      const next = items.find((i) => i.id === id);
-      // A re-ingest keeps the id but bumps addedAt; rebuild so the new asset shows.
+      const next = items.find(i => i.id === id);
       if (!next || next.addedAt !== node.item.addedAt) {
-        this.shelf.remove(node.root);
-        node.dispose();
-        this.nodes.delete(id);
-        if (this.hovered === node) this.setHovered(null);
+        this.objects.remove(node.root); node.dispose(); this.nodes.delete(id);
+      } else node.item = next;
+    }
+    this.relayout(); this.reset();
+    const pending = items.filter(item => !this.nodes.has(item.id));
+    let loaded = items.length - pending.length, failed = 0, cursor = 0;
+    this.events.loading(loaded, items.length, 0);
+    // Bounded concurrency keeps model parsing and texture uploads from monopolizing a phone.
+    await Promise.all(Array.from({ length: Math.min(3, pending.length) }, async () => {
+      while (cursor < pending.length && revision === this.revision) {
+        const item = pending[cursor++];
+        try {
+          const node = await buildItemNode(item);
+          if (revision !== this.revision) { node.dispose(); return; }
+          const slot = this.slots.get(item.id)!;
+          node.root.position.copy(slot.position); node.root.rotation.y = slot.yaw;
+          this.nodes.set(item.id, node); this.objects.add(node.root);
+        } catch (error) {
+          if (revision !== this.revision) return;
+          failed++; console.warn(`[things] Unable to display ${item.title}`, error);
+        }
+        loaded++;
+        this.events.loading(loaded, items.length, failed);
+        this.invalidate();
       }
-    }
-    for (const id of this.targets.keys()) if (!ids.has(id)) this.targets.delete(id);
-
-    const groups = groupItems(items);
-    this.groups = groups.map((g) => ({ label: g.label, count: g.items.length }));
-    this.order = groups.flatMap((g) => g.items.map((i) => i.id));
-    this.focus = null;
-    this.autoFrame = true;
-    this.relayout();
-
-    await Promise.all(
-      items
-        .filter((item) => !this.nodes.has(item.id) && !this.pending.has(item.id))
-        .map(async (item) => {
-          this.pending.add(item.id);
-          try {
-            const node = await buildItemNode(item);
-            const slot = this.targets.get(item.id);
-            if (!slot || this.nodes.has(item.id)) {
-              node.dispose(); // removed (or replaced) while loading
-              return;
-            }
-            node.root.position.copy(slot.position);
-            node.root.rotation.y = slot.yaw;
-            node.root.scale.setScalar(0.001);
-            this.nodes.set(item.id, node);
-            this.shelf.add(node.root);
-          } catch (err) {
-            console.error(`[things] ${item.id}: could not build`, err);
-          } finally {
-            this.pending.delete(item.id);
-          }
-        }),
-    );
+    }));
+    this.invalidate();
   }
-
-  /**
-   * Frame one section (its label) or the whole shelf (null, or the section already focused).
-   * Returns what is focused now.
-   */
-  focusSection(label: string | null): string | null {
-    const known = label !== null && this.groups.some((g) => g.label === label);
-    this.focus = known && this.focus !== label ? label : null;
+  reset() {
     this.autoFrame = true;
-    this.reframe();
-    return this.focus;
+    if (this.reduced.matches) { this.camera.position.copy(this.targetCamera); this.controls.target.copy(this.targetLook); }
+    this.invalidate(1800);
   }
-
-  // ---------- frame ----------
-
-  private tick = () => {
-    const dt = Math.min(this.clock.getDelta(), 0.05);
-    const t = this.clock.elapsedTime;
-
-    if (this.pointerDirty) {
-      this.pointerDirty = false;
-      this.setHovered(this.pick(this.pointer));
+  private relayout() {
+    const layout = layoutShelf([{ count: this.items.length }], this.width < 600 ? 2 : 4);
+    this.slots.clear();
+    this.items.forEach((item, index) => this.slots.set(item.id, layout.slots[index]));
+    for (const node of this.nodes.values()) {
+      const slot = this.slots.get(node.item.id); if (slot) { node.root.position.copy(slot.position); node.root.rotation.y = slot.yaw; }
     }
-
-    if (this.motion) {
-      this.world.rotation.y = Math.sin(t * 0.11) * 0.018;
-      this.dust.rotation.y = t * 0.007;
-      this.dust.position.y = Math.sin(t * 0.05) * 0.4;
+    for (const object of [...this.shelves.children]) {
+      this.shelves.remove(object);
+      if (object instanceof THREE.Mesh) { object.geometry.dispose(); for (const m of Array.isArray(object.material) ? object.material : [object.material]) m.dispose(); }
     }
-
-    const follow = 1 - Math.exp(-dt * 5);
-    for (const node of this.nodes.values()) this.animate(node, t, dt, follow);
-
-    if (this.autoFrame) this.easeCamera(dt);
+    const rows = new Map<number, Slot[]>();
+    for (const slot of layout.slots) rows.set(slot.position.y, [...(rows.get(slot.position.y) || []), slot]);
+    for (const [y, slots] of rows) {
+      const width = Math.max(...slots.map(s => s.position.x)) - Math.min(...slots.map(s => s.position.x)) + 1.65;
+      const board = new THREE.Mesh(new RoundedBoxGeometry(width, .105, 1.48, 3, .035), new THREE.MeshStandardMaterial({ color: 0x353d33, roughness: .52, metalness: .48 }));
+      board.position.set(0, y - .1, .08);
+      const lip = new THREE.Mesh(new THREE.BoxGeometry(width - .09, .012, .014), new THREE.MeshStandardMaterial({ color: 0x939d87, roughness: .4, metalness: .65 }));
+      lip.position.set(0, y - .075, .823);
+      this.shelves.add(board, lip);
+    }
+    const verticalFov = THREE.MathUtils.degToRad(this.camera.fov);
+    const distance = Math.max((layout.halfWidth + 1.15) / (Math.tan(verticalFov / 2) * this.camera.aspect), (layout.halfHeight + 1.2) / Math.tan(verticalFov / 2)) * 1.17;
+    this.targetLook.set(0, .46, .1);
+    this.targetCamera.set(.16, .46 + distance * .13, distance);
+    this.controls.maxDistance = Math.max(20, distance * 1.6);
+    this.invalidate();
+  }
+  private resize() {
+    const rect = this.canvas.getBoundingClientRect(); if (rect.width <= 0 || rect.height <= 0) return;
+    this.width = rect.width; this.height = rect.height;
+    this.camera.aspect = this.width / this.height;
+    this.camera.fov = this.width < 600 ? 40 : 36;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(this.width, this.height, false);
+    this.relayout(); this.reset();
+  }
+  private invalidate(duration = 700) {
+    this.activeUntil = Math.max(this.activeUntil, performance.now() + duration);
+    if (!this.frame && this.visible && !document.hidden) this.frame = requestAnimationFrame(this.tick);
+  }
+  private tick = (now: number) => {
+    this.frame = 0;
+    const dt = Math.min((now - this.lastTime) / 1000, .05); this.lastTime = now;
+    const k = this.reduced.matches ? 1 : 1 - Math.exp(-dt * 8);
+    if (this.autoFrame) {
+      this.camera.position.lerp(this.targetCamera, k); this.controls.target.lerp(this.targetLook, k);
+      if (this.camera.position.distanceTo(this.targetCamera) > .002) this.activeUntil = Math.max(this.activeUntil, now + 100);
+    }
+    for (const node of this.nodes.values()) {
+      node.hoverAmount += ((node === this.hovered ? 1 : 0) - node.hoverAmount) * k;
+      node.pivot.position.y = node.hoverAmount * .055;
+      node.pivot.scale.setScalar(1 + node.hoverAmount * .045);
+      node.glow.material.opacity = .17 + node.hoverAmount * .12;
+      const age = this.reduced.matches ? 1 : Math.min(1, (now - node.born) / 400);
+      node.root.scale.setScalar(.94 + .06 * (1 - (1 - age) ** 3));
+    }
     this.controls.update();
     this.renderer.render(this.scene, this.camera);
+    const projected = new THREE.Vector3();
+    this.events.labels(this.items.map(item => {
+      const slot = this.slots.get(item.id)!;
+      projected.copy(slot.position).add(new THREE.Vector3(0, -.2, .95)).project(this.camera);
+      const x = (projected.x + 1) * this.width / 2, y = (1 - projected.y) * this.height / 2;
+      return { id: item.id, x, y, visible: x > 45 && x < this.width - 45 && y > 55 && y < this.height - 60 && projected.z < 1 };
+    }));
+    if (now < this.activeUntil && this.visible && !document.hidden && !this.frame) this.frame = requestAnimationFrame(this.tick);
   };
-
-  private animate(node: ItemNode, t: number, dt: number, follow: number) {
-    const slot = this.targets.get(node.item.id);
-    if (slot) {
-      node.root.position.lerp(slot.position, follow);
-      node.root.rotation.y += (slot.yaw - node.root.rotation.y) * follow;
-    }
-
-    const age = (performance.now() - node.born) / 800;
-    const grow = age >= 1 ? 1 : 1 - Math.pow(1 - age, 3);
-    node.root.scale.setScalar(Math.max(0.001, grow));
-
-    node.hoverAmount += ((node === this.hovered ? 1 : 0) - node.hoverAmount) * (1 - Math.exp(-dt * 9));
-    const h = node.hoverAmount;
-
-    // Gentle sway around the facing direction; settle to face the viewer on hover.
-    const idle = this.motion ? Math.sin(t * 0.32 + node.phase) * SWAY[node.kind] : 0;
-    node.pivot.rotation.y = idle * (1 - h);
-    node.pivot.position.y = this.motion ? Math.sin(t * 0.55 + node.phase) * 0.025 : 0;
-    node.pivot.scale.setScalar(1 + 0.06 * h);
-    node.glow.material.opacity = 0.2 + 0.22 * h;
+  private at(x: number, y: number) {
+    const rect = this.canvas.getBoundingClientRect();
+    return new THREE.Vector2((x - rect.left) / rect.width * 2 - 1, -(y - rect.top) / rect.height * 2 + 1);
   }
-
-  /** Slide the orbit target (and the camera with it) toward the goal, and settle the distance. */
-  private easeCamera(dt: number) {
-    const k = 1 - Math.exp(-dt * 2.2);
-    const pan = this.goal.clone().sub(this.controls.target).multiplyScalar(k);
-    if (pan.lengthSq() > 1e-8) {
-      this.controls.target.add(pan);
-      this.camera.position.add(pan);
-    }
-    const offset = this.camera.position.clone().sub(this.controls.target);
-    const d = offset.length();
-    if (Math.abs(d - this.frameDistance) < 0.005) return;
-    const nd = d + (this.frameDistance - d) * k;
-    this.camera.position.copy(this.controls.target).add(offset.multiplyScalar(nd / d));
+  private pick(at: THREE.Vector2) {
+    this.raycaster.setFromCamera(at, this.camera);
+    const hit = this.raycaster.intersectObjects([...this.nodes.values()].map(n => n.pivot), true)[0];
+    let object: THREE.Object3D | null = hit?.object || null;
+    while (object && !object.userData.itemId) object = object.parent;
+    return object ? this.nodes.get(object.userData.itemId as string) ?? null : null;
   }
-
-  /** Assign shelf slots for the current viewport shape, then frame the camera on them. */
-  private relayout() {
-    this.layout = layoutShelf(this.groups, maxPerRow(this.camera.aspect));
-    this.order.forEach((id, i) => this.targets.set(id, this.layout.slots[i]));
-    if (this.autoFrame) this.reframe();
+  private setHovered(node: ItemNode | null) {
+    if (this.hovered === node) return;
+    this.hovered = node; this.canvas.classList.toggle('is-pointing', !!node); this.events.hover(node); this.invalidate();
   }
-
-  /** Pull back just far enough that the focused section, or the whole shelf, fits the viewport. */
-  private reframe() {
-    if (this.order.length === 0) {
-      this.frameDistance = 8;
-      this.goal.set(0, 0.4, 0);
-      return;
-    }
-    const band = this.focus === null ? undefined : this.layout.bands.find((b) => b.label === this.focus);
-    const extent = band ?? { ...this.layout, y: 0, rows: this.layout.rows };
-    // Pad for item footprint (~FIT) plus breathing room so a section zoom does not clip the band.
-    const halfW = extent.halfWidth + 1.85;
-    const halfH = extent.halfHeight + 1.65;
-    const vfov = THREE.MathUtils.degToRad(this.camera.fov);
-    const hfov = 2 * Math.atan(Math.tan(vfov / 2) * this.camera.aspect);
-    const byWidth = halfW / Math.tan(hfov / 2);
-    const byHeight = halfH / Math.tan(vfov / 2);
-    this.frameDistance = THREE.MathUtils.clamp(Math.max(byWidth, byHeight) * 1.06 + 0.6, 5, 60);
-    // Items stand up from their slot, so the visual centre sits a little above the shelf line.
-    this.goal.set(0, extent.y + (extent.rows > 1 ? 0.45 : 0.55), 0);
-  }
-
-  private resize = () => {
-    const w = window.innerWidth;
-    const h = window.innerHeight;
-    this.camera.aspect = w / h;
-    this.camera.fov = this.camera.aspect < 1 ? 48 : 38; // portrait: open up so a stacked shelf still fills the screen
-    this.camera.updateProjectionMatrix();
-    this.renderer.setSize(w, h, false);
-    this.relayout();
-  };
-
-  // ---------- picking ----------
-
   private bindPointer() {
-    const c = this.canvas;
-    // Hover is a mouse / pen affair. Touch pointers "leave" the moment a finger lifts, which
-    // would clear the label a tap just revealed, so touch only ever goes through pointerup.
-    c.addEventListener('pointermove', (e) => {
-      if (e.pointerType === 'touch') return;
-      this.pointer.set((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
-      this.pointerDirty = true;
+    let pressed: { x: number; y: number; id: number } | null = null;
+    let dragged = false;
+    const pointers = new Set<number>();
+    this.canvas.addEventListener('pointerdown', e => { pointers.add(e.pointerId); if (pointers.size > 1) dragged = true; else { pressed = { x: e.clientX, y: e.clientY, id: e.pointerId }; dragged = false; } });
+    this.canvas.addEventListener('pointermove', e => {
+      if (pressed && Math.hypot(e.clientX - pressed.x, e.clientY - pressed.y) > 6) dragged = true;
+      if (e.pointerType !== 'touch' && !pointers.size) this.setHovered(this.pick(this.at(e.clientX, e.clientY)));
     });
-    c.addEventListener('pointerleave', (e) => {
-      if (e.pointerType === 'touch') return;
-      // Moving onto the product card must not clear the hover it belongs to.
-      const to = e.relatedTarget as Element | null;
-      if (to?.closest?.('[data-keep-hover]')) return;
-      this.pointer.set(2, 2);
-      this.pointerDirty = true;
+    this.canvas.addEventListener('pointerup', e => {
+      pointers.delete(e.pointerId);
+      if (pressed?.id === e.pointerId && !dragged) { const node = this.pick(this.at(e.clientX, e.clientY)); if (node) this.events.select(node); }
+      if (!pointers.size) pressed = null;
     });
-    c.addEventListener('pointerdown', (e) => {
-      this.pressed = { x: e.clientX, y: e.clientY };
-    });
-    c.addEventListener('pointerup', (e) => {
-      const p = this.pressed;
-      this.pressed = null;
-      if (!p || Math.hypot(e.clientX - p.x, e.clientY - p.y) > CLICK_SLOP_PX) return;
-      const at = new THREE.Vector2((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
-      const node = this.pick(at);
-      if (e.pointerType === 'touch') {
-        // First tap reveals the label, a second tap on the same item follows the link.
-        if (node && node === this.hovered) this.events.select(node);
-        else this.setHovered(node);
-      } else if (node) {
-        this.events.select(node);
+    this.canvas.addEventListener('pointercancel', e => { pointers.delete(e.pointerId); pressed = null; dragged = true; });
+    this.canvas.addEventListener('pointerleave', () => this.setHovered(null));
+    this.canvas.addEventListener('keydown', e => {
+      if (e.key.toLowerCase() === 'r') { e.preventDefault(); this.reset(); }
+      if (e.key === 'Escape') this.setHovered(null);
+      if (e.key === 'Enter' && this.hovered) { e.preventDefault(); this.events.select(this.hovered); }
+      if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key) && this.items.length) {
+        e.preventDefault(); const direction = ['ArrowLeft', 'ArrowUp'].includes(e.key) ? -1 : 1;
+        this.keyIndex = (this.keyIndex + direction + this.items.length) % this.items.length;
+        this.setHovered(this.nodes.get(this.items[this.keyIndex].id) || null);
       }
     });
   }
-
-  private pick(at: THREE.Vector2): ItemNode | null {
-    if (at.x > 1 || at.y > 1) return null;
-    this.raycaster.setFromCamera(at, this.camera);
-    const pivots = [...this.nodes.values()].map((n) => n.pivot);
-    const hit = this.raycaster.intersectObjects(pivots, true)[0];
-    if (!hit) return null;
-    let o: THREE.Object3D | null = hit.object;
-    while (o && !o.userData.itemId) o = o.parent;
-    return o ? this.nodes.get(o.userData.itemId as string) ?? null : null;
-  }
-
-  private setHovered(node: ItemNode | null) {
-    if (node === this.hovered) return;
-    this.hovered = node;
-    this.canvas.classList.toggle('is-pointing', !!node);
-    this.events.hover(node);
-  }
-
-  // ---------- dressing ----------
-
   private addLights() {
-    this.scene.add(new THREE.HemisphereLight(0xe6ebf7, 0x08080c, 0.4));
-    const key = new THREE.DirectionalLight(0xfff1de, 1.7);
-    key.position.set(3, 6, 5);
-    const rim = new THREE.DirectionalLight(0xc2d3ff, 0.9);
-    rim.position.set(-5, 3, -4);
-    this.scene.add(key, rim);
-
-    // Image-based lighting for GLBs and the procedural box / cylinder sides. Background stays black.
+    this.scene.add(new THREE.HemisphereLight(0xf5f6ed, 0x172013, 1.3));
+    const key = new THREE.DirectionalLight(0xfff2db, 2.6); key.position.set(-3, 7, 6);
+    const fill = new THREE.DirectionalLight(0xdde5ee, 1.4); fill.position.set(5, 2, 4);
+    const rim = new THREE.DirectionalLight(0xd9e7c9, 2); rim.position.set(0, 4, -3);
+    this.scene.add(key, fill, rim);
     const pmrem = new THREE.PMREMGenerator(this.renderer);
-    this.scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-    this.scene.environmentIntensity = 0.45;
-    pmrem.dispose();
+    const room = new RoomEnvironment();
+    this.scene.environment = pmrem.fromScene(room, .06).texture;
+    this.scene.environmentIntensity = .65;
+    room.dispose(); pmrem.dispose();
   }
-}
-
-/** Sparse, dim motes so orbiting reads as moving through space rather than rotating a picture. */
-function makeDust(): THREE.Points {
-  const count = 420;
-  const positions = new Float32Array(count * 3);
-  for (let i = 0; i < count; i++) {
-    positions[i * 3] = (Math.random() - 0.5) * 34;
-    positions[i * 3 + 1] = (Math.random() - 0.5) * 16;
-    positions[i * 3 + 2] = -16 + Math.random() * 18;
-  }
-  const geometry = new THREE.BufferGeometry();
-  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  const material = new THREE.PointsMaterial({
-    size: 0.045,
-    color: 0x9aa4b8,
-    transparent: true,
-    opacity: 0.32,
-    depthWrite: false,
-    blending: THREE.AdditiveBlending,
-    sizeAttenuation: true,
-  });
-  const points = new THREE.Points(geometry, material);
-  points.renderOrder = -2;
-  return points;
 }

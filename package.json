@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "ingest": "tsx scripts/ingest.ts",
     "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.scripts.json",
-    "test": "node --import tsx --test tests/*.test.ts"
+    "test": "node --import tsx --test tests/*.test.ts",
+    "refine": "tsx scripts/refine.ts"
   },
   "dependencies": {
     "three": "^0.170.0"

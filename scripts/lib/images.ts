@@ -68,7 +68,7 @@ export interface ProcessedPrimary {
 }
 
 export type DecodedImage = Awaited<ReturnType<typeof Jimp.fromBuffer>>;
-type Img = DecodedImage;
+export type Img = DecodedImage;
 
 export async function decode(buffer: Buffer): Promise<Img> {
   return Jimp.fromBuffer(buffer);

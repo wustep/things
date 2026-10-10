@@ -24,7 +24,7 @@
  * Idempotent: the same URL always maps to the same id and is skipped unless --force.
  */
 import { createHash } from 'node:crypto';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -45,6 +45,7 @@ import {
 } from './lib/images.ts';
 import { fetchTaskGlb, generateGlb, MAX_MESH_IMAGES, meshyAvailable } from './lib/meshy.ts';
 import { stageAssets, writeFileAtomic } from './lib/store.ts';
+import type { Finish } from './lib/refine.ts';
 
 // THINGS_ROOT points ingest at another checkout-shaped folder (the tests use a temp dir).
 const ROOT = process.env.THINGS_ROOT
@@ -335,7 +336,7 @@ async function meshAsset(
     : await generateGlb(chosen.map((r) => ({ data: r.jpg, mime: 'image/jpeg' as const })), log);
   let glb = raw;
   try {
-    glb = await slimGlb(raw, log);
+    glb = await slimGlb(raw, log, finishFor(path.basename(dir)));
     log(`model.glb ${kb(raw)} KB from Meshy, ${kb(glb)} KB slimmed`);
   } catch (err) {
     log(`could not slim the GLB, keeping Meshy's original (${kb(raw)} KB): ${(err as Error).message}`);
@@ -637,3 +638,13 @@ main().catch((err) => {
   console.error(err);
   process.exit(1);
 });
+
+/** Per-item refine settings (data/mesh-finish.json), or the defaults. */
+function finishFor(id: string): Finish {
+  try {
+    const all = JSON.parse(readFileSync(path.join(ROOT, 'data', 'mesh-finish.json'), 'utf8')) as Record<string, Finish>;
+    return all[id] ?? {};
+  } catch {
+    return {};
+  }
+}

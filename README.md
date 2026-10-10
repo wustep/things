@@ -128,6 +128,26 @@ ingest was interrupted after Meshy finished, the paid-for model is still on Mesh
 its task id in the batch entry as `meshTask` and `--remesh` attaches it instead of starting a
 new task.
 
+### Cleaning up models locally
+
+Meshy bakes colour into an atlas of hundreds of small UV islands, and each island comes out a
+slightly different brightness, so plain surfaces (brushed steel, matte plastic, fabric) look
+like camouflage. `npm run refine` evens that out on the mesh itself, with no API calls: island
+brightness is smoothed across the welded surface (so seams in the atlas don't matter) and baked
+back into the texture, luminance only, so labels and edges keep their colour. It can also lift
+near-black albedo off the void, floor roughness (Meshy's near-zero roughness reads as glitter)
+and override metalness or roughness where Meshy guessed wrong.
+
+```sh
+npm run refine                          # every model not refined yet
+npm run refine -- <id> [<id> ...]       # just these
+npm run refine -- --from <git-rev> <id> # start over from the model as committed at <rev>
+```
+
+Per-item settings live in `data/mesh-finish.json` (`harmonize`, `spread`, `flatten`, `lift`,
+`roughnessMin`, `roughness`, `metalness`, `saturation`; see `scripts/lib/refine.ts`). Ingest
+runs the same pass on every new Meshy model, with that item's settings or the defaults.
+
 ## The shelf
 
 `samples/moonsift-ingest.json` is a Moonsift collection (Office / Home / Misc) plus a couple of

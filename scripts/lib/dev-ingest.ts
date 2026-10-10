@@ -77,7 +77,8 @@ export function thingsDevIngest(): Plugin {
           'x-content-type-options': 'nosniff',
         });
         server.config.logger.info(`[things] ingest ${urls.join(' ')}`);
-        const child = spawn(process.execPath, [tsxCli, script, ...urls], {
+        // Paste-to-ingest never spends Meshy credits; models are opt-in from the CLI (--mesh).
+        const child = spawn(process.execPath, [tsxCli, script, '--no-mesh', ...urls], {
           cwd: root,
           env: process.env,
           stdio: ['ignore', 'pipe', 'pipe'],

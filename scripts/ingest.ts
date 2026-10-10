@@ -5,13 +5,16 @@
  *   npm run ingest -- <url> [<url> ...]
  *   npm run ingest -- batch.json            # JSON array of urls or {url, title?, brand?, price?, section?}
  *   npm run ingest -- --force <url>         # re-ingest even if the item already exists
+ *   npm run ingest -- --mesh <url>          # also ask Meshy for a 3D model (paid; needs MESHY_API_KEY)
  *   npm run ingest -- --remesh <url>        # give an existing item a Meshy model from the photos it already has
  *   npm run ingest -- --remove <id|url>     # drop an item and its files
  *   npm run ingest -- --list
  *
- * Flags: --force, --remesh (existing items keep their photos and metadata and only get a model;
- * with --force it also replaces a model they already have), --no-mesh (skip Meshy even if
- * MESHY_API_KEY is set), --max-refs N (default 6), --parallel N (work on N entries at once; default 1).
+ * Flags: --force, --mesh (opt in to Meshy; without it, or --remesh, Meshy is never called even if
+ * MESHY_API_KEY is set), --remesh (implies --mesh; existing items keep their photos and metadata and
+ * only get a model; with --force it also replaces a model they already have), --no-mesh (the
+ * default; kept for old scripts), --max-refs N (default 6), --parallel N (work on N entries at
+ * once; default 1).
  * Batch entries may also carry `image` (primary image URL), `images` (more reference image URLs),
  * `section` (a shelf label such as "Office"), `shape: 'card' | 'box' | 'cylinder'` and `meshTask`
  * (the id of a Meshy task that already succeeded, to attach its model instead of paying for a new one).
@@ -85,7 +88,8 @@ interface Options {
   remesh: boolean;
   remove: boolean;
   list: boolean;
-  noMesh: boolean;
+  /** Ask Meshy for a model. Off unless --mesh or --remesh: models cost credits. */
+  mesh: boolean;
   maxRefs: number;
   parallel: number;
   inputs: string[];
@@ -110,11 +114,14 @@ async function main() {
   }
   if (opts.inputs.length === 0) {
     console.error(
-      'usage: npm run ingest -- <url> [<url> ...] | <batch.json> | --remove <id> | --list  [--force] [--remesh] [--no-mesh] [--max-refs N] [--parallel N]',
+      'usage: npm run ingest -- <url> [<url> ...] | <batch.json> | --remove <id> | --list  [--force] [--mesh] [--remesh] [--max-refs N] [--parallel N]',
     );
     process.exit(1);
   }
 
+  if (opts.mesh && !opts.remesh && !meshyAvailable()) {
+    console.log('--mesh: MESHY_API_KEY is not set; making image-based assets only');
+  }
   const entries = await expandInputs(opts.inputs);
   const order = new Map(entries.map((e, i) => [idForUrl(e.url) ?? e.url, i]));
   let ok = 0, skipped = 0, failed = 0;
@@ -214,7 +221,7 @@ async function ingestOne(entry: BatchEntry, id: string, existing: Item | undefin
     }
     let asset: Asset = procedural;
 
-    if (meshyAvailable() && !opts.noMesh) {
+    if (opts.mesh && meshyAvailable()) {
       try {
         asset = await meshAsset(entry, refs, processed, dir, procedural, log, id);
       } catch (err) {
@@ -281,7 +288,7 @@ async function remeshOne(entry: BatchEntry, existing: Item, opts: Options): Prom
   const tag = opts.parallel > 1 ? `${id}  ` : '';
   const log = (m: string) => console.log(`      ${tag}${m}`);
   console.log(`mesh  ${id}  ${existing.title}`);
-  if (!meshyAvailable() || opts.noMesh) throw new Error('--remesh needs MESHY_API_KEY (and not --no-mesh)');
+  if (!opts.mesh || !meshyAvailable()) throw new Error('--remesh needs MESHY_API_KEY (and not --no-mesh)');
 
   const dir = path.join(PUBLIC_ITEMS, id);
   const refs: Ref[] = [];
@@ -550,7 +557,7 @@ function parseArgs(argv: string[]): Options {
     remesh: false,
     remove: false,
     list: false,
-    noMesh: false,
+    mesh: false,
     maxRefs: DEFAULT_MAX_REFS,
     parallel: 1,
     inputs: [],
@@ -564,10 +571,11 @@ function parseArgs(argv: string[]): Options {
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--force' || a === '-f') opts.force = true;
-    else if (a === '--remesh') opts.remesh = true;
+    else if (a === '--remesh') opts.remesh = opts.mesh = true;
     else if (a === '--remove' || a === '--rm') opts.remove = true;
     else if (a === '--list' || a === '-l') opts.list = true;
-    else if (a === '--no-mesh') opts.noMesh = true;
+    else if (a === '--mesh') opts.mesh = true;
+    else if (a === '--no-mesh') opts.mesh = false;
     else if (a === '--max-refs' || a.startsWith('--max-refs=')) [opts.maxRefs, i] = intFlag(a, i, '--max-refs', 50);
     else if (a === '--parallel' || a.startsWith('--parallel=')) [opts.parallel, i] = intFlag(a, i, '--parallel', MAX_PARALLEL);
     else if (a.startsWith('-')) throw new Error(`unknown flag ${a}`);

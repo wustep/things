@@ -28,7 +28,7 @@ import { fileURLToPath } from 'node:url';
 import { titleWithoutBrand } from '../shared/text.ts';
 import type { Asset, Item, ModelAsset, ProceduralAsset, ProceduralShape } from '../shared/types.ts';
 import { buildProceduralAsset } from './lib/asset.ts';
-import { extractProduct, type Extracted } from './lib/extract.ts';
+import { extractProduct, extractShopifyProduct, shopifyProductEndpoints, type Extracted } from './lib/extract.ts';
 import { fetchBinary, fetchHtml } from './lib/fetch.ts';
 import { slimGlb } from './lib/glb.ts';
 import {
@@ -166,7 +166,11 @@ async function ingestOne(entry: BatchEntry, id: string, existing: Item | undefin
     finalUrl = page.finalUrl;
     extracted = extractProduct(page.html, finalUrl);
   } catch (err) {
-    log(`page fetch failed (${(err as Error).message}); continuing with overrides only`);
+    log(`page fetch failed (${(err as Error).message}); trying product JSON and overrides`);
+  }
+  // Thin metadata (client-rendered theme, bot wall): Shopify's public product JSON often still works.
+  if (!extracted.images.length || !extracted.title || !extracted.price) {
+    extracted = mergeExtracted(extracted, await fetchShopifyProduct(finalUrl, log));
   }
   const overrides = [entry.image, ...(entry.images ?? [])].filter((u): u is string => typeof u === 'string' && u.length > 0);
   for (const u of overrides) {
@@ -232,6 +236,38 @@ async function ingestOne(entry: BatchEntry, id: string, existing: Item | undefin
       addedAt: new Date().toISOString(),
     };
   });
+}
+
+/** Try `<product-url>.js`, then `.json`. Undefined when the URL is not a Shopify product or both fail. */
+async function fetchShopifyProduct(pageUrl: string, log: (m: string) => void): Promise<Extracted | undefined> {
+  for (const endpoint of shopifyProductEndpoints(pageUrl)) {
+    try {
+      const { html } = await fetchHtml(endpoint);
+      const shop = extractShopifyProduct(JSON.parse(html), pageUrl);
+      log(`shopify product JSON: ${shop.images.length} images  ${endpoint.slice(0, 90)}`);
+      return shop;
+    } catch {
+      /* not Shopify, or this endpoint is blocked: try the next */
+    }
+  }
+  return undefined;
+}
+
+/**
+ * Page metadata wins field by field. The product JSON's images only lead when the page declared
+ * none of its own (anything it has then was scraped from <img> tags and may be other products).
+ */
+function mergeExtracted(page: Extracted, shop: Extracted | undefined): Extracted {
+  if (!shop) return page;
+  const shopImagesFirst = page.declared === 0;
+  return {
+    title: page.title ?? shop.title,
+    brand: page.brand ?? shop.brand,
+    price: page.price ?? shop.price,
+    description: page.description ?? shop.description,
+    images: shopImagesFirst ? [...shop.images, ...page.images] : page.images,
+    declared: shopImagesFirst ? shop.declared : page.declared,
+  };
 }
 
 /**

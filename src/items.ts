@@ -22,6 +22,10 @@ export interface ItemNode {
   /** Animated (sway, spin, bob, hover); owns the mesh. */
   pivot: THREE.Group;
   glow: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial>;
+  /** Soft contact shadow baked from the item's own footprint; sits under the pivot. */
+  shadow: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial>;
+  /** Invisible box the picker tests instead of every triangle (and so open shapes are easy to hover). */
+  hit: THREE.Mesh;
   size: { w: number; h: number; d: number };
   /** Per-item animation offset so the shelf never moves in lockstep. */
   phase: number;
@@ -68,14 +72,21 @@ export async function buildItemNode(item: Item): Promise<ItemNode> {
 
   const glow = makeGlow(glowColor(paletteOf(item)), built.size);
   root.add(glow);
+  const shadow = makeContactShadow(built.object, built.size);
+  root.add(shadow);
+  const hit = makeHitBox(built.size);
+  hit.userData.itemId = item.id;
+  pivot.add(hit);
 
-  const disposables = [...built.disposables, glow.geometry, glow.material];
+  const disposables = [...built.disposables, glow.geometry, glow.material, shadow.geometry, shadow.material, shadow.material.map!, hit.geometry];
   return {
     item,
     kind: built.kind,
     root,
     pivot,
     glow,
+    shadow,
+    hit,
     size: built.size,
     phase: hashPhase(item.id),
     born: performance.now(),
@@ -186,6 +197,7 @@ async function buildGlb(url: string, orientation?: ModelOrientation): Promise<Bu
   object.add(model);
 
   applyOrientation(model, orientation);
+  finishGlbMaterials(model);
 
   const box = new THREE.Box3().setFromObject(object);
   const size = box.getSize(new THREE.Vector3());
@@ -254,7 +266,137 @@ function shouldFaceCamera(model: THREE.Object3D): boolean {
   const size = new THREE.Box3().setFromObject(model).getSize(new THREE.Vector3());
   return size.z > size.x * 1.18;
 }
+/**
+ * Meshy's PBR maps are noisy in two ways that read badly on black: roughness that dips to ~0
+ * (glitter and hot speckles across plastic, cork, stainless) and normal maps that carry the
+ * same baking noise as the colour. Both are tamed in the shader of the material that came with
+ * the GLB, which is edited in place: nothing is swapped or disposed, so shared textures are
+ * never torn down under another mesh.
+ */
+const ROUGHNESS_FLOOR = 0.32;
+const NORMAL_STRENGTH = 0.7;
 
+function finishGlbMaterials(root: THREE.Object3D) {
+  const seen = new Set<THREE.Material>();
+  root.traverse((o) => {
+    if (!(o instanceof THREE.Mesh)) return;
+    for (const m of Array.isArray(o.material) ? o.material : [o.material]) {
+      if (seen.has(m) || !(m instanceof THREE.MeshStandardMaterial)) continue;
+      seen.add(m);
+      m.normalScale.multiplyScalar(NORMAL_STRENGTH);
+      for (const tex of [m.map, m.normalMap, m.roughnessMap, m.metalnessMap, m.aoMap, m.emissiveMap]) {
+        if (tex && tex.anisotropy !== maxAnisotropy) {
+          tex.anisotropy = maxAnisotropy;
+          tex.needsUpdate = true;
+        }
+      }
+      m.onBeforeCompile = (shader) => {
+        shader.fragmentShader = shader.fragmentShader.replace(
+          '#include <roughnessmap_fragment>',
+          `#include <roughnessmap_fragment>\n\troughnessFactor = max(roughnessFactor, ${ROUGHNESS_FLOOR.toFixed(2)});`,
+        );
+      };
+      m.customProgramCacheKey = () => 'things-finish';
+      m.needsUpdate = true;
+    }
+  });
+}
+
+// ---------- contact & picking ----------
+
+const SHADOW_RES = 96;
+
+/**
+ * A soft shadow under the item, splatted from its own vertices seen from above: points near the
+ * base weigh most, so legs make four little pools and a bottle makes one round one. Drawn in
+ * normal blending over the additive glow, it reads as the thing resting on its light.
+ */
+function makeContactShadow(object: THREE.Object3D, size: { w: number; h: number; d: number }) {
+  object.updateMatrixWorld(true);
+  const pad = 0.22;
+  const ext = Math.max(size.w, size.d) * 0.5 + pad; // half side of the square the shadow covers
+  const grid = new Float32Array(SHADOW_RES * SHADOW_RES);
+  const v = new THREE.Vector3();
+  const falloff = Math.max(0.06, size.h * 0.22);
+  object.traverse((o) => {
+    if (!(o instanceof THREE.Mesh)) return;
+    const pos = o.geometry.getAttribute('position') as THREE.BufferAttribute | undefined;
+    if (!pos) return;
+    const stride = Math.max(1, Math.floor(pos.count / 30000));
+    for (let i = 0; i < pos.count; i += stride) {
+      v.fromBufferAttribute(pos, i).applyMatrix4(o.matrixWorld);
+      const wgt = Math.exp(-Math.max(0, v.y) / falloff);
+      if (wgt < 0.02) continue;
+      const gx = Math.floor(((v.x + ext) / (2 * ext)) * SHADOW_RES);
+      const gz = Math.floor(((v.z + ext) / (2 * ext)) * SHADOW_RES);
+      if (gx < 0 || gz < 0 || gx >= SHADOW_RES || gz >= SHADOW_RES) continue;
+      grid[gz * SHADOW_RES + gx] += wgt;
+    }
+  });
+  // Procedural cards are a single quad: give them a slim pool of their own width.
+  if (size.d < 0.05) {
+    for (let x = 0; x < SHADOW_RES; x++) {
+      const wx = (x / SHADOW_RES) * 2 * ext - ext;
+      if (Math.abs(wx) < size.w / 2) grid[Math.floor(SHADOW_RES / 2) * SHADOW_RES + x] += 4;
+    }
+  }
+  blur(grid, SHADOW_RES, 3);
+  blur(grid, SHADOW_RES, 3);
+  let max = 0;
+  for (const g of grid) max = Math.max(max, g);
+  const canvas = document.createElement('canvas');
+  canvas.width = canvas.height = SHADOW_RES;
+  const ctx = canvas.getContext('2d')!;
+  const img = ctx.createImageData(SHADOW_RES, SHADOW_RES);
+  for (let i = 0; i < grid.length; i++) {
+    // Soft knee so a dense patch saturates and a sparse one still shows.
+    const a = max > 0 ? 1 - Math.exp(-3 * (grid[i] / max)) : 0;
+    img.data[i * 4 + 3] = Math.round(a * 255);
+  }
+  ctx.putImageData(img, 0, 0);
+  const map = new THREE.CanvasTexture(canvas);
+  const geometry = new THREE.PlaneGeometry(2 * ext, 2 * ext);
+  const material = new THREE.MeshBasicMaterial({ map, color: 0x000000, transparent: true, opacity: 0.8, depthWrite: false, toneMapped: false });
+  const mesh = new THREE.Mesh(geometry, material);
+  // Canvas row 0 is the far edge (-z): with flipY that is v = 1, which lying flat puts at -z too.
+  mesh.rotation.x = -Math.PI / 2;
+  mesh.position.y = -0.03;
+  mesh.renderOrder = -0.5;
+  return mesh;
+}
+
+/** Separable box blur, in place. */
+function blur(grid: Float32Array, n: number, r: number) {
+  const tmp = new Float32Array(grid.length);
+  for (let pass = 0; pass < 2; pass++) {
+    const src = pass === 0 ? grid : tmp;
+    const dst = pass === 0 ? tmp : grid;
+    for (let y = 0; y < n; y++) {
+      for (let x = 0; x < n; x++) {
+        let sum = 0;
+        let cnt = 0;
+        for (let k = -r; k <= r; k++) {
+          const xx = pass === 0 ? x + k : x;
+          const yy = pass === 0 ? y : y + k;
+          if (xx < 0 || yy < 0 || xx >= n || yy >= n) continue;
+          sum += src[yy * n + xx];
+          cnt++;
+        }
+        dst[y * n + x] = sum / cnt;
+      }
+    }
+  }
+}
+
+const hitMaterial = new THREE.MeshBasicMaterial();
+
+function makeHitBox(size: { w: number; h: number; d: number }): THREE.Mesh {
+  const geometry = new THREE.BoxGeometry(Math.max(size.w, 0.3), Math.max(size.h, 0.3), Math.max(size.d, 0.3));
+  const mesh = new THREE.Mesh(geometry, hitMaterial);
+  mesh.position.y = Math.max(size.h, 0.3) / 2;
+  mesh.visible = false;
+  return mesh;
+}
 
 // ---------- textures ----------
 

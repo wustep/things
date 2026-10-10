@@ -4,7 +4,6 @@
  */
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import type { Item } from '../shared/types.ts';
 import { buildItemNode, setMaxAnisotropy, type ItemNode, type NodeKind } from './items.ts';
 import { layoutShelf, maxPerRow, type Group, type Shelf, type Slot } from './layout.ts';
@@ -56,7 +55,10 @@ export class Stage {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.setClearColor(0x000000, 1);
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
-    this.renderer.toneMapping = THREE.NoToneMapping; // photos stay true to the product page
+    // Khronos PBR Neutral: built for product colour fidelity, it only rolls off highlights, so
+    // meshes keep their catalogue colours while studio reflections don't clip. Photo cut-outs
+    // opt out (toneMapped: false) and stay exactly as on the product page.
+    this.renderer.toneMapping = THREE.NeutralToneMapping;
     setMaxAnisotropy(this.renderer.capabilities.getMaxAnisotropy());
 
     this.camera = new THREE.PerspectiveCamera(38, 1, 0.1, 200);
@@ -205,6 +207,10 @@ export class Stage {
     node.pivot.position.y = this.motion ? Math.sin(t * 0.55 + node.phase) * 0.025 : 0;
     node.pivot.scale.setScalar(1 + 0.06 * h);
     node.glow.material.opacity = 0.2 + 0.22 * h;
+    // The contact shadow loosens as the thing lifts (bob, hover) so it never looks glued on.
+    const lift = node.pivot.position.y + 0.04 * h;
+    node.shadow.material.opacity = 0.8 * (1 - THREE.MathUtils.clamp(lift * 6, 0, 0.35)) * Math.min(1, grow * 1.2);
+    node.shadow.scale.setScalar(1 + lift * 1.5);
   }
 
   /** Slide the orbit target (and the camera with it) toward the goal, and settle the distance. */
@@ -301,8 +307,9 @@ export class Stage {
   private pick(at: THREE.Vector2): ItemNode | null {
     if (at.x > 1 || at.y > 1) return null;
     this.raycaster.setFromCamera(at, this.camera);
-    const pivots = [...this.nodes.values()].map((n) => n.pivot);
-    const hit = this.raycaster.intersectObjects(pivots, true)[0];
+    // One invisible box per item: cheap, and open shapes (a headband, a desk) hover anywhere inside.
+    const boxes = [...this.nodes.values()].map((n) => n.hit);
+    const hit = this.raycaster.intersectObjects(boxes, false)[0];
     if (!hit) return null;
     let o: THREE.Object3D | null = hit.object;
     while (o && !o.userData.itemId) o = o.parent;
@@ -319,19 +326,62 @@ export class Stage {
   // ---------- dressing ----------
 
   private addLights() {
-    this.scene.add(new THREE.HemisphereLight(0xe6ebf7, 0x08080c, 0.4));
-    const key = new THREE.DirectionalLight(0xfff1de, 1.7);
+    // A warm key from upper right shapes the forms; rims from behind separate dark things from
+    // the void. Most of the light comes from the studio environment below.
+    this.scene.add(new THREE.HemisphereLight(0xe6ebf7, 0x08080c, 0.25));
+    const key = new THREE.DirectionalLight(0xfff1de, 1.25);
     key.position.set(3, 6, 5);
-    const rim = new THREE.DirectionalLight(0xc2d3ff, 0.9);
+    const rim = new THREE.DirectionalLight(0xc2d3ff, 1.6);
     rim.position.set(-5, 3, -4);
-    this.scene.add(key, rim);
+    const rim2 = new THREE.DirectionalLight(0xffe8d6, 0.9);
+    rim2.position.set(5, 2.5, -5);
+    // Low, soft fill from the viewer's side so black plastic still shows its form.
+    const fill = new THREE.DirectionalLight(0xdfe6f5, 0.45);
+    fill.position.set(-2, 1, 6);
+    this.scene.add(key, rim, rim2, fill);
 
-    // Image-based lighting for GLBs and the procedural box / cylinder sides. Background stays black.
+    // Image-based lighting: an unseen photo studio, so steel, glass and lacquer have something
+    // to reflect besides black. The background stays the void.
     const pmrem = new THREE.PMREMGenerator(this.renderer);
-    this.scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-    this.scene.environmentIntensity = 0.45;
+    const studio = makeStudio();
+    this.scene.environment = pmrem.fromScene(studio, 0.035).texture;
+    this.scene.environmentIntensity = 1;
     pmrem.dispose();
+    studio.traverse((o) => {
+      if (o instanceof THREE.Mesh) {
+        o.geometry.dispose();
+        (o.material as THREE.Material).dispose();
+      }
+    });
   }
+}
+
+/**
+ * A dim grey cyclorama with softboxes: a big overhead diffuser, a key panel front-right, a
+ * narrower fill front-left and two strip lights behind for rims. Only ever seen as reflections.
+ */
+function makeStudio(): THREE.Scene {
+  const scene = new THREE.Scene();
+  const room = new THREE.Mesh(new THREE.BoxGeometry(20, 12, 20), new THREE.MeshBasicMaterial({ color: 0x7a7c82, side: THREE.BackSide }));
+  room.position.y = 4;
+  scene.add(room);
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(20, 20), new THREE.MeshBasicMaterial({ color: 0x5c5d62 }));
+  floor.rotation.x = -Math.PI / 2;
+  floor.position.y = -1.9;
+  scene.add(floor);
+  const panel = (w: number, h: number, intensity: number, tint: number, pos: [number, number, number]) => {
+    const color = new THREE.Color(tint).multiplyScalar(intensity);
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color, side: THREE.DoubleSide }));
+    m.position.set(...pos);
+    m.lookAt(0, 0.5, 0);
+    scene.add(m);
+  };
+  panel(12, 9, 1.8, 0xffffff, [0, 9.5, 1]); // overhead diffuser
+  panel(8, 7, 2.4, 0xfff2e2, [6, 3.5, 7]); // key
+  panel(7, 6, 1.3, 0xe6eeff, [-7, 3, 6]); // fill
+  panel(1.4, 8, 2.6, 0xd4e0ff, [-7, 3, -7]); // rims
+  panel(1.4, 8, 2.0, 0xfff0e0, [7, 3, -7]);
+  return scene;
 }
 
 /** Sparse, dim motes so orbiting reads as moving through space rather than rotating a picture. */

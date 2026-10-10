@@ -32,3 +32,6 @@ if (import.meta.hot) {
     if (mod) show(normalizeItems(mod.default));
   });
 }
+
+// Dev handle for poking at the scene from the console (and for the screenshot script).
+if (import.meta.env.DEV) (window as unknown as { __stage?: Stage }).__stage = stage;

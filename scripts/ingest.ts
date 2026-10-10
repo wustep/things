@@ -46,7 +46,10 @@ import {
 import { fetchTaskGlb, generateGlb, MAX_MESH_IMAGES, meshyAvailable } from './lib/meshy.ts';
 import { stageAssets, writeFileAtomic } from './lib/store.ts';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+// THINGS_ROOT points ingest at another checkout-shaped folder (the tests use a temp dir).
+const ROOT = process.env.THINGS_ROOT
+  ? path.resolve(process.env.THINGS_ROOT)
+  : path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DATA_FILE = path.join(ROOT, 'data', 'items.json');
 const PUBLIC_ITEMS = path.join(ROOT, 'public', 'items');
 const ENV_FILE = path.join(ROOT, '.env');

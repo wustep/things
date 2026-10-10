@@ -1,9 +1,11 @@
 /**
- * Turns an Item into a Three.js node for the shelf. GLB assets are loaded as-is (with the
- * procedural asset as a fallback); procedural assets become a floating cut-out card, a box
- * with the photo on its face, or a cylinder with the photo wrapped on as a label.
+ * Turns an Item into a Three.js node for the shelf. GLB assets are loaded and their materials
+ * finished in place (with the procedural asset as a fallback); procedural assets become a floating
+ * cut-out card (picked only where the photo is opaque), a rounded carton with the photo printed
+ * on, or a bottle turned from the photo's own silhouette.
  */
 import * as THREE from 'three';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import type { Item, ModelOrientation, ProceduralAsset, ProceduralShape } from '../shared/types.ts';
 import { assetUrl } from './data.ts';
@@ -26,6 +28,8 @@ export interface ItemNode {
   shadow: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial>;
   /** Invisible box the picker tests instead of every triangle (and so open shapes are easy to hover). */
   hit: THREE.Mesh;
+  /** Cut-outs: after the box, the ray must land on an opaque pixel of the photo. */
+  precise?: Precise;
   size: { w: number; h: number; d: number };
   /** Per-item animation offset so the shelf never moves in lockstep. */
   phase: number;
@@ -40,6 +44,13 @@ interface Built {
   kind: NodeKind;
   size: { w: number; h: number; d: number };
   disposables: { dispose(): void }[];
+  /** Exact-pick surface for see-through shapes: a hit only counts where the photo is opaque. */
+  precise?: Precise;
+}
+
+export interface Precise {
+  mesh: THREE.Mesh;
+  opaque(u: number, v: number): boolean;
 }
 
 const imageLoader = new THREE.ImageLoader();
@@ -50,9 +61,14 @@ export function setMaxAnisotropy(n: number) {
   maxAnisotropy = Math.max(1, Math.min(8, n));
 }
 
+/** `?procedural` in the URL shows every item's procedural shape instead of its model. */
+const forceProcedural = typeof location !== 'undefined' && new URLSearchParams(location.search).has('procedural');
+
 export async function buildItemNode(item: Item): Promise<ItemNode> {
   let built: Built;
-  if (item.asset.kind === 'glb') {
+  if (item.asset.kind === 'glb' && forceProcedural) {
+    built = await buildProcedural(item.asset.fallback, item.title);
+  } else if (item.asset.kind === 'glb') {
     try {
       built = await buildGlb(item.asset.url, item.asset.orientation);
     } catch (err) {
@@ -87,6 +103,7 @@ export async function buildItemNode(item: Item): Promise<ItemNode> {
     glow,
     shadow,
     hit,
+    precise: built.precise,
     size: built.size,
     phase: hashPhase(item.id),
     born: performance.now(),
@@ -103,13 +120,14 @@ async function buildProcedural(asset: ProceduralAsset, title: string): Promise<B
   const image = await loadImage(assetUrl(asset.texture));
   const aspect = asset.aspect > 0 ? asset.aspect : image.width / image.height || 1;
   const palette = asset.palette.length ? asset.palette : ['#8a8a8a'];
+  const mask = alphaMask(image);
   switch (asset.shape) {
     case 'box':
       return buildBox(image, aspect, palette);
     case 'cylinder':
-      return buildCylinder(image, aspect, palette);
+      return mask ? buildBottle(image, aspect, palette, mask) : buildCylinder(image, aspect, palette);
     default:
-      return buildCard(image, aspect, title);
+      return buildCard(image, aspect, title, mask);
   }
 }
 
@@ -124,7 +142,7 @@ function fitPlane(aspect: number): { w: number; h: number } {
   return { w, h };
 }
 
-function buildCard(image: HTMLImageElement, aspect: number, title: string): Built {
+function buildCard(image: HTMLImageElement, aspect: number, title: string, mask: Mask | null): Built {
   const { w, h } = fitPlane(aspect);
   const map = imageTexture(image);
   const material = new THREE.MeshBasicMaterial({
@@ -138,30 +156,96 @@ function buildCard(image: HTMLImageElement, aspect: number, title: string): Buil
   const mesh = new THREE.Mesh(geometry, material);
   mesh.name = `card:${title}`;
   mesh.position.y = h / 2;
-  return { object: mesh, kind: 'card', size: { w, h, d: 0.02 }, disposables: [geometry, material, map] };
+  return {
+    object: mesh,
+    kind: 'card',
+    size: { w, h, d: 0.02 },
+    disposables: [geometry, material, map],
+    precise: mask ? { mesh, opaque: (u, v) => maskAlpha(mask, u, v) > 24 } : undefined,
+  };
 }
 
+/** A softly rounded carton with the photo printed on the front and back. */
 function buildBox(image: HTMLImageElement, aspect: number, palette: string[]): Built {
   const { w, h } = fitPlane(aspect);
   const d = clamp(w * 0.28, 0.16, FIT.d);
   const accent = new THREE.Color(palette[0]);
+  const radius = Math.min(w, h, d) * 0.07;
 
-  // Composite the cut-out over a light face so transparent regions don't show the box interior.
+  const body = new RoundedBoxGeometry(w, h, d, 3, radius);
+  const side = new THREE.MeshStandardMaterial({ color: sideColor(accent), roughness: 0.72, metalness: 0.02, envMapIntensity: 0.6 });
+  // Composite the cut-out over a light paper so transparent regions don't show the carton.
   const face = compositeTexture(image, faceColor(accent));
-  const back = face.clone();
-  back.repeat.x = -1;
-  back.offset.x = 1;
-  back.needsUpdate = true;
-
-  const photo = (map: THREE.Texture) => new THREE.MeshBasicMaterial({ map, toneMapped: false });
-  const side = new THREE.MeshStandardMaterial({ color: sideColor(accent), roughness: 0.8, metalness: 0.04, envMapIntensity: 0.5 });
-  const materials = [side, side, side, side, photo(face), photo(back)]; // +x -x +y -y +z -z
-  const geometry = new THREE.BoxGeometry(w, h, d);
-  const mesh = new THREE.Mesh(geometry, materials);
-  mesh.position.y = h / 2;
-  return { object: mesh, kind: 'box', size: { w, h, d }, disposables: [geometry, side, ...materials.slice(4), face, back] };
+  const print = new THREE.MeshBasicMaterial({ map: face, toneMapped: false });
+  // The print stops short of the rounded edges, the way a label does.
+  const plane = new THREE.PlaneGeometry(w - radius * 2, h - radius * 2);
+  const group = new THREE.Group();
+  const mesh = new THREE.Mesh(body, side);
+  const front = new THREE.Mesh(plane, print);
+  front.position.z = d / 2 + 0.0015;
+  const back = new THREE.Mesh(plane, print);
+  back.position.z = -d / 2 - 0.0015;
+  back.rotation.y = Math.PI;
+  group.add(mesh, front, back);
+  group.position.y = h / 2;
+  return { object: group, kind: 'box', size: { w, h, d }, disposables: [body, side, face, print, plane] };
 }
 
+/**
+ * A bottle turned on a lathe whose profile is the photo's own silhouette (the half-width of each
+ * row of the cut-out), so caps, shoulders and tapers come out the shape they are. The photo is
+ * projected on from the front, which is how a product shot sees it anyway.
+ */
+function buildBottle(image: HTMLImageElement, aspect: number, palette: string[], mask: Mask): Built {
+  const { w, h } = fitPlane(aspect);
+  const rows = 64;
+  const radii: number[] = [];
+  for (let j = 0; j <= rows; j++) {
+    const r = Math.min(mask.h - 1, Math.floor((1 - j / rows) * (mask.h - 1)));
+    let lo = -1;
+    let hi = -1;
+    for (let x = 0; x < mask.w; x++) {
+      if (mask.a[r * mask.w + x] > 96) {
+        if (lo < 0) lo = x;
+        hi = x;
+      }
+    }
+    radii.push(lo < 0 ? 0 : ((hi - lo + 1) / 2 / mask.w) * w);
+  }
+  // A light median pass so a stray strap or reflection doesn't put a notch in the profile.
+  const smooth = radii.map((_, j) => {
+    const win = radii.slice(Math.max(0, j - 2), j + 3).sort((a, b) => a - b);
+    return win[Math.floor(win.length / 2)];
+  });
+  if (Math.max(...smooth) < 0.02) return buildCylinder(image, aspect, palette);
+  const points = [new THREE.Vector2(0, 0)];
+  smooth.forEach((r, j) => points.push(new THREE.Vector2(Math.max(r, 0.002), (j / rows) * h)));
+  points.push(new THREE.Vector2(0, h));
+  const geometry = new THREE.LatheGeometry(points, 72);
+  const pos = geometry.getAttribute('position');
+  const uv = geometry.getAttribute('uv');
+  for (let i = 0; i < pos.count; i++) uv.setXY(i, 0.5 + pos.getX(i) / w, pos.getY(i) / h);
+  uv.needsUpdate = true;
+  geometry.computeVertexNormals();
+
+  const accent = new THREE.Color(palette[0]);
+  const label = compositeTexture(image, sideColor(accent));
+  const material = new THREE.MeshStandardMaterial({
+    map: label,
+    // The photo glows a little so it reads true on the shaded curve.
+    emissiveMap: label,
+    emissive: 0xffffff,
+    emissiveIntensity: 0.35,
+    roughness: 0.42,
+    metalness: 0,
+    envMapIntensity: 0.7,
+  });
+  const mesh = new THREE.Mesh(geometry, material);
+  const d = Math.max(...smooth) * 2;
+  return { object: mesh, kind: 'cylinder', size: { w, h, d }, disposables: [geometry, material, label] };
+}
+
+/** Plain cylinder with the photo wrapped round as a label: the fallback when there is no alpha to read. */
 function buildCylinder(image: HTMLImageElement, aspect: number, palette: string[]): Built {
   const { w, h } = fitPlane(aspect);
   const r = w / 2;
@@ -396,6 +480,45 @@ function makeHitBox(size: { w: number; h: number; d: number }): THREE.Mesh {
   mesh.position.y = Math.max(size.h, 0.3) / 2;
   mesh.visible = false;
   return mesh;
+}
+
+// ---------- alpha ----------
+
+interface Mask {
+  w: number;
+  h: number;
+  /** Alpha, row 0 at the top of the image. */
+  a: Uint8Array;
+}
+
+const MASK_MAX = 160;
+
+/** A small copy of the cut-out's alpha, or null when the pixels can't be read (cross-origin). */
+function alphaMask(image: HTMLImageElement): Mask | null {
+  const scale = Math.min(1, MASK_MAX / Math.max(image.width, image.height));
+  const w = Math.max(2, Math.round(image.width * scale));
+  const h = Math.max(2, Math.round(image.height * scale));
+  try {
+    const canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d', { willReadFrequently: true })!;
+    ctx.drawImage(image, 0, 0, w, h);
+    const data = ctx.getImageData(0, 0, w, h).data;
+    const a = new Uint8Array(w * h);
+    let opaque = 0;
+    for (let i = 0; i < a.length; i++) if ((a[i] = data[i * 4 + 3]) > 127) opaque++;
+    // A fully opaque photo has no silhouette to trace.
+    return opaque > 0 && opaque < a.length * 0.97 ? { w, h, a } : null;
+  } catch {
+    return null;
+  }
+}
+
+function maskAlpha(mask: Mask, u: number, v: number): number {
+  const x = Math.min(mask.w - 1, Math.max(0, Math.floor(u * mask.w)));
+  const y = Math.min(mask.h - 1, Math.max(0, Math.floor((1 - v) * mask.h)));
+  return mask.a[y * mask.w + x];
 }
 
 // ---------- textures ----------

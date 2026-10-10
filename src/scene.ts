@@ -17,6 +17,8 @@ export interface StageEvents {
 /** Idle yaw amplitude (radians) per kind; keeps the front toward the camera. */
 const SWAY: Record<NodeKind, number> = { card: 0.14, box: 0.42, cylinder: 0.95, glb: 0.28 };
 const CLICK_SLOP_PX = 6;
+/** With nothing moving but the idle sway, 30 fps is indistinguishable and halves the GPU time. */
+const IDLE_FRAME_MS = 1000 / 30;
 
 export class Stage {
   readonly renderer: THREE.WebGLRenderer;
@@ -46,6 +48,10 @@ export class Stage {
   private layout: Shelf = layoutShelf([], 1);
   private focus: string | null = null;
   private readonly motion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /** Render on demand: a frame is scheduled only while something is changing (or idling, with motion). */
+  private frame = 0;
+  private activeUntil = 0;
+  private lastRender = 0;
 
   constructor(
     readonly canvas: HTMLCanvasElement,
@@ -84,6 +90,7 @@ export class Stage {
       canvas.classList.add('is-dragging');
     });
     this.controls.addEventListener('end', () => canvas.classList.remove('is-dragging'));
+    this.controls.addEventListener('change', () => this.invalidate(200));
 
     this.scene.background = new THREE.Color(0x000000);
     this.scene.add(this.world);
@@ -99,7 +106,16 @@ export class Stage {
 
   start() {
     this.clock.start();
-    this.renderer.setAnimationLoop(this.tick);
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) this.invalidate();
+    });
+    this.invalidate();
+  }
+
+  /** Keep frames coming for at least `ms` (and as long after that as anything is still settling). */
+  invalidate(ms = 600) {
+    this.activeUntil = Math.max(this.activeUntil, performance.now() + ms);
+    if (!this.frame && !document.hidden) this.frame = requestAnimationFrame(this.tick);
   }
 
   /** Reconcile the shelf with a new item list: drop what left, build what arrived, re-layout all. */
@@ -141,6 +157,7 @@ export class Stage {
             node.root.scale.setScalar(0.001);
             this.nodes.set(item.id, node);
             this.shelf.add(node.root);
+            this.invalidate(1000);
           } catch (err) {
             console.error(`[things] ${item.id}: could not build`, err);
           } finally {
@@ -159,12 +176,22 @@ export class Stage {
     this.focus = known && this.focus !== label ? label : null;
     this.autoFrame = true;
     this.reframe();
+    this.invalidate();
     return this.focus;
   }
 
   // ---------- frame ----------
 
-  private tick = () => {
+  private tick = (now: number) => {
+    this.frame = 0;
+    if (document.hidden) return;
+    const active = now < this.activeUntil;
+    if (!active && !this.motion) return;
+    if (!active && now - this.lastRender < IDLE_FRAME_MS - 4) {
+      this.frame = requestAnimationFrame(this.tick);
+      return;
+    }
+    this.lastRender = now;
     const dt = Math.min(this.clock.getDelta(), 0.05);
     const t = this.clock.elapsedTime;
 
@@ -180,16 +207,23 @@ export class Stage {
     }
 
     const follow = 1 - Math.exp(-dt * 5);
-    for (const node of this.nodes.values()) this.animate(node, t, dt, follow);
-
-    if (this.autoFrame) this.easeCamera(dt);
-    this.controls.update();
+    let settling = false;
+    for (const node of this.nodes.values()) settling = this.animate(node, t, dt, follow) || settling;
+    if (this.autoFrame) settling = this.easeCamera(dt) || settling;
+    settling = this.controls.update() || settling;
     this.renderer.render(this.scene, this.camera);
+
+    if (settling) this.activeUntil = Math.max(this.activeUntil, now + 120);
+    // invalidate() during this frame may already have queued the next one; never run two loops.
+    if (!this.frame && (now < this.activeUntil || this.motion)) this.frame = requestAnimationFrame(this.tick);
   };
 
-  private animate(node: ItemNode, t: number, dt: number, follow: number) {
+  /** Returns true while the node is still in a transition (arriving, moving slots, hover easing). */
+  private animate(node: ItemNode, t: number, dt: number, follow: number): boolean {
+    let settling = false;
     const slot = this.targets.get(node.item.id);
     if (slot) {
+      settling = node.root.position.distanceToSquared(slot.position) > 1e-6 || Math.abs(slot.yaw - node.root.rotation.y) > 1e-4;
       node.root.position.lerp(slot.position, follow);
       node.root.rotation.y += (slot.yaw - node.root.rotation.y) * follow;
     }
@@ -198,7 +232,11 @@ export class Stage {
     const grow = age >= 1 ? 1 : 1 - Math.pow(1 - age, 3);
     node.root.scale.setScalar(Math.max(0.001, grow));
 
-    node.hoverAmount += ((node === this.hovered ? 1 : 0) - node.hoverAmount) * (1 - Math.exp(-dt * 9));
+    const hoverGoal = node === this.hovered ? 1 : 0;
+    node.hoverAmount += (hoverGoal - node.hoverAmount) * (1 - Math.exp(-dt * 9));
+    if (Math.abs(hoverGoal - node.hoverAmount) < 1e-3) node.hoverAmount = hoverGoal;
+    else settling = true;
+    if (age < 1) settling = true;
     const h = node.hoverAmount;
 
     // Gentle sway around the facing direction; settle to face the viewer on hover.
@@ -211,21 +249,27 @@ export class Stage {
     const lift = node.pivot.position.y + 0.04 * h;
     node.shadow.material.opacity = 0.8 * (1 - THREE.MathUtils.clamp(lift * 6, 0, 0.35)) * Math.min(1, grow * 1.2);
     node.shadow.scale.setScalar(1 + lift * 1.5);
+    return settling;
   }
 
   /** Slide the orbit target (and the camera with it) toward the goal, and settle the distance. */
-  private easeCamera(dt: number) {
-    const k = 1 - Math.exp(-dt * 2.2);
-    const pan = this.goal.clone().sub(this.controls.target).multiplyScalar(k);
-    if (pan.lengthSq() > 1e-8) {
+  private easeCamera(dt: number): boolean {
+    // Reduced motion: frame changes jump rather than glide.
+    const k = this.motion ? 1 - Math.exp(-dt * 2.2) : 1;
+    const pan = this.goal.clone().sub(this.controls.target);
+    const offset = this.camera.position.clone().sub(this.controls.target);
+    const d = offset.length();
+    // Close enough: land exactly, so an idle shelf stops asking for frames.
+    const done = pan.lengthSq() < 1e-6 && Math.abs(d - this.frameDistance) < 0.002;
+    const step = done ? 1 : k;
+    if (pan.lengthSq() > 0) {
+      pan.multiplyScalar(step);
       this.controls.target.add(pan);
       this.camera.position.add(pan);
     }
-    const offset = this.camera.position.clone().sub(this.controls.target);
-    const d = offset.length();
-    if (Math.abs(d - this.frameDistance) < 0.005) return;
-    const nd = d + (this.frameDistance - d) * k;
-    this.camera.position.copy(this.controls.target).add(offset.multiplyScalar(nd / d));
+    const nd = d + (this.frameDistance - d) * step;
+    if (d > 0) this.camera.position.copy(this.controls.target).add(offset.multiplyScalar(nd / d));
+    return !done;
   }
 
   /** Assign shelf slots for the current viewport shape, then frame the camera on them. */
@@ -264,6 +308,7 @@ export class Stage {
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(w, h, false);
     this.relayout();
+    this.invalidate();
   };
 
   // ---------- picking ----------
@@ -276,6 +321,7 @@ export class Stage {
       if (e.pointerType === 'touch') return;
       this.pointer.set((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
       this.pointerDirty = true;
+      this.invalidate(200);
     });
     c.addEventListener('pointerleave', (e) => {
       if (e.pointerType === 'touch') return;
@@ -284,6 +330,7 @@ export class Stage {
       if (to?.closest?.('[data-keep-hover]')) return;
       this.pointer.set(2, 2);
       this.pointerDirty = true;
+      this.invalidate(200);
     });
     c.addEventListener('pointerdown', (e) => {
       this.pressed = { x: e.clientX, y: e.clientY };
@@ -309,11 +356,15 @@ export class Stage {
     this.raycaster.setFromCamera(at, this.camera);
     // One invisible box per item: cheap, and open shapes (a headband, a desk) hover anywhere inside.
     const boxes = [...this.nodes.values()].map((n) => n.hit);
-    const hit = this.raycaster.intersectObjects(boxes, false)[0];
-    if (!hit) return null;
-    let o: THREE.Object3D | null = hit.object;
-    while (o && !o.userData.itemId) o = o.parent;
-    return o ? this.nodes.get(o.userData.itemId as string) ?? null : null;
+    for (const hit of this.raycaster.intersectObjects(boxes, false)) {
+      const node = this.nodes.get(hit.object.userData.itemId as string);
+      if (!node) continue;
+      if (!node.precise) return node;
+      // Cut-outs are mostly air: only an opaque pixel of the photo counts, else look behind it.
+      const { mesh, opaque } = node.precise;
+      if (this.raycaster.intersectObject(mesh, false).some((h) => h.uv && opaque(h.uv.x, h.uv.y))) return node;
+    }
+    return null;
   }
 
   private setHovered(node: ItemNode | null) {
@@ -321,6 +372,7 @@ export class Stage {
     this.hovered = node;
     this.canvas.classList.toggle('is-pointing', !!node);
     this.events.hover(node);
+    this.invalidate();
   }
 
   // ---------- dressing ----------

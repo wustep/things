@@ -42,7 +42,9 @@ import {
 } from './lib/images.ts';
 import { fetchTaskGlb, generateGlb, MAX_MESH_IMAGES, meshyAvailable } from './lib/meshy.ts';
 
-const ROOT = process.env.THINGS_ROOT ? path.resolve(process.env.THINGS_ROOT) : path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const ROOT = process.env.THINGS_ROOT
+  ? path.resolve(process.env.THINGS_ROOT)
+  : path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DATA_FILE = path.join(ROOT, 'data', 'items.json');
 const PUBLIC_ITEMS = path.join(ROOT, 'public', 'items');
 const ENV_FILE = path.join(ROOT, '.env');
@@ -99,7 +101,9 @@ async function main() {
     return;
   }
   if (opts.remove) {
-    const remaining = items.filter((it) => !opts.inputs.some((q) => q === it.id || q === it.url || idForUrl(q) === it.id));
+    const remaining = items.filter(
+      (it) => !opts.inputs.some((q) => q === it.id || q === it.url || idForUrl(q) === it.id),
+    );
     for (const it of items.filter((it) => !remaining.includes(it))) {
       await rm(path.join(PUBLIC_ITEMS, it.id), { recursive: true, force: true });
       console.log(`removed ${it.id} (${it.title})`);
@@ -116,10 +120,12 @@ async function main() {
   }
 
   const rawEntries = await expandInputs(opts.inputs);
-  const unique = new Map(rawEntries.map(entry => [idFor(entry.url), entry]));
+  const unique = new Map(rawEntries.map((entry) => [idFor(entry.url), entry]));
   const entries = [...unique.values()];
   const order = new Map(entries.map((e, i) => [idForUrl(e.url) ?? e.url, i]));
-  let ok = 0, skipped = 0, failed = 0;
+  let ok = 0,
+    skipped = 0,
+    failed = 0;
   await inParallel(entries, opts.parallel, async (entry) => {
     let id = entry.url;
     try {
@@ -175,13 +181,28 @@ async function ingestOne(entry: BatchEntry, id: string, existing: Item | undefin
   // Shopify's public product endpoint often survives theme/client-rendering changes.
   if ((!extracted.images.length || !extracted.price) && /\/products\/[^/]+/.test(new URL(finalUrl).pathname)) {
     try {
-      const endpoint = new URL(finalUrl); endpoint.pathname = endpoint.pathname.replace(/\/$/, '') + '.js'; endpoint.search = '';
+      const endpoint = new URL(finalUrl);
+      endpoint.pathname = endpoint.pathname.replace(/\/$/, '') + '.js';
+      endpoint.search = '';
       const response = await fetchHtml(endpoint.toString());
       const shop = extractShopifyProduct(JSON.parse(response.html), finalUrl);
-      extracted = { ...shop, ...Object.fromEntries(Object.entries(extracted).filter(([key, value]) => !['images', 'declared'].includes(key) && value !== undefined)), images: [...shop.images, ...extracted.images], declared: shop.declared + extracted.declared };
-    } catch { /* Not Shopify, or the shop blocks both endpoints. Preserve the original reason. */ }
+      extracted = {
+        ...shop,
+        ...Object.fromEntries(
+          Object.entries(extracted).filter(
+            ([key, value]) => !['images', 'declared'].includes(key) && value !== undefined,
+          ),
+        ),
+        images: [...shop.images, ...extracted.images],
+        declared: shop.declared + extracted.declared,
+      };
+    } catch {
+      /* Not Shopify, or the shop blocks both endpoints. Preserve the original reason. */
+    }
   }
-  const overrides = [entry.image, ...(entry.images ?? [])].filter((u): u is string => typeof u === 'string' && u.length > 0);
+  const overrides = [entry.image, ...(entry.images ?? [])].filter(
+    (u): u is string => typeof u === 'string' && u.length > 0,
+  );
   for (const u of overrides) {
     if (!/^https?:\/\//i.test(u)) throw new Error(`image override must be an http(s) URL: ${u}`);
   }
@@ -193,57 +214,65 @@ async function ingestOne(entry: BatchEntry, id: string, existing: Item | undefin
   const title = titleWithoutBrand(entry.title ?? extracted.title ?? titleFromUrl(entry.url), brand);
   const price = (entry.price ?? extracted.price)?.trim() || undefined;
   const section = entry.section?.trim() || existing?.section;
-  log(`title: ${title}${brand ? `  brand: ${brand}` : ''}${price ? `  price: ${price}` : ''}${section ? `  section: ${section}` : ''}`);
+  log(
+    `title: ${title}${brand ? `  brand: ${brand}` : ''}${price ? `  price: ${price}` : ''}${section ? `  section: ${section}` : ''}`,
+  );
 
   return stageAssets(path.join(PUBLIC_ITEMS, id), async (dir) => {
+    const refs = await downloadReferences(extracted.images, extracted.declared, finalUrl, dir, opts.maxRefs, log);
+    if (refs.length === 0)
+      throw new Error(
+        pageError
+          ? `${pageError.message}. The shop blocked or could not serve this product; supply an image override in a batch file.`
+          : 'No usable product images found. Try a direct product URL or supply an image override in a batch file.',
+      );
 
-  const refs = await downloadReferences(extracted.images, extracted.declared, finalUrl, dir, opts.maxRefs, log);
-  if (refs.length === 0) throw new Error(pageError ? `${pageError.message}. The shop blocked or could not serve this product; supply an image override in a batch file.` : 'No usable product images found. Try a direct product URL or supply an image override in a batch file.');
-
-  const processed = new Map<Ref, ProcessedPrimary>();
-  const { primary, index } = await choosePrimary(refs, processed);
-  if (index !== 0) {
-    log(`primary: using reference ${index + 1} (larger subject than the first image)`);
-    refs.unshift(...refs.splice(index, 1)); // keep item.images "primary first"
-  }
-  await writeFile(path.join(dir, 'primary.png'), primary.png);
-  log(`primary cut-out ${primary.width}x${primary.height}, background removed ${(primary.removedFraction * 100).toFixed(0)}%, palette ${primary.palette.join(' ')}`);
-
-  const publicDir = `/items/${id}`;
-  const procedural = buildProceduralAsset({
-    title,
-    texture: `${publicDir}/primary.png`,
-    aspect: primary.aspect,
-    palette: primary.palette,
-    removedFraction: primary.removedFraction,
-  });
-  if (entry.shape) {
-    if (!SHAPES.includes(entry.shape)) throw new Error(`unknown shape "${entry.shape}" (use ${SHAPES.join(' | ')})`);
-    procedural.shape = entry.shape;
-  }
-  let asset: Asset = procedural;
-
-  if (meshyAvailable() && !opts.noMesh) {
-    try {
-      asset = await meshAsset(entry, refs, processed, dir, procedural, log, id);
-    } catch (err) {
-      log(`mesh generation failed, keeping procedural asset: ${(err as Error).message}`);
+    const processed = new Map<Ref, ProcessedPrimary>();
+    const { primary, index } = await choosePrimary(refs, processed);
+    if (index !== 0) {
+      log(`primary: using reference ${index + 1} (larger subject than the first image)`);
+      refs.unshift(...refs.splice(index, 1)); // keep item.images "primary first"
     }
-  }
+    await writeFile(path.join(dir, 'primary.png'), primary.png);
+    log(
+      `primary cut-out ${primary.width}x${primary.height}, background removed ${(primary.removedFraction * 100).toFixed(0)}%, palette ${primary.palette.join(' ')}`,
+    );
 
-  return {
-    id,
-    url: entry.url,
-    domain: new URL(finalUrl).hostname.replace(/^www\./, ''),
-    title,
-    brand,
-    price,
-    section,
-    description: extracted.description,
-    images: refs.map((r) => `${publicDir}/${r.file}`),
-    asset,
-    addedAt: new Date().toISOString(),
-  };
+    const publicDir = `/items/${id}`;
+    const procedural = buildProceduralAsset({
+      title,
+      texture: `${publicDir}/primary.png`,
+      aspect: primary.aspect,
+      palette: primary.palette,
+      removedFraction: primary.removedFraction,
+    });
+    if (entry.shape) {
+      if (!SHAPES.includes(entry.shape)) throw new Error(`unknown shape "${entry.shape}" (use ${SHAPES.join(' | ')})`);
+      procedural.shape = entry.shape;
+    }
+    let asset: Asset = procedural;
+
+    if (meshyAvailable() && !opts.noMesh) {
+      try {
+        asset = await meshAsset(entry, refs, processed, dir, procedural, log, id);
+      } catch (err) {
+        log(`mesh generation failed, keeping procedural asset: ${(err as Error).message}`);
+      }
+    }
+
+    return {
+      id,
+      url: entry.url,
+      domain: new URL(finalUrl).hostname.replace(/^www\./, ''),
+      title,
+      brand,
+      price,
+      section,
+      description: extracted.description,
+      images: refs.map((r) => `${publicDir}/${r.file}`),
+      asset,
+      addedAt: new Date().toISOString(),
+    };
   });
 }
 
@@ -276,7 +305,9 @@ async function remeshOne(entry: BatchEntry, existing: Item, opts: Options): Prom
   const title = titleWithoutBrand(entry.title ?? existing.title, brand);
   const price = entry.price?.trim() || existing.price;
   const section = entry.section?.trim() || existing.section;
-  log(`title: ${title}${brand ? `  brand: ${brand}` : ''}${price ? `  price: ${price}` : ''}${section ? `  section: ${section}` : ''}`);
+  log(
+    `title: ${title}${brand ? `  brand: ${brand}` : ''}${price ? `  price: ${price}` : ''}${section ? `  section: ${section}` : ''}`,
+  );
 
   const processed = new Map<Ref, ProcessedPrimary>();
   processed.set(refs[0], await processPrimary(refs[0].buffer));
@@ -299,7 +330,10 @@ async function meshAsset(
   const chosen = await chooseMeshReferences(refs, processed, log);
   const raw = entry.meshTask
     ? await fetchTaskGlb(entry.meshTask, log)
-    : await generateGlb(chosen.map((r) => ({ data: r.jpg, mime: 'image/jpeg' as const })), log);
+    : await generateGlb(
+        chosen.map((r) => ({ data: r.jpg, mime: 'image/jpeg' as const })),
+        log,
+      );
   let glb = raw;
   try {
     glb = await slimGlb(raw, log);
@@ -337,7 +371,10 @@ interface Ref {
  * background could not be separated (usually a lifestyle shot), and later images must be
  * clearly bigger to displace an earlier one.
  */
-async function choosePrimary(refs: Ref[], processed: Map<Ref, ProcessedPrimary>): Promise<{ primary: ProcessedPrimary; index: number }> {
+async function choosePrimary(
+  refs: Ref[],
+  processed: Map<Ref, ProcessedPrimary>,
+): Promise<{ primary: ProcessedPrimary; index: number }> {
   let best: { primary: ProcessedPrimary; index: number } | undefined;
   for (let i = 0; i < Math.min(PRIMARY_CANDIDATES, refs.length); i++) {
     if (i > 0 && !refs[i].declared) break;
@@ -354,7 +391,8 @@ async function choosePrimary(refs: Ref[], processed: Map<Ref, ProcessedPrimary>)
         if (keyed) best = { primary, index: i };
         continue;
       }
-      if (primary.subjectArea > best.primary.subjectArea * (best.index === 0 ? 1.5 : 1.05)) best = { primary, index: i };
+      if (primary.subjectArea > best.primary.subjectArea * (best.index === 0 ? 1.5 : 1.05))
+        best = { primary, index: i };
     } catch {
       /* undecodable reference: skip */
     }
@@ -376,7 +414,11 @@ const MIN_DOMINANCE = 0.7;
  * lifestyle photo's room, or a second colourway, would end up in the mesh), declared images beat
  * scraped ones, and bigger subjects beat smaller ones.
  */
-async function chooseMeshReferences(refs: Ref[], processed: Map<Ref, ProcessedPrimary>, log: (m: string) => void): Promise<Ref[]> {
+async function chooseMeshReferences(
+  refs: Ref[],
+  processed: Map<Ref, ProcessedPrimary>,
+  log: (m: string) => void,
+): Promise<Ref[]> {
   const chosen = [refs[0]];
   const candidates: { ref: Ref; p: ProcessedPrimary }[] = [];
   for (const ref of refs.slice(1)) {
@@ -393,7 +435,9 @@ async function chooseMeshReferences(refs: Ref[], processed: Map<Ref, ProcessedPr
     if (chosen.length >= MAX_MESH_IMAGES) break;
     chosen.push(c.ref);
   }
-  log(`meshy refs: ${chosen.map((r) => r.file).join(' ')}  (primary dominance ${processed.get(refs[0])!.dominance.toFixed(2)})`);
+  log(
+    `meshy refs: ${chosen.map((r) => r.file).join(' ')}  (primary dominance ${processed.get(refs[0])!.dominance.toFixed(2)})`,
+  );
   return chosen;
 }
 
@@ -453,8 +497,8 @@ async function downloadReferences(
 function looksLikeImage(buf: Buffer): boolean {
   const head = buf.subarray(0, 12);
   return (
-    head[0] === 0xff && head[1] === 0xd8 || // jpeg
-    head[0] === 0x89 && head[1] === 0x50 || // png
+    (head[0] === 0xff && head[1] === 0xd8) || // jpeg
+    (head[0] === 0x89 && head[1] === 0x50) || // png
     head.toString('ascii', 8, 12) === 'WEBP' ||
     head.toString('ascii', 0, 3) === 'GIF'
   );
@@ -462,7 +506,9 @@ function looksLikeImage(buf: Buffer): boolean {
 
 // ---------- items.json ----------
 
-async function loadItems(): Promise<Item[]> { return loadCollection(DATA_FILE); }
+async function loadItems(): Promise<Item[]> {
+  return loadCollection(DATA_FILE);
+}
 let saving: Promise<void> = Promise.resolve();
 function saveItems(items: Item[]): Promise<void> {
   const snapshot = structuredClone(items);
@@ -495,7 +541,7 @@ async function expandInputs(inputs: string[]): Promise<BatchEntry[]> {
     const file = path.resolve(input);
     if (!existsSync(file)) throw new Error(`not a URL or existing file: ${input}`);
     const parsed = JSON.parse(await readFile(file, 'utf8')) as unknown;
-    const list = Array.isArray(parsed) ? parsed : (parsed as { items?: unknown[] }).items ?? [];
+    const list = Array.isArray(parsed) ? parsed : ((parsed as { items?: unknown[] }).items ?? []);
     for (const e of list) {
       if (typeof e === 'string') entries.push({ url: e });
       else if (e && typeof e === 'object' && typeof (e as BatchEntry).url === 'string') entries.push(e as BatchEntry);
@@ -526,19 +572,23 @@ function parseArgs(argv: string[]): Options {
   const intFlag = (a: string, i: number, name: string, max: number): [number, number] => {
     const raw = a.includes('=') ? a.split('=')[1] : argv[i + 1];
     const n = Number(raw);
-    if (!Number.isInteger(n) || n < 1 || n > max) throw new Error(`${name} needs an integer from 1 to ${max}, got "${raw}"`);
+    if (!Number.isInteger(n) || n < 1 || n > max)
+      throw new Error(`${name} needs an integer from 1 to ${max}, got "${raw}"`);
     return [n, a.includes('=') ? i : i + 1];
   };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--force' || a === '-f') opts.force = true;
-    else if (a === '--remesh') { opts.remesh = true; opts.noMesh = false; }
-    else if (a === '--remove' || a === '--rm') opts.remove = true;
+    else if (a === '--remesh') {
+      opts.remesh = true;
+      opts.noMesh = false;
+    } else if (a === '--remove' || a === '--rm') opts.remove = true;
     else if (a === '--list' || a === '-l') opts.list = true;
     else if (a === '--no-mesh') opts.noMesh = true;
     else if (a === '--mesh') opts.noMesh = false;
     else if (a === '--max-refs' || a.startsWith('--max-refs=')) [opts.maxRefs, i] = intFlag(a, i, '--max-refs', 50);
-    else if (a === '--parallel' || a.startsWith('--parallel=')) [opts.parallel, i] = intFlag(a, i, '--parallel', MAX_PARALLEL);
+    else if (a === '--parallel' || a.startsWith('--parallel='))
+      [opts.parallel, i] = intFlag(a, i, '--parallel', MAX_PARALLEL);
     else if (a.startsWith('-')) throw new Error(`unknown flag ${a}`);
     else opts.inputs.push(a);
   }
@@ -547,7 +597,8 @@ function parseArgs(argv: string[]): Options {
 
 // ---------- ids ----------
 
-const TRACKING_PARAMS = /^(utm_|fbclid|gclid|ref$|ref_|tag$|th$|psc$|pd_rd|pf_rd|sr$|keywords$|qid$|sprefix$|crid$|linkCode$|_encoding$|smid$|dib)/i;
+const TRACKING_PARAMS =
+  /^(utm_|fbclid|gclid|ref$|ref_|tag$|th$|psc$|pd_rd|pf_rd|sr$|keywords$|qid$|sprefix$|crid$|linkCode$|_encoding$|smid$|dib)/i;
 
 /** Stable id: hostname slug + short hash of the URL without tracking params. */
 export function idFor(url: string): string {
@@ -558,7 +609,12 @@ export function idFor(url: string): string {
   }
   u.hash = '';
 
-  const host = u.hostname.replace(/^www\./, '').split('.').slice(0, -1).join('-') || u.hostname;
+  const host =
+    u.hostname
+      .replace(/^www\./, '')
+      .split('.')
+      .slice(0, -1)
+      .join('-') || u.hostname;
   // Amazon: collapse to the ASIN so /dp/ASIN and /Long-Title/dp/ASIN agree.
   const asin = u.pathname.match(/\/(?:dp|gp\/product)\/([A-Z0-9]{10})/i)?.[1];
   const canonical = asin ? `${u.hostname}/dp/${asin.toUpperCase()}` : u.toString();
@@ -576,13 +632,22 @@ function idForUrl(input: string): string | undefined {
 }
 
 function slug(s: string): string {
-  return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40);
+  return s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+    .slice(0, 40);
 }
 
 function titleFromUrl(url: string): string {
   const u = new URL(url);
   const last = u.pathname.split('/').filter(Boolean).pop() ?? u.hostname;
-  return decodeURIComponent(last).replace(/[-_+]+/g, ' ').replace(/\.\w+$/, '').trim() || u.hostname;
+  return (
+    decodeURIComponent(last)
+      .replace(/[-_+]+/g, ' ')
+      .replace(/\.\w+$/, '')
+      .trim() || u.hostname
+  );
 }
 
 function describe(asset: Asset): string {
@@ -593,8 +658,9 @@ function kb(buf: Buffer): string {
   return (buf.length / 1024).toFixed(0);
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) withCollectionLock(DATA_FILE, main).catch((err) => {
-  console.error(err);
-  process.exitCode = 1;
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url))
+  withCollectionLock(DATA_FILE, main).catch((err) => {
+    console.error(err);
+    process.exitCode = 1;
     return;
-});
+  });

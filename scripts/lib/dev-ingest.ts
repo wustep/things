@@ -60,7 +60,8 @@ export function thingsDevIngest(): Plugin {
       server.middlewares.use('/__things/collection', async (req, res) => {
         if (req.method !== 'POST') return reply(res, 405, 'POST only');
         if (!sameOrigin(req)) return reply(res, 403, 'cross-origin requests are not allowed');
-        if (!/^application\/json\b/.test(req.headers['content-type'] ?? '')) return reply(res, 415, 'send application/json');
+        if (!/^application\/json\b/.test(req.headers['content-type'] ?? ''))
+          return reply(res, 415, 'send application/json');
         try {
           const change = JSON.parse(await readBody(req)) as CollectionChange;
           if (!change || typeof change !== 'object') return reply(res, 400, 'Invalid collection action');
@@ -72,13 +73,16 @@ export function thingsDevIngest(): Plugin {
           });
           res.setHeader('content-type', 'application/json');
           res.end(JSON.stringify(next));
-        } catch (error) { reply(res, 409, (error as Error).message); }
+        } catch (error) {
+          reply(res, 409, (error as Error).message);
+        }
       });
 
       server.middlewares.use('/__things/ingest', async (req, res) => {
         if (req.method !== 'POST') return reply(res, 405, 'POST only');
         if (!sameOrigin(req)) return reply(res, 403, 'cross-origin requests are not allowed');
-        if (!/^application\/json\b/.test(req.headers['content-type'] ?? '')) return reply(res, 415, 'send application/json');
+        if (!/^application\/json\b/.test(req.headers['content-type'] ?? ''))
+          return reply(res, 415, 'send application/json');
 
         let urls: string[];
         try {

@@ -113,7 +113,8 @@ If it cannot establish the price or currency reliably, it leaves the price blank
 
 The October 2026 smoke pass imported Teenage Engineering, Stonemaier Games, Ugmonk and Amazon.
 Aesop and LEGO returned HTTP 403. Shop behavior can change; `data/demo.json` contains the four
-successful examples. The 24 original collection items and all their assets were preserved.
+successful examples. Only Stephen’s original 24 collection items ship with the app. Trial imports were moved
+to a temporary test fixture and removed from the published collection.
 
 If an interrupted process leaves `data/items.json.lock`, first verify no import or dev edit
 is running, then remove that empty lock directory and retry. In normal failures it is

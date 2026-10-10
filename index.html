@@ -5,60 +5,174 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#101110" />
-    <meta name="description" content="A personal shelf for things worth keeping. Collect, arrange, and rediscover objects from around the web." />
+    <meta
+      name="description"
+      content="A personal shelf for things worth keeping. Collect, arrange, and rediscover objects from around the web."
+    />
     <title>Things — A personal collection</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
   <body>
     <a class="skip-link" href="#collection">Skip to collection</a>
     <header class="header">
-      <a class="wordmark" href="./" aria-label="Things home"><span class="mark" aria-hidden="true">▦</span> things<span class="wordmark-dot">.</span></a>
+      <a class="wordmark" href="./" aria-label="Things home"
+        ><span class="mark" aria-hidden="true">▦</span> things<span class="wordmark-dot">.</span></a
+      >
       <span class="header-note">A little space for good things.</span>
       <button id="add-button" class="button button-light"><span aria-hidden="true">＋</span> Add a thing</button>
     </header>
     <main id="collection" tabindex="-1">
       <div class="collection-heading">
-        <div><p class="eyebrow">THE PERSONAL COLLECTION</p><h1>Objects of interest<span class="accent">.</span></h1></div>
-        <p class="collection-note">Found here and there.<br>Kept in one place.</p>
+        <div>
+          <p class="eyebrow">THE PERSONAL COLLECTION</p>
+          <h1>Objects of interest<span class="accent">.</span></h1>
+        </div>
+        <p class="collection-note">Found here and there.<br />Kept in one place.</p>
       </div>
       <div class="toolbar">
         <nav id="sections" class="sections" aria-label="Collection sections"></nav>
         <div class="view-toggle" aria-label="Collection view" role="group">
-          <button id="shelf-view" aria-label="Shelf view" aria-pressed="true" title="Shelf view"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 9h14M3 17h14M5 3v6m5-4v4m5-6v6M5 12v5m5-4v4m5-5v5"/></svg><span>Shelf</span></button>
-          <button id="catalog-view" aria-label="Catalog view" aria-pressed="false" title="Catalog view"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 3h5v5H3zm9 0h5v5h-5zM3 12h5v5H3zm9 0h5v5h-5z"/></svg><span>Catalog</span></button>
+          <button id="shelf-view" aria-label="Shelf view" aria-pressed="true" title="Shelf view">
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M3 9h14M3 17h14M5 3v6m5-4v4m5-6v6M5 12v5m5-4v4m5-5v5" /></svg
+            ><span>Shelf</span>
+          </button>
+          <button id="catalog-view" aria-label="Catalog view" aria-pressed="false" title="Catalog view">
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M3 3h5v5H3zm9 0h5v5h-5zM3 12h5v5H3zm9 0h5v5h-5z" /></svg
+            ><span>Catalog</span>
+          </button>
         </div>
       </div>
       <div id="shelf-area" class="shelf-area">
-        <canvas id="stage" tabindex="0" aria-label="Interactive shelf. Drag to orbit, scroll to zoom. Use arrow keys to browse objects, Enter to inspect, or R to reset." aria-describedby="shelf-instructions"></canvas>
-        <div class="scene-meta"><span class="live-dot"></span><span id="scene-label">All things</span><span id="scene-count"></span></div>
-        <div id="scene-loading" class="scene-loading" role="status">Arranging your shelf<span class="loading-dots">…</span></div>
+        <canvas
+          id="stage"
+          tabindex="0"
+          aria-label="Interactive shelf. Drag to orbit, scroll to zoom. Use arrow keys to browse objects, Enter to inspect, or R to reset."
+          aria-describedby="shelf-instructions"
+        ></canvas>
+        <div class="scene-meta">
+          <span class="live-dot"></span><span id="scene-label">All things</span><span id="scene-count"></span>
+        </div>
+        <div id="scene-loading" class="scene-loading" role="status">
+          Arranging your shelf<span class="loading-dots">…</span>
+        </div>
         <div id="object-labels" class="object-labels"></div>
-        <div id="empty" class="empty" hidden><span class="empty-symbol" aria-hidden="true">＋</span><h2>A space for your next find.</h2><p>Add something that catches your eye.<br>It starts with a product link.</p><button id="empty-add" class="button button-light">Add your first thing</button></div>
-        <div class="scene-bottom"><span id="shelf-instructions">Drag to look around <span>·</span> Select a thing to explore</span><button id="reset-camera" class="quiet-button" title="Reset camera (R)"><span aria-hidden="true">↺</span> Reset view</button></div>
-        <div id="hover-card" class="hover-card" hidden><span id="hover-brand"></span><strong id="hover-title"></strong><span id="hover-price"></span></div>
+        <div id="empty" class="empty" hidden>
+          <span class="empty-symbol" aria-hidden="true">＋</span>
+          <h2>A space for your next find.</h2>
+          <p>Add something that catches your eye.<br />It starts with a product link.</p>
+          <button id="empty-add" class="button button-light">Add your first thing</button>
+        </div>
+        <div class="scene-bottom">
+          <span id="shelf-instructions">Drag to look around <span>·</span> Select a thing to explore</span
+          ><button id="reset-camera" class="quiet-button" title="Reset camera (R)">
+            <span aria-hidden="true">↺</span> Reset view
+          </button>
+        </div>
+        <div id="hover-card" class="hover-card" hidden>
+          <span id="hover-brand"></span><strong id="hover-title"></strong><span id="hover-price"></span>
+        </div>
       </div>
       <section id="catalog" class="catalog" aria-label="Product catalog" hidden>
-        <label class="search-field"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="8" r="5"/><path d="m12 12 5 5"/></svg><input id="search" type="search" placeholder="Find something in your collection" aria-label="Search collection" /></label>
+        <label class="search-field"
+          ><svg viewBox="0 0 20 20" aria-hidden="true">
+            <circle cx="8" cy="8" r="5" />
+            <path d="m12 12 5 5" /></svg
+          ><input
+            id="search"
+            type="search"
+            placeholder="Find something in your collection"
+            aria-label="Search collection"
+        /></label>
         <div id="catalog-grid" class="catalog-grid"></div>
-        <p id="search-empty" class="search-empty" hidden>No things match your search. Try a title, brand, or section.</p>
+        <p id="search-empty" class="search-empty" hidden>
+          No things match your search. Try a title, brand, or section.
+        </p>
       </section>
-      <footer class="collection-footer"><span id="collection-total"></span><div id="pagination" class="pagination"><button id="previous-page" aria-label="Previous shelf">←</button><span id="page-number"></span><button id="next-page" aria-label="Next shelf">→</button></div><span class="footer-note">A collection, always in progress.</span></footer>
+      <footer class="collection-footer">
+        <span id="collection-total"></span>
+        <div id="pagination" class="pagination">
+          <button id="previous-page" aria-label="Previous shelf">←</button><span id="page-number"></span
+          ><button id="next-page" aria-label="Next shelf">→</button>
+        </div>
+        <span class="footer-note">A collection, always in progress.</span>
+      </footer>
     </main>
     <dialog id="detail" class="dialog detail-dialog" aria-labelledby="detail-title">
       <button class="dialog-close" data-close aria-label="Close details">×</button>
-      <div class="detail-image"><img id="detail-image" alt="" /><span id="detail-number" class="eyebrow"></span></div>
-      <div class="detail-body"><p id="detail-brand" class="eyebrow"></p><h2 id="detail-title"></h2><p id="detail-price" class="detail-price"></p><p id="detail-description" class="detail-description"></p><a id="detail-link" class="button button-light" target="_blank" rel="noopener noreferrer">Visit shop <span aria-hidden="true">↗</span></a><p id="detail-domain" class="detail-domain"></p>
-      <div class="detail-manage"><label for="detail-section">On your shelf</label><div class="section-edit"><input id="detail-section" list="section-options" placeholder="Unsorted" maxlength="60" aria-label="Section name" /><button id="save-section" class="button">Move</button></div><datalist id="section-options"></datalist><div class="order-actions"><span>Position in collection</span><button id="move-earlier" title="Move earlier" aria-label="Move earlier">←</button><button id="move-later" title="Move later" aria-label="Move later">→</button></div><button id="remove-item" class="remove-button">Remove from collection</button></div></div>
+      <div class="detail-image">
+        <img id="detail-image" alt="" /><span id="detail-image-fallback" class="image-fallback" hidden
+          >Image unavailable</span
+        ><span id="detail-number" class="eyebrow"></span>
+      </div>
+      <div class="detail-body">
+        <p id="detail-brand" class="eyebrow"></p>
+        <h2 id="detail-title"></h2>
+        <p id="detail-price" class="detail-price"></p>
+        <p id="detail-description" class="detail-description"></p>
+        <a id="detail-link" class="button button-light" target="_blank" rel="noopener noreferrer"
+          >Visit shop <span aria-hidden="true">↗</span></a
+        >
+        <p id="detail-domain" class="detail-domain"></p>
+        <div class="detail-manage">
+          <label for="detail-section">On your shelf</label>
+          <div class="section-edit">
+            <input
+              id="detail-section"
+              list="section-options"
+              placeholder="Unsorted"
+              maxlength="60"
+              aria-label="Section name"
+            /><button id="save-section" class="button">Move</button>
+          </div>
+          <datalist id="section-options"></datalist>
+          <p class="section-hint">Type a new name to create a section.</p>
+          <div class="order-actions">
+            <span>Position in section</span
+            ><button id="move-earlier" title="Move earlier" aria-label="Move earlier">←</button
+            ><button id="move-later" title="Move later" aria-label="Move later">→</button>
+          </div>
+          <button id="remove-item" class="remove-button">Remove from collection</button>
+          <p id="persistence-note" class="persistence-note"></p>
+        </div>
+      </div>
     </dialog>
     <dialog id="add-dialog" class="dialog add-dialog" aria-labelledby="add-title">
-      <button class="dialog-close" data-close aria-label="Close add dialog">×</button><p class="eyebrow">MAKE ROOM FOR SOMETHING GOOD</p><h2 id="add-title">A new thing.</h2><p class="dialog-intro" id="add-intro">Paste a product link. We’ll find the image and make a place for it.</p>
-      <form id="add-form"><label for="product-url">Product URL</label><textarea id="product-url" rows="3" placeholder="https://shop.com/products/something-good" required spellcheck="false"></textarea><p class="field-hint">One link per line. Up to 10 things at a time.</p><button id="ingest-submit" class="button button-light" type="submit">Add to collection <span aria-hidden="true">↗</span></button></form>
+      <button class="dialog-close" data-close aria-label="Close add dialog">×</button>
+      <p class="eyebrow">MAKE ROOM FOR SOMETHING GOOD</p>
+      <h2 id="add-title">A new thing.</h2>
+      <p class="dialog-intro" id="add-intro">Paste a product link. We’ll find the image and make a place for it.</p>
+      <form id="add-form">
+        <label for="product-url">Product URL</label
+        ><textarea
+          id="product-url"
+          rows="3"
+          placeholder="https://shop.com/products/something-good"
+          required
+          spellcheck="false"
+        ></textarea>
+        <p class="field-hint">One link per line. Up to 10 things at a time.</p>
+        <button id="ingest-submit" class="button button-light" type="submit">
+          Add to collection <span aria-hidden="true">↗</span>
+        </button>
+      </form>
       <div id="ingest-feedback" class="ingest-feedback" role="status" hidden></div>
-      <div id="static-command" hidden><p>Run this in your local Things folder, then publish the updated collection.</p><pre id="ingest-command"></pre><button id="copy-command" class="button">Copy command</button></div>
+      <div id="static-command" hidden>
+        <p>Run this in your local Things folder, then publish the updated collection.</p>
+        <pre id="ingest-command"></pre>
+        <button id="copy-command" class="button">Copy command</button>
+      </div>
       <p class="add-footnote" id="add-footnote">Images only. No paid model generation.</p>
     </dialog>
-    <div id="status" class="status" role="status" hidden><span id="status-text"></span><button id="undo-button" hidden>Undo</button><button id="dismiss-status" aria-label="Dismiss notification">×</button></div>
-    <div id="drop" class="drop" hidden><span>Drop something good.</span><p>Product links become things on your shelf.</p></div>
+    <div id="status" class="status" role="status" hidden>
+      <span id="status-text"></span><button id="undo-button" hidden>Undo</button
+      ><button id="dismiss-status" aria-label="Dismiss notification">×</button>
+    </div>
+    <div id="drop" class="drop" hidden>
+      <span>Drop something good.</span>
+      <p>Product links become things on your shelf.</p>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

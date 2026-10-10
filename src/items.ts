@@ -125,6 +125,24 @@ function buildCard(image: HTMLImageElement, aspect: number, title: string): Buil
   });
   const geometry = new THREE.PlaneGeometry(w, h);
   const mesh = new THREE.Mesh(geometry, material);
+  // Raycasting should hit the product, not the invisible rectangle around its cutout.
+  const mask = document.createElement('canvas');
+  mask.width = mask.height = 128;
+  const ctx = mask.getContext('2d', { willReadFrequently: true })!;
+  ctx.drawImage(image, 0, 0, 128, 128);
+  try {
+    const alpha = ctx.getImageData(0, 0, 128, 128).data;
+    mesh.userData.alphaHit = (uv?: THREE.Vector2) =>
+      !uv ||
+      alpha[
+        (Math.min(127, Math.max(0, Math.floor((1 - uv.y) * 128))) * 128 +
+          Math.min(127, Math.max(0, Math.floor(uv.x * 128)))) *
+          4 +
+          3
+      ] > 24;
+  } catch {
+    /* Cross-origin textures retain rectangular picking. */
+  }
   mesh.name = `card:${title}`;
   mesh.position.y = h / 2;
   return { object: mesh, kind: 'card', size: { w, h, d: 0.02 }, disposables: [geometry, material, map] };
@@ -143,12 +161,22 @@ function buildBox(image: HTMLImageElement, aspect: number, palette: string[]): B
   back.needsUpdate = true;
 
   const photo = (map: THREE.Texture) => new THREE.MeshBasicMaterial({ map, toneMapped: false });
-  const side = new THREE.MeshStandardMaterial({ color: sideColor(accent), roughness: 0.8, metalness: 0.04, envMapIntensity: 0.5 });
+  const side = new THREE.MeshStandardMaterial({
+    color: sideColor(accent),
+    roughness: 0.8,
+    metalness: 0.04,
+    envMapIntensity: 0.5,
+  });
   const materials = [side, side, side, side, photo(face), photo(back)]; // +x -x +y -y +z -z
   const geometry = new THREE.BoxGeometry(w, h, d);
   const mesh = new THREE.Mesh(geometry, materials);
   mesh.position.y = h / 2;
-  return { object: mesh, kind: 'box', size: { w, h, d }, disposables: [geometry, side, ...materials.slice(4), face, back] };
+  return {
+    object: mesh,
+    kind: 'box',
+    size: { w, h, d },
+    disposables: [geometry, side, ...materials.slice(4), face, back],
+  };
 }
 
 function buildCylinder(image: HTMLImageElement, aspect: number, palette: string[]): Built {
@@ -168,7 +196,12 @@ function buildCylinder(image: HTMLImageElement, aspect: number, palette: string[
     metalness: 0.05,
     envMapIntensity: 0.35,
   });
-  const cap = new THREE.MeshStandardMaterial({ color: sideColor(accent).multiplyScalar(0.7), roughness: 0.8, metalness: 0.05, envMapIntensity: 0.35 });
+  const cap = new THREE.MeshStandardMaterial({
+    color: sideColor(accent).multiplyScalar(0.7),
+    roughness: 0.8,
+    metalness: 0.05,
+    envMapIntensity: 0.35,
+  });
   const geometry = new THREE.CylinderGeometry(r, r, h, 64, 1, false);
   const mesh = new THREE.Mesh(geometry, [side, cap, cap]);
   mesh.position.y = h / 2;
@@ -255,7 +288,6 @@ function shouldFaceCamera(model: THREE.Object3D): boolean {
   return size.z > size.x * 1.18;
 }
 
-
 // ---------- textures ----------
 
 function loadImage(url: string): Promise<HTMLImageElement> {
@@ -336,7 +368,7 @@ function makeGlow(color: THREE.Color, size: { w: number; h: number; d: number })
   const mesh = new THREE.Mesh(geometry, material);
   mesh.rotation.x = -Math.PI / 2;
   mesh.position.y = -0.04;
-  const s = Math.max(size.w, size.d) * 2.4;
+  const s = Math.max(size.w, size.d) * 1.8;
   mesh.scale.set(s, s, 1);
   mesh.renderOrder = -1;
   return mesh;
@@ -376,5 +408,5 @@ function clamp(v: number, lo: number, hi: number): number {
 function hashPhase(id: string): number {
   let h = 0;
   for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
-  return (h % 1000) / 1000 * Math.PI * 2;
+  return ((h % 1000) / 1000) * Math.PI * 2;
 }

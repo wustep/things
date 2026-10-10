@@ -41,7 +41,11 @@ function wasmFormat(mime: 'image/webp' | 'image/avif', decode: (buf: ArrayBuffer
       await ensureDecoders();
       const copy = new Uint8Array(data); // a fresh ArrayBuffer of exactly these bytes
       const img = await decode(copy.buffer);
-      return { data: Buffer.from(img.data.buffer, img.data.byteOffset, img.data.byteLength), width: img.width, height: img.height };
+      return {
+        data: Buffer.from(img.data.buffer, img.data.byteOffset, img.data.byteLength),
+        width: img.width,
+        height: img.height,
+      };
     },
     encode: (): Buffer => {
       throw new Error(`${mime} encoding is not supported; references are stored as JPEG and PNG`);
@@ -90,7 +94,10 @@ export function hashDistance(a: string, b: string): number {
 }
 
 /** Downscale a reference image to a sane size and re-encode as JPEG. */
-export async function normalizeReference(buffer: Buffer, maxSide = 1200): Promise<{ jpg: Buffer; width: number; height: number }> {
+export async function normalizeReference(
+  buffer: Buffer,
+  maxSide = 1200,
+): Promise<{ jpg: Buffer; width: number; height: number }> {
   const img = await decode(buffer);
   flattenOntoWhite(img);
   fit(img, maxSide);
@@ -111,10 +118,17 @@ export async function processPrimary(buffer: Buffer, maxSide = 1024): Promise<Pr
   const { width, height, data } = img.bitmap;
   const original = Buffer.from(data);
   const bg = hasTransparency ? null : estimateBackground(data, width, height);
-  let removed = hasTransparency ? data.reduce((n, value, index) => n + Number(index % 4 === 3 && value < 24), 0) : bg ? keyOutBackground(data, width, height, bg) : 0;
+  let removed = hasTransparency
+    ? data.reduce((n, value, index) => n + Number(index % 4 === 3 && value < 24), 0)
+    : bg
+      ? keyOutBackground(data, width, height, bg)
+      : 0;
   // Near-white objects against white can disappear under naive keying. Keep the photograph
   // when the mask would erase almost everything; never emit a blank "successful" object.
-  if (!hasTransparency && removed / (width * height) > .97) { original.copy(data); removed = 0; }
+  if (!hasTransparency && removed / (width * height) > 0.97) {
+    original.copy(data);
+    removed = 0;
+  }
   const removedFraction = removed / (width * height);
 
   const box = opaqueBounds(data, width, height);
@@ -251,7 +265,8 @@ function keyOutBackground(data: Buffer, w: number, h: number, bg: RGB): number {
     if (alpha > 0 && alpha < 255) {
       // Remove the original matte from fringe pixels so white halos do not glow in the void.
       const a = alpha / 255;
-      for (const [channel, background] of [bg.r, bg.g, bg.b].entries()) data[o + channel] = Math.max(0, Math.min(255, Math.round((data[o + channel] - background * (1 - a)) / a)));
+      for (const [channel, background] of [bg.r, bg.g, bg.b].entries())
+        data[o + channel] = Math.max(0, Math.min(255, Math.round((data[o + channel] - background * (1 - a)) / a)));
     }
     if (alpha === 0) removed++;
     const x = i % w;
@@ -265,7 +280,10 @@ function keyOutBackground(data: Buffer, w: number, h: number, bg: RGB): number {
 }
 
 function opaqueBounds(data: Buffer, w: number, h: number) {
-  let minX = w, minY = h, maxX = -1, maxY = -1;
+  let minX = w,
+    minY = h,
+    maxX = -1,
+    maxY = -1;
   for (let y = 0; y < h; y++) {
     for (let x = 0; x < w; x++) {
       if (data[(y * w + x) * 4 + 3] > 24) {
@@ -288,7 +306,9 @@ export function extractPalette(data: Buffer, w: number, h: number): string[] {
     for (let x = 0; x < w; x += step) {
       const o = (y * w + x) * 4;
       if (data[o + 3] < 200) continue;
-      const r = data[o], g = data[o + 1], b = data[o + 2];
+      const r = data[o],
+        g = data[o + 1],
+        b = data[o + 2];
       const key = `${r >> 5},${g >> 5},${b >> 5}`;
       const bin = bins.get(key) ?? { n: 0, r: 0, g: 0, b: 0 };
       bin.n++;
@@ -313,7 +333,8 @@ export function extractPalette(data: Buffer, w: number, h: number): string[] {
 }
 
 function score(c: RGB): number {
-  const max = Math.max(c.r, c.g, c.b), min = Math.min(c.r, c.g, c.b);
+  const max = Math.max(c.r, c.g, c.b),
+    min = Math.min(c.r, c.g, c.b);
   const sat = max === 0 ? 0 : (max - min) / max;
   const lum = (c.r + c.g + c.b) / (3 * 255);
   return sat * 2 + (1 - Math.abs(lum - 0.5));

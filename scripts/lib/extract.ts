@@ -93,7 +93,8 @@ function priceOf(offers: unknown): string | undefined {
     if (!o || typeof o !== 'object') continue;
     const r = o as Record<string, unknown>;
     const price = r.price ?? r.lowPrice ?? (r.priceSpecification as Record<string, unknown> | undefined)?.price;
-    const currency = str(r.priceCurrency) ?? str((r.priceSpecification as Record<string, unknown> | undefined)?.priceCurrency);
+    const currency =
+      str(r.priceCurrency) ?? str((r.priceSpecification as Record<string, unknown> | undefined)?.priceCurrency);
     if (price !== undefined && price !== null && price !== '') return formatPrice(String(price), currency);
   }
   return undefined;
@@ -120,7 +121,9 @@ function applyAmazon($: Cheerio, out: Extracted) {
     out.brand = (m?.[1] ?? m?.[2] ?? byline).trim();
   }
   if (!out.price) {
-    const p = $('#corePrice_feature_div .a-offscreen, #apex_desktop .a-offscreen, .priceToPay .a-offscreen, #price_inside_buybox')
+    const p = $(
+      '#corePrice_feature_div .a-offscreen, #apex_desktop .a-offscreen, .priceToPay .a-offscreen, #price_inside_buybox',
+    )
       .first()
       .text()
       .trim();
@@ -166,12 +169,12 @@ function applyOpenGraph($: Cheerio, out: Extracted, pageUrl: string) {
     const currency = meta('meta[property="product:price:currency"]') ?? meta('meta[property="og:price:currency"]');
     if (amount) out.price = formatPrice(amount, currency);
   }
-  $('meta[property="og:image"], meta[property="og:image:secure_url"], meta[name="twitter:image"], meta[itemprop="image"]').each(
-    (_, el) => {
-      const c = $(el).attr('content');
-      if (c) out.images.push(absolutize(c, pageUrl));
-    },
-  );
+  $(
+    'meta[property="og:image"], meta[property="og:image:secure_url"], meta[name="twitter:image"], meta[itemprop="image"]',
+  ).each((_, el) => {
+    const c = $(el).attr('content');
+    if (c) out.images.push(absolutize(c, pageUrl));
+  });
   const siteName = meta('meta[property="og:site_name"]');
   if (siteName && !out.brand) out.brand = siteName;
 }
@@ -205,7 +208,8 @@ function applyGenericFallbacks($: Cheerio, out: Extracted, pageUrl: string) {
         const best = pickLargestFromSrcset(srcset);
         if (best) out.images.push(absolutize(best, pageUrl));
       }
-      const src = $el.attr('data-src') ?? $el.attr('data-zoom-image') ?? $el.attr('data-large_image') ?? $el.attr('src');
+      const src =
+        $el.attr('data-src') ?? $el.attr('data-zoom-image') ?? $el.attr('data-large_image') ?? $el.attr('src');
       if (src && !src.startsWith('data:')) out.images.push(absolutize(src, pageUrl));
     });
     if (out.images.length > 24) break;
@@ -228,7 +232,8 @@ function pickLargestFromSrcset(srcset: string): string | undefined {
 function isLikelyProductImage(u: string): boolean {
   if (!/^https?:/i.test(u)) return false;
   if (/\.(svg|gif)(\?|$)/i.test(u)) return false;
-  if (/(sprite|icon|logo|badge|flag|pixel|tracking|avatar|placeholder|spinner|loading|1x1|blank)/i.test(u)) return false;
+  if (/(sprite|icon|logo|badge|flag|pixel|tracking|avatar|placeholder|spinner|loading|1x1|blank)/i.test(u))
+    return false;
   return true;
 }
 
@@ -267,7 +272,7 @@ export function formatPrice(amount: string, currency?: string): string {
   if (/^[^\d]/.test(trimmed)) return trimmed; // already has a symbol
   const num = Number(trimmed.replace(/,/g, ''));
   if (!Number.isFinite(num)) return trimmed;
-  const sym = currency ? SYMBOLS[currency.toUpperCase()] ?? `${currency.toUpperCase()} ` : '$';
+  const sym = currency ? (SYMBOLS[currency.toUpperCase()] ?? `${currency.toUpperCase()} `) : '$';
   const fixed = Number.isInteger(num) ? num.toString() : num.toFixed(2);
   return `${sym}${fixed}`;
 }
@@ -277,13 +282,24 @@ export function extractShopifyProduct(value: unknown, pageUrl: string): Extracte
   if (!value || typeof value !== 'object') throw new Error('Not a product response');
   const p = value as Record<string, unknown>;
   if (typeof p.title !== 'string' || !Array.isArray(p.images)) throw new Error('Not a Shopify product');
-  const images = imagesOf(p.images).map(url => absolutize(url, pageUrl)).filter(isLikelyProductImage);
+  const images = imagesOf(p.images)
+    .map((url) => absolutize(url, pageUrl))
+    .filter(isLikelyProductImage);
   const variantId = new URL(pageUrl).searchParams.get('variant');
-  const variants = Array.isArray(p.variants) ? p.variants as Record<string, unknown>[] : [];
-  const variant = variants.find(v => String(v.id) === variantId) ?? variants[0];
+  const variants = Array.isArray(p.variants) ? (p.variants as Record<string, unknown>[]) : [];
+  const variant = variants.find((v) => String(v.id) === variantId) ?? variants[0];
   const price = variant?.price ?? p.price;
-  return { title: p.title, brand: str(p.vendor), description: typeof p.description === 'string' ? cheerio.load(p.description).text().trim().slice(0, 400) : undefined,
+  return {
+    title: p.title,
+    brand: str(p.vendor),
+    description:
+      typeof p.description === 'string' ? cheerio.load(p.description).text().trim().slice(0, 400) : undefined,
     // Public product JSON does not reliably declare the shop currency. Do not guess dollars.
-    price: typeof price === 'number' && typeof p.currency === 'string' ? formatPrice(String(price / 100), p.currency) : undefined,
-    images, declared: images.length };
+    price:
+      typeof price === 'number' && typeof p.currency === 'string'
+        ? formatPrice(String(price / 100), p.currency)
+        : undefined,
+    images,
+    declared: images.length,
+  };
 }

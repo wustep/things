@@ -13,12 +13,14 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "types": [
-      "node"
+      "node",
+      "vite/client"
     ]
   },
   "include": [
     "scripts",
     "shared",
-    "vite.config.ts"
+    "vite.config.ts",
+    "tests/**/*.ts"
   ]
 }

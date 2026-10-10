@@ -1,7 +1,9 @@
 import type { ProceduralAsset, ProceduralShape } from '../../shared/types.ts';
 
-const CYLINDER_WORDS = /\b(bottle|perfume|fragrance|cologne|eau de|candle|wash|lotion|serum|spray|shampoo|conditioner|tumbler|can|jar|vase|mug|cup|flask|thermos|wine|whisk(e)?y|gin|vodka|sake|oil)\b/i;
-const BOX_WORDS = /\b(book|hardcover|paperback|box|boxed|puzzle|board game|console|speaker|camera|lens|keyboard|monitor|laptop|notebook|tablet|ipad|macbook|tv|cube|case|carton|kit|set)\b/i;
+const CYLINDER_WORDS =
+  /\b(bottle|perfume|fragrance|cologne|eau de|candle|wash|lotion|serum|spray|shampoo|conditioner|tumbler|can|jar|vase|mug|cup|flask|thermos|wine|whisk(e)?y|gin|vodka|sake|oil)\b/i;
+const BOX_WORDS =
+  /\b(book|hardcover|paperback|box|boxed|puzzle|board game|console|speaker|camera|lens|keyboard|monitor|laptop|notebook|tablet|ipad|macbook|tv|cube|case|carton|kit|set)\b/i;
 
 /** Decide how to represent an item in the void from its title and cut-out shape. */
 export function chooseShape(title: string, aspect: number, removedFraction: number): ProceduralShape {

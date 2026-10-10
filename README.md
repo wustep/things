@@ -36,16 +36,35 @@ photo, and decides how to show it:
 | `box`      | Books, consoles, boxed things; or when the photo couldn't be keyed |
 | `cylinder` | Tall bottles, cans, candles, tumblers                        |
 
+A few things keep that honest on real shops:
+
+- **Shopify fallback.** When a `/products/<handle>` page comes back thin (client-rendered
+  theme, bot wall, no images, title or price), ingest asks the shop's public product JSON at
+  `<product-url>.js`, then `.json`, and fills in only what the page was missing. Shopify
+  doesn't reliably say which currency it means there, so no price is guessed from it.
+- **Cut-outs keep their transparency.** If the primary image already has a real alpha channel
+  (a transparent PNG or WebP, at least 1% see-through), that mask is kept as is instead of
+  being flattened onto white and keyed again, so white highlights inside the product survive.
+- **Download limits.** Pages and product JSON are capped at 6 MB, each image at 24 MB, and
+  the 20 s timeout covers the whole body, so a CDN that sends headers and then stalls fails
+  instead of hanging the run.
+
 While `npm run dev` is running you can also **paste or drop a URL onto the page**. The dev
-server runs the same ingest and the shelf updates in place as items land. A production
-build has no server, so pasting there just shows you the command to run.
+server runs the same ingest and the shelf updates in place as items land. It never calls
+Meshy, even with a key set. A production build has no server, so pasting there just shows
+you the command to run.
 
 Every ingest writes:
 
 - `data/items.json`, the collection (imported by the viewer, so it ships in the build)
 - `public/items/<id>/primary.png`, the keyed cut-out used as the texture
 - `public/items/<id>/ref-N.jpg`, the reference photos
-- `public/items/<id>/model.glb`, only when Meshy is enabled (below)
+- `public/items/<id>/model.glb`, only with `--mesh` (below)
+
+The files are built in a staging folder next to the item and swapped in only once the whole
+ingest succeeded. A `--force` that fails halfway (the shop now blocks you, no usable images)
+leaves the item's existing photos, cut-out and model exactly as they were; `model.glb` and
+`items.json` are written via a temp file and rename, so nothing is ever half-written.
 
 Useful flags and subcommands:
 
@@ -53,9 +72,9 @@ Useful flags and subcommands:
 npm run ingest -- --list                       # what's on the shelf
 npm run ingest -- --remove <id-or-url>         # take something off (deletes its files)
 npm run ingest -- --force <url>                # re-ingest an existing item
+npm run ingest -- --mesh <url>                 # also make a Meshy model (paid, needs a key)
 npm run ingest -- --remesh <url>               # keep its photos, just (re)make the Meshy model
 npm run ingest -- --max-refs 2 <url>           # keep fewer reference photos
-npm run ingest -- --no-mesh <url>              # skip Meshy even if a key is set
 npm run ingest -- --parallel 4 batch.json      # work on four entries at once (Meshy is the slow part)
 ```
 
@@ -87,13 +106,15 @@ their ASIN).
 
 ### Optional: real 3D models with Meshy
 
-Copy `.env.example` to `.env` and set `MESHY_API_KEY`. Ingest will then send up to four
-reference photos (the primary first, then the cleanest other single-object shots) to
+Copy `.env.example` to `.env` and set `MESHY_API_KEY`, then pass `--mesh` (or `--remesh`).
+A key on its own spends nothing: without one of those flags Meshy is never called, and
+`--no-mesh` is still accepted for old scripts but is now just the default. With `--mesh`,
+ingest sends up to four reference photos (the primary first, then the cleanest other single-object shots) to
 [Meshy](https://www.meshy.ai) multi-image-to-3D and store the resulting GLB next to the item.
 Meshy's 2k PBR textures are downsized to 1k JPEGs and the geometry quantized on the way in, so
 a model lands at roughly 1 MB instead of 7–15 MB. The viewer prefers the GLB and keeps the
 procedural shape as a fallback; `asset.refs` records which photos the mesh came from. Without
-a key everything works offline with procedural shapes.
+`--mesh` everything works offline with procedural shapes.
 
 Each Meshy task takes a few minutes and costs credits (30 per model at the time of writing), so
 batches are best run with `--parallel`; the account's concurrent-task limit is respected by
@@ -110,7 +131,7 @@ new task.
 ## The shelf
 
 `samples/moonsift-ingest.json` is a Moonsift collection (Office / Home / Misc) plus a couple of
-extra Amazon finds; `npm run ingest -- --force --parallel 4 samples/moonsift-ingest.json` rebuilds
+extra Amazon finds; `npm run ingest -- --force --mesh --parallel 4 samples/moonsift-ingest.json` rebuilds
 it with Meshy models, and `npm run ingest -- --remesh --parallel 4 samples/moonsift-ingest.json`
 fills in models for whatever is still procedural. `data/demo.json` is a small batch of public product pages for trying the
 pipeline. Product images belong to their respective owners; `npm run ingest -- --remove <id>`
@@ -120,9 +141,15 @@ clears any of them.
 
 ```sh
 npm run typecheck
+npm test             # ingest tests (node --test via tsx)
 npm run build        # dist/
 npm run preview      # serve dist/ locally
 ```
+
+`npm test` runs `tests/*.test.ts` with Node's built-in runner. The ingest tests serve fake
+product pages and images from a local HTTP server, run the real CLI against a temp folder
+(`THINGS_ROOT`), and preload `tests/helpers/no-paid-network.ts`, which blocks any request to
+Meshy, so they never touch the network or spend credits.
 
 `dist/` is a fully static site: the item list is bundled in and images are copied from
 `public/`. Deploy it anywhere that serves static files.
@@ -146,11 +173,12 @@ src/                  viewer (Vite + Three.js)
   sections.ts         group items by section (layout and chrome counts share it)
   ui.ts               product card, section labels, empty state, paste / drop intake
 scripts/ingest.ts     CLI ingest
-scripts/lib/          fetch, extract, images (keying, hashing, palette), asset (shape), meshy, glb (slimming), dev-ingest (Vite plugin)
+scripts/lib/          fetch, extract, images (keying, hashing, palette), asset (shape), meshy, glb (slimming), store (staged writes), dev-ingest (Vite plugin)
 shared/types.ts       Item / Asset types shared by both sides
 shared/text.ts        brand-once title rule shared by both sides
 data/items.json       the collection
 data/demo.json        small batch of public product pages
 samples/              the Moonsift collection batch and its raw export
 public/items/<id>/    per-item images (and model.glb when present)
+tests/                node --test suite for ingest
 ```

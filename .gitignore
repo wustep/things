@@ -6,3 +6,7 @@ dist
 *.log
 .DS_Store
 .vercel
+
+# Left behind only if an ingest is killed mid-swap (see scripts/lib/store.ts)
+public/items/*.staging-*
+public/items/*.backup-*

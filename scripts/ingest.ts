@@ -16,12 +16,13 @@
  * `section` (a shelf label such as "Office"), `shape: 'card' | 'box' | 'cylinder'` and `meshTask`
  * (the id of a Meshy task that already succeeded, to attach its model instead of paying for a new one).
  *
- * Writes data/items.json and public/items/<id>/{primary.png, ref-N.jpg, model.glb?}.
+ * Writes data/items.json and public/items/<id>/{primary.png, ref-N.jpg, model.glb?}. New files are
+ * built in a staging folder and swapped in only on success, so a failed --force keeps the old ones.
  * Idempotent: the same URL always maps to the same id and is skipped unless --force.
  */
 import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
-import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { titleWithoutBrand } from '../shared/text.ts';
@@ -40,6 +41,7 @@ import {
   type ProcessedPrimary,
 } from './lib/images.ts';
 import { fetchTaskGlb, generateGlb, MAX_MESH_IMAGES, meshyAvailable } from './lib/meshy.ts';
+import { stageAssets, writeFileAtomic } from './lib/store.ts';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DATA_FILE = path.join(ROOT, 'data', 'items.json');
@@ -180,57 +182,56 @@ async function ingestOne(entry: BatchEntry, id: string, existing: Item | undefin
   const section = entry.section?.trim() || existing?.section;
   log(`title: ${title}${brand ? `  brand: ${brand}` : ''}${price ? `  price: ${price}` : ''}${section ? `  section: ${section}` : ''}`);
 
-  const dir = path.join(PUBLIC_ITEMS, id);
-  await rm(dir, { recursive: true, force: true });
-  await mkdir(dir, { recursive: true });
+  // Build into a staging folder; the item's current files are only replaced once this succeeds.
+  return stageAssets(path.join(PUBLIC_ITEMS, id), async (dir) => {
+    const refs = await downloadReferences(extracted.images, extracted.declared, finalUrl, dir, opts.maxRefs, log);
+    if (refs.length === 0) throw new Error('no usable images found on the page');
 
-  const refs = await downloadReferences(extracted.images, extracted.declared, finalUrl, dir, opts.maxRefs, log);
-  if (refs.length === 0) throw new Error('no usable images found on the page');
-
-  const processed = new Map<Ref, ProcessedPrimary>();
-  const { primary, index } = await choosePrimary(refs, processed);
-  if (index !== 0) {
-    log(`primary: using reference ${index + 1} (larger subject than the first image)`);
-    refs.unshift(...refs.splice(index, 1)); // keep item.images "primary first"
-  }
-  await writeFile(path.join(dir, 'primary.png'), primary.png);
-  log(`primary cut-out ${primary.width}x${primary.height}, background removed ${(primary.removedFraction * 100).toFixed(0)}%, palette ${primary.palette.join(' ')}`);
-
-  const publicDir = `/items/${id}`;
-  const procedural = buildProceduralAsset({
-    title,
-    texture: `${publicDir}/primary.png`,
-    aspect: primary.aspect,
-    palette: primary.palette,
-    removedFraction: primary.removedFraction,
-  });
-  if (entry.shape) {
-    if (!SHAPES.includes(entry.shape)) throw new Error(`unknown shape "${entry.shape}" (use ${SHAPES.join(' | ')})`);
-    procedural.shape = entry.shape;
-  }
-  let asset: Asset = procedural;
-
-  if (meshyAvailable() && !opts.noMesh) {
-    try {
-      asset = await meshAsset(entry, refs, processed, dir, procedural, log);
-    } catch (err) {
-      log(`mesh generation failed, keeping procedural asset: ${(err as Error).message}`);
+    const processed = new Map<Ref, ProcessedPrimary>();
+    const { primary, index } = await choosePrimary(refs, processed);
+    if (index !== 0) {
+      log(`primary: using reference ${index + 1} (larger subject than the first image)`);
+      refs.unshift(...refs.splice(index, 1)); // keep item.images "primary first"
     }
-  }
+    await writeFile(path.join(dir, 'primary.png'), primary.png);
+    log(`primary cut-out ${primary.width}x${primary.height}, background removed ${(primary.removedFraction * 100).toFixed(0)}%, palette ${primary.palette.join(' ')}`);
 
-  return {
-    id,
-    url: entry.url,
-    domain: new URL(finalUrl).hostname.replace(/^www\./, ''),
-    title,
-    brand,
-    price,
-    section,
-    description: extracted.description,
-    images: refs.map((r) => `${publicDir}/${r.file}`),
-    asset,
-    addedAt: new Date().toISOString(),
-  };
+    const publicDir = `/items/${id}`;
+    const procedural = buildProceduralAsset({
+      title,
+      texture: `${publicDir}/primary.png`,
+      aspect: primary.aspect,
+      palette: primary.palette,
+      removedFraction: primary.removedFraction,
+    });
+    if (entry.shape) {
+      if (!SHAPES.includes(entry.shape)) throw new Error(`unknown shape "${entry.shape}" (use ${SHAPES.join(' | ')})`);
+      procedural.shape = entry.shape;
+    }
+    let asset: Asset = procedural;
+
+    if (meshyAvailable() && !opts.noMesh) {
+      try {
+        asset = await meshAsset(entry, refs, processed, dir, procedural, log, id);
+      } catch (err) {
+        log(`mesh generation failed, keeping procedural asset: ${(err as Error).message}`);
+      }
+    }
+
+    return {
+      id,
+      url: entry.url,
+      domain: new URL(finalUrl).hostname.replace(/^www\./, ''),
+      title,
+      brand,
+      price,
+      section,
+      description: extracted.description,
+      images: refs.map((r) => `${publicDir}/${r.file}`),
+      asset,
+      addedAt: new Date().toISOString(),
+    };
+  });
 }
 
 /**
@@ -279,8 +280,9 @@ async function meshAsset(
   dir: string,
   fallback: ProceduralAsset,
   log: (m: string) => void,
+  itemId = path.basename(dir),
 ): Promise<ModelAsset> {
-  const publicDir = `/items/${path.basename(dir)}`;
+  const publicDir = `/items/${itemId}`;
   const chosen = await chooseMeshReferences(refs, processed, log);
   const raw = entry.meshTask
     ? await fetchTaskGlb(entry.meshTask, log)
@@ -292,7 +294,8 @@ async function meshAsset(
   } catch (err) {
     log(`could not slim the GLB, keeping Meshy's original (${kb(raw)} KB): ${(err as Error).message}`);
   }
-  await writeFile(path.join(dir, 'model.glb'), glb);
+  // --remesh writes into the live folder: never leave a truncated model behind.
+  await writeFileAtomic(path.join(dir, 'model.glb'), glb);
   return {
     kind: 'glb',
     url: `${publicDir}/model.glb`,
@@ -459,10 +462,7 @@ let saving: Promise<void> = Promise.resolve();
 function saveItems(items: Item[]): Promise<void> {
   saving = saving
     .catch(() => undefined)
-    .then(async () => {
-      await mkdir(path.dirname(DATA_FILE), { recursive: true });
-      await writeFile(DATA_FILE, JSON.stringify(items, null, 2) + '\n');
-    });
+    .then(() => writeFileAtomic(DATA_FILE, JSON.stringify(items, null, 2) + '\n'));
   return saving;
 }
 

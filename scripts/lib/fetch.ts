@@ -9,17 +9,26 @@ const BASE_HEADERS: Record<string, string> = {
   'cache-control': 'no-cache',
 };
 
-export async function fetchHtml(url: string, timeoutMs = 20000): Promise<{ html: string; finalUrl: string }> {
-  const res = await fetchWithTimeout(url, { headers: BASE_HEADERS, redirect: 'follow' }, timeoutMs);
-  if (!res.ok) throw new Error(`HTTP ${res.status} fetching ${url}`);
-  const html = await res.text();
-  return { html, finalUrl: res.url || url };
+/** Largest product page (or product JSON) we will read. Real pages are well under this. */
+export const MAX_PAGE_BYTES = 6 * 1024 * 1024;
+/** Largest single image we will download. */
+export const MAX_IMAGE_BYTES = 24 * 1024 * 1024;
+export const DEFAULT_TIMEOUT_MS = 20000;
+
+export async function fetchHtml(
+  url: string,
+  timeoutMs = DEFAULT_TIMEOUT_MS,
+  maxBytes = MAX_PAGE_BYTES,
+): Promise<{ html: string; finalUrl: string }> {
+  const res = await download(url, BASE_HEADERS, timeoutMs, maxBytes);
+  return { html: res.buffer.toString('utf8'), finalUrl: res.finalUrl };
 }
 
 export async function fetchBinary(
   url: string,
   referer?: string,
-  timeoutMs = 20000,
+  timeoutMs = DEFAULT_TIMEOUT_MS,
+  maxBytes = MAX_IMAGE_BYTES,
 ): Promise<{ buffer: Buffer; contentType: string }> {
   const headers: Record<string, string> = {
     'user-agent': UA,
@@ -29,18 +38,57 @@ export async function fetchBinary(
     'accept-language': 'en-US,en;q=0.9',
   };
   if (referer) headers.referer = referer;
-  const res = await fetchWithTimeout(url, { headers, redirect: 'follow' }, timeoutMs);
-  if (!res.ok) throw new Error(`HTTP ${res.status} fetching ${url}`);
-  const contentType = res.headers.get('content-type') ?? '';
-  const buffer = Buffer.from(await res.arrayBuffer());
+  const { buffer, contentType } = await download(url, headers, timeoutMs, maxBytes);
   return { buffer, contentType };
 }
 
-async function fetchWithTimeout(url: string, init: RequestInit, timeoutMs: number): Promise<Response> {
+/**
+ * GET with a size cap and a timeout that covers the whole body, not just the headers: some
+ * CDNs answer quickly and then stall mid-body, and some "images" are hundreds of megabytes.
+ */
+async function download(
+  url: string,
+  headers: Record<string, string>,
+  timeoutMs: number,
+  maxBytes: number,
+): Promise<{ buffer: Buffer; contentType: string; finalUrl: string }> {
+  if (!['http:', 'https:'].includes(new URL(url).protocol)) throw new Error(`only http(s) URLs are supported: ${url}`);
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    return await fetch(url, { ...init, signal: controller.signal });
+    const res = await fetch(url, { headers, redirect: 'follow', signal: controller.signal });
+    if (!res.ok) {
+      await res.body?.cancel().catch(() => undefined);
+      throw new Error(`HTTP ${res.status} fetching ${url}`);
+    }
+    const tooLarge = () => new Error(`response larger than ${Math.round(maxBytes / 1024)} KB: ${url}`);
+    if (Number(res.headers.get('content-length')) > maxBytes) {
+      await res.body?.cancel().catch(() => undefined);
+      throw tooLarge();
+    }
+    const chunks: Uint8Array[] = [];
+    let size = 0;
+    if (res.body) {
+      const reader = res.body.getReader();
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        size += value.byteLength;
+        if (size > maxBytes) {
+          await reader.cancel().catch(() => undefined);
+          throw tooLarge();
+        }
+        chunks.push(value);
+      }
+    }
+    return {
+      buffer: Buffer.concat(chunks),
+      contentType: res.headers.get('content-type') ?? '',
+      finalUrl: res.url || url,
+    };
+  } catch (err) {
+    if (controller.signal.aborted) throw new Error(`timed out after ${timeoutMs} ms fetching ${url}`);
+    throw err;
   } finally {
     clearTimeout(timer);
   }

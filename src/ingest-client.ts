@@ -2,7 +2,7 @@
  * Talks to the dev-server ingest endpoint (see scripts/lib/dev-ingest.ts). Only exists while
  * `npm run dev` is serving; a static build has no server, so callers fall back to a hint.
  */
-const BASE = import.meta.env.BASE_URL;
+const BASE = import.meta.env?.BASE_URL ?? '/';
 
 export async function ingestAvailable(): Promise<boolean> {
   if (!import.meta.env.DEV) return false;

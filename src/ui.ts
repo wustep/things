@@ -1,12 +1,13 @@
 import { titleWithoutBrand } from '../shared/text.ts';
 import type { Item } from '../shared/types.ts';
+import type { CollectionChange as Change } from '../shared/collection.ts';
 import { assetUrl } from './data.ts';
 import { extractUrls, ingestAvailable, ingestUrls } from './ingest-client.ts';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 export const textureOf = (item: Item) => assetUrl(item.asset.kind === 'glb' ? item.asset.fallback.texture : item.asset.texture);
 const titleOf = (item: Item) => titleWithoutBrand(item.title, item.brand);
-export type Change = { type: 'section'; id: string; section: string } | { type: 'move'; id: string; delta: number } | { type: 'remove'; id: string } | { type: 'restore'; item: Item; index: number };
+
 
 export class Hud {
   private items: Item[] = [];
@@ -49,7 +50,22 @@ export class Hud {
         const r = dialog.getBoundingClientRect();
         if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dialog.close();
       });
-      dialog.addEventListener('close', () => { this.opener?.focus(); });
+      dialog.addEventListener('keydown', event => {
+        if (event.key !== 'Tab') return;
+        const focusable = [...dialog.querySelectorAll<HTMLElement>('button:not([disabled]), a[href], input:not([disabled]), textarea:not([disabled])')].filter(el => el.getClientRects().length > 0);
+        const first = focusable[0], last = focusable.at(-1);
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+      });
+      dialog.addEventListener('close', () => {
+        if (dialog.id !== 'detail') { $('add-button').focus(); return; }
+        if (this.opener?.isConnected) this.opener.focus();
+        else {
+          const container = this.view === 'shelf' ? $('object-labels') : $('catalog-grid');
+          const selected = this.selected && container.querySelector<HTMLElement>(`[data-item-id="${CSS.escape(this.selected.id)}"]`);
+          (selected || container.querySelector<HTMLElement>('button') || $('add-button')).focus();
+        }
+      });
     }
     $('save-section').onclick = () => void this.changeSection();
     $('detail-section').onkeydown = e => { if (e.key === 'Enter') void this.changeSection(); };
@@ -109,7 +125,7 @@ export class Hud {
     $('hover-card').hidden = true;
     this.labels.clear();
     $('object-labels').replaceChildren(...visible.map((item, index) => {
-      const button = document.createElement('button'); button.className = 'object-label'; button.style.visibility = 'hidden';
+      const button = document.createElement('button'); button.className = 'object-label'; button.dataset.itemId = item.id; button.style.visibility = 'hidden';
       button.setAttribute('aria-label', `Inspect ${titleOf(item)}`);
       const n = document.createElement('small'); n.textContent = String(this.page * this.pageSize + index + 1).padStart(2, '0');
       button.append(n, titleOf(item)); button.onclick = () => this.inspect(item);
@@ -138,9 +154,10 @@ export class Hud {
   private renderCatalog() {
     const query = $<HTMLInputElement>('search').value.trim().toLowerCase();
     const items = this.filtered().filter(item => `${item.title} ${item.brand ?? ''} ${item.section ?? ''}`.toLowerCase().includes(query));
-    $('search-empty').hidden = items.length > 0 || this.items.length === 0;
+    $('search-empty').hidden = items.length > 0;
+    $('search-empty').textContent = this.items.length ? 'No things match your search. Try a title, brand, or section.' : 'Your collection is empty. Add a thing to make it yours.';
     $('catalog-grid').replaceChildren(...items.map(item => {
-      const button = document.createElement('button'); button.className = 'product-tile'; button.setAttribute('aria-label', `Inspect ${titleOf(item)}`);
+      const button = document.createElement('button'); button.className = 'product-tile'; button.dataset.itemId = item.id; button.setAttribute('aria-label', `Inspect ${titleOf(item)}`);
       const picture = document.createElement('span'); picture.className = 'tile-image';
       const img = document.createElement('img'); img.src = textureOf(item); img.alt = ''; img.loading = 'lazy'; img.decoding = 'async';
       img.onerror = () => { img.hidden = true; picture.dataset.failed = 'true'; };
@@ -194,7 +211,7 @@ export class Hud {
     if (await this.change({ type: 'move', id: this.selected.id, delta })) this.say(delta < 0 ? 'Moved earlier in this section.' : 'Moved later in this section.');
   }
   private async change(change: Change) {
-    try { await this.onChange?.(change); return true; }
+    try { if (!this.onChange) throw new Error('Collection controls are still loading. Try again.'); await this.onChange(change); return true; }
     catch (err) { this.say((err as Error).message, { error: true }); return false; }
   }
 

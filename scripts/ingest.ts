@@ -27,7 +27,8 @@ import { fileURLToPath } from 'node:url';
 import { titleWithoutBrand } from '../shared/text.ts';
 import type { Asset, Item, ModelAsset, ProceduralAsset, ProceduralShape } from '../shared/types.ts';
 import { buildProceduralAsset } from './lib/asset.ts';
-import { extractProduct, type Extracted } from './lib/extract.ts';
+import { extractProduct, extractShopifyProduct, type Extracted } from './lib/extract.ts';
+import { loadCollection, saveCollection, stageAssets, withCollectionLock } from './lib/store.ts';
 import { fetchBinary, fetchHtml } from './lib/fetch.ts';
 import { slimGlb } from './lib/glb.ts';
 import {
@@ -41,7 +42,7 @@ import {
 } from './lib/images.ts';
 import { fetchTaskGlb, generateGlb, MAX_MESH_IMAGES, meshyAvailable } from './lib/meshy.ts';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const ROOT = process.env.THINGS_ROOT ? path.resolve(process.env.THINGS_ROOT) : path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DATA_FILE = path.join(ROOT, 'data', 'items.json');
 const PUBLIC_ITEMS = path.join(ROOT, 'public', 'items');
 const ENV_FILE = path.join(ROOT, '.env');
@@ -110,10 +111,13 @@ async function main() {
     console.error(
       'usage: npm run ingest -- <url> [<url> ...] | <batch.json> | --remove <id> | --list  [--force] [--remesh] [--no-mesh] [--max-refs N] [--parallel N]',
     );
-    process.exit(1);
+    process.exitCode = 1;
+    return;
   }
 
-  const entries = await expandInputs(opts.inputs);
+  const rawEntries = await expandInputs(opts.inputs);
+  const unique = new Map(rawEntries.map(entry => [idFor(entry.url), entry]));
+  const entries = [...unique.values()];
   const order = new Map(entries.map((e, i) => [idForUrl(e.url) ?? e.url, i]));
   let ok = 0, skipped = 0, failed = 0;
   await inParallel(entries, opts.parallel, async (entry) => {
@@ -149,7 +153,7 @@ async function main() {
     }
   });
   console.log(`\n${ok} ingested, ${skipped} skipped, ${failed} failed → ${path.relative(ROOT, DATA_FILE)}`);
-  if (failed && !ok) process.exit(1);
+  if (failed) process.exitCode = 1;
 }
 
 async function ingestOne(entry: BatchEntry, id: string, existing: Item | undefined, opts: Options): Promise<Item> {
@@ -159,12 +163,23 @@ async function ingestOne(entry: BatchEntry, id: string, existing: Item | undefin
 
   let extracted: Extracted = { images: [], declared: 0 };
   let finalUrl = entry.url;
+  let pageError: Error | undefined;
   try {
     const page = await fetchHtml(entry.url);
     finalUrl = page.finalUrl;
     extracted = extractProduct(page.html, finalUrl);
   } catch (err) {
-    log(`page fetch failed (${(err as Error).message}); continuing with overrides only`);
+    pageError = err as Error;
+    log(`page fetch failed (${pageError.message}); trying product data or image overrides`);
+  }
+  // Shopify's public product endpoint often survives theme/client-rendering changes.
+  if ((!extracted.images.length || !extracted.price) && /\/products\/[^/]+/.test(new URL(finalUrl).pathname)) {
+    try {
+      const endpoint = new URL(finalUrl); endpoint.pathname = endpoint.pathname.replace(/\/$/, '') + '.js'; endpoint.search = '';
+      const response = await fetchHtml(endpoint.toString());
+      const shop = extractShopifyProduct(JSON.parse(response.html), finalUrl);
+      extracted = { ...shop, ...Object.fromEntries(Object.entries(extracted).filter(([key, value]) => !['images', 'declared'].includes(key) && value !== undefined)), images: [...shop.images, ...extracted.images], declared: shop.declared + extracted.declared };
+    } catch { /* Not Shopify, or the shop blocks both endpoints. Preserve the original reason. */ }
   }
   const overrides = [entry.image, ...(entry.images ?? [])].filter((u): u is string => typeof u === 'string' && u.length > 0);
   for (const u of overrides) {
@@ -180,12 +195,10 @@ async function ingestOne(entry: BatchEntry, id: string, existing: Item | undefin
   const section = entry.section?.trim() || existing?.section;
   log(`title: ${title}${brand ? `  brand: ${brand}` : ''}${price ? `  price: ${price}` : ''}${section ? `  section: ${section}` : ''}`);
 
-  const dir = path.join(PUBLIC_ITEMS, id);
-  await rm(dir, { recursive: true, force: true });
-  await mkdir(dir, { recursive: true });
+  return stageAssets(path.join(PUBLIC_ITEMS, id), async (dir) => {
 
   const refs = await downloadReferences(extracted.images, extracted.declared, finalUrl, dir, opts.maxRefs, log);
-  if (refs.length === 0) throw new Error('no usable images found on the page');
+  if (refs.length === 0) throw new Error(pageError ? `${pageError.message}. The shop blocked or could not serve this product; supply an image override in a batch file.` : 'No usable product images found. Try a direct product URL or supply an image override in a batch file.');
 
   const processed = new Map<Ref, ProcessedPrimary>();
   const { primary, index } = await choosePrimary(refs, processed);
@@ -212,7 +225,7 @@ async function ingestOne(entry: BatchEntry, id: string, existing: Item | undefin
 
   if (meshyAvailable() && !opts.noMesh) {
     try {
-      asset = await meshAsset(entry, refs, processed, dir, procedural, log);
+      asset = await meshAsset(entry, refs, processed, dir, procedural, log, id);
     } catch (err) {
       log(`mesh generation failed, keeping procedural asset: ${(err as Error).message}`);
     }
@@ -231,6 +244,7 @@ async function ingestOne(entry: BatchEntry, id: string, existing: Item | undefin
     asset,
     addedAt: new Date().toISOString(),
   };
+  });
 }
 
 /**
@@ -279,8 +293,9 @@ async function meshAsset(
   dir: string,
   fallback: ProceduralAsset,
   log: (m: string) => void,
+  itemId = path.basename(dir),
 ): Promise<ModelAsset> {
-  const publicDir = `/items/${path.basename(dir)}`;
+  const publicDir = `/items/${itemId}`;
   const chosen = await chooseMeshReferences(refs, processed, log);
   const raw = entry.meshTask
     ? await fetchTaskGlb(entry.meshTask, log)
@@ -398,7 +413,7 @@ async function downloadReferences(
 ): Promise<Ref[]> {
   const refs: Ref[] = [];
   const seen = new Set<string>();
-  for (const [i, url] of candidates.entries()) {
+  for (const [i, url] of [...new Set(candidates)].slice(0, 24).entries()) {
     if (refs.length >= maxRefs) break;
     try {
       const { buffer, contentType } = await fetchBinary(url, referer);
@@ -447,22 +462,11 @@ function looksLikeImage(buf: Buffer): boolean {
 
 // ---------- items.json ----------
 
-async function loadItems(): Promise<Item[]> {
-  if (!existsSync(DATA_FILE)) return [];
-  const raw = await readFile(DATA_FILE, 'utf8');
-  return raw.trim() ? (JSON.parse(raw) as Item[]) : [];
-}
-
-/** Writes are queued so parallel ingests never interleave inside the file. */
+async function loadItems(): Promise<Item[]> { return loadCollection(DATA_FILE); }
 let saving: Promise<void> = Promise.resolve();
-
 function saveItems(items: Item[]): Promise<void> {
-  saving = saving
-    .catch(() => undefined)
-    .then(async () => {
-      await mkdir(path.dirname(DATA_FILE), { recursive: true });
-      await writeFile(DATA_FILE, JSON.stringify(items, null, 2) + '\n');
-    });
+  const snapshot = structuredClone(items);
+  saving = saving.then(() => saveCollection(DATA_FILE, snapshot));
   return saving;
 }
 
@@ -514,7 +518,7 @@ function parseArgs(argv: string[]): Options {
     remesh: false,
     remove: false,
     list: false,
-    noMesh: false,
+    noMesh: true,
     maxRefs: DEFAULT_MAX_REFS,
     parallel: 1,
     inputs: [],
@@ -528,10 +532,11 @@ function parseArgs(argv: string[]): Options {
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--force' || a === '-f') opts.force = true;
-    else if (a === '--remesh') opts.remesh = true;
+    else if (a === '--remesh') { opts.remesh = true; opts.noMesh = false; }
     else if (a === '--remove' || a === '--rm') opts.remove = true;
     else if (a === '--list' || a === '-l') opts.list = true;
     else if (a === '--no-mesh') opts.noMesh = true;
+    else if (a === '--mesh') opts.noMesh = false;
     else if (a === '--max-refs' || a.startsWith('--max-refs=')) [opts.maxRefs, i] = intFlag(a, i, '--max-refs', 50);
     else if (a === '--parallel' || a.startsWith('--parallel=')) [opts.parallel, i] = intFlag(a, i, '--parallel', MAX_PARALLEL);
     else if (a.startsWith('-')) throw new Error(`unknown flag ${a}`);
@@ -547,10 +552,12 @@ const TRACKING_PARAMS = /^(utm_|fbclid|gclid|ref$|ref_|tag$|th$|psc$|pd_rd|pf_rd
 /** Stable id: hostname slug + short hash of the URL without tracking params. */
 export function idFor(url: string): string {
   const u = new URL(url);
+  if (!['http:', 'https:'].includes(u.protocol)) throw new Error('Use an http(s) product URL.');
   for (const key of [...u.searchParams.keys()]) {
     if (TRACKING_PARAMS.test(key)) u.searchParams.delete(key);
   }
   u.hash = '';
+
   const host = u.hostname.replace(/^www\./, '').split('.').slice(0, -1).join('-') || u.hostname;
   // Amazon: collapse to the ASIN so /dp/ASIN and /Long-Title/dp/ASIN agree.
   const asin = u.pathname.match(/\/(?:dp|gp\/product)\/([A-Z0-9]{10})/i)?.[1];
@@ -586,7 +593,8 @@ function kb(buf: Buffer): string {
   return (buf.length / 1024).toFixed(0);
 }
 
-main().catch((err) => {
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) withCollectionLock(DATA_FILE, main).catch((err) => {
   console.error(err);
-  process.exit(1);
+  process.exitCode = 1;
+    return;
 });

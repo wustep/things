@@ -1,18 +1,21 @@
 [
   {
-    "url": "https://www.aesop.com/hand-body/hand-washes-balms/resurrection-aromatique-hand-wash/BT13.html",
-    "brand": "Aesop"
-  },
-  {
-    "url": "https://www.lego.com/en-us/product/bonsai-tree-10281",
-    "brand": "LEGO"
-  },
-  {
     "url": "https://store.stonemaiergames.com/products/wingspan",
-    "shape": "box"
+    "section": "New finds"
   },
   {
     "url": "https://teenage.engineering/store/tp-7/",
-    "title": "TP–7 field recorder"
+    "title": "TP\u20137 field recorder",
+    "section": "New finds"
+  },
+  {
+    "url": "https://www.ugmonk.com/products/analog-starter-kit",
+    "section": "New finds"
+  },
+  {
+    "url": "https://www.amazon.com/dp/B09HM94VDS",
+    "title": "MX Master 3S",
+    "brand": "Logitech",
+    "section": "New finds"
   }
 ]

@@ -104,12 +104,17 @@ export async function normalizeReference(buffer: Buffer, maxSide = 1200): Promis
  */
 export async function processPrimary(buffer: Buffer, maxSide = 1024): Promise<ProcessedPrimary> {
   const img = await decode(buffer);
-  flattenOntoWhite(img);
+  // An existing alpha channel is better evidence than color similarity. Keep it intact.
+  const hasTransparency = img.bitmap.data.some((value, index) => index % 4 === 3 && value < 250);
   fit(img, 1400);
 
   const { width, height, data } = img.bitmap;
-  const bg = estimateBackground(data, width, height);
-  const removed = bg ? keyOutBackground(data, width, height, bg) : 0;
+  const original = Buffer.from(data);
+  const bg = hasTransparency ? null : estimateBackground(data, width, height);
+  let removed = hasTransparency ? data.reduce((n, value, index) => n + Number(index % 4 === 3 && value < 24), 0) : bg ? keyOutBackground(data, width, height, bg) : 0;
+  // Near-white objects against white can disappear under naive keying. Keep the photograph
+  // when the mask would erase almost everything; never emit a blank "successful" object.
+  if (!hasTransparency && removed / (width * height) > .97) { original.copy(data); removed = 0; }
   const removedFraction = removed / (width * height);
 
   const box = opaqueBounds(data, width, height);
@@ -243,6 +248,11 @@ function keyOutBackground(data: Buffer, w: number, h: number, bg: RGB): number {
     // Soft edge: partially transparent between tol and soft.
     const alpha = d <= tol ? 0 : Math.round(((d - tol) / (soft - tol)) * 255);
     data[o + 3] = alpha;
+    if (alpha > 0 && alpha < 255) {
+      // Remove the original matte from fringe pixels so white halos do not glow in the void.
+      const a = alpha / 255;
+      for (const [channel, background] of [bg.r, bg.g, bg.b].entries()) data[o + channel] = Math.max(0, Math.min(255, Math.round((data[o + channel] - background * (1 - a)) / a)));
+    }
     if (alpha === 0) removed++;
     const x = i % w;
     const y = (i - x) / w;

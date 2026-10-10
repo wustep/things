@@ -6,6 +6,8 @@ const BOX_WORDS = /\b(book|hardcover|paperback|box|boxed|puzzle|board game|conso
 /** Decide how to represent an item in the void from its title and cut-out shape. */
 export function chooseShape(title: string, aspect: number, removedFraction: number): ProceduralShape {
   const tall = aspect < 0.62;
+  // A keyed silhouette is more faithful than wrapping the product photograph around a can.
+  if (removedFraction >= 0.05) return 'card';
   if (CYLINDER_WORDS.test(title) && tall) return 'cylinder';
   if (BOX_WORDS.test(title) && aspect > 0.7 && aspect < 1.8) return 'box';
   // If we could not separate the subject from its background, a box with the photo as

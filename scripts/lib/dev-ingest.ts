@@ -12,6 +12,8 @@ import type { IncomingMessage, ServerResponse } from 'node:http';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import type { Plugin } from 'vite';
+import { applyChange, type CollectionChange } from '../../shared/collection.ts';
+import { loadCollection, saveCollection, withCollectionLock } from './store.ts';
 
 const MAX_URLS = 10;
 const ITEM_TYPES: Record<string, string> = {
@@ -55,6 +57,24 @@ export function thingsDevIngest(): Plugin {
         res.end('things');
       });
 
+      server.middlewares.use('/__things/collection', async (req, res) => {
+        if (req.method !== 'POST') return reply(res, 405, 'POST only');
+        if (!sameOrigin(req)) return reply(res, 403, 'cross-origin requests are not allowed');
+        if (!/^application\/json\b/.test(req.headers['content-type'] ?? '')) return reply(res, 415, 'send application/json');
+        try {
+          const change = JSON.parse(await readBody(req)) as CollectionChange;
+          if (!change || typeof change !== 'object') return reply(res, 400, 'Invalid collection action');
+          const file = path.join(root, 'data', 'items.json');
+          const next = await withCollectionLock(file, async () => {
+            const items = applyChange(await loadCollection(file), change);
+            await saveCollection(file, items);
+            return items;
+          });
+          res.setHeader('content-type', 'application/json');
+          res.end(JSON.stringify(next));
+        } catch (error) { reply(res, 409, (error as Error).message); }
+      });
+
       server.middlewares.use('/__things/ingest', async (req, res) => {
         if (req.method !== 'POST') return reply(res, 405, 'POST only');
         if (!sameOrigin(req)) return reply(res, 403, 'cross-origin requests are not allowed');
@@ -77,7 +97,7 @@ export function thingsDevIngest(): Plugin {
           'x-content-type-options': 'nosniff',
         });
         server.config.logger.info(`[things] ingest ${urls.join(' ')}`);
-        const child = spawn(process.execPath, [tsxCli, script, ...urls], {
+        const child = spawn(process.execPath, [tsxCli, script, '--no-mesh', ...urls], {
           cwd: root,
           env: process.env,
           stdio: ['ignore', 'pipe', 'pipe'],

@@ -65,8 +65,8 @@ function flattenJsonLd(node: unknown, acc: unknown[] = []): unknown[] {
   if (Array.isArray(node)) node.forEach((n) => flattenJsonLd(n, acc));
   else if (node && typeof node === 'object') {
     acc.push(node);
-    const graph = (node as Record<string, unknown>)['@graph'];
-    if (graph) flattenJsonLd(graph, acc);
+    const record = node as Record<string, unknown>;
+    for (const key of ['@graph', 'mainEntity', 'hasVariant']) if (record[key]) flattenJsonLd(record[key], acc);
   }
   return acc;
 }
@@ -75,7 +75,7 @@ function isProductNode(node: unknown): boolean {
   if (!node || typeof node !== 'object') return false;
   const type = (node as Record<string, unknown>)['@type'];
   const types = Array.isArray(type) ? type : [type];
-  return types.some((t) => typeof t === 'string' && /product/i.test(t));
+  return types.some((t) => typeof t === 'string' && /^(?:https?:\/\/schema.org\/)?Product(?:Group)?$/i.test(t));
 }
 
 function brandOf(b: unknown): string | undefined {
@@ -188,12 +188,6 @@ function applyGenericFallbacks($: Cheerio, out: Extracted, pageUrl: string) {
       out.price = formatPrice(candidate, currency);
     }
   }
-  if (!out.price) {
-    // Look for a visible price-ish string near the top of the body.
-    const body = $('body').text();
-    const m = body.match(/(?:[$€£¥]\s?\d{1,5}(?:[.,]\d{2,3})?(?:[.,]\d{2})?)/);
-    if (m) out.price = m[0].replace(/\s/g, '');
-  }
   // Gallery images: prefer large <img> in product-y containers, then any big srcset.
   const selectors = [
     '[class*="gallery"] img',
@@ -276,4 +270,20 @@ export function formatPrice(amount: string, currency?: string): string {
   const sym = currency ? SYMBOLS[currency.toUpperCase()] ?? `${currency.toUpperCase()} ` : '$';
   const fixed = Number.isInteger(num) ? num.toString() : num.toFixed(2);
   return `${sym}${fixed}`;
+}
+
+/** Shopify /products/handle.js uses cents, not display currency amounts. */
+export function extractShopifyProduct(value: unknown, pageUrl: string): Extracted {
+  if (!value || typeof value !== 'object') throw new Error('Not a product response');
+  const p = value as Record<string, unknown>;
+  if (typeof p.title !== 'string' || !Array.isArray(p.images)) throw new Error('Not a Shopify product');
+  const images = imagesOf(p.images).map(url => absolutize(url, pageUrl)).filter(isLikelyProductImage);
+  const variantId = new URL(pageUrl).searchParams.get('variant');
+  const variants = Array.isArray(p.variants) ? p.variants as Record<string, unknown>[] : [];
+  const variant = variants.find(v => String(v.id) === variantId) ?? variants[0];
+  const price = variant?.price ?? p.price;
+  return { title: p.title, brand: str(p.vendor), description: typeof p.description === 'string' ? cheerio.load(p.description).text().trim().slice(0, 400) : undefined,
+    // Public product JSON does not reliably declare the shop currency. Do not guess dollars.
+    price: typeof price === 'number' && typeof p.currency === 'string' ? formatPrice(String(price / 100), p.currency) : undefined,
+    images, declared: images.length };
 }

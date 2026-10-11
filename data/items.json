@@ -800,45 +800,29 @@
     "url": "https://us.nothing.tech/products/headphone-1?variant=46734988705944",
     "domain": "us.nothing.tech",
     "title": "Headphone (1)",
-    "price": "$299",
+    "brand": "Nothing",
+    "price": "$199",
     "section": "Misc",
     "images": [
       "/items/us-nothing-db5358fa/ref-0.jpg",
       "/items/us-nothing-db5358fa/ref-1.jpg",
       "/items/us-nothing-db5358fa/ref-2.jpg",
       "/items/us-nothing-db5358fa/ref-3.jpg",
-      "/items/us-nothing-db5358fa/ref-4.jpg",
-      "/items/us-nothing-db5358fa/ref-5.jpg"
+      "/items/us-nothing-db5358fa/ref-4.jpg"
     ],
     "asset": {
-      "kind": "glb",
-      "url": "/items/us-nothing-db5358fa/model.glb",
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/us-nothing-db5358fa/primary.png",
+      "aspect": 0.7129,
       "palette": [
-        "#8b8e92",
-        "#4a4d50",
-        "#101112",
-        "#ffffff"
-      ],
-      "refs": [
-        "/items/us-nothing-db5358fa/ref-0.jpg",
-        "/items/us-nothing-db5358fa/ref-2.jpg",
-        "/items/us-nothing-db5358fa/ref-1.jpg"
-      ],
-      "fallback": {
-        "kind": "procedural",
-        "shape": "card",
-        "texture": "/items/us-nothing-db5358fa/primary.png",
-        "aspect": 0.7119,
-        "palette": [
-          "#8b8e92",
-          "#4a4d50",
-          "#101112",
-          "#ffffff"
-        ]
-      }
+        "#707274",
+        "#4d4f51",
+        "#aeb0b2",
+        "#0e0f0f"
+      ]
     },
-    "addedAt": "2026-09-14T07:29:29.664Z",
-    "brand": "Nothing"
+    "addedAt": "2026-10-11T02:30:48.765Z"
   },
   {
     "id": "remsen-f65a1f42",

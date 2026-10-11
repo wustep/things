@@ -1,43 +1,31 @@
 [
   {
     "file": "ref-0.png",
-    "url": "https://cdn.shopify.com/s/files/1/0579/8091/1768/files/headphone-1-black-3_4-view-thumbnail.webp?v=1788842815",
+    "url": "https://cdn.shopify.com/s/files/1/0579/8091/1768/files/headphone-1-white-3_4-view-thumbnail.webp?v=1788842815",
     "width": 2000,
     "height": 2000
   },
   {
     "file": "ref-1.jpg",
-    "url": "https://cdn.sanity.io/images/gtd4w1cq/production/6e7ce8b020e81a6e157c8c0d7ccacc16961f7896-4096x2305.jpg?auto=format",
+    "url": "https://cdn.sanity.io/images/gtd4w1cq/production/e46a5dce8b323b3601995bb54dc8d818cab0b7bf-4096x2305.jpg?auto=format",
     "width": 4096,
     "height": 2305
   },
   {
     "file": "ref-2.jpg",
-    "url": "https://cdn.sanity.io/images/gtd4w1cq/production/b76a6e3ba2d0bfa105c9629633a1151493005a52-4096x2305.jpg?auto=format",
-    "width": 4096,
-    "height": 2305
+    "url": "https://cdn.sanity.io/images/gtd4w1cq/production/c45d469722841bcffddc4bb2520582f0e6c414d8-864x864.jpg?auto=format",
+    "width": 864,
+    "height": 864
   },
   {
     "file": "ref-3.jpg",
-    "url": "https://cdn.sanity.io/images/gtd4w1cq/production/682ad402f35018030b5e79c37ff5b00eea7af6a8-4096x2305.jpg?auto=format",
-    "width": 4096,
-    "height": 2305
+    "url": "https://cdn.sanity.io/images/gtd4w1cq/production/777d84280036889f8fdfe4d472b682d251d8d55c-1536x1153.jpg?auto=format",
+    "width": 1536,
+    "height": 1153
   },
   {
     "file": "ref-4.jpg",
-    "url": "https://cdn.sanity.io/images/gtd4w1cq/production/8d5f9b344f0413ea729917034414bf763676abb2-4096x2305.jpg?auto=format",
-    "width": 4096,
-    "height": 2305
-  },
-  {
-    "file": "ref-5.jpg",
-    "url": "https://cdn.sanity.io/images/gtd4w1cq/production/e234708c4c1ce60c8b865904db1f445911579af7-4096x2305.jpg?auto=format",
-    "width": 4096,
-    "height": 2305
-  },
-  {
-    "file": "ref-6.jpg",
-    "url": "https://cdn.sanity.io/images/gtd4w1cq/production/e46a5dce8b323b3601995bb54dc8d818cab0b7bf-4096x2305.jpg?auto=format",
+    "url": "https://cdn.sanity.io/images/gtd4w1cq/production/88f41084d5adc91d9835c009738c0f6d20f0cdee-4096x2305.jpg?auto=format",
     "width": 4096,
     "height": 2305
   }

@@ -148,9 +148,16 @@
   {
     "url": "https://us.nothing.tech/products/headphone-1?variant=46734988705944",
     "title": "Headphone (1)",
-    "price": "$299",
+    "price": "$199",
     "section": "Misc",
-    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_NYKUrszFZKs0e2VnmfhY.jpg",
+    "image": "https://cdn.shopify.com/s/files/1/0579/8091/1768/files/headphone-1-white-3_4-view-thumbnail.webp?v=1788842815",
+    "images": [
+      "https://cdn.sanity.io/images/gtd4w1cq/production/e46a5dce8b323b3601995bb54dc8d818cab0b7bf-4096x2305.jpg?auto=format",
+      "https://cdn.sanity.io/images/gtd4w1cq/production/c45d469722841bcffddc4bb2520582f0e6c414d8-864x864.jpg?auto=format",
+      "https://cdn.sanity.io/images/gtd4w1cq/production/777d84280036889f8fdfe4d472b682d251d8d55c-1536x1153.jpg?auto=format",
+      "https://cdn.sanity.io/images/gtd4w1cq/production/88f41084d5adc91d9835c009738c0f6d20f0cdee-4096x2305.jpg?auto=format"
+    ],
+    "maxRefs": 5,
     "brand": "Nothing"
   },
   {

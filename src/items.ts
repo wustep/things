@@ -9,6 +9,7 @@ import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.j
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import type { Item, ModelOrientation, ProceduralAsset, ProceduralShape } from '../shared/types.ts';
 import { assetUrl } from './data.ts';
+import sizesJson from '../data/sizes.json';
 
 /** Every item is fitted into this footprint (world units) so the shelf reads evenly. */
 const FIT = { w: 1.2, h: 1.05, d: 1.1 };
@@ -78,6 +79,7 @@ export async function buildItemNode(item: Item): Promise<ItemNode> {
   } else {
     built = await buildProcedural(item.asset, item.title);
   }
+  applyRealScale(built, item.id);
 
   const root = new THREE.Group();
   root.name = item.id;
@@ -269,6 +271,35 @@ function buildCylinder(image: HTMLImageElement, aspect: number, palette: string[
   mesh.position.y = h / 2;
   mesh.rotation.y = Math.PI; // the label is drawn around u = 0.5, which this turns to face +z
   return { object: mesh, kind: 'cylinder', size: { w, h, d: w }, disposables: [geometry, side, cap, label, emissive] };
+}
+
+// ---------- real-world scale ----------
+
+/**
+ * Largest real dimension (cm) per item from data/sizes.json. Literal scale would make a mouse a
+ * sixteenth of a sofa and invisible on the shelf, so display size follows (cm / largest)^0.3,
+ * never below SCALE_FLOOR: the sofa stays full size, a mouse lands near half of it, and order is
+ * always preserved.
+ */
+const SCALE_EXPONENT = 0.3;
+const SCALE_FLOOR = 0.42;
+const REAL_SIZES = new Map(Object.entries(sizesJson).filter((e): e is [string, number] => typeof e[1] === 'number' && e[1] > 0));
+const LARGEST_CM = Math.max(1, ...REAL_SIZES.values());
+/** Things not measured yet sit at the collection's median size rather than the largest. */
+const MEDIAN_CM = (() => {
+  const v = [...REAL_SIZES.values()].sort((a, b) => a - b);
+  return v.length ? v[Math.floor(v.length / 2)] : LARGEST_CM;
+})();
+
+function applyRealScale(built: Built, id: string) {
+  const cm = REAL_SIZES.get(id) ?? MEDIAN_CM;
+  const target = Math.max(FIT.w, FIT.h) * Math.max(SCALE_FLOOR, Math.pow(cm / LARGEST_CM, SCALE_EXPONENT));
+  const k = Math.min(1, target / Math.max(built.size.w, built.size.h, built.size.d, 1e-6));
+  if (k >= 0.999) return;
+  // The object already sits centred on its base; scaling its offset with it keeps it there.
+  built.object.scale.multiplyScalar(k);
+  built.object.position.multiplyScalar(k);
+  built.size = { w: built.size.w * k, h: built.size.h * k, d: built.size.d * k };
 }
 
 // ---------- glb ----------

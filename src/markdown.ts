@@ -1,3 +1,5 @@
+import { affiliateUrl } from '../shared/amazon.ts';
+
 /**
  * Just enough Markdown for notes about things: paragraphs, line breaks, headings, lists, quotes,
  * code, emphasis, links and rules. Everything is HTML-escaped first and only http(s) and mailto
@@ -82,7 +84,8 @@ function inline(text: string): string {
 function link(href: string, label: string): string {
   const raw = href.replace(/&amp;/g, '&');
   if (!/^(https?:|mailto:)/i.test(raw)) return label;
-  return `<a href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+  const tagged = affiliateUrl(raw);
+  return `<a href="${tagged === raw ? href : escapeHtml(tagged)}" target="_blank" rel="noopener noreferrer">${label}</a>`;
 }
 
 export function escapeHtml(s: string): string {

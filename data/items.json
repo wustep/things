@@ -118,6 +118,34 @@
     "addedAt": "2026-10-11T02:00:00.729Z"
   },
   {
+    "id": "ergonofis-b544e709",
+    "url": "https://ergonofis.com/products/single-dual-monitor-arms?variant=45146352910415",
+    "domain": "ergonofis.com",
+    "title": "Monitor Arm, White",
+    "brand": "ergonofis",
+    "price": "$165",
+    "section": "Office",
+    "description": "Free up desk space and work comfortably with the Monitor Arm. Customize your setup with a single or dual arm, and even add a laptop tray, for the flexibility that fits your needs. With full 360° rotation, a wide tilt range, and effortless switching between landscape and portrait, it keeps your screen right where you want it. Easy to install and exceptionally stable, the arm secures to your standin",
+    "images": [
+      "/items/ergonofis-b544e709/ref-0.jpg",
+      "/items/ergonofis-b544e709/ref-1.jpg",
+      "/items/ergonofis-b544e709/ref-2.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "box",
+      "texture": "/items/ergonofis-b544e709/primary.png",
+      "aspect": 1.1689,
+      "palette": [
+        "#8e8f8e",
+        "#454645",
+        "#dcdbdb",
+        "#151515"
+      ]
+    },
+    "addedAt": "2026-10-11T04:03:21.129Z"
+  },
+  {
     "id": "amzn-f76e128e",
     "url": "https://amzn.to/4bAIa1U",
     "domain": "amazon.com",
@@ -625,6 +653,231 @@
     "addedAt": "2026-10-11T01:05:19.030Z"
   },
   {
+    "id": "jamescookartworkshop-b0e89a91",
+    "url": "https://www.jamescookartworkshop.com/pages/ea-the-bestsellers-collection",
+    "domain": "jamescookartworkshop.com",
+    "title": "Bestsellers Collection",
+    "brand": "James Cook",
+    "section": "Home",
+    "description": "James Cook Artwork Shop",
+    "images": [
+      "/items/jamescookartworkshop-b0e89a91/ref-0.jpg",
+      "/items/jamescookartworkshop-b0e89a91/ref-1.jpg",
+      "/items/jamescookartworkshop-b0e89a91/ref-2.jpg",
+      "/items/jamescookartworkshop-b0e89a91/ref-3.jpg",
+      "/items/jamescookartworkshop-b0e89a91/ref-4.jpg",
+      "/items/jamescookartworkshop-b0e89a91/ref-5.jpg"
+    ],
+    "asset": {
+      "kind": "glb",
+      "url": "/items/jamescookartworkshop-b0e89a91/model.glb",
+      "palette": [
+        "#d00708",
+        "#b48d74",
+        "#362f2c",
+        "#0d0b0b"
+      ],
+      "refs": [
+        "/items/jamescookartworkshop-b0e89a91/ref-0.jpg",
+        "/items/jamescookartworkshop-b0e89a91/ref-4.jpg",
+        "/items/jamescookartworkshop-b0e89a91/ref-2.jpg",
+        "/items/jamescookartworkshop-b0e89a91/ref-3.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "box",
+        "texture": "/items/jamescookartworkshop-b0e89a91/primary.png",
+        "aspect": 0.7998,
+        "palette": [
+          "#d00708",
+          "#b48d74",
+          "#362f2c",
+          "#0d0b0b"
+        ]
+      }
+    },
+    "addedAt": "2026-09-14T06:53:49.418Z"
+  },
+  {
+    "id": "etsy-55c9006b",
+    "url": "https://www.etsy.com/listing/1814690193/interstellar-full-movie-print-whole",
+    "domain": "etsy.com",
+    "title": "Interstellar Whole Movie Poster (Details)",
+    "brand": "BendingPixelsShop",
+    "price": "$59.99",
+    "section": "Home",
+    "images": [
+      "/items/etsy-55c9006b/ref-0.jpg",
+      "/items/etsy-55c9006b/ref-1.jpg",
+      "/items/etsy-55c9006b/ref-2.jpg",
+      "/items/etsy-55c9006b/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/etsy-55c9006b/primary.png",
+      "aspect": 0.665,
+      "palette": [
+        "#90918e",
+        "#50514f",
+        "#0c0c0c",
+        "#f9f9f8"
+      ]
+    },
+    "addedAt": "2026-10-11T04:04:10.460Z",
+    "description": "The whole movie in one 24\" x 36\" print: the film rendered at one frame per second, then stitched together left to right, top to bottom at 1200 dpi. Frames are not included with prints."
+  },
+  {
+    "id": "amazon-b05badce",
+    "url": "https://www.amazon.com/Nord-88-Key-Digital-Pianos-Stage-STAGE4-88/dp/B0C4FM4MJK",
+    "domain": "amazon.com",
+    "title": "Stage 4 88",
+    "brand": "Nord",
+    "price": "$5,999.00",
+    "section": "Music",
+    "description": "Buy Nord Stage 4 88-Key Fully-Weighted Keyboard: Stage Digital Pianos - Amazon.com ✓ FREE DELIVERY possible on eligible purchases",
+    "images": [
+      "/items/amazon-b05badce/ref-0.jpg",
+      "/items/amazon-b05badce/ref-1.jpg",
+      "/items/amazon-b05badce/ref-2.jpg",
+      "/items/amazon-b05badce/ref-3.jpg",
+      "/items/amazon-b05badce/ref-4.jpg",
+      "/items/amazon-b05badce/ref-5.jpg"
+    ],
+    "asset": {
+      "kind": "glb",
+      "url": "/items/amazon-b05badce/model.glb",
+      "palette": [
+        "#75292f",
+        "#292d33",
+        "#6d6c72",
+        "#ffffff"
+      ],
+      "refs": [
+        "/items/amazon-b05badce/ref-0.jpg",
+        "/items/amazon-b05badce/ref-5.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "box",
+        "texture": "/items/amazon-b05badce/primary.png",
+        "aspect": 1,
+        "palette": [
+          "#75292f",
+          "#292d33",
+          "#6d6c72",
+          "#ffffff"
+        ]
+      }
+    },
+    "addedAt": "2026-09-14T07:46:07.373Z"
+  },
+  {
+    "id": "roli-0e3366f5",
+    "url": "https://roli.com/us/product/airwave-create",
+    "domain": "roli.com",
+    "title": "Airwave",
+    "brand": "ROLI",
+    "price": "$349",
+    "section": "Music",
+    "description": "Explore new dimensions of sound with Airwave, the revolutionary device that enhances musical expression through natural gestures. Connected to Piano M or Seaboard, Airwave enables you to interact with your instrument in mid-air using a range of movements such as Air Raise, Air Tilt, Air Glide, Air Slide, and Air Flex. Powered by ROLI Vision's advanced infrared tracking, Airwave captures every nuan",
+    "images": [
+      "/items/roli-0e3366f5/ref-1.jpg",
+      "/items/roli-0e3366f5/ref-0.jpg",
+      "/items/roli-0e3366f5/ref-2.jpg",
+      "/items/roli-0e3366f5/ref-3.jpg",
+      "/items/roli-0e3366f5/ref-4.jpg",
+      "/items/roli-0e3366f5/ref-5.jpg"
+    ],
+    "asset": {
+      "kind": "glb",
+      "url": "/items/roli-0e3366f5/model.glb",
+      "palette": [
+        "#72716e",
+        "#2f2e32",
+        "#cccccc",
+        "#ffffff"
+      ],
+      "refs": [
+        "/items/roli-0e3366f5/ref-1.jpg",
+        "/items/roli-0e3366f5/ref-5.jpg",
+        "/items/roli-0e3366f5/ref-2.jpg",
+        "/items/roli-0e3366f5/ref-3.jpg"
+      ],
+      "fallback": {
+        "kind": "procedural",
+        "shape": "card",
+        "texture": "/items/roli-0e3366f5/primary.png",
+        "aspect": 0.6219,
+        "palette": [
+          "#72716e",
+          "#2f2e32",
+          "#cccccc",
+          "#ffffff"
+        ]
+      }
+    },
+    "addedAt": "2026-09-14T07:50:57.269Z"
+  },
+  {
+    "id": "boss-55cd4543",
+    "url": "https://www.boss.info/us/products/rc-500/",
+    "domain": "boss.info",
+    "title": "RC-500 Loop Station",
+    "brand": "BOSS",
+    "price": "$309.98",
+    "section": "Music",
+    "description": "RC-500: Loop Station - Dual-Track Powerhouse",
+    "images": [
+      "/items/boss-55cd4543/ref-0.jpg",
+      "/items/boss-55cd4543/ref-1.jpg",
+      "/items/boss-55cd4543/ref-2.jpg",
+      "/items/boss-55cd4543/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/boss-55cd4543/primary.png",
+      "aspect": 1.15,
+      "palette": [
+        "#d02f31",
+        "#8d514e",
+        "#141212",
+        "#edf2f3"
+      ]
+    },
+    "addedAt": "2026-10-11T03:18:00.044Z"
+  },
+  {
+    "id": "amazon-421bd010",
+    "url": "https://www.amazon.com/dp/B07Q38FWFJ",
+    "domain": "amazon.com",
+    "title": "Kalimba Thumb Piano, 17 Keys",
+    "brand": "Newlam",
+    "price": "$26.39",
+    "section": "Music",
+    "description": "Buy Newlam Kalimba Thumb Piano 17 Keys, Musical Gift for Kids and Adults: Thumb Pianos - Amazon.com ✓ FREE DELIVERY possible on eligible purchases",
+    "images": [
+      "/items/amazon-421bd010/ref-1.jpg",
+      "/items/amazon-421bd010/ref-0.jpg",
+      "/items/amazon-421bd010/ref-2.jpg",
+      "/items/amazon-421bd010/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/amazon-421bd010/primary.png",
+      "aspect": 0.9824,
+      "palette": [
+        "#d08a37",
+        "#100d0d",
+        "#4a4949",
+        "#f4f3f4"
+      ]
+    },
+    "addedAt": "2026-10-11T04:03:29.499Z"
+  },
+  {
     "id": "peakdesign-8f476d14",
     "url": "https://www.peakdesign.com/products/roller-pro?Color=Sage",
     "domain": "peakdesign.com",
@@ -670,6 +923,61 @@
       }
     },
     "addedAt": "2026-09-14T06:53:25.324Z"
+  },
+  {
+    "id": "peakdesign-e3a72cf8",
+    "url": "https://www.peakdesign.com/products/wash-pouch?Size=Small&Color=Sage",
+    "domain": "peakdesign.com",
+    "title": "Small Wash Pouch, Sage",
+    "brand": "Peak Design",
+    "price": "$49.95",
+    "section": "Misc",
+    "description": "Dopp kit, ditty bag, toiletry bag, call it what you will—it’s one of the most essential travel carry tools, and can also be one of the most frustrating....",
+    "images": [
+      "/items/peakdesign-e3a72cf8/ref-0.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/peakdesign-e3a72cf8/primary.png",
+      "aspect": 1.9498,
+      "palette": [
+        "#93948c",
+        "#53554e",
+        "#151612",
+        "#cececa"
+      ]
+    },
+    "addedAt": "2026-10-11T04:03:22.208Z"
+  },
+  {
+    "id": "peakdesign-709dfa64",
+    "url": "https://www.peakdesign.com/products/small-tech-pouch-black",
+    "domain": "peakdesign.com",
+    "title": "Small Tech Pouch, Black",
+    "brand": "Peak Design",
+    "price": "$49.95",
+    "section": "Misc",
+    "description": "Whether storing cables, everyday gear, or travel essentials, Tech Pouch offers unrivaled organization and ease of access.",
+    "images": [
+      "/items/peakdesign-709dfa64/ref-2.jpg",
+      "/items/peakdesign-709dfa64/ref-0.jpg",
+      "/items/peakdesign-709dfa64/ref-1.jpg",
+      "/items/peakdesign-709dfa64/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/peakdesign-709dfa64/primary.png",
+      "aspect": 1.2229,
+      "palette": [
+        "#717273",
+        "#2d2e31",
+        "#aeafb0",
+        "#eeeeef"
+      ]
+    },
+    "addedAt": "2026-10-11T04:03:24.925Z"
   },
   {
     "id": "amzn-0f80deec",
@@ -748,52 +1056,6 @@
       ]
     },
     "addedAt": "2026-10-11T00:43:39.474Z"
-  },
-  {
-    "id": "jamescookartworkshop-b0e89a91",
-    "url": "https://www.jamescookartworkshop.com/pages/ea-the-bestsellers-collection",
-    "domain": "jamescookartworkshop.com",
-    "title": "Bestsellers Collection",
-    "brand": "James Cook",
-    "section": "Misc",
-    "description": "James Cook Artwork Shop",
-    "images": [
-      "/items/jamescookartworkshop-b0e89a91/ref-0.jpg",
-      "/items/jamescookartworkshop-b0e89a91/ref-1.jpg",
-      "/items/jamescookartworkshop-b0e89a91/ref-2.jpg",
-      "/items/jamescookartworkshop-b0e89a91/ref-3.jpg",
-      "/items/jamescookartworkshop-b0e89a91/ref-4.jpg",
-      "/items/jamescookartworkshop-b0e89a91/ref-5.jpg"
-    ],
-    "asset": {
-      "kind": "glb",
-      "url": "/items/jamescookartworkshop-b0e89a91/model.glb",
-      "palette": [
-        "#d00708",
-        "#b48d74",
-        "#362f2c",
-        "#0d0b0b"
-      ],
-      "refs": [
-        "/items/jamescookartworkshop-b0e89a91/ref-0.jpg",
-        "/items/jamescookartworkshop-b0e89a91/ref-4.jpg",
-        "/items/jamescookartworkshop-b0e89a91/ref-2.jpg",
-        "/items/jamescookartworkshop-b0e89a91/ref-3.jpg"
-      ],
-      "fallback": {
-        "kind": "procedural",
-        "shape": "box",
-        "texture": "/items/jamescookartworkshop-b0e89a91/primary.png",
-        "aspect": 0.7998,
-        "palette": [
-          "#d00708",
-          "#b48d74",
-          "#362f2c",
-          "#0d0b0b"
-        ]
-      }
-    },
-    "addedAt": "2026-09-14T06:53:49.418Z"
   },
   {
     "id": "us-nothing-db5358fa",
@@ -919,127 +1181,6 @@
       }
     },
     "addedAt": "2026-09-14T07:29:29.627Z"
-  },
-  {
-    "id": "amazon-b05badce",
-    "url": "https://www.amazon.com/Nord-88-Key-Digital-Pianos-Stage-STAGE4-88/dp/B0C4FM4MJK",
-    "domain": "amazon.com",
-    "title": "Stage 4 88",
-    "brand": "Nord",
-    "price": "$5,999.00",
-    "section": "Misc",
-    "description": "Buy Nord Stage 4 88-Key Fully-Weighted Keyboard: Stage Digital Pianos - Amazon.com ✓ FREE DELIVERY possible on eligible purchases",
-    "images": [
-      "/items/amazon-b05badce/ref-0.jpg",
-      "/items/amazon-b05badce/ref-1.jpg",
-      "/items/amazon-b05badce/ref-2.jpg",
-      "/items/amazon-b05badce/ref-3.jpg",
-      "/items/amazon-b05badce/ref-4.jpg",
-      "/items/amazon-b05badce/ref-5.jpg"
-    ],
-    "asset": {
-      "kind": "glb",
-      "url": "/items/amazon-b05badce/model.glb",
-      "palette": [
-        "#75292f",
-        "#292d33",
-        "#6d6c72",
-        "#ffffff"
-      ],
-      "refs": [
-        "/items/amazon-b05badce/ref-0.jpg",
-        "/items/amazon-b05badce/ref-5.jpg"
-      ],
-      "fallback": {
-        "kind": "procedural",
-        "shape": "box",
-        "texture": "/items/amazon-b05badce/primary.png",
-        "aspect": 1,
-        "palette": [
-          "#75292f",
-          "#292d33",
-          "#6d6c72",
-          "#ffffff"
-        ]
-      }
-    },
-    "addedAt": "2026-09-14T07:46:07.373Z"
-  },
-  {
-    "id": "boss-55cd4543",
-    "url": "https://www.boss.info/us/products/rc-500/",
-    "domain": "boss.info",
-    "title": "RC-500 Loop Station",
-    "brand": "BOSS",
-    "price": "$309.98",
-    "section": "Misc",
-    "description": "RC-500: Loop Station - Dual-Track Powerhouse",
-    "images": [
-      "/items/boss-55cd4543/ref-0.jpg",
-      "/items/boss-55cd4543/ref-1.jpg",
-      "/items/boss-55cd4543/ref-2.jpg",
-      "/items/boss-55cd4543/ref-3.jpg"
-    ],
-    "asset": {
-      "kind": "procedural",
-      "shape": "card",
-      "texture": "/items/boss-55cd4543/primary.png",
-      "aspect": 1.15,
-      "palette": [
-        "#d02f31",
-        "#8d514e",
-        "#141212",
-        "#edf2f3"
-      ]
-    },
-    "addedAt": "2026-10-11T03:18:00.044Z"
-  },
-  {
-    "id": "roli-0e3366f5",
-    "url": "https://roli.com/us/product/airwave-create",
-    "domain": "roli.com",
-    "title": "Airwave",
-    "brand": "ROLI",
-    "price": "$349",
-    "section": "Misc",
-    "description": "Explore new dimensions of sound with Airwave, the revolutionary device that enhances musical expression through natural gestures. Connected to Piano M or Seaboard, Airwave enables you to interact with your instrument in mid-air using a range of movements such as Air Raise, Air Tilt, Air Glide, Air Slide, and Air Flex. Powered by ROLI Vision's advanced infrared tracking, Airwave captures every nuan",
-    "images": [
-      "/items/roli-0e3366f5/ref-1.jpg",
-      "/items/roli-0e3366f5/ref-0.jpg",
-      "/items/roli-0e3366f5/ref-2.jpg",
-      "/items/roli-0e3366f5/ref-3.jpg",
-      "/items/roli-0e3366f5/ref-4.jpg",
-      "/items/roli-0e3366f5/ref-5.jpg"
-    ],
-    "asset": {
-      "kind": "glb",
-      "url": "/items/roli-0e3366f5/model.glb",
-      "palette": [
-        "#72716e",
-        "#2f2e32",
-        "#cccccc",
-        "#ffffff"
-      ],
-      "refs": [
-        "/items/roli-0e3366f5/ref-1.jpg",
-        "/items/roli-0e3366f5/ref-5.jpg",
-        "/items/roli-0e3366f5/ref-2.jpg",
-        "/items/roli-0e3366f5/ref-3.jpg"
-      ],
-      "fallback": {
-        "kind": "procedural",
-        "shape": "card",
-        "texture": "/items/roli-0e3366f5/primary.png",
-        "aspect": 0.6219,
-        "palette": [
-          "#72716e",
-          "#2f2e32",
-          "#cccccc",
-          "#ffffff"
-        ]
-      }
-    },
-    "addedAt": "2026-09-14T07:50:57.269Z"
   },
   {
     "id": "amazon-3f443256",

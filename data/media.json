@@ -740,14 +740,14 @@
   },
   "jamescookartworkshop-b0e89a91": {
     "hero": {
-      "base": "/items/jamescookartworkshop-b0e89a91/2d/hero.ba6e144c",
+      "base": "/items/jamescookartworkshop-b0e89a91/2d/hero.fc638e76",
       "widths": [
         480,
         960,
         1600
       ],
       "width": 1600,
-      "height": 2216,
+      "height": 2225,
       "mode": "photo",
       "subject": [
         0,
@@ -755,11 +755,11 @@
         1,
         1
       ],
-      "tone": "#949494"
+      "tone": "#979797"
     },
     "gallery": [
       {
-        "base": "/items/jamescookartworkshop-b0e89a91/2d/photo-1.ba6e144c",
+        "base": "/items/jamescookartworkshop-b0e89a91/2d/photo-1.fc638e76",
         "widths": [
           640,
           1080
@@ -768,7 +768,7 @@
         "height": 1350
       },
       {
-        "base": "/items/jamescookartworkshop-b0e89a91/2d/photo-2.ba6e144c",
+        "base": "/items/jamescookartworkshop-b0e89a91/2d/photo-2.fc638e76",
         "widths": [
           640,
           1280
@@ -777,7 +777,7 @@
         "height": 1777
       },
       {
-        "base": "/items/jamescookartworkshop-b0e89a91/2d/photo-3.ba6e144c",
+        "base": "/items/jamescookartworkshop-b0e89a91/2d/photo-3.fc638e76",
         "widths": [
           640,
           1280
@@ -786,7 +786,7 @@
         "height": 1776
       },
       {
-        "base": "/items/jamescookartworkshop-b0e89a91/2d/photo-4.ba6e144c",
+        "base": "/items/jamescookartworkshop-b0e89a91/2d/photo-4.fc638e76",
         "widths": [
           640,
           1280
@@ -795,7 +795,7 @@
         "height": 1774
       }
     ],
-    "key": "ba6e144cd886"
+    "key": "fc638e76e8ea"
   },
   "etsy-55c9006b": {
     "hero": {
@@ -970,25 +970,25 @@
   },
   "amazon-421bd010": {
     "hero": {
-      "base": "/items/amazon-421bd010/2d/hero.abec1bad",
+      "base": "/items/amazon-421bd010/2d/hero.cb85f27e",
       "widths": [
         480,
         960
       ],
       "width": 960,
-      "height": 1250,
+      "height": 1226,
       "mode": "cutout",
       "subject": [
-        0.0571,
-        0.0439,
-        0.8857,
-        0.8775
+        0.058,
+        0.0454,
+        0.884,
+        0.9092
       ],
-      "tone": "#987352"
+      "tone": "#987251"
     },
     "gallery": [
       {
-        "base": "/items/amazon-421bd010/2d/photo-1.abec1bad",
+        "base": "/items/amazon-421bd010/2d/photo-1.cb85f27e",
         "widths": [
           640,
           1280
@@ -997,7 +997,7 @@
         "height": 1303
       },
       {
-        "base": "/items/amazon-421bd010/2d/photo-2.abec1bad",
+        "base": "/items/amazon-421bd010/2d/photo-2.cb85f27e",
         "widths": [
           640,
           1280
@@ -1006,7 +1006,7 @@
         "height": 1280
       },
       {
-        "base": "/items/amazon-421bd010/2d/photo-3.abec1bad",
+        "base": "/items/amazon-421bd010/2d/photo-3.cb85f27e",
         "widths": [
           640,
           1280
@@ -1015,7 +1015,7 @@
         "height": 1280
       }
     ],
-    "key": "abec1badf189"
+    "key": "cb85f27edf2c"
   },
   "peakdesign-8f476d14": {
     "hero": {

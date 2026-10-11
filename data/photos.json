@@ -1,5 +1,5 @@
 {
-  "_note": "Which of media/originals/<id>/ each thing is shown with (`npm run images` reads this). hero: the file cut out and shown on the shelf, or {file, mode, crop}: mode 'photo' keeps the whole photo as a rectangle (flat art, or when the shop only has a room shot); crop is [left, top, width, height] as fractions of the photo; holes keys out backdrop left inside the object (true | 'exact' | 'clear' | 'grow', see README; 'fill' makes enclosed clear patches solid); matte picks the model ('general' default, 'matting' for clear materials); lay: true lays a top-down rug flat on the shelf in perspective; frame: true puts a print in a thin black frame. gallery: extra photos for the detail view, in order. Items missing here use ref-0 and no gallery.",
+  "_note": "Which of media/originals/<id>/ each thing is shown with (`npm run images` reads this). hero: the file cut out and shown on the shelf, or {file, mode, crop}: mode 'photo' keeps the whole photo as a rectangle (flat art, or when the shop only has a room shot); crop is [left, top, width, height] as fractions of the photo; holes keys out backdrop left inside the object (true | 'exact' | 'clear' | 'grow', see README; 'fill' makes enclosed clear patches solid); matte picks the model ('general' default, 'matting' for clear materials); lay: true lays a top-down rug flat on the shelf in perspective; frame: true puts a print in a thin black frame; floor: [[x, y], ...] traces the object's bottom edge (fractions of the photo) and clears everything below it, for a floor reflection under an angled base. gallery: extra photos for the detail view, in order. Items missing here use ref-0 and no gallery.",
   "ugmonk-5117191f": { "hero": "ref-0.jpg", "gallery": ["ref-3.jpg", "ref-5.jpg", "ref-7.jpg", "ref-2.jpg"] },
   "ugmonk-ef1055c7": { "hero": { "file": "ref-0.jpg", "holes": "grow" }, "gallery": ["ref-2.jpg", "ref-4.jpg", "ref-3.jpg", "ref-7.jpg"] },
   "ergonofis-aba25b63": { "hero": "ref-0.png", "gallery": ["ref-1.png", "ref-2.png"] },
@@ -19,7 +19,7 @@
   "peakdesign-8f476d14": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-2.jpg"] },
   "amzn-0f80deec": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-2.jpg"] },
   "orientwatchusa-5b000bba": { "hero": "ref-0.png", "gallery": ["ref-1.jpg", "ref-3.jpg", "ref-2.jpg", "ref-4.jpg"] },
-  "jamescookartworkshop-b0e89a91": { "hero": { "file": "ref-1.jpg", "mode": "photo" }, "gallery": ["ref-0.png", "ref-6.jpg", "ref-4.jpg", "ref-2.jpg"] },
+  "jamescookartworkshop-b0e89a91": { "hero": { "file": "ref-1.jpg", "mode": "photo", "crop": [0.006, 0.004, 0.988, 0.992] }, "gallery": ["ref-0.png", "ref-6.jpg", "ref-4.jpg", "ref-2.jpg"] },
   "us-nothing-db5358fa": { "hero": "ref-0.png", "gallery": ["ref-1.jpg", "ref-3.jpg", "ref-2.jpg", "ref-4.jpg"] },
   "remsen-f65a1f42": { "hero": "ref-6.jpg", "gallery": ["ref-5.jpg", "ref-7.jpg", "ref-2.jpg", "ref-0.png"] },
   "journeyofficial-67ef95f6": { "hero": "ref-0.jpg", "gallery": ["ref-2.jpg", "ref-6.jpg", "ref-3.jpg"] },
@@ -52,7 +52,7 @@
   "boss-1b124b07": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-2.jpg"] },
   "ergonofis-b544e709": { "hero": { "file": "ref-1.png", "crop": [0.215, 0.176, 0.547, 0.66] }, "gallery": ["ref-0.png", "ref-2.png"] },
   "etsy-55c9006b": { "hero": { "file": "ref-0.jpg", "frame": true }, "gallery": ["ref-3.jpg", "ref-1.jpg", "ref-2.jpg"] },
-  "amazon-421bd010": { "hero": { "file": "ref-0.jpg", "crop": [0, 0, 1, 0.982], "matte": "matting", "holes": "fill" }, "gallery": ["ref-1.jpg", "ref-2.jpg", "ref-3.jpg"] },
+  "amazon-421bd010": { "hero": { "file": "ref-0.jpg", "floor": [[0.000, 0.967], [0.009, 0.971], [0.017, 0.982], [0.028, 0.986], [0.044, 0.992], [0.066, 0.996], [0.088, 0.998], [0.133, 1.000], [0.221, 0.996], [0.442, 0.986], [0.663, 0.976], [0.884, 0.965], [0.972, 0.959], [0.989, 0.948], [1.000, 0.938]], "matte": "matting", "holes": "fill" }, "gallery": ["ref-1.jpg", "ref-2.jpg", "ref-3.jpg"] },
   "peakdesign-e3a72cf8": { "hero": "ref-0.jpg", "gallery": [] },
   "peakdesign-709dfa64": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-2.jpg", "ref-3.jpg"] },
   "amazon-091b2237": { "hero": "ref-0.png", "gallery": ["ref-4.png", "ref-1.png", "ref-2.png", "ref-3.png"] }

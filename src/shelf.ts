@@ -41,7 +41,7 @@ export interface Placed {
   imgH: number;
   objW: number;
   objH: number;
-  /** How far the image hangs below the shelf line (its padding under the object, where the shadow is). */
+  /** How far the image hangs below the shelf line (its padding under the object). */
   drop: number;
   /** Horizontal shift so the object, not the padded image, is centred in its slot. */
   shift: number;

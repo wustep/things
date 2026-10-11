@@ -16,10 +16,9 @@
  *      white-studio fringes don't glow on the dark page.
  *   2. Colour: a gentle white balance on neutral pixels, highlights eased to one common white
  *      point and the deepest blacks lifted a touch, so black and white things both read on dark.
- *   3. Framing: trimmed to the object, then the same padding ratio around every one.
- *   4. Shadow: one contact shadow under the footprint and a soft occlusion, the same recipe for
- *      every object.
- *   5. AVIF + WebP at 480/960/1600 px wide (never upscaled).
+ *   3. Framing: trimmed to the object, then the same padding ratio around every one. No shadow
+ *      is baked in: things sit straight on the shelf.
+ *   4. AVIF + WebP at 480/960/1600 px wide (never upscaled).
  * Gallery photos are kept as photographs, resized to 640/1280. Outputs go to
  * public/items/<id>/2d/ and their sizes to data/media.json, which the viewer imports.
  */
@@ -39,13 +38,13 @@ const MANIFEST_FILE = path.join(ROOT, 'data', 'media.json');
 const ITEMS_FILE = path.join(ROOT, 'data', 'items.json');
 
 /** Bump when the processing below changes, so every item is rebuilt once. */
-const PIPELINE = 6;
+const PIPELINE = 7;
 /** Work at most this big (the matte is refined here), then scale down; the largest output is 1600 px. */
 const WORK_SIDE = 3072;
 const HERO_WIDTHS = [480, 960, 1600];
 const GALLERY_WIDTHS = [640, 1280];
-/** Padding around the trimmed object, as a share of its larger side; the bottom leaves room for the shadow. */
-const PAD = { side: 0.05, top: 0.05, bottom: 0.09 };
+/** Padding around the trimmed object, as a share of its larger side. No shadow: things sit straight on the shelf. */
+const PAD = { side: 0.05, top: 0.05, bottom: 0.05 };
 
 type HeroPick =
   | string
@@ -77,6 +76,12 @@ type HeroPick =
       lay?: boolean;
       /** Flat art to show framed: the picture (after crop) goes into a thin black frame and stands like an object. */
       frame?: boolean;
+      /**
+       * The object's bottom edge as [x, y] points (fractions of the photo after crop, left to
+       * right); everything below the line through them is cleared. For a floor reflection under a
+       * base seen at an angle, which a rectangular crop can't take off without clipping the base.
+       */
+      floor?: [number, number][];
     };
 interface Pick {
   hero?: HeroPick;
@@ -153,7 +158,7 @@ async function saveManifest(manifest: Record<string, MediaEntry>, items: { id: s
 
 type Holes = boolean | 'exact' | 'clear' | 'grow' | 'fill';
 
-function heroOf(pick: Pick): { file: string; mode: 'cutout' | 'photo'; crop?: [number, number, number, number]; holes: Holes; matte: MatteModel; lay: boolean; frame: boolean } {
+function heroOf(pick: Pick): { file: string; mode: 'cutout' | 'photo'; crop?: [number, number, number, number]; holes: Holes; matte: MatteModel; lay: boolean; frame: boolean; floor?: [number, number][] } {
   const h = pick.hero ?? 'ref-0.jpg';
   return typeof h === 'string'
     ? { file: h, mode: 'cutout', holes: false, matte: 'general', lay: false, frame: false }
@@ -165,6 +170,7 @@ function heroOf(pick: Pick): { file: string; mode: 'cutout' | 'photo'; crop?: [n
         matte: h.matte === 'matting' ? 'matting' : 'general',
         lay: !!h.lay,
         frame: !!h.frame,
+        floor: h.floor,
       };
 }
 
@@ -214,7 +220,7 @@ async function buildItem(id: string, pick: Pick, key: string): Promise<MediaEntr
     heroOut = await framePhoto(rgba, W, H);
   } else {
     const own = await existingAlpha(rgba, W, H);
-    heroOut = await cutout(rgba, own ?? (await segment(rgba, W, H, hero.matte)), W, H, hero.holes, !!own, hero.lay);
+    heroOut = await cutout(rgba, own ?? (await segment(rgba, W, H, hero.matte)), W, H, hero.holes, !!own, hero.lay, hero.floor);
   }
   const heroWidths = await encodeSet(
     sharp(heroOut.data, { raw: { width: heroOut.width, height: heroOut.height, channels: 4 } }),
@@ -280,7 +286,7 @@ async function existingAlpha(rgba: Buffer, W: number, H: number): Promise<Float3
 
 // ---------- cut-out ----------
 
-async function cutout(rgba: Buffer, alphaIn: Float32Array, W0: number, H0: number, holes: Holes = false, own = false, lay = false) {
+async function cutout(rgba: Buffer, alphaIn: Float32Array, W0: number, H0: number, holes: Holes = false, own = false, lay = false, floor?: [number, number][]) {
   let W = W0, H = H0;
   const n = W * H;
   await debugMask('1-model', alphaIn, W, H);
@@ -341,6 +347,7 @@ async function cutout(rgba: Buffer, alphaIn: Float32Array, W0: number, H0: numbe
     await debugMask('3-consistent', alpha, W, H);
   }
 
+  if (floor) clearBelow(alpha, W, H, floor);
   defringe(rgb, alpha, W, H);
   normalizeColour(rgb, alpha, n);
   if (lay) ({ rgb, alpha, W, H } = layFlat(rgb, alpha, W, H));
@@ -361,66 +368,21 @@ async function cutout(rgba: Buffer, alphaIn: Float32Array, W0: number, H0: numbe
   const padX = Math.round(side * PAD.side), padT = Math.round(side * PAD.top), padB = Math.round(side * PAD.bottom);
   const CW = sw + padX * 2, CH = sh + padT + padB;
 
-  // The object, premultiplied-free RGBA on a transparent canvas.
-  const object = Buffer.alloc(CW * CH * 4);
-  const objAlpha = Buffer.alloc(CW * CH);
+  // The object, premultiplied-free RGBA on a transparent canvas, and nothing else: no baked shadow.
+  const data = Buffer.alloc(CW * CH * 4);
   let tr = 0, tg = 0, tb = 0, tw = 0;
   for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) {
     const si = (y0 + y) * W + (x0 + x);
     const di = (padT + y) * CW + (padX + x);
     const a = alpha[si];
-    object[di * 4] = rgb[si * 3];
-    object[di * 4 + 1] = rgb[si * 3 + 1];
-    object[di * 4 + 2] = rgb[si * 3 + 2];
-    object[di * 4 + 3] = Math.round(a * 255);
-    objAlpha[di] = Math.round(a * 255);
+    data[di * 4] = rgb[si * 3];
+    data[di * 4 + 1] = rgb[si * 3 + 1];
+    data[di * 4 + 2] = rgb[si * 3 + 2];
+    data[di * 4 + 3] = Math.round(a * 255);
     if (a > 0.5) {
       tr += rgb[si * 3]; tg += rgb[si * 3 + 1]; tb += rgb[si * 3 + 2]; tw++;
     }
   }
-
-  // Footprint: where the bottom few percent of the object actually touches down.
-  const band = Math.max(2, Math.round(sh * 0.04));
-  let fx0 = sw, fx1 = -1;
-  for (let y = sh - band; y < sh; y++) for (let x = 0; x < sw; x++) {
-    if (alpha[(y0 + y) * W + x0 + x] > 0.5) {
-      if (x < fx0) fx0 = x;
-      if (x > fx1) fx1 = x;
-    }
-  }
-  if (fx1 < 0) [fx0, fx1] = [0, sw - 1];
-  const footW = Math.max(fx1 - fx0 + 1, sw * 0.25);
-  const cx = padX + (fx0 + fx1) / 2;
-  const groundY = padT + sh;
-  const blur = Math.max(1, side * 0.012);
-  const contact = Buffer.from(
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${CW}" height="${CH}">
-      <defs><filter id="b" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="${blur.toFixed(1)}"/></filter></defs>
-      <ellipse cx="${cx.toFixed(1)}" cy="${(groundY - side * 0.004).toFixed(1)}" rx="${(footW * 0.56).toFixed(1)}" ry="${Math.max(2, side * 0.018).toFixed(1)}" fill="#000" fill-opacity="0.62" filter="url(#b)"/>
-    </svg>`,
-  );
-  // Soft occlusion: the silhouette itself, blurred and nudged down.
-  const occlusion = await sharp(objAlpha, { raw: { width: CW, height: CH, channels: 1 } })
-    .blur(Math.max(0.5, side * 0.02))
-    .linear(0.32, 0)
-    .extractChannel(0)
-    .raw()
-    .toBuffer();
-  const occRgba = Buffer.alloc(CW * CH * 4);
-  const shift = Math.round(side * 0.012);
-  for (let y = 0; y < CH; y++) for (let x = 0; x < CW; x++) {
-    const sy = y - shift;
-    occRgba[(y * CW + x) * 4 + 3] = sy >= 0 ? occlusion[sy * CW + x] : 0;
-  }
-
-  const data = await sharp({ create: { width: CW, height: CH, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } })
-    .composite([
-      { input: occRgba, raw: { width: CW, height: CH, channels: 4 } },
-      { input: contact },
-      { input: object, raw: { width: CW, height: CH, channels: 4 } },
-    ])
-    .raw()
-    .toBuffer();
 
   return {
     data,
@@ -714,6 +676,22 @@ function growBackdrop(rgba: Buffer, alpha: Float32Array, bg: [number, number, nu
     frontier = next;
   }
   for (let i = 0; i < n; i++) if (grown[i]) alpha[i] = 0;
+}
+
+/** floor: clear everything below the polyline through the points (flat beyond the ends), with a one-pixel soft edge. */
+function clearBelow(alpha: Float32Array, W: number, H: number, points: [number, number][]) {
+  const pts = [...points].sort((a, b) => a[0] - b[0]);
+  for (let x = 0; x < W; x++) {
+    const fx = (x + 0.5) / W;
+    let k = 0;
+    while (k < pts.length - 2 && fx > pts[k + 1][0]) k++;
+    const [x0, y0] = pts[k], [x1, y1] = pts[Math.min(k + 1, pts.length - 1)];
+    const t = x1 > x0 ? clamp((fx - x0) / (x1 - x0), 0, 1) : 0;
+    const edge = (y0 + (y1 - y0) * t) * H;
+    for (let y = Math.max(0, Math.floor(edge) - 1); y < H; y++) {
+      alpha[y * W + x] *= clamp(edge - (y + 0.5) + 0.5, 0, 1);
+    }
+  }
 }
 
 /**

@@ -163,6 +163,9 @@ left inside or between parts of the object:
   opacity, on top of the model's matte (the record stand).
 - `"grow"`: a backdrop in shade, such as the gap between two cards; the cleared backdrop spreads
   into shaded pixels of the same hue that change only gradually (the card bar).
+- `"fill"`: the other way round: clear patches the backdrop can't reach from the photo's edge
+  become solid again, for light parts the model keyed out inside the object (the kalimba's chrome
+  tines over white).
 
 Every cut-out also has its edges defringed: sharpened shop photos leave a ring lighter than the
 backdrop around the object, so an edge pixel lighter than the object just inside it takes the

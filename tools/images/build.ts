@@ -62,9 +62,11 @@ type HeroPick =
        * (together with the model's), so the backdrop seen through it goes and thin clear edges the
        * model missed come back. 'grow': for a shaded backdrop the model kept in a gap (between two
        * cards), the cleared backdrop spreads into neighbours that keep its hue and change only
-       * gradually, so it stops at the object's edges. Off by default.
+       * gradually, so it stops at the object's edges. 'fill': the other way round, for a model that
+       * keyed out light parts enclosed by the object (chrome tines on a kalimba's wood): anything
+       * the backdrop can't reach from the photo's edge becomes solid again. Off by default.
        */
-      holes?: boolean | 'exact' | 'clear' | 'grow';
+      holes?: boolean | 'exact' | 'clear' | 'grow' | 'fill';
       /** Which model draws the matte: 'general' (default, solid and crisp) or 'matting' (keeps partial alpha: clear acrylic, glass). */
       matte?: MatteModel;
       /**
@@ -149,7 +151,7 @@ async function saveManifest(manifest: Record<string, MediaEntry>, items: { id: s
   await rename(tmp, MANIFEST_FILE);
 }
 
-type Holes = boolean | 'exact' | 'clear' | 'grow';
+type Holes = boolean | 'exact' | 'clear' | 'grow' | 'fill';
 
 function heroOf(pick: Pick): { file: string; mode: 'cutout' | 'photo'; crop?: [number, number, number, number]; holes: Holes; matte: MatteModel; lay: boolean; frame: boolean } {
   const h = pick.hero ?? 'ref-0.jpg';
@@ -159,7 +161,7 @@ function heroOf(pick: Pick): { file: string; mode: 'cutout' | 'photo'; crop?: [n
         file: h.file,
         mode: h.mode ?? 'cutout',
         crop: h.crop,
-        holes: h.holes === 'exact' || h.holes === 'clear' || h.holes === 'grow' ? h.holes : !!h.holes,
+        holes: h.holes === 'exact' || h.holes === 'clear' || h.holes === 'grow' || h.holes === 'fill' ? h.holes : !!h.holes,
         matte: h.matte === 'matting' ? 'matting' : 'general',
         lay: !!h.lay,
         frame: !!h.frame,
@@ -291,6 +293,7 @@ async function cutout(rgba: Buffer, alphaIn: Float32Array, W0: number, H0: numbe
   const bg = backgroundColour(rgba, alpha, W, H);
   if (holes === 'exact') keyBackdropPatches(rgba, alpha, bg, W, H);
   else if (holes === 'grow') growBackdrop(rgba, alpha, bg, W, H);
+  else if (holes === 'fill') fillEnclosed(alpha, W, H);
   else if (holes === 'clear') {
     // Clear material only shows as how much it bends or dims the backdrop: that difference is its
     // opacity. Solid things the model found stay solid, less the backdrop patches seen through them.
@@ -711,6 +714,36 @@ function growBackdrop(rgba: Buffer, alpha: Float32Array, bg: [number, number, nu
     frontier = next;
   }
   for (let i = 0; i < n; i++) if (grown[i]) alpha[i] = 0;
+}
+
+/**
+ * holes: 'fill'. A matting model can key out light parts of an object that sit against light
+ * parts of the photo (a kalimba's chrome tines over white), leaving slots the dark page shows
+ * through. The real backdrop is all connected to the photo's edge, so a clear pixel the edge can't
+ * reach through other clear pixels is part of the object and becomes solid (soft edge pixels are
+ * left as they are, so a thin soft rim doesn't let the backdrop leak in).
+ */
+function fillEnclosed(alpha: Float32Array, W: number, H: number) {
+  const n = W * H;
+  const outside = new Uint8Array(n);
+  const stack: number[] = [];
+  const seed = (p: number) => {
+    if (!outside[p] && alpha[p] < 0.5) {
+      outside[p] = 1;
+      stack.push(p);
+    }
+  };
+  for (let x = 0; x < W; x++) seed(x), seed(n - W + x);
+  for (let y = 0; y < H; y++) seed(y * W), seed(y * W + W - 1);
+  while (stack.length) {
+    const p = stack.pop()!;
+    const x = p % W;
+    if (x > 0) seed(p - 1);
+    if (x < W - 1) seed(p + 1);
+    if (p >= W) seed(p - W);
+    if (p < n - W) seed(p + W);
+  }
+  for (let i = 0; i < n; i++) if (!outside[i] && alpha[i] < 0.5) alpha[i] = 1;
 }
 
 // ---------- colour ----------

@@ -25,7 +25,7 @@ const shelf = new Shelf(shelfEl, {
   open(item, from) {
     openedFromShelf = true;
     history.pushState({ thing: item.id }, '', itemPath(slugs.get(item.id) ?? item.id));
-    transition(() => openItem(item), from.querySelector('.thing-pic'));
+    transition('open', () => openItem(item), from.querySelector<HTMLImageElement>('.thing-pic img'));
   },
   intent(item) {
     if (!saveData()) detail.prefetchOne(item);
@@ -40,7 +40,9 @@ const detail = new Detail(detailEl, {
     const next = walk[(i + delta + walk.length) % walk.length];
     // Stepping replaces the entry, so Back still returns to the shelf in one go.
     history.replaceState({ thing: next.id }, '', itemPath(slugs.get(next.id) ?? next.id));
-    openItem(next);
+    // A swipe slides the sheets itself; the arrows and the bar's buttons cross-fade to the next one.
+    if (detail.sliding) openItem(next);
+    else crossfade(() => openItem(next));
   },
 });
 
@@ -101,6 +103,7 @@ function applyRoute(animate: boolean) {
   const id = detail.openId!;
   const link = shelf.linkFor(id);
   transition(
+    'close',
     () => {
       detail.hide();
       shelfEl.inert = false;
@@ -109,37 +112,126 @@ function applyRoute(animate: boolean) {
       link?.focus({ preventScroll: true });
       link?.scrollIntoView({ block: 'nearest' });
     },
-    null,
-    animate ? link?.querySelector<HTMLElement>('.thing-pic') ?? null : null,
+    animate ? link?.querySelector<HTMLImageElement>('.thing-pic img') ?? null : null,
   );
 }
 
 window.addEventListener('popstate', () => applyRoute(true));
 
 /**
- * Picking a thing off the shelf: with the View Transitions API, its picture glides from the shelf
- * to the stage (and back on close). Without it, or with reduced motion, the view just swaps.
+ * Picking a thing off the shelf: with the View Transitions API, its picture glides from its place
+ * on the shelf to the stage, and back to wherever it now stands on close (the shelf may have
+ * scrolled, or the open thing changed with the arrows or a swipe). The two pictures are the same
+ * image file, so the morph runs between their exact boxes, and only the sharper of the two (the
+ * stage's) is drawn on the way: no cross-fade ghost, no small picture blown up. Without the API,
+ * or with reduced motion, the view just swaps.
  */
-function transition(update: () => void, fromShelf: HTMLElement | null, toShelf: HTMLElement | null = null) {
-  const doc = document as Document & { startViewTransition?: (cb: () => void) => unknown };
+function transition(dir: 'open' | 'close', update: () => void, shelfImg: HTMLImageElement | null) {
+  const doc = document as Document & { startViewTransition?: (cb: () => Promise<void>) => ViewTransitionLike };
+  if (!doc.startViewTransition || reduceMotion.matches || !shelfImg) {
+    update();
+    return;
+  }
+  const html = document.documentElement;
+  const NAME = 'thing-hero';
+  const run = ++transitions;
+  const from = dir === 'open' ? shelfImg : detail.stageImage();
+  if (from) from.style.viewTransitionName = NAME;
+  html.classList.remove(...MOTION_CLASSES);
+  html.classList.add(dir === 'open' ? 'is-opening' : 'is-closing');
+  opening = dir === 'open';
+  let to: HTMLImageElement | null = null;
+  const t = doc.startViewTransition(async () => {
+    if (from) from.style.viewTransitionName = '';
+    // Only now, with the old frame captured as it was (a tapped thing half-lifted, say).
+    html.classList.add('is-morphing');
+    update();
+    opening = false;
+    to = dir === 'open' ? detail.stageImage() : shelfImg;
+    if (!to) return;
+    to.style.viewTransitionName = NAME;
+    if (dir === 'open') to.dataset.arrived = '';
+    // The new frame is captured once this resolves, so the picture it lands on is decoded first
+    // (usually at once: hovering or touching a thing started loading it). The page holds still
+    // meanwhile, so the wait is short; past it, the two pictures cross-fade as before.
+    if (dir === 'close') to.loading = 'eager';
+    if (!(await decoded(to, 150)) && dir === 'open') {
+      html.classList.add('is-unready');
+      delete to.dataset.arrived; // it fades in on its own once it's here
+    }
+  });
+  t.ready.catch(() => {}); // skipped by the next one: nothing to do
+  void t.updateCallbackDone.then(() => {
+    if (!escWhileOpening) return;
+    escWhileOpening = false;
+    closeDetail();
+  });
+  void t.finished.finally(() => {
+    if (to) to.style.viewTransitionName = '';
+    // A transition cut short by the next one (Esc mid-flight) leaves the classes to that one.
+    if (run === transitions) html.classList.remove(...MOTION_CLASSES);
+  });
+}
+
+interface ViewTransitionLike {
+  ready: Promise<void>;
+  updateCallbackDone: Promise<void>;
+  finished: Promise<void>;
+}
+
+/**
+ * Between a click and the moment the detail view exists (the old frame is being captured), Esc
+ * would find nothing open and the view would open anyway. Esc always closes: it's held until the
+ * view is there, then closes it.
+ */
+let opening = false;
+let escWhileOpening = false;
+document.addEventListener('keydown', (e) => {
+  if (opening && e.key === 'Escape') {
+    e.preventDefault();
+    escWhileOpening = true;
+  }
+});
+
+/** Bumped by each transition, so only the latest one tidies up after itself. */
+let transitions = 0;
+const MOTION_CLASSES = ['is-morphing', 'is-opening', 'is-closing', 'is-unready', 'is-stepping'];
+
+/**
+ * Stepping to the next thing with the arrows: the sheet cross-fades, the new picture already
+ * decoded, so the stage never goes dark between the two.
+ */
+function crossfade(update: () => void) {
+  const doc = document as Document & { startViewTransition?: (cb: () => Promise<void>) => ViewTransitionLike };
   if (!doc.startViewTransition || reduceMotion.matches) {
     update();
     return;
   }
-  const name = 'thing-hero';
-  if (fromShelf) fromShelf.style.viewTransitionName = name;
-  else detail.stageImage()?.style.setProperty('view-transition-name', name);
-  doc.startViewTransition(() => {
-    if (fromShelf) fromShelf.style.viewTransitionName = '';
+  const html = document.documentElement;
+  const run = ++transitions;
+  html.classList.remove(...MOTION_CLASSES);
+  html.classList.add('is-stepping');
+  const t = doc.startViewTransition(async () => {
     update();
-    if (fromShelf) detail.stageImage()?.style.setProperty('view-transition-name', name);
-    if (toShelf) toShelf.style.viewTransitionName = name;
+    const img = detail.stageImage();
+    if (!img) return;
+    img.dataset.arrived = '';
+    // Not here in time (a slow network): it fades in on its own once it is.
+    if (!(await decoded(img, 160))) delete img.dataset.arrived;
   });
-  // Names must be unique per frame: clear them once the snapshot has been taken.
-  setTimeout(() => {
-    detail.stageImage()?.style.removeProperty('view-transition-name');
-    if (toShelf) toShelf.style.viewTransitionName = '';
-  }, 700);
+  t.ready.catch(() => {});
+  void t.finished.finally(() => {
+    if (run === transitions) html.classList.remove(...MOTION_CLASSES);
+  });
+}
+
+/** True once the image is decoded, false if that takes longer than `ms` or fails. */
+function decoded(img: HTMLImageElement, ms: number): Promise<boolean> {
+  // decode() even when complete: an async-decoded image can be loaded and still not paintable.
+  return Promise.race([
+    img.decode().then(() => true, () => false),
+    new Promise<boolean>((done) => setTimeout(() => done(false), ms)),
+  ]);
 }
 
 function show(next: Item[]) {

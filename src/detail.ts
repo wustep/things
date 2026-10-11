@@ -121,6 +121,10 @@ export class Detail {
     // Images
     const visual = el('div', 'visual');
     const stage = el('figure', 'stage');
+    // On a phone the stage takes the thing's own proportions (the cut-out's), so a wide thing isn't
+    // floating in a tall empty box; it stays put while the gallery photos are flipped through.
+    const hero = heroFor(item);
+    stage.style.setProperty('--ar', `${hero.width} / ${hero.height}`);
     stage.append(this.stagePicture());
     visual.append(stage);
     if (this.frames.length > 1) {

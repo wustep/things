@@ -777,8 +777,11 @@ html.is-detail body {
     position: static;
   }
   .stage {
-    height: min(52vh, 460px);
-    min-height: 280px;
+    width: 100%;
+    height: auto;
+    aspect-ratio: var(--ar, 1);
+    max-height: min(52vh, 460px);
+    min-height: 220px;
   }
   .thumbs {
     justify-content: flex-start;

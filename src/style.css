@@ -395,15 +395,15 @@ html.is-detail body {
   place-items: center;
   height: min(74vh, 780px);
   margin: 0;
-  padding: 4%;
   background: radial-gradient(60% 56% at 50% 40%, rgba(255, 213, 158, 0.08), rgba(255, 213, 158, 0.025) 55%, transparent 78%);
 }
+/* Sized by the stage, not by the image, so tall things are contained like wide ones. */
 .stage-pic {
+  position: absolute;
+  inset: 4%;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
 }
 .stage-pic img {
   display: block;

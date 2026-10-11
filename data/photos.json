@@ -13,7 +13,7 @@
   "theartifox-f5289f2b": { "hero": "ref-0.jpg", "gallery": ["ref-5.jpg", "ref-7.jpg", "ref-3.jpg", "ref-2.jpg"] },
   "amzn-a0753bc5": { "hero": { "file": "ref-0.jpg", "holes": "clear", "matte": "matting" }, "gallery": ["ref-1.jpg", "ref-3.jpg", "ref-6.jpg"] },
   "roomandboard-03a90ea7": { "hero": "ref-0.jpg", "gallery": ["ref-2.jpg", "ref-1.jpg", "ref-3.jpg"] },
-  "amzn-f530eeab": { "hero": "ref-0.jpg", "gallery": ["ref-2.jpg", "ref-6.jpg", "ref-4.jpg"] },
+  "amzn-f530eeab": { "hero": { "file": "ref-8.png", "crop": [0.26, 0.31, 0.42, 0.58] }, "gallery": ["ref-2.jpg", "ref-6.jpg", "ref-4.jpg"] },
   "amzn-1fc53358": { "hero": "ref-0.jpg", "gallery": ["ref-6.jpg", "ref-4.jpg"] },
   "dwr-c60bfcc5": { "hero": "ref-0.jpg", "gallery": [] },
   "peakdesign-8f476d14": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-2.jpg"] },

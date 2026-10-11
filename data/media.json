@@ -588,26 +588,25 @@
   },
   "amzn-f530eeab": {
     "hero": {
-      "base": "/items/amzn-f530eeab/2d/hero.af6983c4",
+      "base": "/items/amzn-f530eeab/2d/hero.70295377",
       "widths": [
         480,
-        960,
-        1092
+        560
       ],
-      "width": 1092,
-      "height": 1623,
+      "width": 560,
+      "height": 920,
       "mode": "cutout",
       "subject": [
-        0.065,
-        0.0437,
-        0.87,
-        0.8774
+        0.0714,
+        0.0435,
+        0.8571,
+        0.8772
       ],
-      "tone": "#9b9c9d"
+      "tone": "#a8a8a8"
     },
     "gallery": [
       {
-        "base": "/items/amzn-f530eeab/2d/photo-1.af6983c4",
+        "base": "/items/amzn-f530eeab/2d/photo-1.70295377",
         "widths": [
           640,
           1280
@@ -616,7 +615,7 @@
         "height": 1280
       },
       {
-        "base": "/items/amzn-f530eeab/2d/photo-2.af6983c4",
+        "base": "/items/amzn-f530eeab/2d/photo-2.70295377",
         "widths": [
           640,
           1280
@@ -625,7 +624,7 @@
         "height": 1280
       },
       {
-        "base": "/items/amzn-f530eeab/2d/photo-3.af6983c4",
+        "base": "/items/amzn-f530eeab/2d/photo-3.70295377",
         "widths": [
           640,
           1280
@@ -634,7 +633,7 @@
         "height": 1280
       }
     ],
-    "key": "af6983c49050"
+    "key": "70295377aec1"
   },
   "amzn-1fc53358": {
     "hero": {

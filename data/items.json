@@ -90,6 +90,38 @@
     "addedAt": "2026-09-14T05:28:45.125Z"
   },
   {
+    "id": "ugmonk-a9228386",
+    "url": "https://ugmonk.com/products/idea-capture-kit-silver-aluminum",
+    "domain": "ugmonk.com",
+    "title": "Analog Capture Kit, Silver Aluminum",
+    "brand": "Ugmonk",
+    "price": "$149.00",
+    "section": "Office",
+    "description": "Includes: Small Capture Kit + Large Capture Kit Say goodbye to scattered notes and lost ideas. The Capture Kit gives you a dedicated place for jotting down ideas, notes, sketches, and everything in between. The solid aluminum tray keeps blank cards ready, while a subtle slope on the front lip you slide completed ones underneath for easy storage. Use it on its own or stack it with additional trays.",
+    "images": [
+      "/items/ugmonk-a9228386/ref-0.jpg",
+      "/items/ugmonk-a9228386/ref-1.jpg",
+      "/items/ugmonk-a9228386/ref-2.jpg",
+      "/items/ugmonk-a9228386/ref-3.jpg",
+      "/items/ugmonk-a9228386/ref-4.jpg",
+      "/items/ugmonk-a9228386/ref-5.jpg",
+      "/items/ugmonk-a9228386/ref-6.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "box",
+      "texture": "/items/ugmonk-a9228386/primary.png",
+      "aspect": 1.5037,
+      "palette": [
+        "#706d6f",
+        "#b2aead",
+        "#363436",
+        "#f2f1f4"
+      ]
+    },
+    "addedAt": "2026-10-11T19:49:21.334Z"
+  },
+  {
     "id": "ergonofis-aba25b63",
     "url": "https://ergonofis.com/products/sway-standing-desk?variant=45146331512911",
     "domain": "ergonofis.com",

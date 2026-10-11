@@ -2,6 +2,7 @@
   "_note": "Approximate largest real-world dimension of each thing, in cm, from the product pages. The viewer compresses these (see SCALE_EXPONENT in src/items.ts) so relative size reads true without the small things vanishing.",
   "ugmonk-5117191f": 22,
   "ugmonk-ef1055c7": 26,
+  "ugmonk-a9228386": 17.3,
   "ergonofis-aba25b63": 152,
   "amzn-f76e128e": 12.5,
   "jossandmain-cc12a72d": 198,

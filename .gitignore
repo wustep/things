@@ -10,3 +10,8 @@ dist
 # Left behind only if an ingest is killed mid-swap (see scripts/lib/store.ts)
 public/items/*.staging-*
 public/items/*.backup-*
+
+# The image tool's own install and its downloaded segmentation model
+tools/images/node_modules
+tools/images/.cache
+public/items/*/2d.staging

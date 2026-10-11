@@ -1540,6 +1540,36 @@
     "addedAt": "2026-10-11T03:04:24.797Z"
   },
   {
+    "id": "amazon-091b2237",
+    "url": "https://www.amazon.com/dp/B0CJVRFTSH",
+    "domain": "amazon.com",
+    "title": "MagSafe Wallet Stand, Black",
+    "brand": "Satechi",
+    "price": "$39.99",
+    "section": "Office",
+    "description": "A vegan-leather MagSafe wallet for up to 4 cards whose flap folds out into a multi-angle phone stand, portrait or landscape. NFC pass-through for tap to pay.",
+    "images": [
+      "/items/amazon-091b2237/ref-0.jpg",
+      "/items/amazon-091b2237/ref-1.jpg",
+      "/items/amazon-091b2237/ref-2.jpg",
+      "/items/amazon-091b2237/ref-3.jpg",
+      "/items/amazon-091b2237/ref-4.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/amazon-091b2237/primary.png",
+      "aspect": 0.9473,
+      "palette": [
+        "#676d73",
+        "#2b2d30",
+        "#b7bdc4",
+        "#e9f0f8"
+      ]
+    },
+    "addedAt": "2026-10-11T06:15:52.625Z"
+  },
+  {
     "id": "revivalrugs-86802fd7",
     "url": "https://www.revivalrugs.com/products/jute-rug-hart-in-olive?variant=39459943514211",
     "domain": "revivalrugs.com",

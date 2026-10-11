@@ -1942,6 +1942,65 @@
     ],
     "key": "7564c4cb8e3e"
   },
+  "amazon-091b2237": {
+    "hero": {
+      "base": "/items/amazon-091b2237/2d/hero.da6ac9cf",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 1991,
+      "mode": "cutout",
+      "subject": [
+        0.0546,
+        0.0439,
+        0.8907,
+        0.8772
+      ],
+      "tone": "#353637"
+    },
+    "gallery": [
+      {
+        "base": "/items/amazon-091b2237/2d/photo-1.da6ac9cf",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/amazon-091b2237/2d/photo-2.da6ac9cf",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/amazon-091b2237/2d/photo-3.da6ac9cf",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/amazon-091b2237/2d/photo-4.da6ac9cf",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "da6ac9cf81e2"
+  },
   "revivalrugs-86802fd7": {
     "hero": {
       "base": "/items/revivalrugs-86802fd7/2d/hero.9effaac5",

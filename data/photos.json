@@ -51,6 +51,7 @@
   "amazon-436fc733": { "hero": "ref-4.png", "gallery": ["ref-1.jpg"] },
   "anker-2866be47": { "hero": "ref-0.png", "gallery": [] },
   "etsy-57abe791": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-2.jpg", "ref-3.jpg", "ref-4.jpg"] },
+  "amazon-fb682f1c": { "hero": { "file": "ref-0.jpg", "holes": "exact" }, "gallery": ["ref-1.jpg", "ref-2.jpg"] },
   "boss-1b124b07": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-2.jpg"] },
   "ergonofis-b544e709": { "hero": { "file": "ref-1.png", "crop": [0.215, 0.176, 0.547, 0.66] }, "gallery": ["ref-0.png", "ref-2.png"] },
   "etsy-55c9006b": { "hero": { "file": "ref-0.jpg", "frame": true }, "gallery": ["ref-3.jpg", "ref-1.jpg", "ref-2.jpg"] },

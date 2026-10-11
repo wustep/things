@@ -1,0 +1,20 @@
+[
+  {
+    "file": "ref-0.jpg",
+    "url": "https://m.media-amazon.com/images/I/51CBcI-bipL._AC_SL1500_.jpg",
+    "width": 1084,
+    "height": 1326
+  },
+  {
+    "file": "ref-1.jpg",
+    "url": "https://m.media-amazon.com/images/I/61nzEjKdH1L._AC_SL1500_.jpg",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "file": "ref-2.jpg",
+    "url": "https://m.media-amazon.com/images/I/61gzITOwOhL._AC_SL1500_.jpg",
+    "width": 1500,
+    "height": 1500
+  }
+]

@@ -62,5 +62,18 @@
       "https://images.steelcase.com/image/upload/v1653061875/21-0169103_1x1.jpg"
     ],
     "maxRefs": 5
+  },
+  {
+    "url": "https://www.amazon.com/dp/B0D4DY9GWG",
+    "title": "Experience 2 Plus Earplugs, Silver",
+    "brand": "Loop",
+    "price": "$35.96",
+    "section": "Carry",
+    "image": "https://m.media-amazon.com/images/I/51CBcI-bipL._AC_SL1500_.jpg",
+    "images": [
+      "https://m.media-amazon.com/images/I/61nzEjKdH1L._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/61gzITOwOhL._AC_SL1500_.jpg"
+    ],
+    "maxRefs": 3
   }
 ]

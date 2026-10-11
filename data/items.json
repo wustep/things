@@ -1985,5 +1985,33 @@
       ]
     },
     "addedAt": "2026-10-11T20:23:12.503Z"
+  },
+  {
+    "id": "amazon-fb682f1c",
+    "url": "https://www.amazon.com/dp/B0D4DY9GWG?tag=wustep09-20",
+    "domain": "amazon.com",
+    "title": "Experience 2 Plus Earplugs, Silver",
+    "brand": "Loop",
+    "price": "$35.96",
+    "section": "Carry",
+    "description": "Reusable high-fidelity earplugs: 17 dB (SNR) of noise reduction that keeps music crisp, plus Loop Mute for extra coverage. For concerts, festivals, sports, DJs and nightlife.",
+    "images": [
+      "/items/amazon-fb682f1c/ref-0.jpg",
+      "/items/amazon-fb682f1c/ref-1.jpg",
+      "/items/amazon-fb682f1c/ref-2.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/amazon-fb682f1c/primary.png",
+      "aspect": 0.8174,
+      "palette": [
+        "#8e8e88",
+        "#2f2f2d",
+        "#d2d1cf",
+        "#f7f7f7"
+      ]
+    },
+    "addedAt": "2026-10-11T20:36:24.746Z"
   }
 ]

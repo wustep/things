@@ -2857,5 +2857,46 @@
       }
     ],
     "key": "9b4aadf02617"
+  },
+  "amazon-fb682f1c": {
+    "hero": {
+      "base": "/items/amazon-fb682f1c/2d/hero.e38bfd0b",
+      "widths": [
+        480,
+        960,
+        1212
+      ],
+      "width": 1212,
+      "height": 1454,
+      "mode": "cutout",
+      "subject": [
+        0.0545,
+        0.0454,
+        0.8911,
+        0.9092
+      ],
+      "tone": "#9e9e9d"
+    },
+    "gallery": [
+      {
+        "base": "/items/amazon-fb682f1c/2d/photo-1.e38bfd0b",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/amazon-fb682f1c/2d/photo-2.e38bfd0b",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "e38bfd0b3c7b"
   }
 }

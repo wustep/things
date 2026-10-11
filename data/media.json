@@ -117,6 +117,74 @@
     ],
     "key": "ddf19d39de1b"
   },
+  "ugmonk-a9228386": {
+    "hero": {
+      "base": "/items/ugmonk-a9228386/2d/hero.404777ec",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 1096,
+      "mode": "cutout",
+      "subject": [
+        0.0453,
+        0.0662,
+        0.9094,
+        0.8676
+      ],
+      "tone": "#c5c4c5"
+    },
+    "gallery": [
+      {
+        "base": "/items/ugmonk-a9228386/2d/photo-1.404777ec",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1587
+      },
+      {
+        "base": "/items/ugmonk-a9228386/2d/photo-2.404777ec",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1587
+      },
+      {
+        "base": "/items/ugmonk-a9228386/2d/photo-3.404777ec",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1587
+      },
+      {
+        "base": "/items/ugmonk-a9228386/2d/photo-4.404777ec",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1587
+      },
+      {
+        "base": "/items/ugmonk-a9228386/2d/photo-5.404777ec",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1587
+      }
+    ],
+    "key": "404777ec6a8e"
+  },
   "ergonofis-aba25b63": {
     "hero": {
       "base": "/items/ergonofis-aba25b63/2d/hero.f9f6b47d",
@@ -2407,26 +2475,26 @@
   },
   "apple-3facb22e": {
     "hero": {
-      "base": "/items/apple-3facb22e/2d/hero.9f522d56",
+      "base": "/items/apple-3facb22e/2d/hero.caeb5790",
       "widths": [
         480,
         960,
         1600
       ],
       "width": 1600,
-      "height": 404,
+      "height": 745,
       "mode": "cutout",
       "subject": [
-        0.0455,
-        0.1803,
-        0.909,
-        0.6393
+        0.0453,
+        0.0974,
+        0.9093,
+        0.8053
       ],
-      "tone": "#d0d0d1"
+      "tone": "#cdcdce"
     },
     "gallery": [
       {
-        "base": "/items/apple-3facb22e/2d/photo-1.9f522d56",
+        "base": "/items/apple-3facb22e/2d/photo-1.caeb5790",
         "widths": [
           640,
           1280
@@ -2435,7 +2503,7 @@
         "height": 1280
       },
       {
-        "base": "/items/apple-3facb22e/2d/photo-2.9f522d56",
+        "base": "/items/apple-3facb22e/2d/photo-2.caeb5790",
         "widths": [
           640,
           1280
@@ -2444,7 +2512,7 @@
         "height": 1280
       },
       {
-        "base": "/items/apple-3facb22e/2d/photo-3.9f522d56",
+        "base": "/items/apple-3facb22e/2d/photo-3.caeb5790",
         "widths": [
           640,
           1280
@@ -2453,7 +2521,7 @@
         "height": 1280
       }
     ],
-    "key": "9f522d566697"
+    "key": "caeb5790e898"
   },
   "amazon-96467ee5": {
     "hero": {

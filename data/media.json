@@ -977,25 +977,25 @@
   },
   "amazon-421bd010": {
     "hero": {
-      "base": "/items/amazon-421bd010/2d/hero.f25cdbbf",
+      "base": "/items/amazon-421bd010/2d/hero.abec1bad",
       "widths": [
         480,
         960
       ],
       "width": 960,
-      "height": 1271,
+      "height": 1250,
       "mode": "cutout",
       "subject": [
-        0.058,
-        0.0438,
-        0.884,
-        0.8774
+        0.0571,
+        0.0439,
+        0.8857,
+        0.8775
       ],
-      "tone": "#997352"
+      "tone": "#987352"
     },
     "gallery": [
       {
-        "base": "/items/amazon-421bd010/2d/photo-1.f25cdbbf",
+        "base": "/items/amazon-421bd010/2d/photo-1.abec1bad",
         "widths": [
           640,
           1280
@@ -1004,7 +1004,7 @@
         "height": 1303
       },
       {
-        "base": "/items/amazon-421bd010/2d/photo-2.f25cdbbf",
+        "base": "/items/amazon-421bd010/2d/photo-2.abec1bad",
         "widths": [
           640,
           1280
@@ -1013,7 +1013,7 @@
         "height": 1280
       },
       {
-        "base": "/items/amazon-421bd010/2d/photo-3.f25cdbbf",
+        "base": "/items/amazon-421bd010/2d/photo-3.abec1bad",
         "widths": [
           640,
           1280
@@ -1022,7 +1022,7 @@
         "height": 1280
       }
     ],
-    "key": "f25cdbbfdab9"
+    "key": "abec1badf189"
   },
   "peakdesign-8f476d14": {
     "hero": {

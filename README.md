@@ -225,13 +225,17 @@ The 3D pipeline is kept intact for it:
 ```sh
 npm run typecheck
 npm test             # ingest, extraction and notes-rendering tests (node --test via tsx)
+npm run test:e2e     # builds, then swipes the detail view on a phone in Chromium (Playwright)
 npm run build        # dist/: the 2D site at /, the 3D archive at /3d/
 npm run preview      # serve dist/ locally
 ```
 
 The ingest tests serve fake product pages and images from a local HTTP server, run the real CLI
 against a temp folder (`THINGS_ROOT`), and preload `tests/helpers/no-paid-network.ts`, which
-blocks any request to Meshy, so they never touch the network or spend credits.
+blocks any request to Meshy, so they never touch the network or spend credits. The swipe tests
+(`tests/e2e/`) serve `dist/` with `vite preview` and drive it through Chromium's real touch-gesture
+path (`Input.synthesizeScrollGesture`), so the browser's own touch-action arbitration decides who
+gets each gesture; they need Playwright's Chromium (`npx playwright install chromium`).
 
 `dist/` is a fully static site: the collection is bundled in and images are copied from
 `public/`. Deploy it anywhere that serves static files and can fall back to `index.html`

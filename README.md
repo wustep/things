@@ -157,6 +157,9 @@ Which photo is used, and which others go in the gallery, is chosen in `data/phot
 "roli-0e3366f5": { "hero": { "file": "ref-2.jpg", "holes": true } }
 ```
 
+A gallery entry can also be `{ "file": "ref-6.jpg", "crop": [left, top, width, height] }`, to trim
+a framed print's backdrop edge the same way as its hero (the James Cook typewriter art).
+
 `mode: "photo"` keeps the picture as a rectangle (flat art, or a shop that only has a room
 shot); `crop` is `[left, top, width, height]` in fractions. `matte` picks the model:
 `"general"` (the default, BiRefNet_HR-general: solid, crisp edges) or `"matting"`
@@ -171,6 +174,9 @@ left inside or between parts of the object:
   it would eat a white one).
 - `"exact"`: only sizeable patches that are the backdrop colour itself, so a white object on a
   white backdrop keeps its body (the Tower hamper's X-frame and base bars).
+- `"through"`: like `"exact"`, but only patches broad enough to be an opening you see through;
+  thin arcs of backdrop white are glare on chrome or gloss and stay solid (the Loop earplugs' holes
+  go, the highlights on their silver rims don't).
 - `"clear"`: clear acrylic or glass on white; each pixel's distance from the backdrop becomes its
   opacity, on top of the model's matte.
 - `"grow"`: a backdrop in shade, such as the gap between two cards; the cleared backdrop spreads

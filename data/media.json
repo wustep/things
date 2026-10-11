@@ -995,7 +995,7 @@
   },
   "jamescookartworkshop-b0e89a91": {
     "hero": {
-      "base": "/items/jamescookartworkshop-b0e89a91/2d/hero.ce08d806",
+      "base": "/items/jamescookartworkshop-b0e89a91/2d/hero.aea34799",
       "widths": [
         480,
         960,
@@ -1014,7 +1014,7 @@
     },
     "gallery": [
       {
-        "base": "/items/jamescookartworkshop-b0e89a91/2d/photo-1.ce08d806",
+        "base": "/items/jamescookartworkshop-b0e89a91/2d/photo-1.aea34799",
         "widths": [
           640,
           1080
@@ -1023,34 +1023,34 @@
         "height": 1350
       },
       {
-        "base": "/items/jamescookartworkshop-b0e89a91/2d/photo-2.ce08d806",
+        "base": "/items/jamescookartworkshop-b0e89a91/2d/photo-2.aea34799",
         "widths": [
           640,
           1280
         ],
         "width": 1280,
-        "height": 1777
+        "height": 1785
       },
       {
-        "base": "/items/jamescookartworkshop-b0e89a91/2d/photo-3.ce08d806",
+        "base": "/items/jamescookartworkshop-b0e89a91/2d/photo-3.aea34799",
         "widths": [
           640,
           1280
         ],
         "width": 1280,
-        "height": 1776
+        "height": 1782
       },
       {
-        "base": "/items/jamescookartworkshop-b0e89a91/2d/photo-4.ce08d806",
+        "base": "/items/jamescookartworkshop-b0e89a91/2d/photo-4.aea34799",
         "widths": [
           640,
           1280
         ],
         "width": 1280,
-        "height": 1774
+        "height": 1782
       }
     ],
-    "key": "ce08d806ccb5"
+    "key": "aea34799d78f"
   },
   "etsy-55c9006b": {
     "hero": {
@@ -2860,7 +2860,7 @@
   },
   "amazon-fb682f1c": {
     "hero": {
-      "base": "/items/amazon-fb682f1c/2d/hero.e38bfd0b",
+      "base": "/items/amazon-fb682f1c/2d/hero.f405d1e5",
       "widths": [
         480,
         960,
@@ -2879,7 +2879,7 @@
     },
     "gallery": [
       {
-        "base": "/items/amazon-fb682f1c/2d/photo-1.e38bfd0b",
+        "base": "/items/amazon-fb682f1c/2d/photo-1.f405d1e5",
         "widths": [
           640,
           1280
@@ -2888,7 +2888,7 @@
         "height": 1280
       },
       {
-        "base": "/items/amazon-fb682f1c/2d/photo-2.e38bfd0b",
+        "base": "/items/amazon-fb682f1c/2d/photo-2.f405d1e5",
         "widths": [
           640,
           1280
@@ -2897,6 +2897,6 @@
         "height": 1280
       }
     ],
-    "key": "e38bfd0b3c7b"
+    "key": "f405d1e581ae"
   }
 }

@@ -795,26 +795,26 @@
   },
   "amzn-a0753bc5": {
     "hero": {
-      "base": "/items/amzn-a0753bc5/2d/hero.5665a83c",
+      "base": "/items/amzn-a0753bc5/2d/hero.a2690ce8",
       "widths": [
         480,
         960,
-        1296
+        1293
       ],
-      "width": 1296,
-      "height": 1649,
+      "width": 1293,
+      "height": 1647,
       "mode": "cutout",
       "subject": [
-        0.0579,
+        0.058,
         0.0455,
-        0.8843,
-        0.909
+        0.884,
+        0.9089
       ],
-      "tone": "#766060"
+      "tone": "#7d6565"
     },
     "gallery": [
       {
-        "base": "/items/amzn-a0753bc5/2d/photo-1.5665a83c",
+        "base": "/items/amzn-a0753bc5/2d/photo-1.a2690ce8",
         "widths": [
           640,
           1280
@@ -823,7 +823,7 @@
         "height": 1280
       },
       {
-        "base": "/items/amzn-a0753bc5/2d/photo-2.5665a83c",
+        "base": "/items/amzn-a0753bc5/2d/photo-2.a2690ce8",
         "widths": [
           640,
           1280
@@ -832,7 +832,7 @@
         "height": 1280
       },
       {
-        "base": "/items/amzn-a0753bc5/2d/photo-3.5665a83c",
+        "base": "/items/amzn-a0753bc5/2d/photo-3.a2690ce8",
         "widths": [
           640,
           1280
@@ -841,7 +841,7 @@
         "height": 1280
       }
     ],
-    "key": "5665a83ce9f0"
+    "key": "a2690ce833d4"
   },
   "roomandboard-03a90ea7": {
     "hero": {

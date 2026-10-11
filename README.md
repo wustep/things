@@ -169,9 +169,14 @@ left inside or between parts of the object:
 - `"exact"`: only sizeable patches that are the backdrop colour itself, so a white object on a
   white backdrop keeps its body (the Tower hamper's X-frame and base bars).
 - `"clear"`: clear acrylic or glass on white; each pixel's distance from the backdrop becomes its
-  opacity, on top of the model's matte (the record stand).
+  opacity, on top of the model's matte.
 - `"grow"`: a backdrop in shade, such as the gap between two cards; the cleared backdrop spreads
   into shaded pixels of the same hue that change only gradually (the card bar).
+- `"glass"`: clear acrylic or glass holding solid things, on a white backdrop (the record stand,
+  which used `"clear"` before). The solid things stay as the model drew them (sure, and in blobs too
+  thick to be an edge line); everything else is the clear material, as opaque as it darkened the
+  backdrop and drawn in a light neutral, the way clear edges catch the light in a dim room. Flat
+  panels that only show the backdrop go, so there is no milky fill. Use with `matte: "matting"`.
 - `"fill"`: the other way round: clear patches the backdrop can't reach from the photo's edge
   become solid again, for light parts the model keyed out inside the object (the kalimba's chrome
   tines over white).

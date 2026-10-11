@@ -15,8 +15,8 @@ npm run dev          # http://localhost:5173
 
 The shelf shows everything in `data/items.json`, one case per `section` (Office, Home, Music, Misc),
 packed into as many shelves as the window needs. Click a thing (or Tab to it and press Enter;
-the arrow keys walk the shelf) to open it. In the detail view, ← and → step through the
-collection, Esc goes back to the shelf, and the thumbnails switch between the cut-out and
+the arrow keys walk the shelf) to open it. In the detail view, ← and → (or a sideways swipe on a
+phone) step through the collection, Esc goes back to the shelf, and the thumbnails switch between the cut-out and
 the shop's own photos.
 
 Every thing has its own address, `/t/<maker-and-name>` (for example

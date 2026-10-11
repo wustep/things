@@ -10,6 +10,7 @@ import { renderMarkdown } from './markdown.ts';
 import { galleryFor, heroFor, picture, type MediaImage } from './media.ts';
 import { el } from './shelf.ts';
 import { commentaryWritable, saveCommentary } from './commentary-client.ts';
+import { watchSwipe } from './swipe.ts';
 
 export interface DetailHandlers {
   close(): void;
@@ -26,12 +27,22 @@ export class Detail {
   private draft = '';
   private writable = false;
   private position = { index: 0, total: 0 };
+  /** Set while a swipe hands over to the next thing: the side its sheet slides in from. */
+  private enterFrom: -1 | 1 | null = null;
+  private readonly reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
   constructor(private readonly root: HTMLElement, private readonly handlers: DetailHandlers) {
     // Keys are heard at the document, not the view: a click on a photo or a thumbnail (Safari
     // doesn't focus buttons on click) leaves focus on <body>, and Esc and the arrows must still work.
     document.addEventListener('keydown', (e) => {
       if (this.isOpen) this.onKey(e);
+    });
+    // On a touch screen, a sideways swipe anywhere on the sheet steps to the next or previous thing.
+    // The photo strip keeps its own sideways scrolling, and a note being written keeps the page still.
+    watchSwipe(this.root, {
+      allow: (target) => !this.editing && !target.closest('.thumbs, textarea, input'),
+      move: (dx) => this.drag(dx),
+      end: (delta, dx) => this.release(delta, dx),
     });
     void commentaryWritable().then((ok) => {
       this.writable = ok;
@@ -59,6 +70,7 @@ export class Detail {
     if (!same) {
       this.editing = false;
       this.frameIndex = 0;
+      this.root.scrollTop = 0; // a new thing starts at its picture, not where the last one was read
     }
     this.frames = [{ kind: 'hero', img: heroFor(item) }, ...galleryFor(item).map((img) => ({ kind: 'photo' as const, img }))];
     this.frameIndex = Math.min(this.frameIndex, this.frames.length - 1);
@@ -178,6 +190,55 @@ export class Detail {
     sheet.append(bar, body);
     this.root.replaceChildren(sheet);
     this.renderNotes();
+    if (this.enterFrom && !this.reduceMotion.matches) {
+      slide(body, [`${this.enterFrom * 28}%`, '0px'], [0, 1], 240);
+      this.enterFrom = null;
+    }
+  }
+
+  // ---------- swipe ----------
+
+  private sheetBody(): HTMLElement | null {
+    return this.root.querySelector('.sheet-body');
+  }
+
+  /** The sheet follows the finger, fading a little as it goes. */
+  private drag(dx: number) {
+    const body = this.sheetBody();
+    if (!body) return;
+    body.getAnimations().forEach((a) => a.cancel());
+    body.style.transform = `translate3d(${dx}px, 0, 0)`;
+    body.style.opacity = String(1 - Math.min(0.5, Math.abs(dx) / this.root.clientWidth));
+  }
+
+  private release(delta: -1 | 0 | 1, dx: number) {
+    const body = this.sheetBody();
+    if (!body) return;
+    const from = getComputedStyle(body).opacity;
+    body.style.transform = '';
+    body.style.opacity = '';
+    const was = this.item?.id;
+    if (delta === 0) {
+      slide(body, [`${dx}px`, '0px'], [Number(from), 1], 220);
+      return;
+    }
+    const step = () => {
+      this.enterFrom = delta;
+      this.handlers.step(delta);
+      // The step was refused (a note in progress): put the sheet back.
+      if (this.item?.id === was) {
+        this.enterFrom = null;
+        body.getAnimations().forEach((a) => a.cancel());
+        slide(body, [`${dx}px`, '0px'], [Number(from), 1], 220);
+      }
+    };
+    if (this.reduceMotion.matches) {
+      step();
+      return;
+    }
+    // Off it goes the way it was swiped, then the next thing comes in from the other side.
+    const out = slide(body, [`${dx}px`, `${-delta * this.root.clientWidth * 0.45}px`], [Number(from), 0], 140, 'forwards');
+    out.onfinish = step;
   }
 
   private stagePicture(): HTMLPictureElement {
@@ -328,6 +389,13 @@ function button(className: string, text: string, label?: string): HTMLButtonElem
     b.title = label;
   }
   return b;
+}
+
+function slide(node: HTMLElement, x: [string, string], opacity: [number, number], ms: number, fill: FillMode = 'none'): Animation {
+  return node.animate(
+    { transform: x.map((v) => `translate3d(${v}, 0, 0)`), opacity },
+    { duration: ms, easing: 'cubic-bezier(0.2, 0.7, 0.1, 1)', fill },
+  );
 }
 
 function autosize(ta: HTMLTextAreaElement) {

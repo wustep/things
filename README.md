@@ -148,7 +148,11 @@ Which photo is used, and which others go in the gallery, is chosen in `data/phot
 `mode: "photo"` keeps the picture as a rectangle (flat art, or a shop that only has a room
 shot); `crop` is `[left, top, width, height]` in fractions. `matte` picks the model:
 `"general"` (the default, BiRefNet_HR-general: solid, crisp edges) or `"matting"`
-(BiRefNet_HR-matting: real partial alpha, for clear acrylic and glass, such as the record stand). `holes` keys out backdrop the model
+(BiRefNet_HR-matting: real partial alpha, for clear acrylic and glass, such as the record stand). `lay: true` is for rugs: the photo is the rug from straight above, and it is
+laid down on the shelf in perspective (seen from the same low three-quarter angle as the furniture
+shots, with a sliver of pile along the near edge), so a rug reads as a rug lying on the shelf rather
+than a poster standing on it. `frame: true` puts flat art (a print) into a thin black frame that
+stands on the shelf like any other object. `holes` keys out backdrop the model
 left inside or between parts of the object:
 
 - `true`: anything within a few levels of the backdrop colour (an open frame on a dark object;

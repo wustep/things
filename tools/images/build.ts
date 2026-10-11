@@ -73,6 +73,8 @@ type HeroPick =
        * pile along its front edge.
        */
       lay?: boolean;
+      /** Flat art to show framed: the picture (after crop) goes into a thin black frame and stands like an object. */
+      frame?: boolean;
     };
 interface Pick {
   hero?: HeroPick;
@@ -149,10 +151,10 @@ async function saveManifest(manifest: Record<string, MediaEntry>, items: { id: s
 
 type Holes = boolean | 'exact' | 'clear' | 'grow';
 
-function heroOf(pick: Pick): { file: string; mode: 'cutout' | 'photo'; crop?: [number, number, number, number]; holes: Holes; matte: MatteModel; lay: boolean } {
+function heroOf(pick: Pick): { file: string; mode: 'cutout' | 'photo'; crop?: [number, number, number, number]; holes: Holes; matte: MatteModel; lay: boolean; frame: boolean } {
   const h = pick.hero ?? 'ref-0.jpg';
   return typeof h === 'string'
-    ? { file: h, mode: 'cutout', holes: false, matte: 'general', lay: false }
+    ? { file: h, mode: 'cutout', holes: false, matte: 'general', lay: false, frame: false }
     : {
         file: h.file,
         mode: h.mode ?? 'cutout',
@@ -160,6 +162,7 @@ function heroOf(pick: Pick): { file: string; mode: 'cutout' | 'photo'; crop?: [n
         holes: h.holes === 'exact' || h.holes === 'clear' || h.holes === 'grow' ? h.holes : !!h.holes,
         matte: h.matte === 'matting' ? 'matting' : 'general',
         lay: !!h.lay,
+        frame: !!h.frame,
       };
 }
 
@@ -190,7 +193,8 @@ async function buildItem(id: string, pick: Pick, key: string): Promise<MediaEntr
     const m = await img.metadata();
     const [l, t, w, h] = hero.crop;
     const W = m.autoOrient?.width ?? m.width!, H = m.autoOrient?.height ?? m.height!;
-    img = sharp(await img.extract({ left: Math.round(l * W), top: Math.round(t * H), width: Math.round(w * W), height: Math.round(h * H) }).toBuffer());
+    const left = Math.round(l * W), top = Math.round(t * H);
+    img = sharp(await img.extract({ left, top, width: Math.min(W - left, Math.round(w * W)), height: Math.min(H - top, Math.round(h * H)) }).toBuffer());
   }
   const base = await img
     .resize(WORK_SIDE, WORK_SIDE, { fit: 'inside', withoutEnlargement: true })
@@ -201,7 +205,10 @@ async function buildItem(id: string, pick: Pick, key: string): Promise<MediaEntr
   const rgba = base.data;
 
   let heroOut: { data: Buffer; width: number; height: number; subject: [number, number, number, number]; tone: string };
-  if (hero.mode === 'photo') {
+  if (hero.frame) {
+    const framed = withFrame(rgba, W, H);
+    heroOut = await cutout(framed.rgba, framed.alpha, framed.W, framed.H, false, true);
+  } else if (hero.mode === 'photo') {
     heroOut = await framePhoto(rgba, W, H);
   } else {
     const own = await existingAlpha(rgba, W, H);
@@ -480,6 +487,33 @@ function layFlat(rgb: Float32Array, alpha: Float32Array, W: number, H: number) {
     for (let c = 0; c < 3; c++) outRgb[o * 3 + c] = outRgb[src * 3 + c] * 0.55;
   }
   return { rgb: outRgb, alpha: outA, W: OW, H: OH };
+}
+
+/**
+ * frame: a print in a thin black gallery frame (the Americanflat Streamline kind): a satin black
+ * moulding about 2.5% of the long side, a hairline highlight on its outer and inner edges so it
+ * reads as a frame and not a border, and nothing behind it.
+ */
+function withFrame(rgba: Buffer, W: number, H: number) {
+  const b = Math.max(6, Math.round(Math.max(W, H) * 0.025));
+  const FW = W + 2 * b, FH = H + 2 * b;
+  const out = Buffer.alloc(FW * FH * 4);
+  for (let y = 0; y < FH; y++) for (let x = 0; x < FW; x++) {
+    const o = (y * FW + x) * 4;
+    const ix = x - b, iy = y - b;
+    if (ix >= 0 && iy >= 0 && ix < W && iy < H) {
+      const i = (iy * W + ix) * 4;
+      out[o] = rgba[i]; out[o + 1] = rgba[i + 1]; out[o + 2] = rgba[i + 2];
+    } else {
+      // Distance to the nearer edge of the moulding, for the two highlights; lit a touch from above.
+      const edge = Math.min(x, y, FW - 1 - x, FH - 1 - y, Math.abs(ix < 0 ? ix + 1 : ix >= W ? ix - W : 99), Math.abs(iy < 0 ? iy + 1 : iy >= H ? iy - H : 99));
+      const top = y < FH / 2 ? 4 : 0;
+      const v = (edge < 1 ? 58 : edge < 2 ? 40 : 26) + top;
+      out[o] = v; out[o + 1] = v; out[o + 2] = v + 1;
+    }
+    out[o + 3] = 255;
+  }
+  return { rgba: out, alpha: new Float32Array(FW * FH).fill(1), W: FW, H: FH };
 }
 
 /** Rectangle treatment for flat art and room shots: the same colour pass, no cut-out, no shadow. */

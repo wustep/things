@@ -123,7 +123,8 @@ npm run images -- --force      # everything
 1. **Background removal.** The photo's own transparency when it has some; otherwise
    [BiRefNet-lite](https://huggingface.co/onnx-community/BiRefNet_lite-ONNX) (MIT), run locally
    with ONNX at a pinned revision. Stray specks are dropped, and edge pixels are un-mixed from the
-   old studio backdrop so white fringes don't glow on the dark page.
+   old studio backdrop and kept no lighter than the object inside them, so white fringes don't
+   glow on the dark page.
 2. **Colour.** A gentle white balance on neutral pixels (±6% at most, so walnut stays walnut),
    one common white point with a soft shoulder, and the deepest blacks lifted a touch so a black
    mouse keeps its shape on a dark shelf.
@@ -141,8 +142,21 @@ Which photo is used, and which others go in the gallery, is chosen in `data/phot
 ```
 
 `mode: "photo"` keeps the picture as a rectangle (flat art, or a shop that only has a room
-shot); `crop` is `[left, top, width, height]` in fractions; `holes` also keys out
-backdrop-coloured pixels inside the object (an open frame). Results land in
+shot); `crop` is `[left, top, width, height]` in fractions. `holes` keys out backdrop the model
+left inside or between parts of the object:
+
+- `true`: anything within a few levels of the backdrop colour (an open frame on a dark object;
+  it would eat a white one).
+- `"exact"`: only sizeable patches that are the backdrop colour itself, so a white object on a
+  white backdrop keeps its body (the Tower hamper's X-frame and base bars).
+- `"clear"`: clear acrylic or glass on white; each pixel's distance from the backdrop becomes its
+  opacity, on top of the model's matte (the record stand).
+- `"grow"`: a backdrop in shade, such as the gap between two cards; the cleared backdrop spreads
+  into shaded pixels of the same hue that change only gradually (the card bar).
+
+Every cut-out also has its edges defringed: sharpened shop photos leave a ring lighter than the
+backdrop around the object, so an edge pixel lighter than the object just inside it takes the
+inside colour. Results land in
 `public/items/<id>/2d/` and `data/media.json` (sizes, the object's box inside the image, its
 average colour for placeholders), which the viewer imports.
 

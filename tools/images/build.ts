@@ -10,8 +10,9 @@
  *
  * For each item, the hero photo picked in data/photos.json goes through:
  *   1. Background removal: the photo's own alpha when it has one, otherwise BiRefNet-lite (MIT,
- *      run locally with ONNX), then stray specks dropped and edge colour freed of the old
- *      background so white-studio fringes don't glow on the dark page.
+ *      run locally with ONNX), then per-item backdrop keying (holes), stray specks dropped, and
+ *      edge colour freed of the old background (and of sharpening halos) so white-studio
+ *      fringes don't glow on the dark page.
  *   2. Colour: a gentle white balance on neutral pixels, highlights eased to one common white
  *      point and the deepest blacks lifted a touch, so black and white things both read on dark.
  *   3. Framing: trimmed to the object, then the same padding ratio around every one.
@@ -36,7 +37,7 @@ const MANIFEST_FILE = path.join(ROOT, 'data', 'media.json');
 const ITEMS_FILE = path.join(ROOT, 'data', 'items.json');
 
 /** Bump when the processing below changes, so every item is rebuilt once. */
-const PIPELINE = 4;
+const PIPELINE = 5;
 const MODEL = { id: 'onnx-community/BiRefNet_lite-ONNX', revision: 'de15b22ba131738a16dff04aab8bdf8dc32e3ac1' };
 /** Work at most this big; the largest output is 1600 px. */
 const WORK_SIDE = 2400;
@@ -51,8 +52,18 @@ type HeroPick =
       file: string;
       mode?: 'cutout' | 'photo';
       crop?: [number, number, number, number];
-      /** Also key out backdrop-coloured pixels inside the object (an open frame). Off by default: it would eat white objects. */
-      holes?: boolean;
+      /**
+       * Also key out backdrop-coloured pixels inside the object (an open frame). true: anything
+       * within a few levels of the backdrop, soft ramp (it would eat a white object). 'exact': only
+       * sizeable patches that are the backdrop colour itself, so a white object on a white
+       * backdrop keeps its body and loses the backdrop seen through it. 'clear': for clear acrylic
+       * or glass on a white backdrop, how far each pixel is from the backdrop becomes the matte
+       * (together with the model's), so the backdrop seen through it goes and thin clear edges the
+       * model missed come back. 'grow': for a shaded backdrop the model kept in a gap (between two
+       * cards), the cleared backdrop spreads into neighbours that keep its hue and change only
+       * gradually, so it stops at the object's edges. Off by default.
+       */
+      holes?: boolean | 'exact' | 'clear' | 'grow';
     };
 interface Pick {
   hero?: HeroPick;
@@ -127,11 +138,13 @@ async function saveManifest(manifest: Record<string, MediaEntry>, items: { id: s
   await rename(tmp, MANIFEST_FILE);
 }
 
-function heroOf(pick: Pick): { file: string; mode: 'cutout' | 'photo'; crop?: [number, number, number, number]; holes: boolean } {
+type Holes = boolean | 'exact' | 'clear' | 'grow';
+
+function heroOf(pick: Pick): { file: string; mode: 'cutout' | 'photo'; crop?: [number, number, number, number]; holes: Holes } {
   const h = pick.hero ?? 'ref-0.jpg';
   return typeof h === 'string'
     ? { file: h, mode: 'cutout', holes: false }
-    : { file: h.file, mode: h.mode ?? 'cutout', crop: h.crop, holes: !!h.holes };
+    : { file: h.file, mode: h.mode ?? 'cutout', crop: h.crop, holes: h.holes === 'exact' || h.holes === 'clear' || h.holes === 'grow' ? h.holes : !!h.holes };
 }
 
 async function inputKey(id: string, pick: Pick): Promise<string> {
@@ -284,14 +297,25 @@ async function loadSegmenter(): Promise<Segmenter> {
 
 // ---------- cut-out ----------
 
-async function cutout(rgba: Buffer, alphaIn: Float32Array, W: number, H: number, holes = false) {
+async function cutout(rgba: Buffer, alphaIn: Float32Array, W: number, H: number, holes: Holes = false) {
   const n = W * H;
   const alpha = new Float32Array(n);
   // Firm up the matte: the model's faint haze goes, edges keep a little softness.
   for (let i = 0; i < n; i++) alpha[i] = smoothstep(0.08, 0.92, alphaIn[i]);
   await debugMask('1-model', alphaIn, W, H);
   const bg = backgroundColour(rgba, alpha, W, H);
-  if (holes) {
+  if (holes === 'exact') keyBackdropPatches(rgba, alpha, bg, W, H);
+  else if (holes === 'grow') growBackdrop(rgba, alpha, bg, W, H);
+  else if (holes === 'clear') {
+    // Clear material only shows as how much it bends or dims the backdrop: that difference is its
+    // opacity. Solid things the model found stay solid, less the backdrop patches seen through them.
+    keyBackdropPatches(rgba, alpha, bg, W, H);
+    for (let i = 0; i < n; i++) {
+      const d = Math.max(Math.abs(rgba[i * 4] - bg[0]), Math.abs(rgba[i * 4 + 1] - bg[1]), Math.abs(rgba[i * 4 + 2] - bg[2]));
+      alpha[i] = Math.max(alpha[i], smoothstep(3, 40, d));
+    }
+  }
+  else if (holes) {
     // Saliency models fill an open frame's middle in; anything within a few levels of the
     // backdrop goes, with a soft ramp so anti-aliased inner edges stay clean.
     for (let i = 0; i < n; i++) {
@@ -312,6 +336,7 @@ async function cutout(rgba: Buffer, alphaIn: Float32Array, W: number, H: number,
     }
   }
 
+  defringe(rgb, alpha, W, H);
   normalizeColour(rgb, alpha, n);
 
   // Trim to the object.
@@ -464,6 +489,137 @@ function dropSpecks(alpha: Float32Array, W: number, H: number) {
   const reach = Math.max(2, Math.round(Math.max(W, H) * 0.004));
   dilate(solidNear, W, H, reach);
   for (let i = 0; i < W * H; i++) if (!solidNear[i]) alpha[i] = 0;
+}
+
+/**
+ * Shop photos are often sharpened, so an object's outline carries a ring brighter than the backdrop
+ * itself, and the model's matte reaches a pixel or so into it. Un-mixing can't remove light that
+ * was never the backdrop's, and on the dark page it reads as a white hairline. Within a couple of
+ * pixels of the silhouette, an edge pixel lighter than the object just inside it takes the inside
+ * colour instead (darker edges, such as a real shadow line, are left alone). Thin parts with no
+ * solid inside (a lamp's stem) keep their own colour.
+ */
+function defringe(rgb: Float32Array, alpha: Float32Array, W: number, H: number) {
+  const n = W * H;
+  const r = Math.max(2, Math.round(Math.max(W, H) * 0.001));
+  const clear = new Uint8Array(n);
+  for (let i = 0; i < n; i++) if (alpha[i] < 0.5) clear[i] = 1;
+  const near = clear.slice();
+  dilate(near, W, H, r);
+  const deep = clear.slice();
+  dilate(deep, W, H, r + 1);
+  // Nearest solid inside pixel for every band pixel, by a breadth-first walk outward from the inside.
+  const src = new Int32Array(n).fill(-1);
+  for (let i = 0; i < n; i++) if (!deep[i] && alpha[i] >= 0.98) src[i] = i;
+  let frontier: number[] = [];
+  for (let i = 0; i < n; i++) {
+    if (src[i] < 0) continue;
+    const x = i % W;
+    if ((x > 0 && src[i - 1] < 0) || (x < W - 1 && src[i + 1] < 0) || (i >= W && src[i - W] < 0) || (i < n - W && src[i + W] < 0)) frontier.push(i);
+  }
+  for (let step = 0; step < r + 3 && frontier.length; step++) {
+    const next: number[] = [];
+    for (const p of frontier) {
+      const x = p % W;
+      for (const q of [x > 0 ? p - 1 : -1, x < W - 1 ? p + 1 : -1, p >= W ? p - W : -1, p < n - W ? p + W : -1]) {
+        if (q >= 0 && src[q] < 0 && alpha[q] > 0) {
+          src[q] = src[p];
+          next.push(q);
+        }
+      }
+    }
+    frontier = next;
+  }
+  const lum = (i: number) => 0.2126 * rgb[i * 3] + 0.7152 * rgb[i * 3 + 1] + 0.0722 * rgb[i * 3 + 2];
+  for (let i = 0; i < n; i++) {
+    const s = src[i];
+    if (s < 0 || s === i || !near[i] || alpha[i] <= 0) continue;
+    if (lum(i) > lum(s)) for (let c = 0; c < 3; c++) rgb[i * 3 + c] = rgb[s * 3 + c];
+  }
+}
+
+/**
+ * holes: 'exact'. Saliency models fill the openings of a frame in (between a hamper's legs, under
+ * its base bars). Those openings show the backdrop itself: flat, within a level or two of it. Each
+ * connected patch of such pixels bigger than a crumb goes, and its rim fades with distance from
+ * the backdrop colour, so anti-aliased edges stay clean and a white body a few levels off the
+ * backdrop is left alone.
+ */
+function keyBackdropPatches(rgba: Buffer, alpha: Float32Array, bg: [number, number, number], W: number, H: number) {
+  const n = W * H;
+  const TOL = 3, RAMP = 18;
+  const dist = new Uint8Array(n);
+  for (let i = 0; i < n; i++) {
+    dist[i] = Math.max(Math.abs(rgba[i * 4] - bg[0]), Math.abs(rgba[i * 4 + 1] - bg[1]), Math.abs(rgba[i * 4 + 2] - bg[2]));
+  }
+  const minArea = Math.max(64, Math.round(n * 0.0002));
+  const patch = new Uint8Array(n);
+  const seen = new Uint8Array(n);
+  const stack: number[] = [];
+  const members: number[] = [];
+  for (let start = 0; start < n; start++) {
+    if (seen[start] || dist[start] > TOL || alpha[start] < 0.02) continue;
+    members.length = 0;
+    seen[start] = 1;
+    stack.push(start);
+    while (stack.length) {
+      const p = stack.pop()!;
+      members.push(p);
+      const x = p % W, y = (p - x) / W;
+      for (const q of [x > 0 ? p - 1 : -1, x < W - 1 ? p + 1 : -1, y > 0 ? p - W : -1, y < H - 1 ? p + W : -1]) {
+        if (q >= 0 && !seen[q] && dist[q] <= TOL) {
+          seen[q] = 1;
+          stack.push(q);
+        }
+      }
+    }
+    if (members.length >= minArea) for (const p of members) patch[p] = 1;
+  }
+  const rim = patch.slice();
+  dilate(rim, W, H, Math.max(2, Math.round(Math.max(W, H) * 0.0015)));
+  for (let i = 0; i < n; i++) {
+    if (patch[i]) alpha[i] = 0;
+    else if (rim[i]) alpha[i] *= smoothstep(TOL, TOL + RAMP, dist[i]);
+  }
+}
+
+/**
+ * holes: 'grow'. A backdrop in shade (the gap between two cards) is no longer the backdrop's
+ * colour, but it keeps its hue and changes slowly from pixel to pixel, while an object's edge is a
+ * step. Starting from what is already clear, the backdrop spreads into shaded neighbours that
+ * differ by a few levels at most and keep the backdrop's hue.
+ */
+function growBackdrop(rgba: Buffer, alpha: Float32Array, bg: [number, number, number], W: number, H: number) {
+  const n = W * H;
+  const STEP = 4, HUE = 5;
+  const hue = (i: number) => [rgba[i * 4] - rgba[i * 4 + 1], rgba[i * 4 + 1] - rgba[i * 4 + 2]];
+  const bgHue = [bg[0] - bg[1], bg[1] - bg[2]];
+  // Only into shade: an object of the backdrop's hue (a cream card) is lit, the gap behind it isn't.
+  const bgLum = (bg[0] + bg[1] + bg[2]) / 3;
+  const backdropLike = (i: number) => {
+    const [a, b] = hue(i);
+    const lum = (rgba[i * 4] + rgba[i * 4 + 1] + rgba[i * 4 + 2]) / 3;
+    return lum < bgLum - 8 && Math.abs(a - bgHue[0]) <= HUE && Math.abs(b - bgHue[1]) <= HUE;
+  };
+  const grown = new Uint8Array(n);
+  let frontier: number[] = [];
+  for (let i = 0; i < n; i++) if (alpha[i] < 0.05) { grown[i] = 1; frontier.push(i); }
+  while (frontier.length) {
+    const next: number[] = [];
+    for (const p of frontier) {
+      const x = p % W;
+      for (const q of [x > 0 ? p - 1 : -1, x < W - 1 ? p + 1 : -1, p >= W ? p - W : -1, p < n - W ? p + W : -1]) {
+        if (q < 0 || grown[q]) continue;
+        const step = Math.max(Math.abs(rgba[p * 4] - rgba[q * 4]), Math.abs(rgba[p * 4 + 1] - rgba[q * 4 + 1]), Math.abs(rgba[p * 4 + 2] - rgba[q * 4 + 2]));
+        if (step <= STEP && backdropLike(q)) {
+          grown[q] = 1;
+          next.push(q);
+        }
+      }
+    }
+    frontier = next;
+  }
+  for (let i = 0; i < n; i++) if (grown[i]) alpha[i] = 0;
 }
 
 function dilate(m: Uint8Array, W: number, H: number, r: number) {

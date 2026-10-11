@@ -147,7 +147,7 @@
   },
   {
     "id": "amzn-f76e128e",
-    "url": "https://amzn.to/4bAIa1U",
+    "url": "https://www.amazon.com/dp/B0FB21526X?tag=wustep09-20",
     "domain": "amazon.com",
     "title": "MX Master 3S",
     "price": "$89.99",
@@ -268,7 +268,7 @@
   },
   {
     "id": "amzn-c91e1f10",
-    "url": "https://amzn.to/4sLMhhN",
+    "url": "https://www.amazon.com/dp/B00T9AJ0S0?tag=wustep09-20",
     "domain": "amazon.com",
     "title": "Tower Laundry Basket",
     "price": "$78.00",
@@ -377,7 +377,7 @@
   },
   {
     "id": "amazon-945ed6e2",
-    "url": "https://www.amazon.com/dp/B011MHN6S2",
+    "url": "https://www.amazon.com/dp/B011MHN6S2?tag=wustep09-20",
     "domain": "amazon.com",
     "title": "45L Semi-Round Sensor Can",
     "brand": "simplehuman",
@@ -452,7 +452,7 @@
   },
   {
     "id": "amzn-a0753bc5",
-    "url": "https://amzn.to/3LE6jtS",
+    "url": "https://www.amazon.com/dp/B0F1758LQQ?tag=wustep09-20",
     "domain": "amazon.com",
     "title": "Acrylic Record Player Stand",
     "brand": "solaround",
@@ -540,7 +540,7 @@
   },
   {
     "id": "amzn-f530eeab",
-    "url": "https://amzn.to/3ZixSfw",
+    "url": "https://www.amazon.com/dp/B08KPJ76RR?tag=wustep09-20",
     "domain": "amazon.com",
     "title": "Air Purifier",
     "brand": "Blueair",
@@ -585,7 +585,7 @@
   },
   {
     "id": "amzn-1fc53358",
-    "url": "https://amzn.to/4jTkxUE",
+    "url": "https://www.amazon.com/dp/B0CF54FWFL?tag=wustep09-20",
     "domain": "amazon.com",
     "title": "Charging Station",
     "brand": "Anker",
@@ -729,7 +729,7 @@
   },
   {
     "id": "amazon-b05badce",
-    "url": "https://www.amazon.com/Nord-88-Key-Digital-Pianos-Stage-STAGE4-88/dp/B0C4FM4MJK",
+    "url": "https://www.amazon.com/dp/B0C4FM4MJK?tag=wustep09-20",
     "domain": "amazon.com",
     "title": "Stage 4 88",
     "brand": "Nord",
@@ -820,41 +820,41 @@
     "addedAt": "2026-09-14T07:50:57.269Z"
   },
   {
-    "id": "boss-55cd4543",
-    "url": "https://www.boss.info/us/products/rc-500/",
+    "id": "boss-1b124b07",
+    "url": "https://www.boss.info/global/products/rc-505mk2/",
     "domain": "boss.info",
-    "title": "RC-500 Loop Station",
+    "title": "RC-505mkII Loop Station",
     "brand": "BOSS",
-    "price": "$309.98",
+    "price": "$659.99",
     "section": "Music",
-    "description": "RC-500: Loop Station - Dual-Track Powerhouse",
     "images": [
-      "/items/boss-55cd4543/ref-0.jpg",
-      "/items/boss-55cd4543/ref-1.jpg",
-      "/items/boss-55cd4543/ref-2.jpg",
-      "/items/boss-55cd4543/ref-3.jpg"
+      "/items/boss-1b124b07/ref-1.jpg",
+      "/items/boss-1b124b07/ref-0.jpg",
+      "/items/boss-1b124b07/ref-2.jpg",
+      "/items/boss-1b124b07/ref-3.jpg",
+      "/items/boss-1b124b07/ref-4.jpg"
     ],
     "asset": {
       "kind": "procedural",
       "shape": "card",
-      "texture": "/items/boss-55cd4543/primary.png",
-      "aspect": 1.15,
+      "texture": "/items/boss-1b124b07/primary.png",
+      "aspect": 1.5015,
       "palette": [
-        "#d02f31",
-        "#8d514e",
-        "#141212",
-        "#edf2f3"
+        "#ad2f35",
+        "#494c52",
+        "#26262c",
+        "#c7cbd7"
       ]
     },
-    "addedAt": "2026-10-11T03:18:00.044Z"
+    "addedAt": "2026-10-11T06:13:44.519Z"
   },
   {
     "id": "amazon-421bd010",
-    "url": "https://www.amazon.com/dp/B07Q38FWFJ",
+    "url": "https://www.amazon.com/dp/B07Q38FWFJ?tag=wustep09-20",
     "domain": "amazon.com",
     "title": "Kalimba Thumb Piano, 17 Keys",
     "brand": "Newlam",
-    "price": "$26.39",
+    "price": "$25.99",
     "section": "Music",
     "description": "Buy Newlam Kalimba Thumb Piano 17 Keys, Musical Gift for Kids and Adults: Thumb Pianos - Amazon.com ✓ FREE DELIVERY possible on eligible purchases",
     "images": [
@@ -981,7 +981,7 @@
   },
   {
     "id": "amzn-0f80deec",
-    "url": "https://amzn.to/4qPvSXO",
+    "url": "https://www.amazon.com/dp/B0194L637E?tag=wustep09-20",
     "domain": "amazon.com",
     "title": "Weekender Fairfield",
     "brand": "Timex",
@@ -1184,7 +1184,7 @@
   },
   {
     "id": "amazon-3f443256",
-    "url": "https://www.amazon.com/Owala-FreeSip-Insulated-Stainless-BPA-Free/dp/B0BZYC7N7X?th=1",
+    "url": "https://www.amazon.com/dp/B0BZYC7N7X?tag=wustep09-20",
     "domain": "amazon.com",
     "title": "FreeSip Camo Cool 24oz",
     "brand": "Owala",
@@ -1453,7 +1453,7 @@
   },
   {
     "id": "amazon-534aae5e",
-    "url": "https://www.amazon.com/dp/B0G52FPP63",
+    "url": "https://www.amazon.com/dp/B0G52FPP63?tag=wustep09-20",
     "domain": "amazon.com",
     "title": "M5 Retro Dock for Mac mini",
     "brand": "Wokyis",
@@ -1482,7 +1482,7 @@
   },
   {
     "id": "amazon-f9715de1",
-    "url": "https://www.amazon.com/dp/B0H38ZKRMS",
+    "url": "https://www.amazon.com/dp/B0H38ZKRMS?tag=wustep09-20",
     "domain": "amazon.com",
     "title": "Retro Case for Apple Watch Ultra",
     "brand": "HUALIMEI",
@@ -1537,6 +1537,36 @@
       ]
     },
     "addedAt": "2026-10-11T03:04:24.797Z"
+  },
+  {
+    "id": "amazon-091b2237",
+    "url": "https://www.amazon.com/dp/B0CJVRFTSH?tag=wustep09-20",
+    "domain": "amazon.com",
+    "title": "MagSafe Wallet Stand, Black",
+    "brand": "Satechi",
+    "price": "$39.99",
+    "section": "Office",
+    "description": "A vegan-leather MagSafe wallet for up to 4 cards whose flap folds out into a multi-angle phone stand, portrait or landscape. NFC pass-through for tap to pay.",
+    "images": [
+      "/items/amazon-091b2237/ref-0.jpg",
+      "/items/amazon-091b2237/ref-1.jpg",
+      "/items/amazon-091b2237/ref-2.jpg",
+      "/items/amazon-091b2237/ref-3.jpg",
+      "/items/amazon-091b2237/ref-4.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/amazon-091b2237/primary.png",
+      "aspect": 0.9473,
+      "palette": [
+        "#676d73",
+        "#2b2d30",
+        "#b7bdc4",
+        "#e9f0f8"
+      ]
+    },
+    "addedAt": "2026-10-11T06:15:52.625Z"
   },
   {
     "id": "revivalrugs-86802fd7",
@@ -1596,7 +1626,7 @@
   },
   {
     "id": "amazon-1fd6380c",
-    "url": "https://www.amazon.com/dp/B00BNRO59G",
+    "url": "https://www.amazon.com/dp/B00BNRO59G?tag=wustep09-20",
     "domain": "amazon.com",
     "title": "2-Tier Bamboo Shoe Rack",
     "brand": "Oceanstar",
@@ -1653,7 +1683,7 @@
   },
   {
     "id": "amazon-57d10ff1",
-    "url": "https://www.amazon.com/dp/B00N0ZOZ9O",
+    "url": "https://www.amazon.com/dp/B00N0ZOZ9O?tag=wustep09-20",
     "domain": "amazon.com",
     "title": "Tower Coat Rack with Shelf",
     "brand": "Yamazaki Home",
@@ -1682,7 +1712,7 @@
   },
   {
     "id": "amazon-436fc733",
-    "url": "https://www.amazon.com/dp/B0DTHMFMKP",
+    "url": "https://www.amazon.com/dp/B0DTHMFMKP?tag=wustep09-20",
     "domain": "amazon.com",
     "title": "FamiLock S3 Max Smart Lock",
     "brand": "eufy",
@@ -1794,7 +1824,7 @@
   },
   {
     "id": "amazon-96467ee5",
-    "url": "https://www.amazon.com/dp/B0C6R9P664",
+    "url": "https://www.amazon.com/dp/B0C6R9P664?tag=wustep09-20",
     "domain": "amazon.com",
     "title": "Pro 7 Mesh Wi-Fi, 3-Pack",
     "brand": "eero",
@@ -1821,7 +1851,7 @@
   },
   {
     "id": "amazon-ad8ad72f",
-    "url": "https://www.amazon.com/dp/B0B5V2YZPZ",
+    "url": "https://www.amazon.com/dp/B0B5V2YZPZ?tag=wustep09-20",
     "domain": "amazon.com",
     "title": "80-Pint Dehumidifier",
     "brand": "Waykar",

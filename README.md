@@ -132,9 +132,9 @@ npm run images -- --force      # everything
 2. **Colour.** A gentle white balance on neutral pixels (±6% at most, so walnut stays walnut),
    one common white point with a soft shoulder, and the deepest blacks lifted a touch so a black
    mouse keeps its shape on a dark shelf.
-3. **Framing.** Trimmed to the object, then the same padding ratio around every one.
-4. **Shadow.** One contact shadow under the footprint plus a soft occlusion, same recipe for all.
-5. **Formats.** AVIF and WebP at 480, 960 and 1600 px wide (never upscaled), with content-hashed
+3. **Framing.** Trimmed to the object, then the same padding ratio around every one. No shadow
+   is baked in; things sit straight on the shelf.
+4. **Formats.** AVIF and WebP at 480, 960 and 1600 px wide (never upscaled), with content-hashed
    names. Gallery photos stay photographs, at 640 and 1280.
 
 Which photo is used, and which others go in the gallery, is chosen in `data/photos.json`:
@@ -166,6 +166,10 @@ left inside or between parts of the object:
 - `"fill"`: the other way round: clear patches the backdrop can't reach from the photo's edge
   become solid again, for light parts the model keyed out inside the object (the kalimba's chrome
   tines over white).
+
+`floor: [[x, y], ...]` traces the object's bottom edge, left to right, in fractions of the photo,
+and clears everything below it: a floor reflection under a base seen at an angle, which a
+rectangular crop can't take off without clipping the base (the kalimba).
 
 Every cut-out also has its edges defringed: sharpened shop photos leave a ring lighter than the
 backdrop around the object, so an edge pixel lighter than the object just inside it takes the

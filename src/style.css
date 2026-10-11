@@ -210,7 +210,8 @@ html.is-detail body {
   opacity: 1;
 }
 .thing-pic.is-photo img {
-  box-shadow: 0 18px 30px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  outline: 1px solid rgba(255, 255, 255, 0.05);
+  outline-offset: -1px;
 }
 .thing-stage.is-missing .thing-pic {
   display: none;
@@ -416,7 +417,6 @@ html.is-detail body {
 }
 .stage-pic.is-photo img {
   border-radius: 3px;
-  box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.9);
 }
 .stage-pic.is-missing img {
   display: none;

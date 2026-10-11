@@ -3,6 +3,7 @@
  * Notes are Markdown in data/items.json (`commentary`). While `npm run dev` is serving they can be
  * written here and are saved back to that file; the built site shows them read-only.
  */
+import { affiliateUrl } from '../shared/amazon.ts';
 import type { Item } from '../shared/types.ts';
 import { shopText, titleWithoutBrand } from '../shared/text.ts';
 import { renderMarkdown } from './markdown.ts';
@@ -27,7 +28,11 @@ export class Detail {
   private position = { index: 0, total: 0 };
 
   constructor(private readonly root: HTMLElement, private readonly handlers: DetailHandlers) {
-    root.addEventListener('keydown', (e) => this.onKey(e));
+    // Keys are heard at the document, not the view: a click on a photo or a thumbnail (Safari
+    // doesn't focus buttons on click) leaves focus on <body>, and Esc and the arrows must still work.
+    document.addEventListener('keydown', (e) => {
+      if (this.isOpen) this.onKey(e);
+    });
     void commentaryWritable().then((ok) => {
       this.writable = ok;
       if (this.item && !this.editing) this.renderNotes();
@@ -151,7 +156,7 @@ export class Detail {
     const facts = el('p', 'info-facts');
     if (item.price) facts.append(Object.assign(el('span', 'info-price'), { textContent: item.price }));
     const shop = el('a', 'info-shop') as HTMLAnchorElement;
-    shop.href = item.url;
+    shop.href = affiliateUrl(item.url);
     shop.target = '_blank';
     shop.rel = 'noopener noreferrer';
     shop.append(`View at ${item.domain}`, Object.assign(el('span', 'info-shop-arrow'), { textContent: '↗', ariaHidden: 'true' }));
@@ -299,11 +304,13 @@ export class Detail {
   // ---------- keys ----------
 
   private onKey(e: KeyboardEvent) {
-    const typing = (e.target as HTMLElement).closest('textarea, input');
+    if (e.defaultPrevented || e.isComposing) return;
+    const target = e.target instanceof Element ? e.target : null;
+    const typing = target?.closest('textarea, input, select, [contenteditable]:not([contenteditable="false"])');
     if (e.key === 'Escape' && !typing) {
       e.preventDefault();
       this.handlers.close();
-    } else if ((e.key === 'ArrowRight' || e.key === 'ArrowLeft') && !typing && !e.metaKey && !e.altKey) {
+    } else if ((e.key === 'ArrowRight' || e.key === 'ArrowLeft') && !typing && !e.metaKey && !e.altKey && !e.ctrlKey && !e.shiftKey) {
       e.preventDefault();
       this.handlers.step(e.key === 'ArrowRight' ? 1 : -1);
     } else if (e.key === 'Tab') {
@@ -334,7 +341,11 @@ function trapFocus(root: HTMLElement, e: KeyboardEvent) {
   );
   if (!focusable.length) return;
   const first = focusable[0], last = focusable[focusable.length - 1];
-  if (e.shiftKey && document.activeElement === first) {
+  // Focus fell out of the view (a click on a photo leaves it on <body>): Tab comes back in.
+  if (!root.contains(document.activeElement)) {
+    e.preventDefault();
+    (e.shiftKey ? last : first).focus();
+  } else if (e.shiftKey && document.activeElement === first) {
     e.preventDefault();
     last.focus();
   } else if (!e.shiftKey && document.activeElement === last) {

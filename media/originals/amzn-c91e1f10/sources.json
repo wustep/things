@@ -46,5 +46,23 @@
     "url": "https://images-na.ssl-images-amazon.com/images/I/71qCL2DSv7L._AC_UL348_SR348,348_.jpg",
     "width": 348,
     "height": 348
+  },
+  {
+    "file": "ref-8.jpg",
+    "url": "https://cdn.shopify.com/s/files/1/0906/1751/2216/files/2484-2.jpg",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "file": "ref-9.jpg",
+    "url": "https://cdn.shopify.com/s/files/1/0906/1751/2216/files/2484-3.jpg",
+    "width": 1500,
+    "height": 1500
+  },
+  {
+    "file": "ref-10.jpg",
+    "url": "https://cdn.shopify.com/s/files/1/0906/1751/2216/files/2484-4.jpg",
+    "width": 1500,
+    "height": 1500
   }
 ]

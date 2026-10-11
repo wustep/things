@@ -1,0 +1,17 @@
+[
+  {
+    "url": "https://www.boss.info/global/products/rc-505mk2/",
+    "title": "RC-505mkII Loop Station",
+    "brand": "BOSS",
+    "price": "$659.99",
+    "section": "Music",
+    "image": "https://static.roland.com/assets/images/articles/thumbnails/rc-505mk2_F_gal.jpg",
+    "images": [
+      "https://static.roland.com/assets/images/articles/thumbnails/rc-505mk2_D_gal.jpg",
+      "https://static.roland.com/assets/images/articles/thumbnails/rc-505mk2_DB_gal.jpg",
+      "https://static.roland.com/assets/images/articles/thumbnails/rc-505mk2_FB_gal.jpg",
+      "https://static.roland.com/assets/images/articles/thumbnails/rc-505mk2_R_gal.jpg"
+    ],
+    "maxRefs": 5
+  }
+]

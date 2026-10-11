@@ -22,5 +22,23 @@
     "url": "https://www.ikea.com/us/en/images/products/kyrre-stool-birch__1488231_pe1003327_s5.jpg",
     "width": 1400,
     "height": 1400
+  },
+  {
+    "file": "ref-4.jpg",
+    "url": "https://www.ikea.com/us/en/images/products/kyrre-stool-birch__1076257_ph180018_s5.jpg?f=xxxl",
+    "width": 1333,
+    "height": 2000
+  },
+  {
+    "file": "ref-5.jpg",
+    "url": "https://www.ikea.com/us/en/images/products/kyrre-stool-birch__1318923_ph191746_s5.jpg?f=xxxl",
+    "width": 1400,
+    "height": 1400
+  },
+  {
+    "file": "ref-6.jpg",
+    "url": "https://www.ikea.com/us/en/images/products/kyrre-stool-birch__1053340_pe846920_s5.jpg?f=xxxl",
+    "width": 1400,
+    "height": 1400
   }
 ]

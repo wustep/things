@@ -8,6 +8,7 @@ import { titleWithoutBrand } from '../shared/text.ts';
 import { groupItems } from './sections.ts';
 import { heroFor, picture, realSizeCm, REFERENCE_CM, SCALE_EXPONENT } from './media.ts';
 import { itemPath } from './route.ts';
+import { pack } from './pack.ts';
 
 interface Metrics {
   /** On-screen size of the largest side of a REFERENCE_CM thing. */
@@ -67,24 +68,6 @@ export function place(item: Item, m: Metrics): Placed {
     drop: (1 - st - sh) * imgH,
     shift: ((1 - sl - sw) - sl) * imgW / 2,
   };
-}
-
-/** Greedy packing: as many things per shelf as fit, in collection order. */
-function pack(placed: Placed[], width: number): Placed[][] {
-  const rows: Placed[][] = [];
-  let row: Placed[] = [];
-  let used = 0;
-  for (const p of placed) {
-    if (row.length && used + p.slot > width) {
-      rows.push(row);
-      row = [];
-      used = 0;
-    }
-    row.push(p);
-    used += p.slot;
-  }
-  if (row.length) rows.push(row);
-  return rows;
 }
 
 export interface ShelfHandlers {

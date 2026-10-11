@@ -508,7 +508,17 @@ html.is-detail .cabinet {
   margin-top: 16px;
   padding: 4px;
   overflow-x: auto;
+  overflow-y: hidden;
   scrollbar-width: none;
+  /*
+   * The strip is a scroller, so it sets its own touch-action rather than inheriting the sheet's.
+   * While it fits, it is part of the sheet: up and down scroll, sideways steps to the next thing.
+   */
+  touch-action: pan-y pinch-zoom;
+}
+/* Too many photos to fit: sideways scrolls the strip itself. */
+.thumbs.is-scrollable {
+  touch-action: pan-x pan-y pinch-zoom;
 }
 .thumb {
   flex: none;

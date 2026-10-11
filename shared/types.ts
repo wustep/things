@@ -62,6 +62,11 @@ export interface Item {
   /** Shelf grouping, e.g. a Moonsift collection section ("Office", "Home"). */
   section?: string;
   /**
+   * Earlier /t/ slugs, from before a rename. They keep resolving (the viewer moves the address on
+   * to the current slug, and the build writes a share page for each), so old links never break.
+   */
+  aliases?: string[];
+  /**
    * Stephen's notes on the thing, in Markdown. Written in the detail view while `npm run dev` is
    * serving (saved back here); read-only on the static site. Ingest never touches it.
    */

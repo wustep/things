@@ -1,7 +1,7 @@
 [
   {
     "id": "ugmonk-5117191f",
-    "url": "https://ugmonk.com/collections/analog/products/analog-complete-kit?variant=40845188956310",
+    "url": "https://ugmonk.com/collections/analog/products/analog-complete-kit",
     "domain": "ugmonk.com",
     "title": "Analog Complete Kit",
     "brand": "Ugmonk",
@@ -47,7 +47,7 @@
   },
   {
     "id": "ugmonk-ef1055c7",
-    "url": "https://ugmonk.com/products/analog-card-bar-silver?variant=44720965714070",
+    "url": "https://ugmonk.com/products/analog-card-bar-silver",
     "domain": "ugmonk.com",
     "title": "Analog Card Bar",
     "brand": "Ugmonk",
@@ -90,6 +90,38 @@
     "addedAt": "2026-09-14T05:28:45.125Z"
   },
   {
+    "id": "ugmonk-a9228386",
+    "url": "https://ugmonk.com/products/idea-capture-kit-silver-aluminum",
+    "domain": "ugmonk.com",
+    "title": "Analog Capture Kit, Silver Aluminum",
+    "brand": "Ugmonk",
+    "price": "$149.00",
+    "section": "Office",
+    "description": "Includes: Small Capture Kit + Large Capture Kit. Say goodbye to scattered notes and lost ideas. The Capture Kit gives you a dedicated place for jotting down ideas, notes, sketches, and everything in between. The solid aluminum tray keeps blank cards ready, while a subtle slope on the front lip you slide completed ones underneath for easy storage. Use it on its own or stack it with additional trays.",
+    "images": [
+      "/items/ugmonk-a9228386/ref-0.jpg",
+      "/items/ugmonk-a9228386/ref-1.jpg",
+      "/items/ugmonk-a9228386/ref-2.jpg",
+      "/items/ugmonk-a9228386/ref-3.jpg",
+      "/items/ugmonk-a9228386/ref-4.jpg",
+      "/items/ugmonk-a9228386/ref-5.jpg",
+      "/items/ugmonk-a9228386/ref-6.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "box",
+      "texture": "/items/ugmonk-a9228386/primary.png",
+      "aspect": 1.5037,
+      "palette": [
+        "#706d6f",
+        "#b2aead",
+        "#363436",
+        "#f2f1f4"
+      ]
+    },
+    "addedAt": "2026-10-11T19:49:21.334Z"
+  },
+  {
     "id": "ergonofis-aba25b63",
     "url": "https://ergonofis.com/products/sway-standing-desk?variant=45146331512911",
     "domain": "ergonofis.com",
@@ -118,8 +150,37 @@
     "addedAt": "2026-10-11T02:00:00.729Z"
   },
   {
+    "id": "steelcase-41758f2b",
+    "url": "https://www.steelcase.com/products/office-chairs/steelcase-series-1/",
+    "domain": "steelcase.com",
+    "title": "Series 1 Task Chair, Medium Blue",
+    "brand": "Steelcase",
+    "price": "$429.00",
+    "section": "Office",
+    "description": "Steelcase Series 1 is an ergonomic chair that provides essential ergonomics, lumbar support, and quality at a great value for any office, home or otherwise.",
+    "images": [
+      "/items/steelcase-41758f2b/ref-0.jpg",
+      "/items/steelcase-41758f2b/ref-1.jpg",
+      "/items/steelcase-41758f2b/ref-2.jpg",
+      "/items/steelcase-41758f2b/ref-3.jpg",
+      "/items/steelcase-41758f2b/ref-4.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/steelcase-41758f2b/primary.png",
+      "aspect": 0.7744,
+      "palette": [
+        "#6f6f6f",
+        "#b3b3b2",
+        "#343434"
+      ]
+    },
+    "addedAt": "2026-10-11T20:29:53.176Z"
+  },
+  {
     "id": "ergonofis-b544e709",
-    "url": "https://ergonofis.com/products/single-dual-monitor-arms?variant=45146352910415",
+    "url": "https://ergonofis.com/products/single-dual-monitor-arms",
     "domain": "ergonofis.com",
     "title": "Monitor Arm, White",
     "brand": "ergonofis",
@@ -192,41 +253,38 @@
   },
   {
     "id": "jossandmain-cc12a72d",
-    "url": "https://www.jossandmain.com/furniture/pdp/joss-main-alix-78-recessed-arm-chesterfield-sofa-j111809464.html",
+    "url": "https://www.jossandmain.com/furniture/pdp/joss-main-bari-91-upholstered-sofa-j001334207.html?piid=830869401%2C841047075",
     "domain": "jossandmain.com",
-    "title": "Alix 78″ Recessed Arm Chesterfield Sofa",
-    "price": "$1899",
+    "title": "Bari 91″ Upholstered Sofa",
+    "brand": "Joss & Main",
+    "price": "$1,779",
     "section": "Home",
+    "aliases": [
+      "joss-and-main-alix-78-recessed-arm-chesterfield-sofa"
+    ],
     "images": [
-      "/items/jossandmain-cc12a72d/ref-0.jpg"
+      "/items/jossandmain-cc12a72d/ref-0.jpg",
+      "/items/jossandmain-cc12a72d/ref-1.jpg",
+      "/items/jossandmain-cc12a72d/ref-2.jpg",
+      "/items/jossandmain-cc12a72d/ref-3.jpg",
+      "/items/jossandmain-cc12a72d/ref-4.jpg",
+      "/items/jossandmain-cc12a72d/ref-5.jpg",
+      "/items/jossandmain-cc12a72d/ref-6.jpg"
     ],
     "asset": {
-      "kind": "glb",
-      "url": "/items/jossandmain-cc12a72d/model.glb",
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/jossandmain-cc12a72d/primary.png",
+      "aspect": 1.4949,
       "palette": [
-        "#27281b",
-        "#565946",
-        "#90908c",
-        "#cccccb"
-      ],
-      "refs": [
-        "/items/jossandmain-cc12a72d/ref-0.jpg"
-      ],
-      "fallback": {
-        "kind": "procedural",
-        "shape": "card",
-        "texture": "/items/jossandmain-cc12a72d/primary.png",
-        "aspect": 1.5479,
-        "palette": [
-          "#27281b",
-          "#565946",
-          "#90908c",
-          "#cccccb"
-        ]
-      }
+        "#6c5735",
+        "#272a14",
+        "#888888",
+        "#b0b1b2"
+      ]
     },
     "addedAt": "2026-09-14T05:28:41.300Z",
-    "brand": "Joss & Main"
+    "description": "A bold statement piece with a low, tuxedo-inspired silhouette and a tight tufted back. Solid parawood frame with corner-block reinforced joinery on tapered solid wood legs in a warm, weathered finish; fiber-wrapped foam over sinuous springs seats four. Shown in Sapphire Olive velvet with Aspen Gray legs."
   },
   {
     "id": "westelm-0d4a26d0",
@@ -629,7 +687,7 @@
   },
   {
     "id": "dwr-c60bfcc5",
-    "url": "https://www.dwr.com/lighting-floor/nelson-cigar-lotus-floor-lamp-metal/100114745.html?lang=en_US&sku=100114745",
+    "url": "https://www.dwr.com/lighting-floor/nelson-cigar-lotus-floor-lamp-metal/100114745.html",
     "domain": "dwr.com",
     "title": "Nelson Cigar Lotus Floor Lamp",
     "brand": "Herman Miller",
@@ -654,11 +712,14 @@
   },
   {
     "id": "jamescookartworkshop-b0e89a91",
-    "url": "https://www.jamescookartworkshop.com/pages/ea-the-bestsellers-collection",
+    "url": "https://www.jamescookartworkshop.com/",
     "domain": "jamescookartworkshop.com",
-    "title": "Bestsellers Collection",
+    "title": "Typewriter Artwork",
     "brand": "James Cook",
     "section": "Home",
+    "aliases": [
+      "james-cook-bestsellers-collection"
+    ],
     "description": "James Cook Artwork Shop",
     "images": [
       "/items/jamescookartworkshop-b0e89a91/ref-0.jpg",
@@ -700,12 +761,15 @@
   },
   {
     "id": "etsy-55c9006b",
-    "url": "https://www.etsy.com/listing/1814690193/interstellar-full-movie-print-whole",
+    "url": "https://www.etsy.com/listing/1590574600/choose-your-own-movie-print-whole-movie",
     "domain": "etsy.com",
-    "title": "Interstellar Whole Movie Poster (Details)",
+    "title": "Movie Frames Poster",
     "brand": "BendingPixelsShop",
     "price": "$59.99",
     "section": "Home",
+    "aliases": [
+      "bendingpixelsshop-interstellar-whole-movie-poster-details"
+    ],
     "images": [
       "/items/etsy-55c9006b/ref-0.jpg",
       "/items/etsy-55c9006b/ref-1.jpg",
@@ -878,6 +942,37 @@
     "addedAt": "2026-10-11T04:03:29.499Z"
   },
   {
+    "id": "jamcorder-2240bbb5",
+    "url": "https://jamcorder.com/",
+    "domain": "jamcorder.com",
+    "title": "Jamcorder",
+    "brand": "Jamcorder",
+    "price": "$99.99",
+    "section": "Music",
+    "description": "Have you ever thought, “wow, I wish I recorded that”? With Jamcorder, you did. Jamcorder is a tiny device you attach to your digital piano that quietly captures everything you play — effortlessly, for life.",
+    "images": [
+      "/items/jamcorder-2240bbb5/ref-0.jpg",
+      "/items/jamcorder-2240bbb5/ref-1.jpg",
+      "/items/jamcorder-2240bbb5/ref-2.jpg",
+      "/items/jamcorder-2240bbb5/ref-3.jpg",
+      "/items/jamcorder-2240bbb5/ref-4.jpg",
+      "/items/jamcorder-2240bbb5/ref-5.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/jamcorder-2240bbb5/primary.png",
+      "aspect": 1.5015,
+      "palette": [
+        "#3667ae",
+        "#75a8f1",
+        "#48596e",
+        "#0d1318"
+      ]
+    },
+    "addedAt": "2026-10-11T20:25:20.437Z"
+  },
+  {
     "id": "peakdesign-8f476d14",
     "url": "https://www.peakdesign.com/products/roller-pro?Color=Sage",
     "domain": "peakdesign.com",
@@ -926,7 +1021,7 @@
   },
   {
     "id": "peakdesign-e3a72cf8",
-    "url": "https://www.peakdesign.com/products/wash-pouch?Size=Small&Color=Sage",
+    "url": "https://www.peakdesign.com/products/wash-pouch",
     "domain": "peakdesign.com",
     "title": "Small Wash Pouch, Sage",
     "brand": "Peak Design",
@@ -1059,7 +1154,7 @@
   },
   {
     "id": "us-nothing-db5358fa",
-    "url": "https://us.nothing.tech/products/headphone-1?variant=46734988705944",
+    "url": "https://us.nothing.tech/products/headphone-1",
     "domain": "us.nothing.tech",
     "title": "Headphone (1)",
     "brand": "Nothing",
@@ -1524,7 +1619,7 @@
   },
   {
     "id": "revivalrugs-86802fd7",
-    "url": "https://www.revivalrugs.com/products/jute-rug-hart-in-olive?variant=39459943514211",
+    "url": "https://www.revivalrugs.com/products/jute-rug-hart-in-olive",
     "domain": "revivalrugs.com",
     "title": "Hart in Olive Jute Rug",
     "brand": "Revival Rugs",
@@ -1860,5 +1955,63 @@
       ]
     },
     "addedAt": "2026-10-11T03:18:00.042Z"
+  },
+  {
+    "id": "etsy-57abe791",
+    "url": "https://www.etsy.com/listing/574168262/leather-valet-tray-large-white-suede",
+    "domain": "etsy.com",
+    "title": "Leather Valet Tray, Large, White Suede",
+    "brand": "BarWR",
+    "price": "$58.00",
+    "section": "Carry",
+    "description": "・ This tray is made in Los Angeles from vegetable tanned leather and smooth cowhide WHITE suede leather, then molded, finished by hand. ・ Natural vegetable tanned leather will darken and gain character with regular use ・ Made in Los Angeles, CA ・ Dimensions: 8-3/4\" wide x 7 1/8\" long ・ The simple style create for unlimited home organization and display. ・ Great Item for your office, rest",
+    "images": [
+      "/items/etsy-57abe791/ref-0.jpg",
+      "/items/etsy-57abe791/ref-1.jpg",
+      "/items/etsy-57abe791/ref-2.jpg",
+      "/items/etsy-57abe791/ref-3.jpg",
+      "/items/etsy-57abe791/ref-4.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/etsy-57abe791/primary.png",
+      "aspect": 1.8092,
+      "palette": [
+        "#4a2b1a",
+        "#7a5233",
+        "#8f7969",
+        "#b2bab8"
+      ]
+    },
+    "addedAt": "2026-10-11T20:23:12.503Z"
+  },
+  {
+    "id": "amazon-fb682f1c",
+    "url": "https://www.amazon.com/dp/B0D4DY9GWG?tag=wustep09-20",
+    "domain": "amazon.com",
+    "title": "Experience 2 Plus Earplugs, Silver",
+    "brand": "Loop",
+    "price": "$35.96",
+    "section": "Carry",
+    "description": "Reusable high-fidelity earplugs: 17 dB (SNR) of noise reduction that keeps music crisp, plus Loop Mute for extra coverage. For concerts, festivals, sports, DJs and nightlife.",
+    "images": [
+      "/items/amazon-fb682f1c/ref-0.jpg",
+      "/items/amazon-fb682f1c/ref-1.jpg",
+      "/items/amazon-fb682f1c/ref-2.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/amazon-fb682f1c/primary.png",
+      "aspect": 0.8174,
+      "palette": [
+        "#8e8e88",
+        "#2f2f2d",
+        "#d2d1cf",
+        "#f7f7f7"
+      ]
+    },
+    "addedAt": "2026-10-11T20:36:24.746Z"
   }
 ]

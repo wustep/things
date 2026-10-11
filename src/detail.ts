@@ -4,6 +4,7 @@
  * written here and are saved back to that file; the built site shows them read-only.
  */
 import { affiliateUrl } from '../shared/amazon.ts';
+import { cleanLink } from '../shared/links.ts';
 import type { Item } from '../shared/types.ts';
 import { shopText, titleWithoutBrand } from '../shared/text.ts';
 import { renderMarkdown } from './markdown.ts';
@@ -40,6 +41,7 @@ export class Detail {
   private hinted = new Map<string, HTMLPictureElement>();
   /** The closer look at the big picture (desktop). */
   private loupe: Loupe | null = null;
+  private stripWatch: ResizeObserver | null = null;
 
   constructor(private readonly root: HTMLElement, private readonly handlers: DetailHandlers) {
     // Keys are heard at the document, not the view: a click on a photo or a thumbnail (Safari
@@ -48,9 +50,16 @@ export class Detail {
       if (this.isOpen) this.onKey(e);
     });
     // On a touch screen, a sideways swipe anywhere on the sheet steps to the next or previous thing.
-    // The photo strip keeps its own sideways scrolling, and a note being written keeps the page still.
+    // A photo strip with more to show keeps its own sideways scrolling until it reaches its end, and
+    // a note being written keeps the page still.
     watchSwipe(this.root, {
-      allow: (target) => !this.editing && !target.closest('.thumbs, textarea, input'),
+      allow: (target) => !this.editing && !target.closest('textarea, input'),
+      scrollsItself: (target, dx) => {
+        const strip = target.closest<HTMLElement>('.thumbs.is-scrollable');
+        if (!strip) return false;
+        // Finger moving left shows more on the right, and the other way round.
+        return dx < 0 ? strip.scrollLeft < strip.scrollWidth - strip.clientWidth - 1 : strip.scrollLeft > 1;
+      },
       move: (dx) => this.drag(dx),
       end: (delta, dx) => this.release(delta, dx),
     });
@@ -147,6 +156,8 @@ export class Detail {
     const body = el('div', 'sheet-body');
 
     // Images
+    this.stripWatch?.disconnect();
+    this.stripWatch = null;
     const visual = el('div', 'visual');
     const stage = el('figure', 'stage');
     // On a phone the stage takes the thing's own proportions (the cut-out's), so a wide thing isn't
@@ -169,6 +180,10 @@ export class Detail {
         thumbs.append(t);
       }
       visual.append(thumbs);
+      // Whether the strip scrolls sideways itself (too many photos for the width) or lets a
+      // sideways swipe step to the next thing; its touch-action has to be right before a touch lands.
+      this.stripWatch = new ResizeObserver(() => thumbs.classList.toggle('is-scrollable', thumbs.scrollWidth > thumbs.clientWidth + 1));
+      this.stripWatch.observe(thumbs);
     }
 
     // Words
@@ -181,7 +196,7 @@ export class Detail {
     const facts = el('p', 'info-facts');
     if (item.price) facts.append(Object.assign(el('span', 'info-price'), { textContent: item.price }));
     const shop = el('a', 'info-shop') as HTMLAnchorElement;
-    shop.href = affiliateUrl(item.url);
+    shop.href = affiliateUrl(cleanLink(item.url));
     shop.target = '_blank';
     shop.rel = 'noopener noreferrer';
     shop.append(`View at ${item.domain}`, Object.assign(el('span', 'info-shop-arrow'), { textContent: '↗', ariaHidden: 'true' }));

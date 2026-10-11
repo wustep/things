@@ -63,9 +63,14 @@ type HeroPick =
        * cards), the cleared backdrop spreads into neighbours that keep its hue and change only
        * gradually, so it stops at the object's edges. 'fill': the other way round, for a model that
        * keyed out light parts enclosed by the object (chrome tines on a kalimba's wood): anything
-       * the backdrop can't reach from the photo's edge becomes solid again. Off by default.
+       * the backdrop can't reach from the photo's edge becomes solid again. 'glass': clear
+       * acrylic or glass holding solid things, on a white backdrop, shown on the dark shelf (the
+       * record stand): the solid things stay as the model drew them; everything else is the clear
+       * material, as opaque as it darkened the backdrop (its edges and bends) and drawn in a light
+       * neutral, the way clear edges catch the light in a dim room. Flat panels that only show the
+       * backdrop go, so there is no milky fill and no glare slabs. Off by default.
        */
-      holes?: boolean | 'exact' | 'clear' | 'grow' | 'fill';
+      holes?: boolean | 'exact' | 'clear' | 'grow' | 'fill' | 'glass';
       /** Which model draws the matte: 'general' (default, solid and crisp) or 'matting' (keeps partial alpha: clear acrylic, glass). */
       matte?: MatteModel;
       /**
@@ -156,7 +161,7 @@ async function saveManifest(manifest: Record<string, MediaEntry>, items: { id: s
   await rename(tmp, MANIFEST_FILE);
 }
 
-type Holes = boolean | 'exact' | 'clear' | 'grow' | 'fill';
+type Holes = boolean | 'exact' | 'clear' | 'grow' | 'fill' | 'glass';
 
 function heroOf(pick: Pick): { file: string; mode: 'cutout' | 'photo'; crop?: [number, number, number, number]; holes: Holes; matte: MatteModel; lay: boolean; frame: boolean; floor?: [number, number][] } {
   const h = pick.hero ?? 'ref-0.jpg';
@@ -166,7 +171,7 @@ function heroOf(pick: Pick): { file: string; mode: 'cutout' | 'photo'; crop?: [n
         file: h.file,
         mode: h.mode ?? 'cutout',
         crop: h.crop,
-        holes: h.holes === 'exact' || h.holes === 'clear' || h.holes === 'grow' || h.holes === 'fill' ? h.holes : !!h.holes,
+        holes: h.holes === 'exact' || h.holes === 'clear' || h.holes === 'grow' || h.holes === 'fill' || h.holes === 'glass' ? h.holes : !!h.holes,
         matte: h.matte === 'matting' ? 'matting' : 'general',
         lay: !!h.lay,
         frame: !!h.frame,
@@ -284,6 +289,34 @@ async function existingAlpha(rgba: Buffer, W: number, H: number): Promise<Float3
   return a;
 }
 
+/**
+ * holes: 'glass'. Splits the photo into solid things and clear material. Solid is where the model is
+ * sure (alpha >= 0.97) in blobs too thick to be a clear edge line: an opening (erode, then dilate)
+ * drops the thin lines, and the blobs grow back over their own soft edges. Everything else is clear
+ * material, as opaque as it darkened the white backdrop, with a soft floor so flat panels that only
+ * show the backdrop vanish. Rewrites alpha in place; returns the clear-material mask.
+ */
+function glassMatte(rgba: Buffer, alpha: Float32Array, bg: number[], W: number, H: number): Uint8Array {
+  const n = W * H;
+  const r = Math.max(2, Math.round(Math.max(W, H) / 400));
+  const solid = new Uint8Array(n);
+  for (let i = 0; i < n; i++) solid[i] = alpha[i] >= 0.97 ? 1 : 0;
+  // Opening: erode (dilate the complement), then dilate back.
+  const holes = new Uint8Array(n);
+  for (let i = 0; i < n; i++) holes[i] = solid[i] ? 0 : 1;
+  dilate(holes, W, H, r);
+  for (let i = 0; i < n; i++) solid[i] = holes[i] ? 0 : 1;
+  dilate(solid, W, H, r + 1);
+  const glass = new Uint8Array(n);
+  for (let i = 0; i < n; i++) {
+    if (solid[i] && alpha[i] >= 0.5) continue;
+    const d = Math.max(Math.abs(rgba[i * 4] - bg[0]), Math.abs(rgba[i * 4 + 1] - bg[1]), Math.abs(rgba[i * 4 + 2] - bg[2]));
+    alpha[i] = 0.92 * smoothstep(6, 70, d);
+    glass[i] = 1;
+  }
+  return glass;
+}
+
 // ---------- cut-out ----------
 
 async function cutout(rgba: Buffer, alphaIn: Float32Array, W0: number, H0: number, holes: Holes = false, own = false, lay = false, floor?: [number, number][]) {
@@ -294,6 +327,7 @@ async function cutout(rgba: Buffer, alphaIn: Float32Array, W0: number, H0: numbe
   // haze over the backdrop goes and near-solid reads solid; partial cover (mesh, acrylic) stays.
   const refined = own ? alphaIn : refine(rgba, alphaIn, W, H);
   let alpha: Float32Array = new Float32Array(n);
+  let glass: Uint8Array | null = null;
   for (let i = 0; i < n; i++) alpha[i] = own ? alphaIn[i] : clamp((refined[i] - 0.04) / 0.92, 0, 1);
   await debugMask('1b-refined', alpha, W, H);
   const bg = backgroundColour(rgba, alpha, W, H);
@@ -312,6 +346,7 @@ async function cutout(rgba: Buffer, alphaIn: Float32Array, W0: number, H0: numbe
       alpha[i] = Math.max(seen, smoothstep(3, 40, d));
     }
   }
+  else if (holes === 'glass') glass = glassMatte(rgba, alpha, bg, W, H);
   else if (holes) {
     // Saliency models fill an open frame's middle in; anything within a few levels of the
     // backdrop goes, with a soft ramp so anti-aliased inner edges stay clean.
@@ -326,7 +361,11 @@ async function cutout(rgba: Buffer, alphaIn: Float32Array, W0: number, H0: numbe
   // The object's own colour in the edge band, with the backdrop it was mixed with taken out. A
   // shop's transparent PNG already stores it that way.
   let rgb: Float32Array = own ? Float32Array.from({ length: n * 3 }, (_, k) => rgba[(k / 3 | 0) * 4 + (k % 3)]) : foreground(rgba, alpha, W, H);
-  if (!own && holes !== 'clear') {
+  if (glass) {
+    // The clear material in a light neutral with the faintest cool cast, as acrylic edges read in a dim room.
+    for (let i = 0; i < n; i++) if (glass[i]) { rgb[i * 3] = 222; rgb[i * 3 + 1] = 229; rgb[i * 3 + 2] = 233; }
+  }
+  if (!own && holes !== 'clear' && holes !== 'glass') {
     // An edge pixel is a mix of the object and the backdrop (I = aF + (1-a)B), so it can't be more
     // opaque than its colour allows: one that is the backdrop's own colour beside a dark object is
     // backdrop (a sliver of studio white the model kept above a strap loop, a smear at the photo's

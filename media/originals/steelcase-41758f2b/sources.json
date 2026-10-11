@@ -1,0 +1,32 @@
+[
+  {
+    "file": "ref-0.jpg",
+    "url": "https://images.steelcase.com/image/upload/v1682355108/22-0184642-1.jpg",
+    "width": 3840,
+    "height": 2160
+  },
+  {
+    "file": "ref-1.jpg",
+    "url": "https://images.steelcase.com/image/upload/v1653061469/21-0169105_1x1.jpg",
+    "width": 2160,
+    "height": 2160
+  },
+  {
+    "file": "ref-2.jpg",
+    "url": "https://images.steelcase.com/image/upload/v1653061046/21-0169106_1x1.jpg",
+    "width": 2160,
+    "height": 2160
+  },
+  {
+    "file": "ref-3.jpg",
+    "url": "https://images.steelcase.com/image/upload/v1653061674/21-0169102_1x1.jpg",
+    "width": 2160,
+    "height": 2160
+  },
+  {
+    "file": "ref-4.jpg",
+    "url": "https://images.steelcase.com/image/upload/v1653061875/21-0169103_1x1.jpg",
+    "width": 2160,
+    "height": 2160
+  }
+]

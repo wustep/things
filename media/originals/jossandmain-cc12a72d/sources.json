@@ -1,8 +1,44 @@
 [
   {
     "file": "ref-0.jpg",
-    "url": "public/items/jossandmain-cc12a72d/ref-0.jpg (ingest copy; the shop blocked a fresh download)",
-    "width": 400,
-    "height": 400
+    "url": "https://assets.wfcdn.com/im/29508268/resize-h1600-w1600%5Ecompr-r85/3278/327804302/Bari+91%22+Upholstered+Sofa-830869401-841047075.jpg",
+    "width": 1600,
+    "height": 1600
+  },
+  {
+    "file": "ref-1.jpg",
+    "url": "https://assets.wfcdn.com/im/05353100/resize-h1600-w1600%5Ecompr-r85/4812/481286972/Bari+91%22+Upholstered+Sofa-830869401-841047075.jpg",
+    "width": 1600,
+    "height": 1600
+  },
+  {
+    "file": "ref-2.jpg",
+    "url": "https://assets.wfcdn.com/im/50398730/resize-h1600-w1600%5Ecompr-r85/3278/327804359/Bari+91%22+Upholstered+Sofa-830869401-841047075.jpg",
+    "width": 1600,
+    "height": 1600
+  },
+  {
+    "file": "ref-3.jpg",
+    "url": "https://assets.wfcdn.com/im/04482596/resize-h1600-w1600%5Ecompr-r85/4350/435028515/Bari+91%22+Upholstered+Sofa-830869401-841047075.jpg",
+    "width": 1600,
+    "height": 1600
+  },
+  {
+    "file": "ref-4.jpg",
+    "url": "https://assets.wfcdn.com/im/09631736/resize-h1600-w1600%5Ecompr-r85/4350/435028489/Bari+91%22+Upholstered+Sofa-830869401-841047075.jpg",
+    "width": 1600,
+    "height": 1600
+  },
+  {
+    "file": "ref-5.jpg",
+    "url": "https://assets.wfcdn.com/im/92320225/resize-h1600-w1600%5Ecompr-r85/7224/72248830/Bari+91%22+Upholstered+Sofa-830869401-841047075.jpg",
+    "width": 1600,
+    "height": 1600
+  },
+  {
+    "file": "ref-6.jpg",
+    "url": "https://assets.wfcdn.com/im/50701130/resize-h1600-w1600%5Ecompr-r85/4130/413010686/Bari+91%22+Upholstered+Sofa-830869401-841047075.jpg",
+    "width": 1024,
+    "height": 1024
   }
 ]

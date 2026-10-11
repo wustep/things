@@ -1,0 +1,79 @@
+[
+  {
+    "url": "https://ugmonk.com/products/idea-capture-kit-silver-aluminum",
+    "title": "Analog Capture Kit, Silver Aluminum",
+    "brand": "Ugmonk",
+    "price": "$149.00",
+    "section": "Office",
+    "image": "https://cdn.shopify.com/s/files/1/0167/4484/files/large-idea-kit-silver-1.jpg",
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0167/4484/files/large-tray-silver-10.jpg",
+      "https://cdn.shopify.com/s/files/1/0167/4484/files/large-tray-silver-9.jpg",
+      "https://cdn.shopify.com/s/files/1/0167/4484/files/alum-ls-cropped-52.jpg",
+      "https://cdn.shopify.com/s/files/1/0167/4484/files/alum-ls-90.jpg",
+      "https://cdn.shopify.com/s/files/1/0167/4484/files/large-tray-silver-6.jpg",
+      "https://cdn.shopify.com/s/files/1/0167/4484/files/large-tray-silver-5.jpg"
+    ],
+    "maxRefs": 7
+  },
+  {
+    "url": "https://www.etsy.com/listing/574168262/leather-valet-tray-large-white-suede",
+    "title": "Leather Valet Tray, Large, White Suede",
+    "brand": "BarWR",
+    "price": "$58.00",
+    "section": "Carry",
+    "image": "https://i.etsystatic.com/12160546/r/il/d67212/1501931512/il_fullxfull.1501931512_5nvk.jpg",
+    "images": [
+      "https://i.etsystatic.com/12160546/r/il/56e72c/2266689565/il_fullxfull.2266689565_h092.jpg",
+      "https://i.etsystatic.com/12160546/r/il/cf7a2a/1453301977/il_fullxfull.1453301977_plwb.jpg",
+      "https://i.etsystatic.com/12160546/r/il/75908c/2181494649/il_fullxfull.2181494649_geyc.jpg",
+      "https://i.etsystatic.com/12160546/r/il/7ddbe5/1390271365/il_fullxfull.1390271365_2cl5.jpg",
+      "https://i.etsystatic.com/12160546/r/il/870ed6/1342990892/il_fullxfull.1342990892_qmli.jpg"
+    ],
+    "maxRefs": 6
+  },
+  {
+    "url": "https://jamcorder.com/",
+    "title": "Jamcorder",
+    "brand": "Jamcorder",
+    "price": "$99.99",
+    "section": "Music",
+    "image": "https://cdn.shopify.com/s/files/1/0892/1366/5598/files/DSC_0646_brighter.jpg",
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0892/1366/5598/files/DSC_0609_brighter-cropped.jpg",
+      "https://cdn.shopify.com/s/files/1/0892/1366/5598/files/DSC_0847-edit.jpg",
+      "https://jamcorder.com/store/side-closeup.webp",
+      "https://jamcorder.com/store/usb-midi-piano.webp",
+      "https://jamcorder.com/store/product-piano-mobile.webp"
+    ],
+    "maxRefs": 6
+  },
+  {
+    "url": "https://www.steelcase.com/products/office-chairs/steelcase-series-1/",
+    "title": "Series 1 Task Chair, Medium Blue",
+    "brand": "Steelcase",
+    "price": "$429.00",
+    "section": "Office",
+    "image": "https://images.steelcase.com/image/upload/v1682355108/22-0184642-1.jpg",
+    "images": [
+      "https://images.steelcase.com/image/upload/v1653061469/21-0169105_1x1.jpg",
+      "https://images.steelcase.com/image/upload/v1653061046/21-0169106_1x1.jpg",
+      "https://images.steelcase.com/image/upload/v1653061674/21-0169102_1x1.jpg",
+      "https://images.steelcase.com/image/upload/v1653061875/21-0169103_1x1.jpg"
+    ],
+    "maxRefs": 5
+  },
+  {
+    "url": "https://www.amazon.com/dp/B0D4DY9GWG",
+    "title": "Experience 2 Plus Earplugs, Silver",
+    "brand": "Loop",
+    "price": "$35.96",
+    "section": "Carry",
+    "image": "https://m.media-amazon.com/images/I/51CBcI-bipL._AC_SL1500_.jpg",
+    "images": [
+      "https://m.media-amazon.com/images/I/61nzEjKdH1L._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/61gzITOwOhL._AC_SL1500_.jpg"
+    ],
+    "maxRefs": 3
+  }
+]

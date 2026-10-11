@@ -6,7 +6,7 @@ import { announce, Detail } from './detail.ts';
 import { extractUrls, ingestAvailable, ingestUrls } from './ingest-client.ts';
 import { setMedia } from './media.ts';
 import { groupItems } from './sections.ts';
-import { currentKey, homePath, itemPath, slugsFor } from './route.ts';
+import { currentKey, homePath, itemPath, resolveKey, slugsFor } from './route.ts';
 import { Shelf } from './shelf.ts';
 
 let items: Item[] = initialItems;
@@ -79,7 +79,7 @@ function closeDetail() {
 }
 
 function findByKey(key: string): Item | undefined {
-  return items.find((it) => slugs.get(it.id) === key) ?? items.find((it) => it.id === key);
+  return resolveKey(items, slugs, key);
 }
 
 /** Show whatever the URL says: a thing's detail view, or just the shelf. */
@@ -91,6 +91,9 @@ function applyRoute(animate: boolean) {
     announce('That thing isn’t on the shelf anymore.');
   }
   if (item) {
+    // An earlier slug (a renamed thing) moves on to the current one, keeping the history entry.
+    const slug = slugs.get(item.id);
+    if (slug && key !== slug && key !== item.id) history.replaceState(history.state, '', itemPath(slug));
     if (detail.openId !== item.id) openItem(item);
     return;
   }

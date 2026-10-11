@@ -22,8 +22,10 @@ around (click again to leave); from the keyboard, Z zooms in and the arrows look
 always closes the view, zoomed or not.
 
 Every thing has its own address, `/t/<maker-and-name>` (for example
-`/t/ugmonk-analog-complete-kit`); the item id works too (`/t/ugmonk-5117191f`). Links can be
-shared and reloaded, and Back returns to the shelf.
+`/t/ugmonk-analog-complete-kit`); the item id works too (`/t/ugmonk-5117191f`). When a thing is
+renamed, its old slug goes in its `aliases` and keeps working: the viewer moves on to the new
+address, and the build writes a share page for the old one too. Links can be shared and
+reloaded, and Back returns to the shelf.
 
 A shared link unfurls with the thing's name, a line about it (maker, price and shop, then the
 note or the shop's words) and a share card: the cut-out standing on a shelf in the same dark
@@ -115,7 +117,10 @@ more; both are tried before anything the page declares (handy for pinning one va
 entry's photos, so a variant can keep only its own (the charcoal Perch, the white-oak Sway). When the brand is known
 it is stripped from the title ("Simplehuman 60L Trash Can" becomes "60L Trash Can" under a
 Simplehuman line) so the tag never says it twice. Items are identified by a stable id derived
-from the URL (tracking parameters are ignored; Amazon URLs collapse to their ASIN).
+from the URL (tracking parameters are ignored; Amazon URLs collapse to their ASIN). Links are stored and shown
+without tracking (`shared/links.ts`: ad-click ids, `utm_*`, referral and shop-search params); what picks
+the product (`?variant=`, a colour option, Joss & Main's `piid`) stays, and Amazon links are left to the
+affiliate rule. A re-ingest finds its thing by that clean link too, so a link that lost a param keeps its id.
 
 ## The 2D image set
 
@@ -167,9 +172,14 @@ left inside or between parts of the object:
 - `"exact"`: only sizeable patches that are the backdrop colour itself, so a white object on a
   white backdrop keeps its body (the Tower hamper's X-frame and base bars).
 - `"clear"`: clear acrylic or glass on white; each pixel's distance from the backdrop becomes its
-  opacity, on top of the model's matte (the record stand).
+  opacity, on top of the model's matte.
 - `"grow"`: a backdrop in shade, such as the gap between two cards; the cleared backdrop spreads
   into shaded pixels of the same hue that change only gradually (the card bar).
+- `"glass"`: clear acrylic or glass holding solid things, on a white backdrop (the record stand,
+  which used `"clear"` before). The solid things stay as the model drew them (sure, and in blobs too
+  thick to be an edge line); everything else is the clear material, as opaque as it darkened the
+  backdrop and drawn in a light neutral, the way clear edges catch the light in a dim room. Flat
+  panels that only show the backdrop go, so there is no milky fill. Use with `matte: "matting"`.
 - `"fill"`: the other way round: clear patches the backdrop can't reach from the photo's edge
   become solid again, for light parts the model keyed out inside the object (the kalimba's chrome
   tines over white).
@@ -223,13 +233,17 @@ The 3D pipeline is kept intact for it:
 ```sh
 npm run typecheck
 npm test             # ingest, extraction and notes-rendering tests (node --test via tsx)
+npm run test:e2e     # builds, then swipes the detail view on a phone in Chromium (Playwright)
 npm run build        # dist/: the 2D site at /, the 3D archive at /3d/
 npm run preview      # serve dist/ locally
 ```
 
 The ingest tests serve fake product pages and images from a local HTTP server, run the real CLI
 against a temp folder (`THINGS_ROOT`), and preload `tests/helpers/no-paid-network.ts`, which
-blocks any request to Meshy, so they never touch the network or spend credits.
+blocks any request to Meshy, so they never touch the network or spend credits. The swipe tests
+(`tests/e2e/`) serve `dist/` with `vite preview` and drive it through Chromium's real touch-gesture
+path (`Input.synthesizeScrollGesture`), so the browser's own touch-action arbitration decides who
+gets each gesture; they need Playwright's Chromium (`npx playwright install chromium`).
 
 `dist/` is a fully static site: the collection is bundled in and images are copied from
 `public/`. Deploy it anywhere that serves static files and can fall back to `index.html`

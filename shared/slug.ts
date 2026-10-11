@@ -22,11 +22,22 @@ export function slugsFor(items: Pick<Item, 'id' | 'title' | 'brand'>[]): Map<str
   const out = new Map<string, string>();
   const taken = new Set<string>();
   for (const it of items) {
-    const name = [it.brand, titleWithoutBrand(it.title, it.brand)].filter(Boolean).join(' ');
+    const rest = titleWithoutBrand(it.title, it.brand);
+    // A thing named for its maker (the Jamcorder) says the name once.
+    const name = it.brand && slugify(rest) === slugify(it.brand) ? it.brand : [it.brand, rest].filter(Boolean).join(' ');
     let slug = slugify(name) || it.id;
     if (taken.has(slug)) slug = `${slug}-${it.id.split('-').pop()}`;
     taken.add(slug);
     out.set(it.id, slug);
   }
   return out;
+}
+
+/** The thing a /t/<key> address means: its current slug, its id, or one of its earlier slugs. */
+export function resolveKey<T extends Pick<Item, 'id' | 'aliases'>>(items: T[], slugs: Map<string, string>, key: string): T | undefined {
+  return (
+    items.find((it) => slugs.get(it.id) === key) ??
+    items.find((it) => it.id === key) ??
+    items.find((it) => it.aliases?.includes(key))
+  );
 }

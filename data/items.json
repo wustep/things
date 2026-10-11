@@ -138,7 +138,7 @@
     "id": "amzn-f76e128e",
     "url": "https://amzn.to/4bAIa1U",
     "domain": "amazon.com",
-    "title": "Logitech MX Master 3S",
+    "title": "MX Master 3S",
     "price": "$89.99",
     "section": "Office",
     "description": "Amazon.com: Logitech MX Master 3S Bluetooth Wireless Mouse No Receiver - Graphite | MagSpeed Scrolling, 8K DPI tracking, Quiet clicks, Programmable buttons, Bluetooth, Windows PC, Mac, Linux, Chrome : Electronics",
@@ -176,13 +176,14 @@
         ]
       }
     },
-    "addedAt": "2026-09-14T05:28:45.175Z"
+    "addedAt": "2026-09-14T05:28:45.175Z",
+    "brand": "Logitech"
   },
   {
     "id": "jossandmain-cc12a72d",
     "url": "https://www.jossandmain.com/furniture/pdp/joss-main-alix-78-recessed-arm-chesterfield-sofa-j111809464.html",
     "domain": "jossandmain.com",
-    "title": "Joss & Main Alix 78'' Recessed Arm Chesterfield Sofa",
+    "title": "Alix 78″ Recessed Arm Chesterfield Sofa",
     "price": "$1899",
     "section": "Home",
     "images": [
@@ -213,7 +214,8 @@
         ]
       }
     },
-    "addedAt": "2026-09-14T05:28:41.300Z"
+    "addedAt": "2026-09-14T05:28:41.300Z",
+    "brand": "Joss & Main"
   },
   {
     "id": "westelm-0d4a26d0",
@@ -250,13 +252,14 @@
         ]
       }
     },
-    "addedAt": "2026-09-14T05:30:46.260Z"
+    "addedAt": "2026-09-14T05:30:46.260Z",
+    "brand": "West Elm"
   },
   {
     "id": "amzn-c91e1f10",
     "url": "https://amzn.to/4sLMhhN",
     "domain": "amazon.com",
-    "title": "Yamazaki Home Tower Laundry Basket",
+    "title": "Tower Laundry Basket",
     "price": "$78.00",
     "section": "Home",
     "description": "Buy Yamazaki Home Laundry Basket - Foldable Storage Hamper Organizer Steel One Size White: Hampers - Amazon.com ✓ FREE DELIVERY possible on eligible purchases",
@@ -294,7 +297,8 @@
         ]
       }
     },
-    "addedAt": "2026-09-14T05:31:34.834Z"
+    "addedAt": "2026-09-14T05:31:34.834Z",
+    "brand": "Yamazaki Home"
   },
   {
     "id": "bludot-9c7c4924",
@@ -380,59 +384,46 @@
         ]
       }
     },
-    "addedAt": "2026-09-14T05:30:37.967Z"
+    "addedAt": "2026-09-14T05:30:37.967Z",
+    "brand": "Room & Board"
   },
   {
-    "id": "amzn-e8da67b1",
-    "url": "https://amzn.to/3LyV7yQ",
+    "id": "amazon-945ed6e2",
+    "url": "https://www.amazon.com/dp/B011MHN6S2",
     "domain": "amazon.com",
-    "title": "simplehuman 60L Trash Can",
-    "price": "$149.98",
+    "title": "45L Semi-Round Sensor Can, Brushed Stainless Steel",
+    "brand": "simplehuman",
+    "price": "$124.99",
     "section": "Home",
+    "description": "Buy simplehuman 45 Liter / 12 Gallon Semi-Round Automatic Sensor Trash Can, Brushed Stainless Steel: Kitchen Trash Cans - Amazon.com ✓ FREE DELIVERY possible on eligible purchases",
     "images": [
-      "/items/amzn-e8da67b1/ref-0.jpg",
-      "/items/amzn-e8da67b1/ref-1.jpg",
-      "/items/amzn-e8da67b1/ref-2.jpg",
-      "/items/amzn-e8da67b1/ref-3.jpg",
-      "/items/amzn-e8da67b1/ref-4.jpg",
-      "/items/amzn-e8da67b1/ref-5.jpg"
+      "/items/amazon-945ed6e2/ref-0.jpg",
+      "/items/amazon-945ed6e2/ref-1.jpg",
+      "/items/amazon-945ed6e2/ref-2.jpg",
+      "/items/amazon-945ed6e2/ref-3.jpg",
+      "/items/amazon-945ed6e2/ref-4.jpg",
+      "/items/amazon-945ed6e2/ref-5.jpg"
     ],
     "asset": {
-      "kind": "glb",
-      "url": "/items/amzn-e8da67b1/model.glb",
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/amazon-945ed6e2/primary.png",
+      "aspect": 0.6641,
       "palette": [
-        "#727272",
-        "#b0b0b0",
-        "#d3d3d3",
-        "#0a0a0a"
-      ],
-      "refs": [
-        "/items/amzn-e8da67b1/ref-0.jpg",
-        "/items/amzn-e8da67b1/ref-2.jpg",
-        "/items/amzn-e8da67b1/ref-4.jpg",
-        "/items/amzn-e8da67b1/ref-5.jpg"
-      ],
-      "fallback": {
-        "kind": "procedural",
-        "shape": "card",
-        "texture": "/items/amzn-e8da67b1/primary.png",
-        "aspect": 0.876,
-        "palette": [
-          "#727272",
-          "#b0b0b0",
-          "#d3d3d3",
-          "#0a0a0a"
-        ]
-      }
+        "#909090",
+        "#525252",
+        "#d0d0d0",
+        "#2f2f2f"
+      ]
     },
-    "addedAt": "2026-09-14T06:49:10.333Z"
+    "addedAt": "2026-10-11T00:43:36.432Z"
   },
   {
     "id": "theartifox-f5289f2b",
     "url": "https://theartifox.com/collections/side/products/side-white-oak",
     "domain": "theartifox.com",
     "title": "Side Table (White Oak)",
-    "brand": "ARTIFOX",
+    "brand": "Artifox",
     "price": "$1190",
     "section": "Home",
     "description": "Shipping Estimate - 6 to 8 weeks This well-rounded white oak side table fits perfectly in the workspace, lounging space or sleeping space. Dock storage on top for your phone, tablet or accessories all with cables managed below. Drawer storage for books, tech or everyday objects. This well-rounded side table fits perfectly in the workspace, lounging space or sleeping space. Dock storage on top for ",
@@ -556,14 +547,15 @@
         "yawDeg": 35
       }
     },
-    "addedAt": "2026-09-14T06:49:13.436Z"
+    "addedAt": "2026-09-14T06:49:13.436Z",
+    "brand": "Room & Board"
   },
   {
     "id": "amzn-f530eeab",
     "url": "https://amzn.to/3ZixSfw",
     "domain": "amazon.com",
     "title": "Air Purifier",
-    "brand": "BLUEAIR",
+    "brand": "Blueair",
     "price": "$139",
     "section": "Home",
     "description": "Buy BLUEAIR Air Purifiers for Home Bedroom Dorm up to 1,138 Ft², Blue 511i Max | WiFi, Auto Mode, Compact, Quiet 19dB HEPASilent Filtration, AHAM Verified, Washable Pre-Filter, Captures Pet Hair, Allergens: Travel-Size Air Purifiers - Amazon.com ✓ FREE DELIVERY possible on eligible purchases",
@@ -646,6 +638,31 @@
       }
     },
     "addedAt": "2026-09-14T08:37:25.650Z"
+  },
+  {
+    "id": "dwr-c60bfcc5",
+    "url": "https://www.dwr.com/lighting-floor/nelson-cigar-lotus-floor-lamp-metal/100114745.html?lang=en_US&sku=100114745",
+    "domain": "dwr.com",
+    "title": "Nelson Cigar Lotus Floor Lamp, Metal, Small",
+    "brand": "Herman Miller",
+    "price": "$995",
+    "section": "Home",
+    "description": "While outfitting his office, architect and Herman Miller design director George Nelson discovered a silk-covered Swedish hanging lamp that he coveted but found too expensive. He then recalled seeing a photo in the paper of Liberty ships being mothballed “by having the decks covered with netting and then being sprayed with a self-webbing plastic,” which got him thinking. “And then, Whammo!” Inspira",
+    "images": [
+      "/items/dwr-c60bfcc5/ref-0.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/dwr-c60bfcc5/primary.png",
+      "aspect": 0.2461,
+      "palette": [
+        "#919191",
+        "#4a4a4a",
+        "#cacaca"
+      ]
+    },
+    "addedAt": "2026-10-11T01:05:19.030Z"
   },
   {
     "id": "peakdesign-8f476d14",
@@ -742,11 +759,42 @@
     "addedAt": "2026-09-14T06:53:27.480Z"
   },
   {
+    "id": "orientwatchusa-5b000bba",
+    "url": "https://www.orientwatchusa.com/products/ra-ak0802s30b",
+    "domain": "orientwatchusa.com",
+    "title": "Bambino Version 9",
+    "brand": "Orient",
+    "price": "$385",
+    "section": "Misc",
+    "description": "The ninth iteration of the Orient Bambino reinterprets the 24 hour sub-dial with a sun and a moon. But the real star is the intricate detailing on the dial and sub-dials, which culminate into its sophisticated design.",
+    "images": [
+      "/items/orientwatchusa-5b000bba/ref-0.jpg",
+      "/items/orientwatchusa-5b000bba/ref-1.jpg",
+      "/items/orientwatchusa-5b000bba/ref-2.jpg",
+      "/items/orientwatchusa-5b000bba/ref-3.jpg",
+      "/items/orientwatchusa-5b000bba/ref-4.jpg",
+      "/items/orientwatchusa-5b000bba/ref-5.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/orientwatchusa-5b000bba/primary.png",
+      "aspect": 0.7613,
+      "palette": [
+        "#8f9092",
+        "#4d4f51",
+        "#d5d5d5",
+        "#0c0c0c"
+      ]
+    },
+    "addedAt": "2026-10-11T00:43:39.474Z"
+  },
+  {
     "id": "jamescookartworkshop-b0e89a91",
     "url": "https://www.jamescookartworkshop.com/pages/ea-the-bestsellers-collection",
     "domain": "jamescookartworkshop.com",
-    "title": "James Cook Artwork Shop",
-    "brand": "James Cook Artwork Shop",
+    "title": "Bestsellers Collection",
+    "brand": "James Cook",
     "section": "Misc",
     "description": "James Cook Artwork Shop",
     "images": [
@@ -791,7 +839,7 @@
     "id": "us-nothing-db5358fa",
     "url": "https://us.nothing.tech/products/headphone-1?variant=46734988705944",
     "domain": "us.nothing.tech",
-    "title": "Nothing Headphone (1)",
+    "title": "Headphone (1)",
     "price": "$299",
     "section": "Misc",
     "images": [
@@ -829,7 +877,8 @@
         ]
       }
     },
-    "addedAt": "2026-09-14T07:29:29.664Z"
+    "addedAt": "2026-09-14T07:29:29.664Z",
+    "brand": "Nothing"
   },
   {
     "id": "remsen-f65a1f42",

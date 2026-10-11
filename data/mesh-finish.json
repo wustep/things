@@ -39,13 +39,6 @@
     "harmonize": 0.6,
     "spread": 120
   },
-  "amzn-e8da67b1": {
-    "harmonize": 1,
-    "spread": 300,
-    "flatten": 0.8,
-    "metalness": 1,
-    "roughness": 0.36
-  },
   "theartifox-f5289f2b": {
     "harmonize": 0.45,
     "spread": 60

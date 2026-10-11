@@ -305,6 +305,13 @@ html.is-detail .cabinet {
     color: var(--ink);
   }
 }
+/* A finger on a thing lifts it a little, the touch screen's hover, so the tap is felt at once. */
+@media (hover: none) {
+  .thing-link:active .thing-pic {
+    transform: translate(calc(-50% + var(--shift)), -4px);
+    transition-duration: 0.12s;
+  }
+}
 .thing-link:focus-visible .thing-pic {
   transform: translate(calc(-50% + var(--shift)), -7px);
 }

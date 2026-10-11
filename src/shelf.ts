@@ -73,7 +73,12 @@ export function place(item: Item, m: Metrics): Placed {
 
 export interface ShelfHandlers {
   open(item: Item, from: HTMLElement): void;
+  /** A thing is probably about to be opened: hovered a moment, focused, or touched. */
+  intent?(item: Item): void;
 }
+
+/** How long the pointer rests on a thing before it counts as intent (not just passing over). */
+const HOVER_INTENT_MS = 90;
 
 export class Shelf {
   private items: Item[] = [];
@@ -82,6 +87,7 @@ export class Shelf {
   /** The thing last focused or picked, where the arrows pick up when focus is elsewhere. */
   private lastId: string | null = null;
   private eager = true;
+  private hoverTimer = 0;
   private readonly observer: ResizeObserver;
 
   constructor(private readonly root: HTMLElement, private readonly handlers: ShelfHandlers) {
@@ -97,7 +103,19 @@ export class Shelf {
     root.addEventListener('focusin', (e) => {
       const link = (e.target as Element).closest<HTMLAnchorElement>('a.thing-link');
       if (link?.dataset.id) this.lastId = link.dataset.id;
+      this.intent(link);
     });
+    // Intent to open: warm the thing's big picture before the click lands.
+    root.addEventListener('pointerover', (e) => {
+      clearTimeout(this.hoverTimer);
+      if (e.pointerType !== 'mouse') return;
+      const link = (e.target as Element).closest<HTMLAnchorElement>('a.thing-link');
+      if (link) this.hoverTimer = window.setTimeout(() => this.intent(link), HOVER_INTENT_MS);
+    });
+    root.addEventListener('pointerout', () => clearTimeout(this.hoverTimer));
+    // iOS Safari only applies :active (the press lift in style.css) where a touch listener exists.
+    root.addEventListener('touchstart', () => {}, { passive: true });
+    root.addEventListener('pointerdown', (e) => this.intent((e.target as Element).closest<HTMLAnchorElement>('a.thing-link')));
   }
 
   /**
@@ -200,6 +218,11 @@ export class Shelf {
     a.append(stage, tag);
     li.append(a);
     return li;
+  }
+
+  private intent(link: HTMLAnchorElement | null) {
+    const item = link && this.items.find((it) => it.id === link.dataset.id);
+    if (item) this.handlers.intent?.(item);
   }
 
   private onClick(e: MouseEvent) {

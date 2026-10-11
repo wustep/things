@@ -27,6 +27,9 @@ const shelf = new Shelf(shelfEl, {
     history.pushState({ thing: item.id }, '', itemPath(slugs.get(item.id) ?? item.id));
     transition(() => openItem(item), from.querySelector('.thing-pic'));
   },
+  intent(item) {
+    if (!saveData()) detail.prefetchOne(item);
+  },
 });
 
 const detail = new Detail(detailEl, {

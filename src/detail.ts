@@ -36,6 +36,8 @@ export class Detail {
   private readonly reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
   /** Pictures of the neighbours, held while they load so a step or swipe lands on a ready image. */
   private warm: HTMLPictureElement[] = [];
+  /** The same, for things the shelf says are about to be opened (kept across opening and closing). */
+  private hinted = new Map<string, HTMLPictureElement>();
   /** The closer look at the big picture (desktop). */
   private loupe: Loupe | null = null;
 
@@ -217,6 +219,15 @@ export class Detail {
       pic.querySelector('img')!.setAttribute('fetchpriority', 'low');
       return pic;
     });
+  }
+
+  /** Starts loading a thing's big picture because it's probably about to be opened. */
+  prefetchOne(item: Item) {
+    if (this.hinted.has(item.id)) return;
+    const pic = picture(heroFor(item), { alt: '', sizes: STAGE_SIZES, eager: true });
+    this.hinted.set(item.id, pic);
+    // Only the last few are held; older ones are in the HTTP cache by now or weren't wanted.
+    if (this.hinted.size > 4) this.hinted.delete(this.hinted.keys().next().value!);
   }
 
   // ---------- swipe ----------

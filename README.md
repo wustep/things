@@ -148,10 +148,16 @@ npm run refine -- --from <git-rev> <id> # start over from the model as committed
 ```
 
 Per-item settings live in `data/mesh-finish.json` (`harmonize`, `spread`, `flatten`, `lift`,
-`roughnessMin`, `roughness`, `metalness`, `saturation`; see `scripts/lib/refine.ts`). Ingest
+`roughnessMin`, `roughness`, `metalness`, `saturation`, `glass`; see `scripts/lib/refine.ts`).
+`glass` turns light, neutral texels see-through for acrylic or glass that Meshy baked as opaque
+white; the viewer draws those texels in their own transparent pass. Ingest
 runs the same pass on every new Meshy model, with that item's settings or the defaults.
 
 ## The shelf
+
+Things keep a believable relative size: `data/sizes.json` holds each one's largest real
+dimension in cm, and the viewer compresses it (a mouse is about half a sofa, not a sixteenth) so
+small things stay legible. Anything not listed sits at the median size.
 
 `samples/moonsift-ingest.json` is a Moonsift collection (Office / Home / Misc) plus a couple of
 extra Amazon finds; `npm run ingest -- --force --mesh --parallel 4 samples/moonsift-ingest.json` rebuilds

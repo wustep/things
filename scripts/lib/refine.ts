@@ -35,6 +35,12 @@ export interface Finish {
   metalness?: number;
   /** Multiply base colour saturation (1 = as is). */
   saturation?: number;
+  /**
+   * Clear acrylic / glass that Meshy baked as opaque white: texels at least `min` light (0..1,
+   * every channel) and nearly neutral become `alpha` opaque and glossy. The viewer draws them in a
+   * separate transparent pass.
+   */
+  glass?: { min: number; alpha: number };
 }
 
 export const DEFAULT_FINISH: Required<Pick<Finish, 'harmonize' | 'spread' | 'roughnessMin'>> = {
@@ -50,6 +56,7 @@ export async function refineDocument(doc: Document, finish: Finish, log: (m: str
   const f = { ...DEFAULT_FINISH, ...finish };
   const root = doc.getRoot();
   for (const material of root.listMaterials()) {
+    let glassMask: { w: number; h: number; clear: Uint8Array; share: number } | undefined;
     const prims = root
       .listMeshes()
       .flatMap((m) => m.listPrimitives())
@@ -62,7 +69,14 @@ export async function refineDocument(doc: Document, finish: Finish, log: (m: str
         log(`harmonize ${f.harmonize} over ${stats.vertices} vertices, mean |gain-1| ${stats.meanShift.toFixed(3)}`);
       }
       if (f.lift || (f.saturation ?? 1) !== 1) tone(img, f.lift ?? 0, f.saturation ?? 1);
-      await write(base, img, 'image/jpeg', 90);
+      if (f.glass) {
+        glassMask = glass(img, f.glass.min, f.glass.alpha);
+        material.setAlphaMode('BLEND').setDoubleSided(true);
+        log(`glass: ${(glassMask.share * 100).toFixed(0)}% of texels made clear`);
+        await write(base, img, 'image/png');
+      } else {
+        await write(base, img, 'image/jpeg', 90);
+      }
     }
     const mr = material.getMetallicRoughnessTexture();
     if (mr && (f.roughnessMin || f.roughness !== undefined || f.metalness !== undefined)) {
@@ -75,6 +89,16 @@ export async function refineDocument(doc: Document, finish: Finish, log: (m: str
         if (f.roughnessMin) g = Math.max(g, f.roughnessMin);
         d[i + 1] = Math.round(g * 255);
         if (f.metalness !== undefined) d[i + 2] = Math.round(f.metalness * 255);
+        if (glassMask) {
+          // The MR map may be smaller than the base colour: sample the mask at the same UV.
+          const p = i / 4;
+          const x = Math.floor(((p % img.bitmap.width) / img.bitmap.width) * glassMask.w);
+          const y = Math.floor((Math.floor(p / img.bitmap.width) / img.bitmap.height) * glassMask.h);
+          if (glassMask.clear[y * glassMask.w + x]) {
+            d[i + 1] = Math.round(0.08 * 255);
+            d[i + 2] = 0;
+          }
+        }
       }
       await write(mr, img, 'image/jpeg', 92);
       material.setRoughnessFactor(1).setMetallicFactor(1);
@@ -87,9 +111,29 @@ async function read(tex: Texture): Promise<Img> {
   return decode(Buffer.from(tex.getImage()!));
 }
 
-async function write(tex: Texture, img: Img, mime: 'image/jpeg', quality: number) {
-  const out = await img.getBuffer(mime, { quality });
+async function write(tex: Texture, img: Img, mime: 'image/jpeg' | 'image/png', quality = 90) {
+  const out = mime === 'image/png' ? await img.getBuffer('image/png') : await img.getBuffer('image/jpeg', { quality });
   tex.setImage(new Uint8Array(out)).setMimeType(mime);
+}
+
+/** Make light, neutral texels see-through; returns which texels were cleared. */
+function glass(img: Img, min: number, alpha: number) {
+  const { width: w, height: h, data: d } = img.bitmap;
+  const clear = new Uint8Array(w * h);
+  let n = 0;
+  const lo = min * 255;
+  for (let p = 0, i = 0; p < w * h; p++, i += 4) {
+    const mx = Math.max(d[i], d[i + 1], d[i + 2]);
+    const mn = Math.min(d[i], d[i + 1], d[i + 2]);
+    if (mn >= lo && mx - mn < 26) {
+      d[i + 3] = Math.round(alpha * 255);
+      clear[p] = 1;
+      n++;
+    } else {
+      d[i + 3] = 255;
+    }
+  }
+  return { w, h, clear, share: n / (w * h) };
 }
 
 /** Luminance-only albedo lift and saturation, in linear light. */

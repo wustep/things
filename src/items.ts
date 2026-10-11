@@ -312,7 +312,7 @@ async function buildGlb(url: string, orientation?: ModelOrientation): Promise<Bu
   object.add(model);
 
   applyOrientation(model, orientation);
-  finishGlbMaterials(model);
+  const glassPasses = finishGlbMaterials(model);
 
   const box = new THREE.Box3().setFromObject(object);
   const size = box.getSize(new THREE.Vector3());
@@ -324,6 +324,7 @@ async function buildGlb(url: string, orientation?: ModelOrientation): Promise<Bu
 
   const fitted = box.getSize(new THREE.Vector3());
   const disposables: { dispose(): void }[] = [];
+  disposables.push(...glassPasses);
   model.traverse((o) => {
     if (o instanceof THREE.Mesh) {
       disposables.push(o.geometry);
@@ -391,12 +392,18 @@ function shouldFaceCamera(model: THREE.Object3D): boolean {
 const ROUGHNESS_FLOOR = 0.32;
 const NORMAL_STRENGTH = 0.7;
 
-function finishGlbMaterials(root: THREE.Object3D) {
+function finishGlbMaterials(root: THREE.Object3D): THREE.Material[] {
   const seen = new Set<THREE.Material>();
+  const meshes: THREE.Mesh[] = [];
   root.traverse((o) => {
-    if (!(o instanceof THREE.Mesh)) return;
+    if (o instanceof THREE.Mesh) meshes.push(o);
+  });
+  const passes: THREE.Material[] = [];
+  for (const o of meshes) {
+    const own = Array.isArray(o.material) ? null : o.material;
+    if (own instanceof THREE.MeshStandardMaterial && own.transparent && !seen.has(own)) passes.push(splitGlass(o, own));
     for (const m of Array.isArray(o.material) ? o.material : [o.material]) {
-      if (seen.has(m) || !(m instanceof THREE.MeshStandardMaterial)) continue;
+      if (seen.has(m) || !(m instanceof THREE.MeshStandardMaterial) || m.transparent) continue;
       seen.add(m);
       m.normalScale.multiplyScalar(NORMAL_STRENGTH);
       for (const tex of [m.map, m.normalMap, m.roughnessMap, m.metalnessMap, m.aoMap, m.emissiveMap]) {
@@ -411,10 +418,38 @@ function finishGlbMaterials(root: THREE.Object3D) {
           `#include <roughnessmap_fragment>\n\troughnessFactor = max(roughnessFactor, ${ROUGHNESS_FLOOR.toFixed(2)});`,
         );
       };
-      m.customProgramCacheKey = () => 'things-finish';
+      m.customProgramCacheKey = () => 'things-finish' + (m.alphaTest ? '-solid' : '');
       m.needsUpdate = true;
     }
-  });
+  }
+  return passes;
+}
+
+/**
+ * A model with clear parts (refine's `glass`: acrylic, glass) is one mesh whose texture mixes
+ * solid and see-through texels. One blended pass sorts badly against itself, so it is drawn
+ * twice: the solid texels as an ordinary opaque pass (alpha test), then the clear ones alone,
+ * blended, without writing depth. The second material is a clone sharing the same textures.
+ */
+function splitGlass(mesh: THREE.Mesh, solid: THREE.MeshStandardMaterial): THREE.Material {
+  const clear = solid.clone();
+  solid.transparent = false;
+  solid.depthWrite = true;
+  solid.alphaTest = 0.5;
+  clear.transparent = true;
+  clear.depthWrite = false;
+  clear.side = THREE.DoubleSide;
+  clear.envMapIntensity = 1.6;
+  clear.onBeforeCompile = (shader) => {
+    shader.fragmentShader = shader.fragmentShader
+      .replace('#include <alphatest_fragment>', '#include <alphatest_fragment>\n\tif (diffuseColor.a >= 0.5) discard;')
+      .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>\n\troughnessFactor = max(roughnessFactor, 0.06);`);
+  };
+  clear.customProgramCacheKey = () => 'things-glass';
+  const pane = new THREE.Mesh(mesh.geometry, clear);
+  pane.renderOrder = 1;
+  mesh.add(pane);
+  return clear;
 }
 
 // ---------- contact & picking ----------

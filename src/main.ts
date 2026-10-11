@@ -5,11 +5,14 @@ import { initialItems, normalizeItems } from './data.ts';
 import { announce, Detail } from './detail.ts';
 import { extractUrls, ingestAvailable, ingestUrls } from './ingest-client.ts';
 import { setMedia } from './media.ts';
+import { groupItems } from './sections.ts';
 import { currentKey, homePath, itemPath, slugsFor } from './route.ts';
 import { Shelf } from './shelf.ts';
 
 let items: Item[] = initialItems;
 let slugs = slugsFor(items);
+/** Things in the order the shelf shows them (case by case), which is the order ← and → walk. */
+let walk: Item[] = shelfOrder(items);
 /** Set when the detail view was opened from the shelf, so closing can just go back in history. */
 let openedFromShelf = false;
 
@@ -30,8 +33,8 @@ const detail = new Detail(detailEl, {
   close: () => closeDetail(),
   step(delta) {
     if (!detail.openId || detail.busy) return;
-    const i = items.findIndex((it) => it.id === detail.openId);
-    const next = items[(i + delta + items.length) % items.length];
+    const i = walk.findIndex((it) => it.id === detail.openId);
+    const next = walk[(i + delta + walk.length) % walk.length];
     // Stepping replaces the entry, so Back still returns to the shelf in one go.
     history.replaceState({ thing: next.id }, '', itemPath(slugs.get(next.id) ?? next.id));
     openItem(next);
@@ -47,8 +50,7 @@ document.addEventListener('click', (e) => {
 });
 
 function openItem(item: Item) {
-  const index = items.indexOf(item);
-  detail.show(item, { index, total: items.length });
+  detail.show(item, { index: walk.indexOf(item), total: walk.length });
   shelfEl.inert = true;
   detail.focusStart();
 }
@@ -128,12 +130,13 @@ function transition(update: () => void, fromShelf: HTMLElement | null, toShelf: 
 function show(next: Item[]) {
   items = next;
   slugs = slugsFor(items);
+  walk = shelfOrder(items);
   countEl.textContent = items.length ? String(items.length) : '';
   shelf.set(items, slugs);
   const id = detail.openId;
   if (id) {
     const item = items.find((it) => it.id === id);
-    if (item) detail.refresh(item, { index: items.indexOf(item), total: items.length });
+    if (item) detail.refresh(item, { index: walk.indexOf(item), total: walk.length });
     else closeDetail();
   }
 }
@@ -179,4 +182,8 @@ if (import.meta.hot) {
     if (mediaMod) setMedia(mediaMod.default);
     show(itemsMod ? normalizeItems(itemsMod.default) : items);
   });
+}
+
+function shelfOrder(list: Item[]): Item[] {
+  return groupItems(list).flatMap((g) => g.items);
 }

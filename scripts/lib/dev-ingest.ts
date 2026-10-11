@@ -1,24 +1,31 @@
 /**
- * Vite dev-server plugin: lets the viewer ingest product URLs that are pasted or dropped onto
- * the page. POST /__things/ingest {urls} runs `scripts/ingest.ts` as a child process and
- * streams its log back; the resulting data/items.json change reaches the page via HMR.
+ * Vite dev-server plugin for the local app:
+ * - POST /__things/ingest {urls} runs `scripts/ingest.ts` as a child process and streams its log
+ *   back (paste or drop a URL onto the page), then builds the new items' 2D images when the image
+ *   tool is installed; the data/*.json changes reach the page via HMR.
+ * - POST /__things/commentary {id, commentary} saves a note into data/items.json.
+ * - /3d serves the archived three.js shelf (Vite would otherwise fall back to the 2D page).
  *
- * Dev only. The endpoint is never part of a build, and it refuses cross-origin requests.
+ * Dev only. None of this is part of a build, and it refuses cross-origin requests.
  */
 import { spawn } from 'node:child_process';
-import { createReadStream } from 'node:fs';
-import { stat } from 'node:fs/promises';
+import { createReadStream, existsSync } from 'node:fs';
+import { readFile, stat } from 'node:fs/promises';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import type { Plugin } from 'vite';
+import type { Item } from '../../shared/types.ts';
+import { writeFileAtomic } from './store.ts';
 
 const MAX_URLS = 10;
+const MAX_NOTE_CHARS = 20000;
 const ITEM_TYPES: Record<string, string> = {
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
   '.webp': 'image/webp',
+  '.avif': 'image/avif',
   '.glb': 'model/gltf-binary',
 };
 
@@ -30,7 +37,50 @@ export function thingsDevIngest(): Plugin {
       const root = server.config.root;
       const tsxCli = createRequire(path.join(root, 'package.json')).resolve('tsx/cli');
       const script = path.join(root, 'scripts', 'ingest.ts');
+      const imagesTool = path.join(root, 'tools', 'images', 'build.ts');
+      const dataFile = path.join(root, 'data', 'items.json');
       let running = false;
+
+      // /3d → /3d/ so the archived 3D page's own index.html is served.
+      server.middlewares.use((req, res, next) => {
+        const url = req.url ?? '';
+        const base = server.config.base.replace(/\/$/, '');
+        if (url === `${base}/3d` || url.startsWith(`${base}/3d?`)) {
+          res.statusCode = 302;
+          res.setHeader('location', url.replace(/\/3d/, '/3d/'));
+          return res.end();
+        }
+        next();
+      });
+
+      server.middlewares.use('/__things/commentary', async (req, res) => {
+        if (req.method !== 'POST') return reply(res, 405, 'POST only');
+        if (!sameOrigin(req)) return reply(res, 403, 'cross-origin requests are not allowed');
+        if (!/^application\/json\b/.test(req.headers['content-type'] ?? '')) return reply(res, 415, 'send application/json');
+        if (running) return reply(res, 409, 'an ingest is writing the collection right now; try again in a moment');
+        let id: unknown, commentary: unknown;
+        try {
+          ({ id, commentary } = JSON.parse(await readBody(req)) as { id?: unknown; commentary?: unknown });
+        } catch {
+          return reply(res, 400, 'invalid JSON body');
+        }
+        if (typeof id !== 'string' || typeof commentary !== 'string') return reply(res, 400, 'need {id, commentary} strings');
+        if (commentary.length > MAX_NOTE_CHARS) return reply(res, 413, `notes are capped at ${MAX_NOTE_CHARS} characters`);
+        try {
+          const items = JSON.parse(await readFile(dataFile, 'utf8')) as Item[];
+          const item = items.find((it) => it.id === id);
+          if (!item) return reply(res, 404, 'that thing is no longer in data/items.json');
+          const text = commentary.replace(/\r\n?/g, '\n').trim();
+          if (text) item.commentary = text;
+          else delete item.commentary;
+          await writeFileAtomic(dataFile, JSON.stringify(items, null, 2) + '\n');
+          server.config.logger.info(`[things] note ${text ? 'saved' : 'cleared'} for ${id}`);
+          res.setHeader('content-type', 'application/json');
+          res.end(JSON.stringify({ commentary: text }));
+        } catch (err) {
+          reply(res, 500, `could not write data/items.json (${(err as Error).message})`);
+        }
+      });
 
       // Serve public/items straight from disk. Vite's own public-file index is filled by its
       // watcher, which can miss files an ingest writes in a burst into a brand-new folder.
@@ -95,7 +145,22 @@ export function thingsDevIngest(): Plugin {
           running = false;
           res.end(`\n${err.message}\nexit 1\n`);
         });
-        child.on('close', (code) => {
+        child.on('close', async (code) => {
+          // New things get their 2D cut-out right away when the image tool is set up; until then
+          // the shelf shows ingest's own keyed photo.
+          const imagesReady = existsSync(path.join(root, 'tools', 'images', 'node_modules', '@huggingface'));
+          if (code === 0 && imagesReady) {
+            res.write('\nbuilding 2D images…\n');
+            code = await new Promise<number | null>((resolve) => {
+              const images = spawn(process.execPath, [tsxCli, imagesTool], { cwd: root, env: process.env, stdio: ['ignore', 'pipe', 'pipe'] });
+              images.stdout.on('data', (chunk: Buffer) => res.write(chunk));
+              images.stderr.on('data', (chunk: Buffer) => process.stderr.write(chunk));
+              images.on('error', () => resolve(0));
+              images.on('close', () => resolve(0)); // a failed cut-out still leaves a usable item
+            });
+          } else if (code === 0) {
+            res.write('\nrun `npm run images` to give the new things their 2D cut-outs\n');
+          }
           running = false;
           res.end(`\nexit ${code ?? 1}\n`);
         });

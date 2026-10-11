@@ -7,9 +7,9 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import type { Item, ModelOrientation, ProceduralAsset, ProceduralShape } from '../shared/types.ts';
-import { assetUrl } from './data.ts';
-import sizesJson from '../data/sizes.json';
+import type { Item, ModelOrientation, ProceduralAsset, ProceduralShape } from '../../shared/types.ts';
+import { assetUrl } from '../data.ts';
+import sizesJson from '../../data/sizes.json';
 
 /** Every item is fitted into this footprint (world units) so the shelf reads evenly. */
 const FIT = { w: 1.2, h: 1.05, d: 1.1 };

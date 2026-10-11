@@ -1,10 +1,10 @@
 /** The little chrome there is: wordmark count, section labels, empty state, product card, status line, drop overlay. */
-import { sameText, titleWithoutBrand } from '../shared/text.ts';
-import type { Item } from '../shared/types.ts';
-import { assetUrl } from './data.ts';
-import { extractUrls, ingestAvailable, ingestUrls } from './ingest-client.ts';
+import { sameText, titleWithoutBrand } from '../../shared/text.ts';
+import type { Item } from '../../shared/types.ts';
+import { assetUrl } from '../data.ts';
+import { extractUrls, ingestAvailable, ingestUrls } from '../ingest-client.ts';
 import type { ItemNode } from './items.ts';
-import type { SectionGroup } from './sections.ts';
+import type { SectionGroup } from '../sections.ts';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 

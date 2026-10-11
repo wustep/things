@@ -4,10 +4,10 @@
  */
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import type { Item } from '../shared/types.ts';
+import type { Item } from '../../shared/types.ts';
 import { buildItemNode, setMaxAnisotropy, type ItemNode, type NodeKind } from './items.ts';
 import { layoutShelf, maxPerRow, type Group, type Shelf, type Slot } from './layout.ts';
-import { groupItems } from './sections.ts';
+import { groupItems } from '../sections.ts';
 
 export interface StageEvents {
   hover(node: ItemNode | null): void;

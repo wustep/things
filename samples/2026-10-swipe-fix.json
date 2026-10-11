@@ -47,5 +47,20 @@
       "https://jamcorder.com/store/product-piano-mobile.webp"
     ],
     "maxRefs": 6
+  },
+  {
+    "url": "https://www.steelcase.com/products/office-chairs/steelcase-series-1/",
+    "title": "Series 1 Task Chair, Medium Blue",
+    "brand": "Steelcase",
+    "price": "$429.00",
+    "section": "Office",
+    "image": "https://images.steelcase.com/image/upload/v1682355108/22-0184642-1.jpg",
+    "images": [
+      "https://images.steelcase.com/image/upload/v1653061469/21-0169105_1x1.jpg",
+      "https://images.steelcase.com/image/upload/v1653061046/21-0169106_1x1.jpg",
+      "https://images.steelcase.com/image/upload/v1653061674/21-0169102_1x1.jpg",
+      "https://images.steelcase.com/image/upload/v1653061875/21-0169103_1x1.jpg"
+    ],
+    "maxRefs": 5
   }
 ]

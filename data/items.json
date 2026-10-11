@@ -150,6 +150,35 @@
     "addedAt": "2026-10-11T02:00:00.729Z"
   },
   {
+    "id": "steelcase-41758f2b",
+    "url": "https://www.steelcase.com/products/office-chairs/steelcase-series-1/",
+    "domain": "steelcase.com",
+    "title": "Series 1 Task Chair, Medium Blue",
+    "brand": "Steelcase",
+    "price": "$429.00",
+    "section": "Office",
+    "description": "Steelcase Series 1 is an ergonomic chair that provides essential ergonomics, lumbar support, and quality at a great value for any office, home or otherwise.",
+    "images": [
+      "/items/steelcase-41758f2b/ref-0.jpg",
+      "/items/steelcase-41758f2b/ref-1.jpg",
+      "/items/steelcase-41758f2b/ref-2.jpg",
+      "/items/steelcase-41758f2b/ref-3.jpg",
+      "/items/steelcase-41758f2b/ref-4.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/steelcase-41758f2b/primary.png",
+      "aspect": 0.7744,
+      "palette": [
+        "#6f6f6f",
+        "#b3b3b2",
+        "#343434"
+      ]
+    },
+    "addedAt": "2026-10-11T20:29:53.176Z"
+  },
+  {
     "id": "ergonofis-b544e709",
     "url": "https://ergonofis.com/products/single-dual-monitor-arms?variant=45146352910415",
     "domain": "ergonofis.com",

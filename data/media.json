@@ -216,6 +216,64 @@
     ],
     "key": "f9f6b47da5de"
   },
+  "steelcase-41758f2b": {
+    "hero": {
+      "base": "/items/steelcase-41758f2b/2d/hero.d04472f6",
+      "widths": [
+        480,
+        960
+      ],
+      "width": 960,
+      "height": 1376,
+      "mode": "cutout",
+      "subject": [
+        0.0654,
+        0.0456,
+        0.8692,
+        0.9087
+      ],
+      "tone": "#9fa3a7"
+    },
+    "gallery": [
+      {
+        "base": "/items/steelcase-41758f2b/2d/photo-1.d04472f6",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/steelcase-41758f2b/2d/photo-2.d04472f6",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/steelcase-41758f2b/2d/photo-3.d04472f6",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/steelcase-41758f2b/2d/photo-4.d04472f6",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "d04472f6ac89"
+  },
   "ergonofis-b544e709": {
     "hero": {
       "base": "/items/ergonofis-b544e709/2d/hero.41dfad5d",

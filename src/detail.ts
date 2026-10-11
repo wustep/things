@@ -19,6 +19,8 @@ export interface DetailHandlers {
 
 /** How wide the big picture is drawn, for picking a file from its srcset. */
 const STAGE_SIZES = '(max-width: 760px) 100vw, 58vw';
+/** How far a click on the big picture zooms in (desktop; touch screens pinch instead). */
+const ZOOM = 2.4;
 
 type Frame = { kind: 'hero'; img: ReturnType<typeof heroFor> } | { kind: 'photo'; img: MediaImage };
 
@@ -35,6 +37,8 @@ export class Detail {
   private readonly reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
   /** Pictures of the neighbours, held while they load so a step or swipe lands on a ready image. */
   private warm: HTMLPictureElement[] = [];
+  private zoomed = false;
+  private readonly finePointer = matchMedia('(hover: hover) and (pointer: fine)');
 
   constructor(private readonly root: HTMLElement, private readonly handlers: DetailHandlers) {
     // Keys are heard at the document, not the view: a click on a photo or a thumbnail (Safari
@@ -149,6 +153,10 @@ export class Detail {
     const hero = heroFor(item);
     stage.style.setProperty('--ar', `${hero.width} / ${hero.height}`);
     stage.append(this.stagePicture());
+    this.zoomed = false;
+    stage.addEventListener('click', (e) => this.onStageClick(e));
+    stage.addEventListener('pointermove', (e) => this.aimZoom(e));
+    stage.addEventListener('pointerleave', () => this.zoom(false));
     visual.append(stage);
     if (this.frames.length > 1) {
       const thumbs = el('div', 'thumbs');
@@ -274,9 +282,48 @@ export class Detail {
     return pic;
   }
 
+  // ---------- a closer look ----------
+
+  /** A click on the picture zooms in toward that spot; another click (or Esc, or leaving) zooms out. */
+  private onStageClick(e: MouseEvent) {
+    if (!this.finePointer.matches) return;
+    if (this.zoomed) this.zoom(false);
+    else if ((e.target as Element).closest('.stage-pic img')) {
+      this.aimZoom(e, true);
+      this.zoom(true);
+    }
+  }
+
+  private zoom(on: boolean) {
+    const stage = this.root.querySelector<HTMLElement>('.stage');
+    if (!stage || this.zoomed === on) return;
+    this.zoomed = on;
+    stage.style.setProperty('--zoom', String(ZOOM));
+    stage.classList.toggle('is-zoomed', on);
+    if (on) {
+      // Ask for a file as sharp as the zoomed picture (the srcset tops out at the original's size).
+      const width = Math.round((stage.querySelector('img')?.offsetWidth ?? stage.clientWidth) * ZOOM);
+      stage.querySelectorAll('source').forEach((src) => (src.sizes = `${width}px`));
+    }
+  }
+
+  /** The zoom follows the pointer: the spot under it stays under it. */
+  private aimZoom(e: PointerEvent | MouseEvent, force = false) {
+    if (!this.zoomed && !force) return;
+    const img = this.root.querySelector<HTMLImageElement>('.stage-pic img');
+    const pic = img?.parentElement;
+    if (!img || !pic) return;
+    const box = pic.getBoundingClientRect();
+    const x = (e.clientX - box.left - img.offsetLeft) / img.offsetWidth;
+    const y = (e.clientY - box.top - img.offsetTop) / img.offsetHeight;
+    const clamp = (n: number) => Math.min(1, Math.max(0, n)) * 100;
+    img.style.transformOrigin = `${clamp(x)}% ${clamp(y)}%`;
+  }
+
   private showFrame(i: number) {
     if (i === this.frameIndex) return;
     this.frameIndex = i;
+    this.zoom(false);
     this.root.querySelector('.stage')?.replaceChildren(this.stagePicture());
     this.root.querySelectorAll('.thumb').forEach((t, j) => t.setAttribute('aria-pressed', String(j === i)));
   }
@@ -386,7 +433,10 @@ export class Detail {
     if (e.defaultPrevented || e.isComposing) return;
     const target = e.target instanceof Element ? e.target : null;
     const typing = target?.closest('textarea, input, select, [contenteditable]:not([contenteditable="false"])');
-    if (e.key === 'Escape' && !typing) {
+    if (e.key === 'Escape' && !typing && this.zoomed) {
+      e.preventDefault();
+      this.zoom(false);
+    } else if (e.key === 'Escape' && !typing) {
       e.preventDefault();
       this.handlers.close();
     } else if ((e.key === 'ArrowRight' || e.key === 'ArrowLeft') && !typing && !e.metaKey && !e.altKey && !e.ctrlKey && !e.shiftKey) {

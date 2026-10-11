@@ -68,6 +68,15 @@ body {
 html.is-detail body {
   overflow: hidden;
 }
+/*
+ * While a thing is open the shelf is covered, so it isn't drawn and its lazy pictures wait: a
+ * shared link loads the one thing it's about, not the whole shelf behind it. `auto` keeps the
+ * shelf's last height (recorded all the time, so it's set on .cabinet itself), so the page's
+ * scroll position is still there when it's closed.
+ */
+html.is-detail .cabinet {
+  content-visibility: hidden;
+}
 
 :focus-visible {
   outline: 1.5px solid var(--ink);
@@ -120,6 +129,7 @@ html.is-detail body {
 /* ---------- the cabinet ---------- */
 
 .cabinet {
+  contain-intrinsic-size: auto 100vh;
   max-width: 1480px;
   margin: 0 auto;
   padding: calc(92px + env(safe-area-inset-top)) var(--side-r) max(120px, env(safe-area-inset-bottom)) var(--side-l);
@@ -454,6 +464,20 @@ html.is-detail body {
 .stage-pic.is-photo img {
   border-radius: 3px;
   filter: brightness(0.88) saturate(0.96);
+}
+/* A closer look (mouse only): click to zoom toward the spot, move to look around, click to leave. */
+@media (hover: hover) and (pointer: fine) {
+  .stage-pic img {
+    cursor: zoom-in;
+    transition: transform 0.4s var(--ease);
+  }
+  .stage.is-zoomed {
+    overflow: hidden;
+  }
+  .stage.is-zoomed .stage-pic img {
+    cursor: zoom-out;
+    transform: scale(var(--zoom));
+  }
 }
 .stage-pic.is-missing img {
   display: none;

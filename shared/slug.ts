@@ -22,7 +22,9 @@ export function slugsFor(items: Pick<Item, 'id' | 'title' | 'brand'>[]): Map<str
   const out = new Map<string, string>();
   const taken = new Set<string>();
   for (const it of items) {
-    const name = [it.brand, titleWithoutBrand(it.title, it.brand)].filter(Boolean).join(' ');
+    const rest = titleWithoutBrand(it.title, it.brand);
+    // A thing named for its maker (the Jamcorder) says the name once.
+    const name = it.brand && slugify(rest) === slugify(it.brand) ? it.brand : [it.brand, rest].filter(Boolean).join(' ');
     let slug = slugify(name) || it.id;
     if (taken.has(slug)) slug = `${slug}-${it.id.split('-').pop()}`;
     taken.add(slug);

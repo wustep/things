@@ -33,3 +33,7 @@ test('a current slug wins over an alias that happens to match it', () => {
   assert.equal(resolveKey([a, b], new Map([['a-1', 'a'], ['b-2', 'b']]), 'b')?.id, 'b-2');
   assert.equal(resolveKey([a, b], new Map(), 'nothing'), undefined);
 });
+
+test('a thing named for its maker says the name once', () => {
+  assert.equal(slugs.get('jamcorder-2240bbb5'), 'jamcorder');
+});

@@ -438,7 +438,7 @@ html.is-detail body {
   gap: 10px;
   justify-content: center;
   margin-top: 16px;
-  padding: 2px;
+  padding: 4px;
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -461,6 +461,11 @@ html.is-detail body {
 }
 .thumb[aria-pressed='true'] {
   border-color: color-mix(in srgb, var(--ink) 55%, transparent);
+}
+/* The strip scrolls, so a ring drawn outside a thumb would be clipped: keep it just inside the padding. */
+.thumb:focus-visible {
+  opacity: 1;
+  outline-offset: 1px;
 }
 .thumb picture,
 .thumb img {

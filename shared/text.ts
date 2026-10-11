@@ -68,3 +68,25 @@ function foldedMatchAt(title: string, key: string, where: 'start' | 'end'): numb
   }
   return undefined;
 }
+
+/**
+ * A shop's own words about a thing, or undefined when what the page offered isn't a description.
+ * Many pages put their SEO title in the description meta ("Amazon.com: Logitech MX Master 3S …
+ * : Electronics", "Buy … FREE DELIVERY possible on eligible purchases", "Hart Colorways"); those are
+ * dropped rather than shown as prose. Store boilerplate around a real description goes ("… Buy
+ * now at apple.com."), and text the ingest cut off mid-sentence ends at its last full sentence.
+ */
+export function shopText(description: string | null | undefined): string | undefined {
+  let t = (description ?? '').replace(/\s+/g, ' ').trim();
+  if (!t) return undefined;
+  if (/^(?:amazon\.com\b|buy\s)/i.test(t) || /(?:\s[-|]\s*amazon\.com|eligible purchases\.?|free returns\.?)$/i.test(t)) return undefined;
+  t = t.replace(/(?:\s*(?:buy now(?: at [\w.]+)?|shop now|learn more|\d+% financing available)\.?)+\s*$/i, '').trim();
+  t = t.replace(/^shipping estimate\s*[-–:]\s*[\w\s]+?weeks?\s*/i, '').trim();
+  if (!/[.!?…"”)]$/.test(t)) {
+    const end = Math.max(t.lastIndexOf('. '), t.lastIndexOf('! '), t.lastIndexOf('? '));
+    t = end > 80 ? t.slice(0, end + 1) : `${t.replace(/[\s,;:–—-]+$/, '')}…`;
+  }
+  // A heading or a page title, not prose.
+  if (t.length < 60 || !/\s\S+\s\S+\s\S+\s/.test(t)) return undefined;
+  return t;
+}

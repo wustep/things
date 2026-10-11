@@ -4,7 +4,7 @@
  * written here and are saved back to that file; the built site shows them read-only.
  */
 import type { Item } from '../shared/types.ts';
-import { titleWithoutBrand } from '../shared/text.ts';
+import { shopText, titleWithoutBrand } from '../shared/text.ts';
 import { renderMarkdown } from './markdown.ts';
 import { galleryFor, heroFor, picture, type MediaImage } from './media.ts';
 import { el } from './shelf.ts';
@@ -156,11 +156,12 @@ export class Detail {
 
     info.append(el('section', 'notes'));
 
-    if (item.description) {
+    const about = shopText(item.description);
+    if (about) {
       const d = el('section', 'from-shop');
       d.setAttribute('aria-labelledby', 'from-shop-label');
       const h = Object.assign(el('h2', 'info-label'), { id: 'from-shop-label', textContent: `What ${item.domain} says` });
-      d.append(h, Object.assign(el('p'), { textContent: item.description }));
+      d.append(h, Object.assign(el('p'), { textContent: about }));
       info.append(d);
     }
 

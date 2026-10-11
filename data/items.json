@@ -966,6 +966,35 @@
     "addedAt": "2026-09-14T07:46:07.373Z"
   },
   {
+    "id": "boss-55cd4543",
+    "url": "https://www.boss.info/us/products/rc-500/",
+    "domain": "boss.info",
+    "title": "RC-500 Loop Station",
+    "brand": "BOSS",
+    "price": "$309.98",
+    "section": "Misc",
+    "description": "RC-500: Loop Station - Dual-Track Powerhouse",
+    "images": [
+      "/items/boss-55cd4543/ref-0.jpg",
+      "/items/boss-55cd4543/ref-1.jpg",
+      "/items/boss-55cd4543/ref-2.jpg",
+      "/items/boss-55cd4543/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/boss-55cd4543/primary.png",
+      "aspect": 1.15,
+      "palette": [
+        "#d02f31",
+        "#8d514e",
+        "#141212",
+        "#edf2f3"
+      ]
+    },
+    "addedAt": "2026-10-11T03:18:00.044Z"
+  },
+  {
     "id": "roli-0e3366f5",
     "url": "https://roli.com/us/product/airwave-create",
     "domain": "roli.com",
@@ -1058,5 +1087,682 @@
       }
     },
     "addedAt": "2026-09-14T08:49:26.074Z"
+  },
+  {
+    "id": "article-f1bb2888",
+    "url": "https://www.article.com/product/23432/lenia-armoire-white-oak",
+    "domain": "article.com",
+    "title": "Lenia Armoire",
+    "brand": "Article",
+    "price": "$1,899",
+    "section": "Home",
+    "description": "Now available in a statement-making Armoire, this new edition of the Lenia collection has all the features you could dream up—double clothes rails and plenty of adjustable shelving, all built on the timeless Lenia base. With its minimal design and natural wood grain, the Lenia Armoire seamlessly blends into any design style while paying homage to its mid-century roots. That pile of laundry in the ",
+    "images": [
+      "/items/article-f1bb2888/ref-0.jpg",
+      "/items/article-f1bb2888/ref-1.jpg",
+      "/items/article-f1bb2888/ref-2.jpg",
+      "/items/article-f1bb2888/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/article-f1bb2888/primary.png",
+      "aspect": 0.6328,
+      "palette": [
+        "#b3906e",
+        "#d1b692",
+        "#e8dcc4",
+        "#fefefe"
+      ]
+    },
+    "addedAt": "2026-10-11T03:03:50.112Z"
+  },
+  {
+    "id": "westelm-807ef4ee",
+    "url": "https://www.westelm.com/products/emma-chamberlain-two-tone-armoire-f817/",
+    "domain": "westelm.com",
+    "title": "Emma Chamberlain Two-Tone Armoire (32\")",
+    "brand": "West Elm",
+    "price": "$1,599",
+    "section": "Home",
+    "images": [
+      "/items/westelm-807ef4ee/ref-0.jpg",
+      "/items/westelm-807ef4ee/ref-1.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "box",
+      "texture": "/items/westelm-807ef4ee/primary.png",
+      "aspect": 1,
+      "palette": [
+        "#8c512e",
+        "#552616",
+        "#959392",
+        "#e9e8e8"
+      ]
+    },
+    "addedAt": "2026-10-11T03:05:21.193Z"
+  },
+  {
+    "id": "article-c5f4a3af",
+    "url": "https://www.article.com/product/22366/lenia-4-drawer-chest-white-oak",
+    "domain": "article.com",
+    "title": "Lenia 4-Drawer Chest",
+    "brand": "Article",
+    "price": "$999",
+    "section": "Home",
+    "description": "If beauty comes from within, well, dang, your clothes really must be beautiful, because the Lenia is stunninggg. Minimal and spacious with a natural wood grain, the Lenia seamlessly blends into any design style while also making its own statement. That pile of laundry in the corner will thank you.",
+    "images": [
+      "/items/article-c5f4a3af/ref-0.jpg",
+      "/items/article-c5f4a3af/ref-1.jpg",
+      "/items/article-c5f4a3af/ref-2.jpg",
+      "/items/article-c5f4a3af/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/article-c5f4a3af/primary.png",
+      "aspect": 0.7764,
+      "palette": [
+        "#6f4e2d",
+        "#af906c",
+        "#dcc7a7",
+        "#fcfdfc"
+      ]
+    },
+    "addedAt": "2026-10-11T03:04:00.334Z"
+  },
+  {
+    "id": "ikea-58ff40a7",
+    "url": "https://www.ikea.com/us/en/p/akterspring-table-lamp-opal-glass-brass-plated-60591655/",
+    "domain": "ikea.com",
+    "title": "AKTERSPRING Table Lamp",
+    "brand": "IKEA",
+    "price": "$79.99",
+    "section": "Home",
+    "description": "AKTERSPRING Table lamp - opal glass/brass plated 15 \". Creates a soft, cozy mood light in your home. The glass lampshade is mouth blown by a skilled craftsperson. Light bulbs sold separately. IKEA recommends LED bulb E12 globe opal white (2 pcs). May be completed with other lamps in the same series.",
+    "images": [
+      "/items/ikea-58ff40a7/ref-0.jpg",
+      "/items/ikea-58ff40a7/ref-1.jpg",
+      "/items/ikea-58ff40a7/ref-2.jpg",
+      "/items/ikea-58ff40a7/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/ikea-58ff40a7/primary.png",
+      "aspect": 0.8115,
+      "palette": [
+        "#4d3b18",
+        "#76684b",
+        "#b9a57a",
+        "#d6d6d0"
+      ]
+    },
+    "addedAt": "2026-10-11T03:04:46.806Z"
+  },
+  {
+    "id": "westelm-59a707a0",
+    "url": "https://www.westelm.com/products/pictograph-buffet-h3356/",
+    "domain": "westelm.com",
+    "title": "Pictograph Buffet (58\")",
+    "brand": "West Elm",
+    "price": "$1,699",
+    "section": "Home",
+    "images": [
+      "/items/westelm-59a707a0/ref-0.jpg",
+      "/items/westelm-59a707a0/ref-1.jpg",
+      "/items/westelm-59a707a0/ref-2.jpg",
+      "/items/westelm-59a707a0/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/westelm-59a707a0/primary.png",
+      "aspect": 1.5492,
+      "palette": [
+        "#0f0b0a",
+        "#443933",
+        "#a69792",
+        "#756b69"
+      ]
+    },
+    "addedAt": "2026-10-11T03:03:56.567Z"
+  },
+  {
+    "id": "philips-hue-9e653c7b",
+    "url": "https://www.philips-hue.com/en-us/p/hue-white-and-color-ambiance-60w-a19-2pack-e26-smart-bulbs/046677590857",
+    "domain": "philips-hue.com",
+    "title": "White and Color Ambiance A19 Bulb, 2-Pack",
+    "brand": "Philips Hue",
+    "price": "$71.98",
+    "section": "Home",
+    "description": "Bring the benefits of natural daylight into your home with our smartest bulb yet, redesigned to feature Chromasync™ precision color-matching as well as full-spectrum white light. Achieve your ideal color or tone of white light, then customize even further with ultra-low dimming from full brightness all the way down to 0.2%.",
+    "images": [
+      "/items/philips-hue-9e653c7b/ref-1.jpg",
+      "/items/philips-hue-9e653c7b/ref-0.jpg",
+      "/items/philips-hue-9e653c7b/ref-2.jpg",
+      "/items/philips-hue-9e653c7b/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/philips-hue-9e653c7b/primary.png",
+      "aspect": 1,
+      "palette": [
+        "#e970b5",
+        "#161619",
+        "#d1cecf",
+        "#f7f6f7"
+      ]
+    },
+    "addedAt": "2026-10-11T03:04:27.342Z"
+  },
+  {
+    "id": "westelm-7ff32545",
+    "url": "https://www.westelm.com/products/ceres-rug-t6912/",
+    "domain": "westelm.com",
+    "title": "Ceres Performance Rug",
+    "brand": "West Elm",
+    "price": "$479",
+    "section": "Home",
+    "images": [
+      "/items/westelm-7ff32545/ref-0.jpg",
+      "/items/westelm-7ff32545/ref-1.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/westelm-7ff32545/primary.png",
+      "aspect": 0.8145,
+      "palette": [
+        "#746454",
+        "#a8998c",
+        "#d4c9b5"
+      ]
+    },
+    "addedAt": "2026-10-11T03:03:56.567Z"
+  },
+  {
+    "id": "ikea-b292ec09",
+    "url": "https://www.ikea.com/us/en/p/kyrre-stool-birch-60416925/",
+    "domain": "ikea.com",
+    "title": "KYRRE Stool, Birch",
+    "brand": "IKEA",
+    "price": "$19.99",
+    "section": "Home",
+    "description": "KYRRE Stool - birch. This all-round stool with three bent legs comes to rescue when unexpected guests pop by or you need an extra space to place your book or drink. A 3-legged stool will never wobble, even if the floor surface is uneven, because all 3 legs rest upon the surface where it stands.",
+    "images": [
+      "/items/ikea-b292ec09/ref-0.jpg",
+      "/items/ikea-b292ec09/ref-1.jpg",
+      "/items/ikea-b292ec09/ref-2.jpg",
+      "/items/ikea-b292ec09/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/ikea-b292ec09/primary.png",
+      "aspect": 0.8604,
+      "palette": [
+        "#ae9177",
+        "#e7ccb1"
+      ]
+    },
+    "addedAt": "2026-10-11T03:04:29.078Z"
+  },
+  {
+    "id": "amazon-534aae5e",
+    "url": "https://www.amazon.com/dp/B0G52FPP63",
+    "domain": "amazon.com",
+    "title": "M5 Retro Dock Station for Mac mini (80Gbps)",
+    "brand": "Wokyis",
+    "price": "$339.99",
+    "section": "Office",
+    "description": "Buy Wokyis M5 Retro Dock Station for Mac mini M4/M5/M6, 80Gbps M.2 NVMe SSD Enclosure with Cooling Fan, Compatible for Thunderbolt 5/4/3/USB 4, 5'inch HD Display, SD/TF Reader 4.0, 8K@60Hz Displayport: Docking Stations - Amazon.com ✓ FREE DELIVERY possible on eligible purchases",
+    "images": [
+      "/items/amazon-534aae5e/ref-0.jpg",
+      "/items/amazon-534aae5e/ref-1.jpg",
+      "/items/amazon-534aae5e/ref-2.jpg",
+      "/items/amazon-534aae5e/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/amazon-534aae5e/primary.png",
+      "aspect": 1.079,
+      "palette": [
+        "#969494",
+        "#cbcbca",
+        "#373737",
+        "#0c0c0c"
+      ]
+    },
+    "addedAt": "2026-10-11T03:04:15.222Z"
+  },
+  {
+    "id": "amazon-f9715de1",
+    "url": "https://www.amazon.com/dp/B0H38ZKRMS",
+    "domain": "amazon.com",
+    "title": "Retro iPod-Style Aluminum Case for Apple Watch Ultra 49mm, Silver",
+    "brand": "HUALIMEI",
+    "price": "$54.99",
+    "section": "Misc",
+    "description": "Amazon.com: Aluminum Alloy Case for Apple Watch Ultra 49mm -Turn Your Apple Watch into a Smartphone,Retro iPod Style Metal Protective Cover with Click Wheel (Silver,49mm - Series Ultra 4 3 2 1) : Cell Phones & Accessories",
+    "images": [
+      "/items/amazon-f9715de1/ref-0.jpg",
+      "/items/amazon-f9715de1/ref-1.jpg",
+      "/items/amazon-f9715de1/ref-2.jpg",
+      "/items/amazon-f9715de1/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "box",
+      "texture": "/items/amazon-f9715de1/primary.png",
+      "aspect": 0.9316,
+      "palette": [
+        "#b68777",
+        "#e8c5b3",
+        "#353434",
+        "#f5f2ee"
+      ]
+    },
+    "addedAt": "2026-10-11T03:04:20.278Z"
+  },
+  {
+    "id": "yohann-f0afe31c",
+    "url": "https://www.yohann.com/products/macbook-stand-wood?variant=41407890587788",
+    "domain": "yohann.com",
+    "title": "MacBook Stand Wood, Oak",
+    "brand": "Yohann",
+    "price": "$199.65",
+    "section": "Office",
+    "description": "This solid wood MacBook stand raises your laptop's screen to a comfortable working height, so you can maintain an upright sitting posture. The stand is made from natural oak and walnut wood, complementing perfectly your workspace. ● Allows for an upright sitting posture ● Free up more space on your desk● Designed in Switzerland● Crafted in Italy and Germany",
+    "images": [
+      "/items/yohann-f0afe31c/ref-0.jpg",
+      "/items/yohann-f0afe31c/ref-1.jpg",
+      "/items/yohann-f0afe31c/ref-2.jpg",
+      "/items/yohann-f0afe31c/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "box",
+      "texture": "/items/yohann-f0afe31c/primary.png",
+      "aspect": 1.7778,
+      "palette": [
+        "#af774b",
+        "#0f0a08",
+        "#514f50",
+        "#b1b0b1"
+      ]
+    },
+    "addedAt": "2026-10-11T03:04:24.797Z"
+  },
+  {
+    "id": "revivalrugs-86802fd7",
+    "url": "https://www.revivalrugs.com/products/jute-rug-hart-in-olive?variant=39459943514211",
+    "domain": "revivalrugs.com",
+    "title": "Hart in Olive Jute Rug",
+    "brand": "Revival Rugs",
+    "price": "$359",
+    "section": "Home",
+    "description": "Hart Colorways",
+    "images": [
+      "/items/revivalrugs-86802fd7/ref-0.jpg",
+      "/items/revivalrugs-86802fd7/ref-1.jpg",
+      "/items/revivalrugs-86802fd7/ref-2.jpg",
+      "/items/revivalrugs-86802fd7/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/revivalrugs-86802fd7/primary.png",
+      "aspect": 1.4949,
+      "palette": [
+        "#383827",
+        "#848d7a",
+        "#5d6653",
+        "#bfc3b7"
+      ]
+    },
+    "addedAt": "2026-10-11T03:04:03.848Z"
+  },
+  {
+    "id": "roomandboard-604fe316",
+    "url": "https://www.roomandboard.com/catalog/dining-and-kitchen/benches-and-banquettes/evan-bench-with-leather-seat",
+    "domain": "roomandboard.com",
+    "title": "Evan Bench with Leather Seat",
+    "brand": "Room & Board",
+    "price": "$849",
+    "section": "Home",
+    "description": "Influenced by Danish design, each leather Evan bench is built one at a time from domestically sourced solid wood by expert craftspeople in Massachusetts. Showcasing a beautiful mix of materials, Evan is a comfortable bench with an approachable silhouette no matter the angle.",
+    "images": [
+      "/items/roomandboard-604fe316/ref-0.jpg",
+      "/items/roomandboard-604fe316/ref-1.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/roomandboard-604fe316/primary.png",
+      "aspect": 2.0604,
+      "palette": [
+        "#714a35",
+        "#8d7467",
+        "#2b3230",
+        "#fffefe"
+      ]
+    },
+    "addedAt": "2026-10-11T03:04:48.733Z"
+  },
+  {
+    "id": "amazon-1fd6380c",
+    "url": "https://www.amazon.com/dp/B00BNRO59G",
+    "domain": "amazon.com",
+    "title": "2-Tier Bamboo Shoe Rack",
+    "brand": "Oceanstar",
+    "price": "$33",
+    "section": "Home",
+    "description": "Buy Oceanstar 2-Tier Bamboo Shoe Rack, Brown, SR1309 | Lightweight: Free Standing Shoe Racks - Amazon.com ✓ FREE DELIVERY possible on eligible purchases",
+    "images": [
+      "/items/amazon-1fd6380c/ref-0.jpg",
+      "/items/amazon-1fd6380c/ref-1.jpg",
+      "/items/amazon-1fd6380c/ref-2.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/amazon-1fd6380c/primary.png",
+      "aspect": 1.2626,
+      "palette": [
+        "#885835",
+        "#b1916c",
+        "#e6d9d2",
+        "#fefefe"
+      ]
+    },
+    "addedAt": "2026-10-11T03:04:51.774Z"
+  },
+  {
+    "id": "etsy-c0af13ae",
+    "url": "https://www.etsy.com/listing/4434411389/solid-oak-coat-rack-wall-mounted",
+    "domain": "etsy.com",
+    "title": "Solid Oak Coat Rack (6 Hooks)",
+    "brand": "Weco",
+    "price": "$88.72",
+    "section": "Home",
+    "description": "Crafted by hand from solid oak, this wall-mounted coat rack blends natural character with practical everyday use. Strong, reliable, and timeless in design, it provides an attractive way to keep your space tidy while showcasing the distinctive grain patterns of real oak. Each piece is individually handmade, ensuring durability and giving every rack its own unique look thanks to the natural variatio",
+    "images": [
+      "/items/etsy-c0af13ae/ref-0.jpg",
+      "/items/etsy-c0af13ae/ref-1.jpg",
+      "/items/etsy-c0af13ae/ref-2.jpg",
+      "/items/etsy-c0af13ae/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/etsy-c0af13ae/primary.png",
+      "aspect": 0.6426,
+      "palette": [
+        "#382612",
+        "#6e5033",
+        "#b79167",
+        "#a4a8a8"
+      ]
+    },
+    "addedAt": "2026-10-11T03:04:20.277Z"
+  },
+  {
+    "id": "amazon-57d10ff1",
+    "url": "https://www.amazon.com/dp/B00N0ZOZ9O",
+    "domain": "amazon.com",
+    "title": "Tower Freestanding Coat Hanger Clothes Rack with Shelf",
+    "brand": "Yamazaki Home",
+    "price": "$125",
+    "section": "Home",
+    "description": "Buy YAMAZAKI Home Freestanding Coat Hanger Clothes Rack with Shelf Steel One Size White: Standard Hangers - Amazon.com ✓ FREE DELIVERY possible on eligible purchases",
+    "images": [
+      "/items/amazon-57d10ff1/ref-0.jpg",
+      "/items/amazon-57d10ff1/ref-1.jpg",
+      "/items/amazon-57d10ff1/ref-2.jpg",
+      "/items/amazon-57d10ff1/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/amazon-57d10ff1/primary.png",
+      "aspect": 0.4141,
+      "palette": [
+        "#6c301c",
+        "#b2956f",
+        "#d5d1cd",
+        "#fefefe"
+      ]
+    },
+    "addedAt": "2026-10-11T03:04:53.926Z"
+  },
+  {
+    "id": "amazon-436fc733",
+    "url": "https://www.amazon.com/dp/B0DTHMFMKP",
+    "domain": "amazon.com",
+    "title": "FamiLock S3 Max Smart Lock",
+    "brand": "eufy",
+    "price": "$327.27",
+    "section": "Home",
+    "description": "eufy Security Video Smart Lock FamiLock S3 Max with Palm Vein Recognition | Internal Video Screen, BHMA Grade 1, Keyless Entry Front Door Lock, WiFi Deadbolt+2K HD Doorbell Camera,16GB Built-in Storage - Amazon.com",
+    "images": [
+      "/items/amazon-436fc733/ref-0.jpg",
+      "/items/amazon-436fc733/ref-1.jpg",
+      "/items/amazon-436fc733/ref-2.jpg",
+      "/items/amazon-436fc733/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/amazon-436fc733/primary.png",
+      "aspect": 0.6162,
+      "palette": [
+        "#8e8c91",
+        "#4c4b50",
+        "#131314",
+        "#f2f2f4"
+      ]
+    },
+    "addedAt": "2026-10-11T03:18:02.288Z"
+  },
+  {
+    "id": "dyson-a11c9a91",
+    "url": "https://www.dyson.com/air-treatment/air-purifier-heaters/pure-hot-cool-hp01/dyson-pure-hot-cool-purifier",
+    "domain": "dyson.com",
+    "title": "Pure Hot + Cool HP01",
+    "brand": "Dyson",
+    "price": "$499.99",
+    "section": "Home",
+    "images": [
+      "/items/dyson-a11c9a91/ref-0.jpg",
+      "/items/dyson-a11c9a91/ref-1.jpg",
+      "/items/dyson-a11c9a91/ref-2.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/dyson-a11c9a91/primary.png",
+      "aspect": 0.3848,
+      "palette": [
+        "#676d76",
+        "#aaafb6",
+        "#070808",
+        "#eef1f4"
+      ]
+    },
+    "addedAt": "2026-10-11T03:04:02.366Z"
+  },
+  {
+    "id": "apple-47da18d0",
+    "url": "https://www.apple.com/shop/buy-mac/studio-display/standard-glass-vesa-mount-adapter",
+    "domain": "apple.com",
+    "title": "Studio Display (Standard Glass, VESA Mount Adapter)",
+    "brand": "Apple",
+    "price": "$1,362",
+    "section": "Office",
+    "description": "Studio Display. 27-inch 5K Retina display. 12MP Center Stage camera. Studio-quality mics and speakers. 0% financing available. Buy now at apple.com.",
+    "images": [
+      "/items/apple-47da18d0/ref-0.jpg",
+      "/items/apple-47da18d0/ref-1.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/apple-47da18d0/primary.png",
+      "aspect": 1.6306,
+      "palette": [
+        "#fb5211",
+        "#0129d0",
+        "#7044fd",
+        "#101010"
+      ]
+    },
+    "addedAt": "2026-10-11T03:05:00.683Z"
+  },
+  {
+    "id": "ugmonk-45dcc1cd",
+    "url": "https://ugmonk.com/products/gather-small-monitor-stand-white-walnut",
+    "domain": "ugmonk.com",
+    "title": "Gather Small Monitor Stand (White/Walnut)",
+    "brand": "Ugmonk",
+    "price": "$269",
+    "section": "Office",
+    "description": "Your best thinking happens off the screen. Analog is a paper card system for capturing ideas, clearing your head, and focusing on what matters most. This Starter Kit gives you everything you need to try it. This kit includes: 15 Task Cards (Today, Next, Someday) 15 Large Dot Grid Cards Solid aluminum card stand Features: 15 Task Cards (Today, Next, Someday) 15 large Dot Grid Cards (notes, ideas, s",
+    "images": [
+      "/items/ugmonk-45dcc1cd/ref-1.jpg",
+      "/items/ugmonk-45dcc1cd/ref-0.jpg",
+      "/items/ugmonk-45dcc1cd/ref-2.jpg",
+      "/items/ugmonk-45dcc1cd/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "box",
+      "texture": "/items/ugmonk-45dcc1cd/primary.png",
+      "aspect": 1.6596,
+      "palette": [
+        "#452c1e",
+        "#07090c",
+        "#908f8d",
+        "#52504d"
+      ]
+    },
+    "addedAt": "2026-10-11T03:05:10.997Z"
+  },
+  {
+    "id": "apple-3facb22e",
+    "url": "https://www.apple.com/shop/product/MJLY4LL/A/magic-keyboard-with-touch-id-for-mac-models-with-apple-silicon-usb-c-us-english",
+    "domain": "apple.com",
+    "title": "Magic Keyboard with Touch ID",
+    "brand": "Apple",
+    "price": "$149",
+    "section": "Office",
+    "description": "Magic Keyboard with Touch ID features a sleek design and rechargeable battery and pairs automatically with your Mac. Buy now.",
+    "images": [
+      "/items/apple-3facb22e/ref-0.jpg",
+      "/items/apple-3facb22e/ref-1.jpg",
+      "/items/apple-3facb22e/ref-2.jpg",
+      "/items/apple-3facb22e/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/apple-3facb22e/primary.png",
+      "aspect": 2.1558,
+      "palette": [
+        "#959698",
+        "#4c4d4f",
+        "#c4c5c7",
+        "#f1f2f6"
+      ]
+    },
+    "addedAt": "2026-10-11T03:05:21.191Z"
+  },
+  {
+    "id": "amazon-96467ee5",
+    "url": "https://www.amazon.com/dp/B0C6R9P664",
+    "domain": "amazon.com",
+    "title": "Pro 7 Tri-Band Mesh Wi-Fi 7 (3-Pack)",
+    "brand": "eero",
+    "price": "$594.99",
+    "section": "Home",
+    "description": "Amazon.com: Amazon eero Pro 7 tri-band mesh Wi-Fi 7 router (newest model) - Supports internet plans up to 5 Gbps, Coverage up to 6,000 sq. ft., 3-pack : Everything Else",
+    "images": [
+      "/items/amazon-96467ee5/ref-0.jpg",
+      "/items/amazon-96467ee5/ref-1.jpg",
+      "/items/amazon-96467ee5/ref-2.jpg",
+      "/items/amazon-96467ee5/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/amazon-96467ee5/primary.png",
+      "aspect": 1.323,
+      "palette": [
+        "#939393",
+        "#cecece"
+      ]
+    },
+    "addedAt": "2026-10-11T03:18:03.190Z"
+  },
+  {
+    "id": "amazon-ad8ad72f",
+    "url": "https://www.amazon.com/dp/B0B5V2YZPZ",
+    "domain": "amazon.com",
+    "title": "80 Pint Energy Star Dehumidifier",
+    "brand": "Waykar",
+    "price": "$217.98",
+    "section": "Home",
+    "description": "Amazon.com - Waykar 80 Pints 5000 Sq. Ft 2025 Energy Star Dehumidifier for Basement | 90° Auto Swing, 30%–80% Humidity Control for home, Continuous drainage support, Whole-House Dehumidification, Auto-defrost",
+    "images": [
+      "/items/amazon-ad8ad72f/ref-0.jpg",
+      "/items/amazon-ad8ad72f/ref-1.jpg",
+      "/items/amazon-ad8ad72f/ref-2.jpg",
+      "/items/amazon-ad8ad72f/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/amazon-ad8ad72f/primary.png",
+      "aspect": 0.6748,
+      "palette": [
+        "#919191",
+        "#6d6d6d",
+        "#3c3c3c",
+        "#d1d1d1"
+      ]
+    },
+    "addedAt": "2026-10-11T03:04:59.023Z"
+  },
+  {
+    "id": "anker-2866be47",
+    "url": "https://www.anker.com/products/a1340-250w-power-bank",
+    "domain": "anker.com",
+    "title": "Prime Power Bank (27,650mAh, 250W)",
+    "brand": "Anker",
+    "price": "$179.99",
+    "section": "Misc",
+    "description": "250W Multi-Device Fast Charging: Powered by the latest PD 3.1 technology, the power bank comes with 2 USB-C ports and 1 USB-A port to deliver up to 250W of",
+    "images": [
+      "/items/anker-2866be47/ref-1.jpg",
+      "/items/anker-2866be47/ref-0.jpg",
+      "/items/anker-2866be47/ref-2.jpg",
+      "/items/anker-2866be47/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/anker-2866be47/primary.png",
+      "aspect": 0.7998,
+      "palette": [
+        "#04bcf5",
+        "#4d4c4f",
+        "#010101",
+        "#fbfbfb"
+      ]
+    },
+    "addedAt": "2026-10-11T03:18:00.042Z"
   }
 ]

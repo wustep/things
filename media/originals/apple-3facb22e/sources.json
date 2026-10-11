@@ -1,0 +1,26 @@
+[
+  {
+    "file": "ref-0.png",
+    "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MJLY4?wid=4000&hei=4000&fmt=png-alpha",
+    "width": 4000,
+    "height": 4000
+  },
+  {
+    "file": "ref-1.png",
+    "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MJLY4_AV1?wid=4000&hei=4000&fmt=png-alpha",
+    "width": 4000,
+    "height": 4000
+  },
+  {
+    "file": "ref-2.png",
+    "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MJLY4_AV2?wid=4000&hei=4000&fmt=png-alpha",
+    "width": 4000,
+    "height": 4000
+  },
+  {
+    "file": "ref-3.png",
+    "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MJLY4_AV3?wid=4000&hei=4000&fmt=png-alpha",
+    "width": 4000,
+    "height": 4000
+  }
+]

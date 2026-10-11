@@ -1,0 +1,33 @@
+[
+  {
+    "file": "ref-1.jpg",
+    "url": "https://www.assets.signify.com/is/image/Signify/046677590857-929003853702-E26-UI-ATF-APP?scl=1",
+    "width": 2500,
+    "height": 2500
+  },
+  {
+    "file": "ref-0.jpg",
+    "url": "https://www.assets.signify.com/is/image/Signify/046677590857-929003853702-Hue-WCA-810-A19-E26-2P-NAM-APP-1?scl=1",
+    "width": 2500,
+    "height": 2500
+  },
+  {
+    "file": "ref-2.jpg",
+    "url": "https://www.assets.signify.com/is/image/Signify/Hue_WCA-A19-E26-A60-E27-100W-carousel-PUP_04?wid=500&qlt=82",
+    "width": 500,
+    "height": 400
+  },
+  {
+    "file": "ref-3.jpg",
+    "url": "https://www.assets.signify.com/is/image/Signify/Philips-Hue-Standard-A19-Warm-Close-16x9-PUP-1?wid=500&qlt=82",
+    "width": 500,
+    "height": 282
+  },
+  {
+    "file": "ref-4.png",
+    "url": "https://www.assets.signify.com/is/image/Signify/046677590857-929003853702-Hue-WCA-810-A19-E26-2P-NAM-RTP?scl=1&fmt=png-alpha",
+    "width": 2500,
+    "height": 2500,
+    "note": "the page's transparent render, added by hand so the hero keeps its own alpha"
+  }
+]

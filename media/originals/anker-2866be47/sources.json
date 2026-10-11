@@ -1,0 +1,26 @@
+[
+  {
+    "file": "ref-1.jpg",
+    "url": "https://cdn.shopify.com/s/files/1/0493/9834/9974/files/A1340011_Rich_image_TD01_US_1200x1500px_V3.jpg",
+    "width": 1200,
+    "height": 1500
+  },
+  {
+    "file": "ref-0.png",
+    "url": "https://cdn.shopify.com/s/files/1/0493/9834/9974/files/Rectangle1_885945a5-b5d8-439f-bc99-54bf72715ff4.png",
+    "width": 3000,
+    "height": 3000
+  },
+  {
+    "file": "ref-2.jpg",
+    "url": "https://cdn.shopify.com/s/files/1/0493/9834/9974/files/A1340011_TD05_V1_2e6a57da-49dc-498b-a38e-4c2f2538ed38.jpg",
+    "width": 1600,
+    "height": 2000
+  },
+  {
+    "file": "ref-3.jpg",
+    "url": "https://cdn.shopify.com/s/files/1/0493/9834/9974/files/A1340011_Rich_image_TD02_US_1600x2000px_V1.jpg",
+    "width": 1600,
+    "height": 2000
+  }
+]

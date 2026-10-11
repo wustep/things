@@ -22,7 +22,6 @@
   "jamescookartworkshop-b0e89a91": { "hero": { "file": "ref-1.jpg", "mode": "photo", "crop": [0.006, 0.004, 0.988, 0.992] }, "gallery": ["ref-0.png", "ref-6.jpg", "ref-4.jpg", "ref-2.jpg"] },
   "us-nothing-db5358fa": { "hero": "ref-0.png", "gallery": ["ref-1.jpg", "ref-3.jpg", "ref-5.jpg", "ref-6.jpg", "ref-7.jpg"] },
   "remsen-f65a1f42": { "hero": { "file": "ref-6.jpg", "holes": "fill" }, "gallery": ["ref-5.jpg", "ref-7.jpg", "ref-3.jpg", "ref-0.png"] },
-  "journeyofficial-67ef95f6": { "hero": "ref-8.jpg", "gallery": ["ref-9.jpg", "ref-10.jpg", "ref-11.jpg", "ref-0.jpg"] },
   "amazon-b05badce": { "hero": "ref-5.jpg", "gallery": ["ref-3.jpg", "ref-2.jpg", "ref-0.jpg"] },
   "roli-0e3366f5": { "hero": "ref-6.png", "gallery": ["ref-2.jpg", "ref-7.png", "ref-8.png", "ref-9.png"] },
   "amazon-3f443256": { "hero": "ref-0.jpg", "gallery": [] },

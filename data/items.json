@@ -884,7 +884,7 @@
     "title": "Roller Pro Carry-On",
     "brand": "Peak Design",
     "price": "$599.95",
-    "section": "Misc",
+    "section": "Carry",
     "description": "Meet the next leap in luggage. Roller Pro Carry-On is a 4-wheeled travel roller in a class of its own, built differently from the ground up to hold more...",
     "images": [
       "/items/peakdesign-8f476d14/ref-0.jpg",
@@ -931,7 +931,7 @@
     "title": "Small Wash Pouch, Sage",
     "brand": "Peak Design",
     "price": "$49.95",
-    "section": "Misc",
+    "section": "Carry",
     "description": "Dopp kit, ditty bag, toiletry bag, call it what you will—it’s one of the most essential travel carry tools, and can also be one of the most frustrating....",
     "images": [
       "/items/peakdesign-e3a72cf8/ref-0.jpg"
@@ -957,7 +957,7 @@
     "title": "Small Tech Pouch, Black",
     "brand": "Peak Design",
     "price": "$49.95",
-    "section": "Misc",
+    "section": "Carry",
     "description": "Whether storing cables, everyday gear, or travel essentials, Tech Pouch offers unrivaled organization and ease of access.",
     "images": [
       "/items/peakdesign-709dfa64/ref-2.jpg",
@@ -986,7 +986,7 @@
     "title": "Weekender Fairfield",
     "brand": "Timex",
     "price": "$59.99",
-    "section": "Misc",
+    "section": "Carry",
     "description": "Buy Timex 'Weekender Fairfield' Quartz Brass and Nylon Casual Watch, Color:Blue (Model: TW2P908009J) and other Wrist Watches at Amazon.com. Our wide selection is eligible for free shipping and free returns.",
     "images": [
       "/items/amzn-0f80deec/ref-0.jpg",
@@ -1033,7 +1033,7 @@
     "title": "Bambino Version 9",
     "brand": "Orient",
     "price": "$385",
-    "section": "Misc",
+    "section": "Carry",
     "description": "The ninth iteration of the Orient Bambino reinterprets the 24 hour sub-dial with a sun and a moon. But the real star is the intricate detailing on the dial and sub-dials, which culminate into its sophisticated design.",
     "images": [
       "/items/orientwatchusa-5b000bba/ref-0.jpg",
@@ -1064,7 +1064,7 @@
     "title": "Headphone (1)",
     "brand": "Nothing",
     "price": "$199",
-    "section": "Misc",
+    "section": "Carry",
     "images": [
       "/items/us-nothing-db5358fa/ref-0.jpg",
       "/items/us-nothing-db5358fa/ref-1.jpg",
@@ -1093,7 +1093,7 @@
     "title": "The Pill Container",
     "brand": "Remsen",
     "price": "$195.00",
-    "section": "Misc",
+    "section": "Carry",
     "description": "A pill case that combines minimalist beauty with mindful functionality. Equipped with a sleek, grooved lid with a mirrored underside for added utility. Constructed with robust materials for unmatched long-term durability. Comes with an easily removable translucent inner cover for secure storage. Prioritizes aesthetics, ergonomics, and practicality for everyday use.",
     "images": [
       "/items/remsen-f65a1f42/ref-0.jpg",
@@ -1137,59 +1137,13 @@
     "addedAt": "2026-09-14T07:28:54.556Z"
   },
   {
-    "id": "journeyofficial-67ef95f6",
-    "url": "https://journeyofficial.com/products/loc8-finder-wallet-and-stand",
-    "domain": "journeyofficial.com",
-    "title": "MagSafe Finder Wallet and Stand",
-    "brand": "Journey",
-    "price": "$89.99",
-    "section": "Misc",
-    "description": "LOC8 MagSafe Finder Wallet and Stand is your ultimate iPhone companion. With built-in tracker and Apple's Find My network compatibility, you can bid farewell to lost wallets. Safeguard up to 5 cards, secure your ID, and enjoy the convenience of a trackable and stand-equipped accessory. Never lose your essentials again; stay connected, organized, and worry-free.",
-    "images": [
-      "/items/journeyofficial-67ef95f6/ref-0.jpg",
-      "/items/journeyofficial-67ef95f6/ref-1.jpg",
-      "/items/journeyofficial-67ef95f6/ref-2.jpg",
-      "/items/journeyofficial-67ef95f6/ref-3.jpg",
-      "/items/journeyofficial-67ef95f6/ref-4.jpg",
-      "/items/journeyofficial-67ef95f6/ref-5.jpg"
-    ],
-    "asset": {
-      "kind": "glb",
-      "url": "/items/journeyofficial-67ef95f6/model.glb",
-      "palette": [
-        "#6c6e70",
-        "#b0afae",
-        "#2f3132",
-        "#0d0e0d"
-      ],
-      "refs": [
-        "/items/journeyofficial-67ef95f6/ref-0.jpg",
-        "/items/journeyofficial-67ef95f6/ref-2.jpg",
-        "/items/journeyofficial-67ef95f6/ref-4.jpg"
-      ],
-      "fallback": {
-        "kind": "procedural",
-        "shape": "card",
-        "texture": "/items/journeyofficial-67ef95f6/primary.png",
-        "aspect": 0.6177,
-        "palette": [
-          "#6c6e70",
-          "#b0afae",
-          "#2f3132",
-          "#0d0e0d"
-        ]
-      }
-    },
-    "addedAt": "2026-09-14T07:29:29.627Z"
-  },
-  {
     "id": "amazon-3f443256",
     "url": "https://www.amazon.com/dp/B0BZYC7N7X?tag=wustep09-20",
     "domain": "amazon.com",
     "title": "FreeSip Camo Cool 24oz",
     "brand": "Owala",
     "price": "$10",
-    "section": "Misc",
+    "section": "Carry",
     "description": "Amazon.com: Owala FreeSip Stainless Steel Water Bottle 24 oz Orange/Green (Camo Cool) : Sports & Outdoors",
     "images": [
       "/items/amazon-3f443256/ref-2.jpg",
@@ -1487,7 +1441,7 @@
     "title": "Retro Case for Apple Watch Ultra",
     "brand": "HUALIMEI",
     "price": "$54.99",
-    "section": "Misc",
+    "section": "Carry",
     "description": "Amazon.com: Aluminum Alloy Case for Apple Watch Ultra 49mm -Turn Your Apple Watch into a Smartphone,Retro iPod Style Metal Protective Cover with Click Wheel (Silver,49mm - Series Ultra 4 3 2 1) : Cell Phones & Accessories",
     "images": [
       "/items/amazon-f9715de1/ref-0.jpg",
@@ -1545,7 +1499,7 @@
     "title": "MagSafe Wallet Stand, Black",
     "brand": "Satechi",
     "price": "$39.99",
-    "section": "Office",
+    "section": "Carry",
     "description": "A vegan-leather MagSafe wallet for up to 4 cards whose flap folds out into a multi-angle phone stand, portrait or landscape. NFC pass-through for tap to pay.",
     "images": [
       "/items/amazon-091b2237/ref-0.jpg",
@@ -1885,7 +1839,7 @@
     "title": "Prime Power Bank, 27,650mAh",
     "brand": "Anker",
     "price": "$179.99",
-    "section": "Misc",
+    "section": "Carry",
     "description": "250W Multi-Device Fast Charging: Powered by the latest PD 3.1 technology, the power bank comes with 2 USB-C ports and 1 USB-A port to deliver up to 250W of",
     "images": [
       "/items/anker-2866be47/ref-1.jpg",

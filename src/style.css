@@ -5,7 +5,7 @@
  */
 :root {
   color-scheme: dark;
-  --night: #14120f; /* the room */
+  --night: #13110e; /* the room */
   --lip-edge: #3d362d; /* the lit front edge of a shelf */
   --lip-face: #221e19;
   --ink: #ede6da; /* warm paper */
@@ -20,6 +20,22 @@
 
   --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
   --gutter: 40px;
+  /* The gutter, widened where a notch or rounded corner needs it. */
+  --side-l: max(var(--gutter), env(safe-area-inset-left));
+  --side-r: max(var(--gutter), env(safe-area-inset-right));
+
+  /*
+   * The room behind everything: a little warmth falling from above, the corners sinking into
+   * shadow, and a fine grain so the dark reads as a surface rather than an empty screen. It is
+   * painted on fixed layers, so scrolling never repaints it, and it sits behind the things, so
+   * their cut-out edges only ever meet a near-flat dark.
+   */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 .9 0 0 0 0 .78 .065 0 0 0 -.015'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --room:
+    var(--grain),
+    radial-gradient(90% 55% at 50% -8%, rgba(255, 214, 165, 0.05), transparent 70%),
+    radial-gradient(130% 95% at 50% 40%, transparent 52%, rgba(0, 0, 0, 0.38)),
+    var(--night);
 }
 
 *,
@@ -32,10 +48,18 @@ html {
   background: var(--night);
   -webkit-text-size-adjust: 100%;
 }
+/* The room is a fixed layer under the page; body stays transparent so it shows through. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--room);
+  pointer-events: none;
+}
 body {
   margin: 0;
   min-height: 100vh;
-  background: var(--night);
   color: var(--ink);
   font-family: var(--serif);
   -webkit-font-smoothing: antialiased;
@@ -71,8 +95,8 @@ html.is-detail body {
 .mark {
   font-weight: 400;
   position: absolute;
-  top: 26px;
-  left: var(--gutter);
+  top: calc(26px + env(safe-area-inset-top));
+  left: var(--side-l);
   margin: 0;
   font: 400 11px/1 var(--mono);
   letter-spacing: 0.2em;
@@ -98,7 +122,7 @@ html.is-detail body {
 .cabinet {
   max-width: 1480px;
   margin: 0 auto;
-  padding: 92px var(--gutter) 120px;
+  padding: calc(92px + env(safe-area-inset-top)) var(--side-r) max(120px, env(safe-area-inset-bottom)) var(--side-l);
   outline: none;
 }
 .cabinet-note {
@@ -121,7 +145,10 @@ html.is-detail body {
   font-variant-numeric: tabular-nums;
 }
 
-/* One shelf: lamplight on the back wall, then the lip things stand on, then their tags. */
+/*
+ * One shelf: a pool of light on the back wall behind the things, brightest where they stand and
+ * fading out on every side (no box edges), then the lip they stand on, then their tags.
+ */
 .tier {
   position: relative;
   padding-bottom: 30px;
@@ -129,12 +156,11 @@ html.is-detail body {
 .tier::before {
   content: '';
   position: absolute;
-  inset: 0 calc(var(--gutter) * -0.5) auto;
-  height: var(--stage);
+  inset: calc(var(--stage) * -0.2) calc(var(--gutter) * -0.5) auto;
+  height: calc(var(--stage) * 1.2);
   background:
-    radial-gradient(70% 110% at 50% -18%, var(--lamp), transparent 72%),
-    linear-gradient(to bottom, transparent, rgba(255, 240, 220, 0.018));
-  border-radius: 2px 2px 0 0;
+    radial-gradient(46% 70% at 50% 100%, var(--lamp), transparent),
+    radial-gradient(75% 40% at 50% 100%, rgba(255, 228, 190, 0.035), transparent);
   pointer-events: none;
 }
 .tier::after {
@@ -146,6 +172,9 @@ html.is-detail body {
   height: 10px;
   background: linear-gradient(to bottom, var(--lip-edge) 0 1px, var(--lip-face) 1px, #1a1713);
   box-shadow: 0 14px 26px -8px rgba(0, 0, 0, 0.7);
+  /* The shelf's ends fall off into the dark rather than stopping at a hard corner. */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 3%, #000 97%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 3%, #000 97%, transparent);
   pointer-events: none;
 }
 .tier + .tier {
@@ -311,7 +340,9 @@ html.is-detail body {
   z-index: 10;
   overflow: auto;
   overscroll-behavior: contain;
-  background: var(--night);
+  /* Sideways is ours (a swipe steps to the next thing); up and down and pinching stay the browser's. */
+  touch-action: pan-y pinch-zoom;
+  background: var(--room);
 }
 .detail[hidden] {
   display: none;
@@ -327,8 +358,9 @@ html.is-detail body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: max(16px, env(safe-area-inset-top)) var(--gutter) 14px;
-  background: linear-gradient(to bottom, var(--night) 62%, transparent);
+  padding: max(16px, env(safe-area-inset-top)) var(--side-r) 14px var(--side-l);
+  /* Translucent, so the room's tone shows through it instead of a flat band across the top. */
+  background: linear-gradient(to bottom, rgba(19, 17, 14, 0.9), rgba(19, 17, 14, 0.62) 60%, transparent);
 }
 .sheet-bar button {
   min-height: 40px;
@@ -384,7 +416,7 @@ html.is-detail body {
   align-items: start;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 4px var(--gutter) 80px;
+  padding: 4px var(--side-r) max(80px, env(safe-area-inset-bottom)) var(--side-l);
 }
 
 .visual {
@@ -519,6 +551,10 @@ html.is-detail body {
   font-variant-numeric: tabular-nums;
 }
 .info-shop {
+  /* A taller hit area than the line it sits on, without moving the line. */
+  display: inline-block;
+  padding: 12px 0;
+  margin: -12px 0;
   color: var(--ink-2);
   text-decoration: underline;
   text-decoration-color: var(--hair);
@@ -744,39 +780,57 @@ html.is-detail body {
     --gutter: 16px;
   }
   .mark {
-    top: 20px;
+    top: calc(22px + env(safe-area-inset-top));
   }
   .cabinet {
-    padding-top: 64px;
+    padding-top: calc(66px + env(safe-area-inset-top));
   }
   .case + .case {
-    margin-top: 48px;
+    margin-top: 44px;
+  }
+  .case-label {
+    margin-bottom: 2px;
   }
   .tier {
-    padding-bottom: 22px;
+    padding-bottom: 14px;
   }
   .tier + .tier {
-    margin-top: 18px;
+    margin-top: 14px;
   }
   .tier-things {
     justify-content: center;
   }
   .tag {
-    margin-top: 16px;
-    padding: 2px 4px 4px;
+    gap: 4px;
+    margin-top: 15px;
+    padding: 2px 2px 4px;
   }
   .tag-name {
     font-size: 13.5px;
+    line-height: 1.25;
   }
   .tag-maker {
     font-size: 9px;
     letter-spacing: 0.12em;
   }
 
+  .sheet-bar {
+    padding-bottom: 8px;
+  }
+  /* Thumb-sized targets in the bar. */
+  .sheet-bar button {
+    min-height: 44px;
+  }
+  .sheet-bar .bar-step {
+    width: 44px;
+  }
+  .bar-pos {
+    min-width: 56px;
+  }
   .sheet-body {
     grid-template-columns: minmax(0, 1fr);
     gap: 12px;
-    padding-bottom: max(56px, env(safe-area-inset-bottom));
+    padding-bottom: max(56px, calc(24px + env(safe-area-inset-bottom)));
   }
   .visual {
     position: static;
@@ -788,22 +842,36 @@ html.is-detail body {
     max-height: min(52vh, 460px);
     min-height: 220px;
   }
+  /* The strip runs to the screen's edges, so it scrolls like the rest of the phone. */
   .thumbs {
     justify-content: flex-start;
-    margin-top: 12px;
+    gap: 8px;
+    margin: 10px calc(var(--side-r) * -1) 0 calc(var(--side-l) * -1);
+    padding: 4px var(--side-r) 4px var(--side-l);
+    scroll-padding-inline: var(--side-l) var(--side-r);
+    scroll-snap-type: x proximity;
   }
   .thumb {
     width: 56px;
     height: 56px;
+    scroll-snap-align: start;
   }
   .info {
-    padding-top: 18px;
+    padding-top: 14px;
   }
   .info-section {
-    margin-bottom: 18px;
+    margin-bottom: 14px;
+  }
+  .info-maker {
+    font-size: 11px;
   }
   .info-title {
-    font-size: 32px;
+    margin: 10px 0 18px;
+    font-size: clamp(28px, 8.4vw, 34px);
+    line-height: 1.1;
+  }
+  .info-facts {
+    gap: 6px 20px;
   }
   .notes,
   .from-shop {

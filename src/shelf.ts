@@ -26,8 +26,9 @@ interface Metrics {
 function metricsFor(width: number): Metrics {
   const phone = width < 560;
   return {
-    unit: phone ? Math.max(84, width * 0.25) : Math.min(196, Math.max(130, width * 0.125)),
-    minObject: phone ? 54 : 70,
+    unit: phone ? Math.max(88, width * 0.27) : Math.min(196, Math.max(130, width * 0.125)),
+    // On a phone the smallest things (a card holder, a pen) still need to be big enough to see and tap.
+    minObject: phone ? 62 : 70,
     minSlot: phone ? 104 : 136,
     gap: phone ? 18 : 40,
     headroom: phone ? 22 : 34,

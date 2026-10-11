@@ -1,0 +1,44 @@
+[
+  {
+    "file": "ref-0.jpg",
+    "url": "https://m.media-amazon.com/images/I/61xZ5YjTzbL.jpg",
+    "width": 2000,
+    "height": 2000
+  },
+  {
+    "file": "ref-1.jpg",
+    "url": "https://m.media-amazon.com/images/I/71XFCo7Rb2L.jpg",
+    "width": 1600,
+    "height": 2000
+  },
+  {
+    "file": "ref-2.jpg",
+    "url": "https://m.media-amazon.com/images/I/61hVO53nkML.jpg",
+    "width": 2048,
+    "height": 2560
+  },
+  {
+    "file": "ref-3.jpg",
+    "url": "https://m.media-amazon.com/images/I/71JDw0VgecL.jpg",
+    "width": 1600,
+    "height": 2000
+  },
+  {
+    "file": "ref-4.jpg",
+    "url": "https://m.media-amazon.com/images/I/71bEVFK0QSL.jpg",
+    "width": 1600,
+    "height": 2000
+  },
+  {
+    "file": "ref-5.jpg",
+    "url": "https://m.media-amazon.com/images/I/713LGeuLaAL._AC_SL1500_.jpg",
+    "width": 1200,
+    "height": 1500
+  },
+  {
+    "file": "ref-6.jpg",
+    "url": "https://m.media-amazon.com/images/I/61Y8TJAnHfL._AC_SL1500_.jpg",
+    "width": 1500,
+    "height": 1500
+  }
+]

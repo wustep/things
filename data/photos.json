@@ -54,6 +54,7 @@
   "ergonofis-b544e709": { "hero": { "file": "ref-1.png", "crop": [0.215, 0.176, 0.547, 0.66] }, "gallery": ["ref-0.png", "ref-2.png"] },
   "etsy-55c9006b": { "hero": { "file": "ref-0.jpg", "frame": true }, "gallery": ["ref-3.jpg", "ref-1.jpg", "ref-2.jpg"] },
   "amazon-421bd010": { "hero": { "file": "ref-0.jpg", "floor": [[0, 0.967], [0.009, 0.971], [0.017, 0.982], [0.028, 0.986], [0.044, 0.992], [0.066, 0.996], [0.088, 0.998], [0.133, 1], [0.221, 0.996], [0.442, 0.986], [0.663, 0.976], [0.884, 0.965], [0.972, 0.959], [0.989, 0.948], [1, 0.938]], "matte": "matting", "holes": "fill" }, "gallery": ["ref-3.jpg"] },
+  "jamcorder-2240bbb5": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-2.jpg", "ref-3.webp", "ref-4.webp", "ref-5.webp"] },
   "peakdesign-e3a72cf8": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-2.jpg", "ref-3.jpg", "ref-4.jpg"] },
   "peakdesign-709dfa64": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-2.jpg"] },
   "amazon-091b2237": { "hero": "ref-0.png", "gallery": ["ref-4.png", "ref-1.png", "ref-2.png", "ref-3.png"] }

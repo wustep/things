@@ -1223,6 +1223,74 @@
     ],
     "key": "2380109e9e17"
   },
+  "jamcorder-2240bbb5": {
+    "hero": {
+      "base": "/items/jamcorder-2240bbb5/2d/hero.a9083437",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 1227,
+      "mode": "cutout",
+      "subject": [
+        0.0455,
+        0.0594,
+        0.9089,
+        0.8813
+      ],
+      "tone": "#7ba8d7"
+    },
+    "gallery": [
+      {
+        "base": "/items/jamcorder-2240bbb5/2d/photo-1.a9083437",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 864
+      },
+      {
+        "base": "/items/jamcorder-2240bbb5/2d/photo-2.a9083437",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 928
+      },
+      {
+        "base": "/items/jamcorder-2240bbb5/2d/photo-3.a9083437",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 928
+      },
+      {
+        "base": "/items/jamcorder-2240bbb5/2d/photo-4.a9083437",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 928
+      },
+      {
+        "base": "/items/jamcorder-2240bbb5/2d/photo-5.a9083437",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 626
+      }
+    ],
+    "key": "a9083437e3a2"
+  },
   "peakdesign-8f476d14": {
     "hero": {
       "base": "/items/peakdesign-8f476d14/2d/hero.74aaf3f3",

@@ -31,5 +31,21 @@
       "https://i.etsystatic.com/12160546/r/il/870ed6/1342990892/il_fullxfull.1342990892_qmli.jpg"
     ],
     "maxRefs": 6
+  },
+  {
+    "url": "https://jamcorder.com/",
+    "title": "Jamcorder",
+    "brand": "Jamcorder",
+    "price": "$99.99",
+    "section": "Music",
+    "image": "https://cdn.shopify.com/s/files/1/0892/1366/5598/files/DSC_0646_brighter.jpg",
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0892/1366/5598/files/DSC_0609_brighter-cropped.jpg",
+      "https://cdn.shopify.com/s/files/1/0892/1366/5598/files/DSC_0847-edit.jpg",
+      "https://jamcorder.com/store/side-closeup.webp",
+      "https://jamcorder.com/store/usb-midi-piano.webp",
+      "https://jamcorder.com/store/product-piano-mobile.webp"
+    ],
+    "maxRefs": 6
   }
 ]

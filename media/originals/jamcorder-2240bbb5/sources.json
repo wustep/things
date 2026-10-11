@@ -1,0 +1,38 @@
+[
+  {
+    "file": "ref-0.jpg",
+    "url": "https://cdn.shopify.com/s/files/1/0892/1366/5598/files/DSC_0646_brighter.jpg",
+    "width": 6000,
+    "height": 4000
+  },
+  {
+    "file": "ref-1.jpg",
+    "url": "https://cdn.shopify.com/s/files/1/0892/1366/5598/files/DSC_0609_brighter-cropped.jpg",
+    "width": 4734,
+    "height": 3194
+  },
+  {
+    "file": "ref-2.jpg",
+    "url": "https://cdn.shopify.com/s/files/1/0892/1366/5598/files/DSC_0847-edit.jpg",
+    "width": 2896,
+    "height": 2099
+  },
+  {
+    "file": "ref-3.webp",
+    "url": "https://jamcorder.com/store/side-closeup.webp",
+    "width": 2428,
+    "height": 1760
+  },
+  {
+    "file": "ref-4.webp",
+    "url": "https://jamcorder.com/store/usb-midi-piano.webp",
+    "width": 2896,
+    "height": 2099
+  },
+  {
+    "file": "ref-5.webp",
+    "url": "https://jamcorder.com/store/product-piano-mobile.webp",
+    "width": 1794,
+    "height": 877
+  }
+]

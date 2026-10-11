@@ -913,6 +913,37 @@
     "addedAt": "2026-10-11T04:03:29.499Z"
   },
   {
+    "id": "jamcorder-2240bbb5",
+    "url": "https://jamcorder.com/",
+    "domain": "jamcorder.com",
+    "title": "Jamcorder",
+    "brand": "Jamcorder",
+    "price": "$99.99",
+    "section": "Music",
+    "description": "Have you ever thought, “wow, I wish I recorded that”? With Jamcorder, you did. Jamcorder is a tiny device you attach to your digital piano that quietly captures everything you play — effortlessly, for life.",
+    "images": [
+      "/items/jamcorder-2240bbb5/ref-0.jpg",
+      "/items/jamcorder-2240bbb5/ref-1.jpg",
+      "/items/jamcorder-2240bbb5/ref-2.jpg",
+      "/items/jamcorder-2240bbb5/ref-3.jpg",
+      "/items/jamcorder-2240bbb5/ref-4.jpg",
+      "/items/jamcorder-2240bbb5/ref-5.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/jamcorder-2240bbb5/primary.png",
+      "aspect": 1.5015,
+      "palette": [
+        "#3667ae",
+        "#75a8f1",
+        "#48596e",
+        "#0d1318"
+      ]
+    },
+    "addedAt": "2026-10-11T20:25:20.437Z"
+  },
+  {
     "id": "peakdesign-8f476d14",
     "url": "https://www.peakdesign.com/products/roller-pro?Color=Sage",
     "domain": "peakdesign.com",

@@ -49,7 +49,7 @@
   "amazon-96467ee5": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-2.jpg", "ref-3.jpg"] },
   "amazon-436fc733": { "hero": { "file": "ref-0.png", "crop": [0.333, 0.082, 0.349, 0.439] }, "gallery": ["ref-1.jpg", "ref-2.jpg", "ref-3.jpg"] },
   "anker-2866be47": { "hero": "ref-0.png", "gallery": ["ref-1.jpg", "ref-2.jpg", "ref-3.jpg"] },
-  "boss-55cd4543": { "hero": "ref-0.jpg", "gallery": ["ref-3.jpg", "ref-1.jpg", "ref-2.jpg"] },
+  "boss-1b124b07": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-2.jpg"] },
   "ergonofis-b544e709": { "hero": { "file": "ref-1.png", "crop": [0.215, 0.176, 0.547, 0.66] }, "gallery": ["ref-0.png", "ref-2.png"] },
   "etsy-55c9006b": { "hero": { "file": "ref-0.jpg", "frame": true }, "gallery": ["ref-3.jpg", "ref-1.jpg", "ref-2.jpg"] },
   "amazon-421bd010": { "hero": { "file": "ref-0.jpg", "crop": [0, 0, 1, 0.982], "matte": "matting", "holes": "fill" }, "gallery": ["ref-1.jpg", "ref-2.jpg", "ref-3.jpg"] },

@@ -1,0 +1,32 @@
+[
+  {
+    "file": "ref-1.jpg",
+    "url": "https://static.roland.com/assets/images/articles/thumbnails/rc-505mk2_D_gal.jpg",
+    "width": 1578,
+    "height": 1050
+  },
+  {
+    "file": "ref-0.jpg",
+    "url": "https://static.roland.com/assets/images/articles/thumbnails/rc-505mk2_F_gal.jpg",
+    "width": 1680,
+    "height": 920
+  },
+  {
+    "file": "ref-2.jpg",
+    "url": "https://static.roland.com/assets/images/articles/thumbnails/rc-505mk2_DB_gal.jpg",
+    "width": 1575,
+    "height": 1050
+  },
+  {
+    "file": "ref-3.jpg",
+    "url": "https://static.roland.com/assets/images/articles/thumbnails/rc-505mk2_FB_gal.jpg",
+    "width": 1575,
+    "height": 1050
+  },
+  {
+    "file": "ref-4.jpg",
+    "url": "https://static.roland.com/products/rc-505mkii/images/rc-505mkii_top_gal.jpg",
+    "width": 1100,
+    "height": 634
+  }
+]

@@ -820,33 +820,34 @@
     "addedAt": "2026-09-14T07:50:57.269Z"
   },
   {
-    "id": "boss-55cd4543",
-    "url": "https://www.boss.info/us/products/rc-500/",
+    "id": "boss-1b124b07",
+    "url": "https://www.boss.info/global/products/rc-505mk2/",
     "domain": "boss.info",
-    "title": "RC-500 Loop Station",
+    "title": "RC-505mkII Loop Station",
     "brand": "BOSS",
-    "price": "$309.98",
+    "price": "$659.99",
     "section": "Music",
-    "description": "RC-500: Loop Station - Dual-Track Powerhouse",
+    "description": "RC-505mkII: Loop Station - Looping Magic at Your Fingertips",
     "images": [
-      "/items/boss-55cd4543/ref-0.jpg",
-      "/items/boss-55cd4543/ref-1.jpg",
-      "/items/boss-55cd4543/ref-2.jpg",
-      "/items/boss-55cd4543/ref-3.jpg"
+      "/items/boss-1b124b07/ref-1.jpg",
+      "/items/boss-1b124b07/ref-0.jpg",
+      "/items/boss-1b124b07/ref-2.jpg",
+      "/items/boss-1b124b07/ref-3.jpg",
+      "/items/boss-1b124b07/ref-4.jpg"
     ],
     "asset": {
       "kind": "procedural",
       "shape": "card",
-      "texture": "/items/boss-55cd4543/primary.png",
-      "aspect": 1.15,
+      "texture": "/items/boss-1b124b07/primary.png",
+      "aspect": 1.5015,
       "palette": [
-        "#d02f31",
-        "#8d514e",
-        "#141212",
-        "#edf2f3"
+        "#ad2f35",
+        "#494c52",
+        "#26262c",
+        "#c7cbd7"
       ]
     },
-    "addedAt": "2026-10-11T03:18:00.044Z"
+    "addedAt": "2026-10-11T06:13:44.519Z"
   },
   {
     "id": "amazon-421bd010",
@@ -854,7 +855,7 @@
     "domain": "amazon.com",
     "title": "Kalimba Thumb Piano, 17 Keys",
     "brand": "Newlam",
-    "price": "$26.39",
+    "price": "$25.99",
     "section": "Music",
     "description": "Buy Newlam Kalimba Thumb Piano 17 Keys, Musical Gift for Kids and Adults: Thumb Pianos - Amazon.com ✓ FREE DELIVERY possible on eligible purchases",
     "images": [

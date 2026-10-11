@@ -78,6 +78,8 @@ export class Shelf {
   private items: Item[] = [];
   private slugs = new Map<string, string>();
   private lastWidth = 0;
+  /** The thing last focused or picked, where the arrows pick up when focus is elsewhere. */
+  private lastId: string | null = null;
   private readonly observer: ResizeObserver;
 
   constructor(private readonly root: HTMLElement, private readonly handlers: ShelfHandlers) {
@@ -87,7 +89,13 @@ export class Shelf {
     });
     this.observer.observe(root);
     root.addEventListener('click', (e) => this.onClick(e));
-    root.addEventListener('keydown', (e) => this.onKey(e));
+    // At the document, so the arrows still walk the shelf after a click on its background left
+    // focus on <body>; they pick up from the thing last focused.
+    document.addEventListener('keydown', (e) => this.onKey(e));
+    root.addEventListener('focusin', (e) => {
+      const link = (e.target as Element).closest<HTMLAnchorElement>('a.thing-link');
+      if (link?.dataset.id) this.lastId = link.dataset.id;
+    });
   }
 
   set(items: Item[], slugs: Map<string, string>) {
@@ -193,22 +201,41 @@ export class Shelf {
     const item = a && this.items.find((it) => it.id === a.dataset.id);
     if (!a || !item) return;
     e.preventDefault();
+    this.lastId = item.id;
     this.handlers.open(item, a);
   }
 
   /** Arrow keys walk the shelf in reading order; Tab still works as usual. */
   private onKey(e: KeyboardEvent) {
     if (!['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) return;
+    if (e.defaultPrevented || e.metaKey || e.altKey || e.ctrlKey || this.root.inert || this.root.hidden) return;
     const links = [...this.root.querySelectorAll<HTMLAnchorElement>('a.thing-link')];
-    const i = links.indexOf(document.activeElement as HTMLAnchorElement);
-    if (i < 0) return;
+    if (!links.length) return;
+    let i = links.indexOf(document.activeElement as HTMLAnchorElement);
+    if (i < 0) {
+      // Nothing on the shelf has focus. Left/Right (which never scroll the page) take it back to
+      // where you were; Up/Down/Home/End are left to scroll the page as usual.
+      const active = document.activeElement;
+      const idle = !active || active === document.body || this.root.contains(active);
+      if (!idle || (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft')) return;
+      const last = this.lastId ? links.findIndex((l) => l.dataset.id === this.lastId) : -1;
+      e.preventDefault();
+      if (last < 0) {
+        links[0].focus();
+        return;
+      }
+      i = last;
+    }
     let next = i;
     if (e.key === 'ArrowRight') next = i + 1;
     else if (e.key === 'ArrowLeft') next = i - 1;
     else if (e.key === 'Home') next = 0;
     else if (e.key === 'End') next = links.length - 1;
     else next = nearestInDirection(links, i, e.key === 'ArrowDown' ? 1 : -1);
-    if (next < 0 || next >= links.length || next === i) return;
+    if (next < 0 || next >= links.length || next === i) {
+      if (document.activeElement !== links[i]) links[i].focus();
+      return;
+    }
     e.preventDefault();
     links[next].focus();
     links[next].scrollIntoView({ block: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });

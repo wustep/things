@@ -18,5 +18,29 @@
     "width": 2000,
     "height": 2000,
     "note": "West Elm studio photo; westelm.com answers 403, so it comes from the copy furniturefinder hosts on its Shopify CDN"
+  },
+  {
+    "file": "ref-3.jpg",
+    "url": "https://assets.weimgs.com/weimgs/rk/images/wcm/products/202630/0618/calgary-tiered-bookshelf-70-xl.jpg",
+    "width": 2000,
+    "height": 2000
+  },
+  {
+    "file": "ref-4.jpg",
+    "url": "https://assets.weimgs.com/weimgs/rk/images/wcm/products/202630/0618/calgary-tiered-bookshelf-70-9-xl.jpg",
+    "width": 2000,
+    "height": 2000
+  },
+  {
+    "file": "ref-5.jpg",
+    "url": "https://assets.weimgs.com/weimgs/rk/images/wcm/products/202630/0618/calgary-tiered-bookshelf-70-12-xl.jpg",
+    "width": 2000,
+    "height": 2000
+  },
+  {
+    "file": "ref-6.jpg",
+    "url": "https://assets.weimgs.com/weimgs/rk/images/wcm/products/202630/0618/calgary-tiered-bookshelf-70-2-xl.jpg",
+    "width": 2000,
+    "height": 2000
   }
 ]

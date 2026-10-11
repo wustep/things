@@ -22,5 +22,23 @@
     "url": "https://m.media-amazon.com/images/I/61-lnzfd2KL._SL1500_.jpg",
     "width": 938,
     "height": 1500
+  },
+  {
+    "file": "ref-4.jpg",
+    "url": "https://contentful.prod.eero.com/contentful/o8zdilputr65/0IClTiRah4WK955wz7eDa/2276f78a5d46ee20c9ab36deda9c4210/M_UK_Config_Gallery_img5_Large_1x.jpg",
+    "width": 1284,
+    "height": 1124
+  },
+  {
+    "file": "ref-5.jpg",
+    "url": "https://contentful.prod.eero.com/contentful/o8zdilputr65/1oeop5sEBZFyCeqjisLxyx/31a5e4e9cf242ddb9106b3844191b032/M_UK_Config_Gallery_img1_Large_1x.jpg",
+    "width": 1284,
+    "height": 1124
+  },
+  {
+    "file": "ref-6.jpg",
+    "url": "https://images.ctfassets.net/o8zdilputr65/6VSqUpunDA42RP0PJ4Qt6p/cb8f575a643d8cfcc7f4f8126c845735/Compare_eeroPro7_Hero_Tablet_2x.webp",
+    "width": 1196,
+    "height": 898
   }
 ]

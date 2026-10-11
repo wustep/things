@@ -396,7 +396,7 @@ async function cutout(rgba: Buffer, alphaIn: Float32Array, W0: number, H0: numbe
 /**
  * lay: a rug photographed from straight above, laid down on the shelf: the far edge narrower than
  * the near one (taper) and the depth foreshortened (tilt), by a true perspective mapping so the
- * pattern recedes evenly, plus a sliver of pile in the near edge's own colour, darkened, below it.
+ * pattern recedes evenly, plus a sliver of pile in the near edge's average colour, darkened, below it.
  */
 function layFlat(rgb: Float32Array, alpha: Float32Array, W: number, H: number) {
   const TILT = 0.3, TAPER = 0.8;
@@ -446,10 +446,26 @@ function layFlat(rgb: Float32Array, alpha: Float32Array, W: number, H: number) {
       for (let c = 0; c < 3; c++) outRgb[o * 3 + c] = a > 1e-4 ? col[c] / a : 0;
     }
   }
+  // The pile: one colour, the near edge's average over a band of rows (a speckled edge copied
+  // down column by column runs into streaks), darker toward the floor.
+  const band = Math.max(2, Math.round(depth * 0.04));
+  const edge = [0, 0, 0];
+  let wsum = 0;
+  for (let y = depth - band; y < depth; y++) for (let x = 0; x < OW; x++) {
+    const o = y * OW + x, a = outA[o];
+    for (let c = 0; c < 3; c++) edge[c] += outRgb[o * 3 + c] * a;
+    wsum += a;
+  }
+  for (let c = 0; c < 3; c++) edge[c] = wsum > 1e-4 ? edge[c] / wsum : 0;
+  // Its coverage comes from the solid band above, not the soft last row, which would leave it
+  // see-through in uneven stripes.
+  const cover = new Float32Array(OW);
+  for (let x = 0; x < OW; x++) for (let y = depth - band; y < depth; y++) cover[x] = Math.max(cover[x], outA[y * OW + x]);
   for (let y = depth; y < OH; y++) for (let x = 0; x < OW; x++) {
-    const src = (depth - 1) * OW + x, o = y * OW + x;
-    outA[o] = outA[src];
-    for (let c = 0; c < 3; c++) outRgb[o * 3 + c] = outRgb[src * 3 + c] * 0.55;
+    const o = y * OW + x;
+    const shade = 0.6 - 0.15 * ((y - depth + 0.5) / pile);
+    outA[o] = cover[x];
+    for (let c = 0; c < 3; c++) outRgb[o * 3 + c] = edge[c] * shade;
   }
   return { rgb: outRgb, alpha: outA, W: OW, H: OH };
 }

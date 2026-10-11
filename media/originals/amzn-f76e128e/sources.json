@@ -46,5 +46,29 @@
     "url": "https://m.media-amazon.com/images/I/71o0b1NGOzL._AC_SL1500_.jpg",
     "width": 1500,
     "height": 1398
+  },
+  {
+    "file": "ref-8.png",
+    "url": "https://resource.logitech.com/content/dam/logitech/en/products/mice/mx-master-3s/2025-update/mx-master-3s-bluetooth-edition-left-front-view-graphite-new-8.png",
+    "width": 2500,
+    "height": 2160
+  },
+  {
+    "file": "ref-9.png",
+    "url": "https://resource.logitech.com/content/dam/logitech/en/products/mice/mx-master-3s/2025-update/mx-master-3s-bluetooth-edition-top-view-graphite-new-1.png",
+    "width": 2500,
+    "height": 2160
+  },
+  {
+    "file": "ref-10.png",
+    "url": "https://resource.logitech.com/content/dam/logitech/en/products/mice/mx-master-3s/2025-update/mx-master-3s-bluetooth-edition-left-profile-view-graphite-new-4.png",
+    "width": 2500,
+    "height": 2160
+  },
+  {
+    "file": "ref-11.png",
+    "url": "https://resource.logitech.com/content/dam/logitech/en/products/mice/mx-master-3s/2025-update/mx-master-3s-bluetooth-edition-rear-view-graphite-new-7.png",
+    "width": 2500,
+    "height": 2160
   }
 ]

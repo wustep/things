@@ -34,5 +34,23 @@
     "url": "https://rnb.scene7.com/is/image/roomandboard/IA_FC_smallspacedining?$thumbnail$&size=900,900&scl=1",
     "width": 900,
     "height": 654
+  },
+  {
+    "file": "ref-6.jpg",
+    "url": "https://content.cylindo.com/api/v2/4951/products/ERROL%20SIDE%20CHR/frames/8/ERROL_SIDE_CHR.jpg?feature=UPHOLSTERY:AS108360&feature=FINISH:WALNUT&size=3000",
+    "width": 3000,
+    "height": 3000
+  },
+  {
+    "file": "ref-7.jpg",
+    "url": "https://content.cylindo.com/api/v2/4951/products/ERROL%20SIDE%20CHR/frames/12/ERROL_SIDE_CHR.jpg?feature=UPHOLSTERY:AS108360&feature=FINISH:WALNUT&size=3000",
+    "width": 3000,
+    "height": 3000
+  },
+  {
+    "file": "ref-8.jpg",
+    "url": "https://content.cylindo.com/api/v2/4951/products/ERROL%20SIDE%20CHR/frames/20/ERROL_SIDE_CHR.jpg?feature=UPHOLSTERY:AS108360&feature=FINISH:WALNUT&size=3000",
+    "width": 3000,
+    "height": 3000
   }
 ]

@@ -17,8 +17,9 @@ The shelf shows everything in `data/items.json`, one case per `section` (Office,
 packed into as many shelves as the window needs. Click a thing (or Tab to it and press Enter;
 the arrow keys walk the shelf) to open it. In the detail view, ← and → (or a sideways swipe on a
 phone) step through the collection, Esc goes back to the shelf, and the thumbnails switch between the cut-out and
-the shop's own photos. With a mouse, click the big picture for a closer look (move to look
-around; click or Esc to leave).
+the shop's own photos. With a mouse, click the big picture for a closer look and move to look
+around (click again to leave); from the keyboard, Z zooms in and the arrows look around. Esc
+always closes the view, zoomed or not.
 
 Every thing has its own address, `/t/<maker-and-name>` (for example
 `/t/ugmonk-analog-complete-kit`); the item id works too (`/t/ugmonk-5117191f`). Links can be

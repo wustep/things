@@ -45,7 +45,6 @@
   "amazon-ad8ad72f": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-3.jpg", "ref-2.jpg"] },
   "westelm-807ef4ee": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg"] },
   "apple-47da18d0": { "hero": "ref-0.png", "gallery": ["ref-1.png"] },
-  "ugmonk-45dcc1cd": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-2.jpg"] },
   "apple-3facb22e": { "hero": "ref-3.png", "gallery": ["ref-0.png", "ref-1.png", "ref-2.png"] },
   "amazon-96467ee5": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-2.jpg", "ref-3.jpg"] },
   "amazon-436fc733": { "hero": { "file": "ref-0.png", "crop": [0.333, 0.082, 0.349, 0.439] }, "gallery": ["ref-1.jpg", "ref-2.jpg", "ref-3.jpg"] },

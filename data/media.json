@@ -2065,47 +2065,6 @@
     ],
     "key": "7a521b5377fe"
   },
-  "ugmonk-45dcc1cd": {
-    "hero": {
-      "base": "/items/ugmonk-45dcc1cd/2d/hero.0a4552c6",
-      "widths": [
-        480,
-        960,
-        1600
-      ],
-      "width": 1600,
-      "height": 867,
-      "mode": "cutout",
-      "subject": [
-        0.0455,
-        0.0839,
-        0.909,
-        0.7652
-      ],
-      "tone": "#d4d0cc"
-    },
-    "gallery": [
-      {
-        "base": "/items/ugmonk-45dcc1cd/2d/photo-1.0a4552c6",
-        "widths": [
-          640,
-          1280
-        ],
-        "width": 1280,
-        "height": 770
-      },
-      {
-        "base": "/items/ugmonk-45dcc1cd/2d/photo-2.0a4552c6",
-        "widths": [
-          640,
-          1280
-        ],
-        "width": 1280,
-        "height": 770
-      }
-    ],
-    "key": "0a4552c61867"
-  },
   "apple-3facb22e": {
     "hero": {
       "base": "/items/apple-3facb22e/2d/hero.d2c4b3f9",

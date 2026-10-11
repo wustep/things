@@ -1623,34 +1623,6 @@
     "addedAt": "2026-10-11T03:05:00.683Z"
   },
   {
-    "id": "ugmonk-45dcc1cd",
-    "url": "https://ugmonk.com/products/gather-small-monitor-stand-white-walnut",
-    "domain": "ugmonk.com",
-    "title": "Gather Monitor Stand, Small",
-    "brand": "Ugmonk",
-    "price": "$269",
-    "section": "Office",
-    "images": [
-      "/items/ugmonk-45dcc1cd/ref-1.jpg",
-      "/items/ugmonk-45dcc1cd/ref-0.jpg",
-      "/items/ugmonk-45dcc1cd/ref-2.jpg",
-      "/items/ugmonk-45dcc1cd/ref-3.jpg"
-    ],
-    "asset": {
-      "kind": "procedural",
-      "shape": "box",
-      "texture": "/items/ugmonk-45dcc1cd/primary.png",
-      "aspect": 1.6596,
-      "palette": [
-        "#452c1e",
-        "#07090c",
-        "#908f8d",
-        "#52504d"
-      ]
-    },
-    "addedAt": "2026-10-11T03:05:10.997Z"
-  },
-  {
     "id": "apple-3facb22e",
     "url": "https://www.apple.com/shop/product/MJLY4LL/A/magic-keyboard-with-touch-id-for-mac-models-with-apple-silicon-usb-c-us-english",
     "domain": "apple.com",

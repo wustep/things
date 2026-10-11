@@ -54,7 +54,9 @@ function openItem(item: Item) {
   detail.show(item, { index: i, total: walk.length });
   shelfEl.inert = true;
   detail.focusStart();
-  // Once this thing's own picture has had its turn, warm the ones on either side of it.
+  // Once this thing's own picture has had its turn, warm the ones on either side of it, unless
+  // the visitor has asked to save data.
+  if (saveData()) return;
   const neighbours = [walk[(i + 1) % walk.length], walk[(i - 1 + walk.length) % walk.length]];
   const idle = window.requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 300));
   idle(() => {
@@ -139,7 +141,7 @@ function show(next: Item[]) {
   slugs = slugsFor(items);
   walk = shelfOrder(items);
   countEl.textContent = items.length ? String(items.length) : '';
-  shelf.set(items, slugs);
+  shelf.set(items, slugs, { eager: !detail.isOpen && !currentKey() });
   const id = detail.openId;
   if (id) {
     const item = items.find((it) => it.id === id);
@@ -189,6 +191,11 @@ if (import.meta.hot) {
     if (mediaMod) setMedia(mediaMod.default);
     show(itemsMod ? normalizeItems(itemsMod.default) : items);
   });
+}
+
+function saveData(): boolean {
+  const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+  return !!connection?.saveData || matchMedia('(prefers-reduced-data: reduce)').matches;
 }
 
 function shelfOrder(list: Item[]): Item[] {

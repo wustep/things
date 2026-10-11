@@ -81,6 +81,7 @@ export class Shelf {
   private lastWidth = 0;
   /** The thing last focused or picked, where the arrows pick up when focus is elsewhere. */
   private lastId: string | null = null;
+  private eager = true;
   private readonly observer: ResizeObserver;
 
   constructor(private readonly root: HTMLElement, private readonly handlers: ShelfHandlers) {
@@ -99,9 +100,14 @@ export class Shelf {
     });
   }
 
-  set(items: Item[], slugs: Map<string, string>) {
+  /**
+   * `eager: false` when the shelf starts out covered (a link straight to a thing): then none of its
+   * pictures jump the queue ahead of the one being looked at.
+   */
+  set(items: Item[], slugs: Map<string, string>, opts: { eager?: boolean } = {}) {
     this.items = items;
     this.slugs = slugs;
+    this.eager = opts.eager ?? true;
     this.render();
   }
 
@@ -121,7 +127,7 @@ export class Shelf {
     const focusedId = (document.activeElement as HTMLElement | null)?.dataset?.id;
     const m = metricsFor(width);
     const frag = document.createDocumentFragment();
-    let eager = 6; // the first shelf's worth loads right away; the rest as they scroll near
+    let eager = this.eager ? 6 : 0; // the first shelf's worth loads right away; the rest as they scroll near
 
     if (this.items.length === 0) {
       frag.append(emptyCase());

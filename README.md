@@ -121,10 +121,14 @@ npm run images -- --force      # everything
 `tools/images/build.ts` turns one photo per thing into a cut-out that sits with the others:
 
 1. **Background removal.** The photo's own transparency when it has some; otherwise
-   [BiRefNet-lite](https://huggingface.co/onnx-community/BiRefNet_lite-ONNX) (MIT), run locally
-   with ONNX at a pinned revision. Stray specks are dropped, and edge pixels are un-mixed from the
-   old studio backdrop and kept no lighter than the object inside them, so white fringes don't
-   glow on the dark page.
+   [BiRefNet_HR](https://github.com/ZhengPeng7/BiRefNet) (MIT), run locally with onnxruntime-node
+   at its native 2048² so legs, cords and strap loops keep their width. The edge is then refined
+   at up to 3072 px with a colour guided filter on a band around the silhouette (it follows the
+   photo's own edge; inside and outside the band the model's matte stands), stray specks are
+   dropped, and the object's own colour is estimated in the transition band (multi-level
+   foreground estimation, as in pymatting) so the studio backdrop mixed into edge pixels is taken
+   out instead of glowing on the dark page. Everything is scaled down to the output sizes only
+   after that.
 2. **Colour.** A gentle white balance on neutral pixels (±6% at most, so walnut stays walnut),
    one common white point with a soft shoulder, and the deepest blacks lifted a touch so a black
    mouse keeps its shape on a dark shelf.
@@ -142,7 +146,9 @@ Which photo is used, and which others go in the gallery, is chosen in `data/phot
 ```
 
 `mode: "photo"` keeps the picture as a rectangle (flat art, or a shop that only has a room
-shot); `crop` is `[left, top, width, height]` in fractions. `holes` keys out backdrop the model
+shot); `crop` is `[left, top, width, height]` in fractions. `matte` picks the model:
+`"general"` (the default, BiRefNet_HR-general: solid, crisp edges) or `"matting"`
+(BiRefNet_HR-matting: real partial alpha, for clear acrylic and glass, such as the record stand). `holes` keys out backdrop the model
 left inside or between parts of the object:
 
 - `true`: anything within a few levels of the backdrop colour (an open frame on a dark object;
@@ -160,9 +166,12 @@ inside colour. Results land in
 `public/items/<id>/2d/` and `data/media.json` (sizes, the object's box inside the image, its
 average colour for placeholders), which the viewer imports.
 
-The tool is its own small package (`tools/images/package.json`) so its ~300 MB ONNX runtime never
-lands in the app's install or the deploy; `npm run images` installs it on first use and downloads
-the model once into `tools/images/.cache` (both git-ignored). No paid APIs, no keys.
+The tool is its own small package (`tools/images/package.json`) so its ONNX runtime never lands in
+the app's install or the deploy; `npm run images` installs it on first use. Each model is a release
+asset of ZhengPeng7/BiRefNet `v1`, pinned in `tools/images/matte.ts` by file size and SHA-256
+(`BiRefNet_HR-general-epoch_130.onnx`, `BiRefNet_HR-matting-epoch_135.onnx`, about 1.1 GB each),
+downloaded once into `tools/images/.cache` (git-ignored) only when an item needs it. Runs on the
+CPU, about half a minute per cut-out. No paid APIs, no keys.
 
 ### Size
 

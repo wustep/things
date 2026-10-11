@@ -9,10 +9,11 @@
  *   npm run images -- --force      # everything
  *
  * For each item, the hero photo picked in data/photos.json goes through:
- *   1. Background removal: the photo's own alpha when it has one, otherwise BiRefNet-lite (MIT,
- *      run locally with ONNX), then per-item backdrop keying (holes), stray specks dropped, and
- *      edge colour freed of the old background (and of sharpening halos) so white-studio
- *      fringes don't glow on the dark page.
+ *   1. Background removal: the photo's own alpha when it has one, otherwise BiRefNet_HR (MIT,
+ *      run locally with ONNX at 2048², see matte.ts) with its edge refined by a guided filter at
+ *      the working size, then per-item backdrop keying (holes), stray specks dropped, and the
+ *      object's own colour estimated in the edge band (and sharpening halos removed) so
+ *      white-studio fringes don't glow on the dark page.
  *   2. Colour: a gentle white balance on neutral pixels, highlights eased to one common white
  *      point and the deepest blacks lifted a touch, so black and white things both read on dark.
  *   3. Framing: trimmed to the object, then the same padding ratio around every one.
@@ -28,6 +29,7 @@ import { mkdir, readdir, readFile, rename, rm, writeFile } from 'node:fs/promise
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
+import { dilate, foreground, MODELS, refine, segment, type MatteModel } from './matte.ts';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const ORIGINALS = path.join(ROOT, 'media', 'originals');
@@ -37,10 +39,9 @@ const MANIFEST_FILE = path.join(ROOT, 'data', 'media.json');
 const ITEMS_FILE = path.join(ROOT, 'data', 'items.json');
 
 /** Bump when the processing below changes, so every item is rebuilt once. */
-const PIPELINE = 5;
-const MODEL = { id: 'onnx-community/BiRefNet_lite-ONNX', revision: 'de15b22ba131738a16dff04aab8bdf8dc32e3ac1' };
-/** Work at most this big; the largest output is 1600 px. */
-const WORK_SIDE = 2400;
+const PIPELINE = 6;
+/** Work at most this big (the matte is refined here), then scale down; the largest output is 1600 px. */
+const WORK_SIDE = 3072;
 const HERO_WIDTHS = [480, 960, 1600];
 const GALLERY_WIDTHS = [640, 1280];
 /** Padding around the trimmed object, as a share of its larger side; the bottom leaves room for the shadow. */
@@ -64,6 +65,14 @@ type HeroPick =
        * gradually, so it stops at the object's edges. Off by default.
        */
       holes?: boolean | 'exact' | 'clear' | 'grow';
+      /** Which model draws the matte: 'general' (default, solid and crisp) or 'matting' (keeps partial alpha: clear acrylic, glass). */
+      matte?: MatteModel;
+      /**
+       * A rug: the photo is the rug from straight above, and it is laid down on the shelf in
+       * perspective (seen from the same low three-quarter angle as the furniture), with a sliver of
+       * pile along its front edge.
+       */
+      lay?: boolean;
     };
 interface Pick {
   hero?: HeroPick;
@@ -140,15 +149,22 @@ async function saveManifest(manifest: Record<string, MediaEntry>, items: { id: s
 
 type Holes = boolean | 'exact' | 'clear' | 'grow';
 
-function heroOf(pick: Pick): { file: string; mode: 'cutout' | 'photo'; crop?: [number, number, number, number]; holes: Holes } {
+function heroOf(pick: Pick): { file: string; mode: 'cutout' | 'photo'; crop?: [number, number, number, number]; holes: Holes; matte: MatteModel; lay: boolean } {
   const h = pick.hero ?? 'ref-0.jpg';
   return typeof h === 'string'
-    ? { file: h, mode: 'cutout', holes: false }
-    : { file: h.file, mode: h.mode ?? 'cutout', crop: h.crop, holes: h.holes === 'exact' || h.holes === 'clear' || h.holes === 'grow' ? h.holes : !!h.holes };
+    ? { file: h, mode: 'cutout', holes: false, matte: 'general', lay: false }
+    : {
+        file: h.file,
+        mode: h.mode ?? 'cutout',
+        crop: h.crop,
+        holes: h.holes === 'exact' || h.holes === 'clear' || h.holes === 'grow' ? h.holes : !!h.holes,
+        matte: h.matte === 'matting' ? 'matting' : 'general',
+        lay: !!h.lay,
+      };
 }
 
 async function inputKey(id: string, pick: Pick): Promise<string> {
-  const hash = createHash('sha1').update(JSON.stringify({ PIPELINE, MODEL, pick }));
+  const hash = createHash('sha1').update(JSON.stringify({ PIPELINE, model: MODELS[heroOf(pick).matte].sha256, pick }));
   for (const file of [heroOf(pick).file, ...(pick.gallery ?? [])]) hash.update(await readFile(originalPath(id, file)));
   return hash.digest('hex').slice(0, 12);
 }
@@ -188,8 +204,8 @@ async function buildItem(id: string, pick: Pick, key: string): Promise<MediaEntr
   if (hero.mode === 'photo') {
     heroOut = await framePhoto(rgba, W, H);
   } else {
-    const alpha = (await existingAlpha(rgba, W, H)) ?? (await segment(rgba, W, H));
-    heroOut = await cutout(rgba, alpha, W, H, hero.holes);
+    const own = await existingAlpha(rgba, W, H);
+    heroOut = await cutout(rgba, own ?? (await segment(rgba, W, H, hero.matte)), W, H, hero.holes, !!own, hero.lay);
   }
   const heroWidths = await encodeSet(
     sharp(heroOut.data, { raw: { width: heroOut.width, height: heroOut.height, channels: 4 } }),
@@ -253,66 +269,31 @@ async function existingAlpha(rgba: Buffer, W: number, H: number): Promise<Float3
   return a;
 }
 
-type Segmenter = (rgb: Buffer, w: number, h: number) => Promise<Float32Array>;
-let segmenter: Promise<Segmenter> | undefined;
-
-/** BiRefNet-lite at its native 1024², mask scaled back to the photo. Loaded once, on first use. */
-async function segment(rgba: Buffer, W: number, H: number): Promise<Float32Array> {
-  const run = await (segmenter ??= loadSegmenter());
-  const { data: rgb } = await sharp(rgba, { raw: { width: W, height: H, channels: 4 } })
-    .flatten({ background: '#ffffff' })
-    .resize(1024, 1024, { fit: 'fill' })
-    .raw()
-    .toBuffer({ resolveWithObject: true });
-  const mask1024 = await run(rgb, 1024, 1024);
-  const bytes = Buffer.alloc(1024 * 1024);
-  for (let i = 0; i < bytes.length; i++) bytes[i] = Math.round(mask1024[i] * 255);
-  const scaled = await sharp(bytes, { raw: { width: 1024, height: 1024, channels: 1 } })
-    .resize(W, H, { fit: 'fill', kernel: 'cubic' })
-    .extractChannel(0) // sharp hands single-channel raw input back as RGB otherwise
-    .raw()
-    .toBuffer();
-  const a = new Float32Array(W * H);
-  for (let i = 0; i < a.length; i++) a[i] = scaled[i] / 255;
-  return a;
-}
-
-async function loadSegmenter(): Promise<Segmenter> {
-  const { AutoModel, Tensor, env } = await import('@huggingface/transformers');
-  env.cacheDir = path.join(path.dirname(fileURLToPath(import.meta.url)), '.cache');
-  console.log(`model ${MODEL.id}@${MODEL.revision.slice(0, 7)} (downloaded once into tools/images/.cache)`);
-  const model = await AutoModel.from_pretrained(MODEL.id, { revision: MODEL.revision, dtype: 'fp32' });
-  const mean = [0.485, 0.456, 0.406], std = [0.229, 0.224, 0.225];
-  return async (rgb, w, h) => {
-    const n = w * h;
-    const input = new Float32Array(3 * n);
-    for (let i = 0; i < n; i++) for (let c = 0; c < 3; c++) input[c * n + i] = (rgb[i * 3 + c] / 255 - mean[c]) / std[c];
-    const out = await model({ input_image: new Tensor('float32', input, [1, 3, h, w]) });
-    const logits = (Object.values(out)[0] as { data: Float32Array }).data;
-    const mask = new Float32Array(n);
-    for (let i = 0; i < n; i++) mask[i] = 1 / (1 + Math.exp(-logits[i]));
-    return mask;
-  };
-}
-
 // ---------- cut-out ----------
 
-async function cutout(rgba: Buffer, alphaIn: Float32Array, W: number, H: number, holes: Holes = false) {
+async function cutout(rgba: Buffer, alphaIn: Float32Array, W0: number, H0: number, holes: Holes = false, own = false, lay = false) {
+  let W = W0, H = H0;
   const n = W * H;
-  const alpha = new Float32Array(n);
-  // Firm up the matte: the model's faint haze goes, edges keep a little softness.
-  for (let i = 0; i < n; i++) alpha[i] = smoothstep(0.08, 0.92, alphaIn[i]);
   await debugMask('1-model', alphaIn, W, H);
+  // The model's edge follows the photo's own (a shop's own alpha is left as drawn), then its faint
+  // haze over the backdrop goes and near-solid reads solid; partial cover (mesh, acrylic) stays.
+  const refined = own ? alphaIn : refine(rgba, alphaIn, W, H);
+  let alpha: Float32Array = new Float32Array(n);
+  for (let i = 0; i < n; i++) alpha[i] = own ? alphaIn[i] : clamp((refined[i] - 0.04) / 0.92, 0, 1);
+  await debugMask('1b-refined', alpha, W, H);
   const bg = backgroundColour(rgba, alpha, W, H);
   if (holes === 'exact') keyBackdropPatches(rgba, alpha, bg, W, H);
   else if (holes === 'grow') growBackdrop(rgba, alpha, bg, W, H);
   else if (holes === 'clear') {
     // Clear material only shows as how much it bends or dims the backdrop: that difference is its
     // opacity. Solid things the model found stay solid, less the backdrop patches seen through them.
-    keyBackdropPatches(rgba, alpha, bg, W, H);
+    // Partial cover the model saw (best with matte: 'matting') is capped the same way, so clear
+    // panels that show the backdrop unchanged show the shelf instead of a milky haze.
+    keyBackdropPatches(rgba, alpha, bg, W, H, 6);
     for (let i = 0; i < n; i++) {
       const d = Math.max(Math.abs(rgba[i * 4] - bg[0]), Math.abs(rgba[i * 4 + 1] - bg[1]), Math.abs(rgba[i * 4 + 2] - bg[2]));
-      alpha[i] = Math.max(alpha[i], smoothstep(3, 40, d));
+      const seen = alpha[i] >= 0.995 ? alpha[i] : Math.min(alpha[i], smoothstep(2, 30, d));
+      alpha[i] = Math.max(seen, smoothstep(3, 40, d));
     }
   }
   else if (holes) {
@@ -326,18 +307,33 @@ async function cutout(rgba: Buffer, alphaIn: Float32Array, W: number, H: number,
   dropSpecks(alpha, W, H);
   await debugMask('2-cleaned', alpha, W, H);
 
-  const rgb = new Float32Array(n * 3);
-  for (let i = 0; i < n; i++) {
-    const a = alpha[i];
-    for (let c = 0; c < 3; c++) {
-      const v = rgba[i * 4 + c];
-      // Un-mix the old background out of soft edge pixels (C = aF + (1-a)B).
-      rgb[i * 3 + c] = a > 0.02 && a < 0.98 ? clamp((v - (1 - a) * bg[c]) / a, 0, 255) : v;
+  // The object's own colour in the edge band, with the backdrop it was mixed with taken out. A
+  // shop's transparent PNG already stores it that way.
+  let rgb: Float32Array = own ? Float32Array.from({ length: n * 3 }, (_, k) => rgba[(k / 3 | 0) * 4 + (k % 3)]) : foreground(rgba, alpha, W, H);
+  if (!own && holes !== 'clear') {
+    // An edge pixel is a mix of the object and the backdrop (I = aF + (1-a)B), so it can't be more
+    // opaque than its colour allows: one that is the backdrop's own colour beside a dark object is
+    // backdrop (a sliver of studio white the model kept above a strap loop, a smear at the photo's
+    // edge). Only lowers alpha, and only where the object differs clearly from the backdrop, so a
+    // white thing on white keeps its edge.
+    for (let i = 0; i < n; i++) {
+      const a = alpha[i];
+      if (a <= 0 || a >= 0.98) continue;
+      let den = 0, dot = 0;
+      for (let c = 0; c < 3; c++) {
+        const fb = rgb[i * 3 + c] - bg[c];
+        den += fb * fb;
+        dot += (rgba[i * 4 + c] - bg[c]) * fb;
+      }
+      if (den < 48 * 48) continue;
+      alpha[i] = Math.min(a, clamp((dot / den) * 1.1 + 0.04, 0, 1));
     }
+    await debugMask('3-consistent', alpha, W, H);
   }
 
   defringe(rgb, alpha, W, H);
   normalizeColour(rgb, alpha, n);
+  if (lay) ({ rgb, alpha, W, H } = layFlat(rgb, alpha, W, H));
 
   // Trim to the object.
   let x0 = W, y0 = H, x1 = -1, y1 = -1;
@@ -423,6 +419,67 @@ async function cutout(rgba: Buffer, alphaIn: Float32Array, W: number, H: number,
     subject: [padX / CW, padT / CH, sw / CW, sh / CH] as [number, number, number, number],
     tone: hex(tw ? [tr / tw, tg / tw, tb / tw] : [128, 128, 128]),
   };
+}
+
+/**
+ * lay: a rug photographed from straight above, laid down on the shelf: the far edge narrower than
+ * the near one (taper) and the depth foreshortened (tilt), by a true perspective mapping so the
+ * pattern recedes evenly, plus a sliver of pile in the near edge's own colour, darkened, below it.
+ */
+function layFlat(rgb: Float32Array, alpha: Float32Array, W: number, H: number) {
+  const TILT = 0.3, TAPER = 0.8;
+  // The rug's own box first, so the backdrop around it doesn't take part.
+  let x0 = W, y0 = H, x1 = -1, y1 = -1;
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (alpha[y * W + x] > 0.5) {
+    if (x < x0) x0 = x;
+    if (x > x1) x1 = x;
+    if (y < y0) y0 = y;
+    if (y > y1) y1 = y;
+  }
+  if (x1 < 0) return { rgb, alpha, W, H };
+  const sw = x1 - x0 + 1, sh = y1 - y0 + 1;
+  const depth = Math.max(2, Math.round(sh * TILT));
+  const pile = Math.max(2, Math.round(sw * 0.012));
+  const OW = sw, OH = depth + pile;
+  const outRgb = new Float32Array(OW * OH * 3);
+  const outA = new Float32Array(OW * OH);
+  const sample = (fx: number, fy: number, c: number) => {
+    const xa = Math.max(0, Math.min(sw - 1, fx)), ya = Math.max(0, Math.min(sh - 1, fy));
+    const xi = Math.min(sw - 2, Math.floor(xa)), yi = Math.min(sh - 2, Math.floor(ya));
+    const tx = xa - xi, ty = ya - yi;
+    const at = (x: number, y: number) => {
+      const i = (y0 + y) * W + x0 + x;
+      return c < 3 ? rgb[i * 3 + c] * alpha[i] : alpha[i];
+    };
+    return (at(xi, yi) * (1 - tx) + at(xi + 1, yi) * tx) * (1 - ty) + (at(xi, yi + 1) * (1 - tx) + at(xi + 1, yi + 1) * tx) * ty;
+  };
+  // Two samples per pixel across, so the far edge, squeezed, doesn't alias.
+  for (let y = 0; y < depth; y++) {
+    const t = (y + 0.5) / depth; // 0 far, 1 near, on screen
+    const s = t / (t + TAPER * (1 - t)); // where that is on the rug
+    const w = TAPER + (1 - TAPER) * t; // row width on screen, as a share of the near edge
+    const sy = s * sh - 0.5;
+    for (let x = 0; x < OW; x++) {
+      let a = 0;
+      const col = [0, 0, 0];
+      for (const off of [0.25, 0.75]) {
+        const u = (x + off - OW / 2) / (OW * w) + 0.5;
+        if (u < 0 || u > 1) continue;
+        const sx = u * sw - 0.5;
+        a += sample(sx, sy, 3) / 2;
+        for (let c = 0; c < 3; c++) col[c] += sample(sx, sy, c) / 2;
+      }
+      const o = y * OW + x;
+      outA[o] = a;
+      for (let c = 0; c < 3; c++) outRgb[o * 3 + c] = a > 1e-4 ? col[c] / a : 0;
+    }
+  }
+  for (let y = depth; y < OH; y++) for (let x = 0; x < OW; x++) {
+    const src = (depth - 1) * OW + x, o = y * OW + x;
+    outA[o] = outA[src];
+    for (let c = 0; c < 3; c++) outRgb[o * 3 + c] = outRgb[src * 3 + c] * 0.55;
+  }
+  return { rgb: outRgb, alpha: outA, W: OW, H: OH };
 }
 
 /** Rectangle treatment for flat art and room shots: the same colour pass, no cut-out, no shadow. */
@@ -545,9 +602,9 @@ function defringe(rgb: Float32Array, alpha: Float32Array, W: number, H: number) 
  * the backdrop colour, so anti-aliased edges stay clean and a white body a few levels off the
  * backdrop is left alone.
  */
-function keyBackdropPatches(rgba: Buffer, alpha: Float32Array, bg: [number, number, number], W: number, H: number) {
+function keyBackdropPatches(rgba: Buffer, alpha: Float32Array, bg: [number, number, number], W: number, H: number, TOL = 3) {
   const n = W * H;
-  const TOL = 3, RAMP = 18;
+  const RAMP = 18;
   const dist = new Uint8Array(n);
   for (let i = 0; i < n; i++) {
     dist[i] = Math.max(Math.abs(rgba[i * 4] - bg[0]), Math.abs(rgba[i * 4 + 1] - bg[1]), Math.abs(rgba[i * 4 + 2] - bg[2]));
@@ -620,23 +677,6 @@ function growBackdrop(rgba: Buffer, alpha: Float32Array, bg: [number, number, nu
     frontier = next;
   }
   for (let i = 0; i < n; i++) if (grown[i]) alpha[i] = 0;
-}
-
-function dilate(m: Uint8Array, W: number, H: number, r: number) {
-  const tmp = new Uint8Array(W * H);
-  for (let y = 0; y < H; y++) {
-    let run = -1e9;
-    for (let x = 0; x < W; x++) { if (m[y * W + x]) run = x; if (x - run <= r) tmp[y * W + x] = 1; }
-    run = 1e9;
-    for (let x = W - 1; x >= 0; x--) { if (m[y * W + x]) run = x; if (run - x <= r) tmp[y * W + x] = 1; }
-  }
-  m.fill(0);
-  for (let x = 0; x < W; x++) {
-    let run = -1e9;
-    for (let y = 0; y < H; y++) { if (tmp[y * W + x]) run = y; if (y - run <= r) m[y * W + x] = 1; }
-    run = 1e9;
-    for (let y = H - 1; y >= 0; y--) { if (tmp[y * W + x]) run = y; if (run - y <= r) m[y * W + x] = 1; }
-  }
 }
 
 // ---------- colour ----------

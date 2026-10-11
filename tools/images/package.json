@@ -4,7 +4,7 @@
   "type": "module",
   "description": "Builds the 2D image set from media/originals. Kept out of the app's dependencies: the ONNX runtime alone is ~300 MB and only this step needs it.",
   "dependencies": {
-    "@huggingface/transformers": "4.3.1",
+    "onnxruntime-node": "1.30.0",
     "sharp": "0.35.5"
   }
 }

@@ -154,15 +154,13 @@ export class Detail {
     facts.append(shop);
     info.append(facts);
 
-    const notes = el('section', 'notes');
-    notes.setAttribute('aria-labelledby', 'notes-label');
-    info.append(notes);
+    info.append(el('section', 'notes'));
 
     if (item.description) {
-      const d = el('details', 'from-shop');
-      const s = el('summary');
-      s.textContent = `What ${item.domain} says`;
-      d.append(s, Object.assign(el('p'), { textContent: item.description }));
+      const d = el('section', 'from-shop');
+      d.setAttribute('aria-labelledby', 'from-shop-label');
+      const h = Object.assign(el('h2', 'info-label'), { id: 'from-shop-label', textContent: `What ${item.domain} says` });
+      d.append(h, Object.assign(el('p'), { textContent: item.description }));
       info.append(d);
     }
 
@@ -198,35 +196,38 @@ export class Detail {
     const notes = this.root.querySelector<HTMLElement>('.notes');
     if (!notes || !this.item) return;
     const text = this.item.commentary?.trim() ?? '';
-    const label = Object.assign(el('h2', 'notes-label'), { id: 'notes-label', textContent: 'Notes' });
+    const label = Object.assign(el('h2', 'info-label'), { id: 'notes-label', textContent: 'Notes' });
+    // No note: the built site shows no Notes section at all; the dev server offers one quiet way to add one.
+    notes.hidden = !text && !this.writable && !this.editing;
+    notes.classList.toggle('is-empty', !text && !this.editing);
+    if (text || this.editing) notes.setAttribute('aria-labelledby', 'notes-label');
+    else notes.removeAttribute('aria-labelledby');
 
     if (this.editing) {
       notes.replaceChildren(label, this.editor());
       return;
     }
-    const children: (Node | string)[] = [label];
-    if (text) {
-      const body = el('div', 'notes-body');
-      body.innerHTML = renderMarkdown(text);
-      children.push(body);
-    } else {
-      const empty = el('p', 'notes-empty');
-      empty.textContent = this.writable
-        ? 'Nothing written about this one yet. Why it’s here, how it’s held up, what you’d tell a friend.'
-        : 'No notes on this one yet.';
-      children.push(empty);
+    if (!text) {
+      if (this.writable) notes.replaceChildren(this.editButton('notes-add', '+ Add a note'));
+      else notes.replaceChildren();
+      return;
     }
-    if (this.writable) {
-      const edit = button('notes-edit', text ? 'Edit note' : 'Write a note');
-      edit.addEventListener('click', () => {
-        this.editing = true;
-        this.draft = this.item?.commentary ?? '';
-        this.renderNotes();
-        this.root.querySelector<HTMLTextAreaElement>('.notes-input')?.focus();
-      });
-      children.push(edit);
-    }
+    const body = el('div', 'notes-body');
+    body.innerHTML = renderMarkdown(text);
+    const children: Node[] = [label, body];
+    if (this.writable) children.push(this.editButton('notes-edit', 'Edit note'));
     notes.replaceChildren(...children);
+  }
+
+  private editButton(className: string, text: string): HTMLButtonElement {
+    const edit = button(className, text);
+    edit.addEventListener('click', () => {
+      this.editing = true;
+      this.draft = this.item?.commentary ?? '';
+      this.renderNotes();
+      this.root.querySelector<HTMLTextAreaElement>('.notes-input')?.focus();
+    });
+    return edit;
   }
 
   private editor(): HTMLElement {
@@ -253,7 +254,7 @@ export class Detail {
     const cancelEdit = () => {
       this.editing = false;
       this.renderNotes();
-      this.root.querySelector<HTMLElement>('.notes-edit')?.focus();
+      this.root.querySelector<HTMLElement>('.notes-edit, .notes-add')?.focus();
     };
     cancel.addEventListener('click', cancelEdit);
     ta.addEventListener('keydown', (e) => {
@@ -278,7 +279,7 @@ export class Detail {
         item.commentary = saved || undefined;
         this.editing = false;
         this.renderNotes();
-        this.root.querySelector<HTMLElement>('.notes-edit')?.focus();
+        this.root.querySelector<HTMLElement>('.notes-edit, .notes-add')?.focus();
         announce('Note saved');
       } catch (error) {
         save.disabled = false;
@@ -323,7 +324,7 @@ function autosize(ta: HTMLTextAreaElement) {
 }
 
 function trapFocus(root: HTMLElement, e: KeyboardEvent) {
-  const focusable = [...root.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), textarea, summary, [tabindex]:not([tabindex="-1"])')].filter(
+  const focusable = [...root.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), textarea, [tabindex]:not([tabindex="-1"])')].filter(
     (n) => n.offsetParent !== null,
   );
   if (!focusable.length) return;

@@ -527,12 +527,22 @@ html.is-detail body {
   margin-left: 6px;
 }
 
-.notes {
+.notes,
+.from-shop {
   margin-top: 46px;
   padding-top: 24px;
   border-top: 1px solid var(--hair);
 }
-.notes-label {
+.notes[hidden] {
+  display: none;
+}
+/* Dev only, no note yet: one quiet line instead of a section. */
+.notes.is-empty {
+  margin-top: 30px;
+  padding-top: 0;
+  border-top: 0;
+}
+.info-label {
   margin: 0 0 16px;
   font: 400 11px/1 var(--mono);
   letter-spacing: 0.2em;
@@ -582,13 +592,6 @@ html.is-detail body {
   border-top: 1px solid var(--hair);
   margin: 1.4em 0;
 }
-.notes-empty {
-  margin: 0;
-  font: italic 400 18px/1.55 var(--serif);
-  color: var(--ink-2);
-  text-wrap: pretty;
-}
-
 .notes button {
   min-height: 38px;
   padding: 0 16px;
@@ -606,6 +609,19 @@ html.is-detail body {
 }
 .notes-edit {
   margin-top: 18px;
+}
+.notes .notes-add {
+  min-height: 32px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--faint);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.notes .notes-add:hover {
+  color: var(--ink-2);
 }
 .notes-edit:hover,
 .notes-cancel:hover {
@@ -665,36 +681,12 @@ html.is-detail body {
 }
 
 .from-shop {
-  margin-top: 40px;
-  color: var(--ink-2);
-}
-.from-shop summary {
-  width: fit-content;
-  font: 400 11px/1 var(--mono);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--faint);
-  cursor: pointer;
-  list-style: none;
-}
-.from-shop summary::-webkit-details-marker {
-  display: none;
-}
-.from-shop summary::before {
-  content: '+';
-  display: inline-block;
-  width: 1.4em;
-  color: var(--faint);
-}
-.from-shop[open] summary::before {
-  content: '–';
-}
-.from-shop summary:hover {
   color: var(--ink-2);
 }
 .from-shop p {
-  margin: 14px 0 0;
+  margin: 0;
   font: 400 15.5px/1.6 var(--serif);
+  text-wrap: pretty;
 }
 
 /* ---------- status line ---------- */
@@ -804,8 +796,12 @@ html.is-detail body {
   .info-title {
     font-size: 32px;
   }
-  .notes {
+  .notes,
+  .from-shop {
     margin-top: 34px;
+  }
+  .notes.is-empty {
+    margin-top: 22px;
   }
   .notes-body {
     font-size: 18px;

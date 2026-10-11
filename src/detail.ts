@@ -17,6 +17,9 @@ export interface DetailHandlers {
   step(delta: 1 | -1): void;
 }
 
+/** How wide the big picture is drawn, for picking a file from its srcset. */
+const STAGE_SIZES = '(max-width: 760px) 100vw, 58vw';
+
 type Frame = { kind: 'hero'; img: ReturnType<typeof heroFor> } | { kind: 'photo'; img: MediaImage };
 
 export class Detail {
@@ -30,6 +33,8 @@ export class Detail {
   /** Set while a swipe hands over to the next thing: the side its sheet slides in from. */
   private enterFrom: -1 | 1 | null = null;
   private readonly reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  /** Pictures of the neighbours, held while they load so a step or swipe lands on a ready image. */
+  private warm: HTMLPictureElement[] = [];
 
   constructor(private readonly root: HTMLElement, private readonly handlers: DetailHandlers) {
     // Keys are heard at the document, not the view: a click on a photo or a thumbnail (Safari
@@ -95,6 +100,7 @@ export class Detail {
   hide() {
     this.root.hidden = true;
     this.root.replaceChildren();
+    this.warm = [];
     this.item = null;
     this.editing = false;
     document.documentElement.classList.remove('is-detail');
@@ -196,6 +202,18 @@ export class Detail {
     }
   }
 
+  /**
+   * Starts loading the big pictures of the things a step or swipe would go to next. The browser
+   * picks the same file from the srcset as the stage will, so the step finds it in the cache.
+   */
+  prefetch(items: Item[]) {
+    this.warm = items.map((it) => {
+      const pic = picture(heroFor(it), { alt: '', sizes: STAGE_SIZES, eager: true });
+      pic.querySelector('img')!.setAttribute('fetchpriority', 'low');
+      return pic;
+    });
+  }
+
   // ---------- swipe ----------
 
   private sheetBody(): HTMLElement | null {
@@ -246,7 +264,7 @@ export class Detail {
     const name = titleWithoutBrand(this.item!.title, this.item!.brand);
     const pic = picture(f.img, {
       alt: f.kind === 'hero' ? name : `${name}, photo ${this.frameIndex} from ${this.item!.domain}`,
-      sizes: '(max-width: 760px) 100vw, 58vw',
+      sizes: STAGE_SIZES,
       eager: true,
     });
     pic.className = `stage-pic is-${f.kind === 'hero' ? (f.img as ReturnType<typeof heroFor>).mode : 'photo'}`;

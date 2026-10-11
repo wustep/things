@@ -1,0 +1,26 @@
+[
+  {
+    "file": "ref-0.jpg",
+    "url": "https://cdn-images.article.com/products/SKU17398/2890x1500/image150857.jpg",
+    "width": 2890,
+    "height": 2890
+  },
+  {
+    "file": "ref-1.jpg",
+    "url": "https://cdn-images.article.com/products/SKU17398/2890x1500/image135065.jpg",
+    "width": 2890,
+    "height": 2890
+  },
+  {
+    "file": "ref-2.jpg",
+    "url": "https://cdn-images.article.com/products/SKU17398/2890x1500/image164753.jpg?w=640&fit=max",
+    "width": 640,
+    "height": 640
+  },
+  {
+    "file": "ref-3.jpg",
+    "url": "https://cdn-images.article.com/products/SKU17398/2890x1500/image135064.jpg?w=640&fit=max",
+    "width": 640,
+    "height": 640
+  }
+]

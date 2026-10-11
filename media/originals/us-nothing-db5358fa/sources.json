@@ -1,0 +1,32 @@
+[
+  {
+    "file": "ref-0.png",
+    "url": "https://cdn.shopify.com/s/files/1/0579/8091/1768/files/headphone-1-white-3_4-view-thumbnail.webp?v=1788842815",
+    "width": 2000,
+    "height": 2000
+  },
+  {
+    "file": "ref-1.jpg",
+    "url": "https://cdn.sanity.io/images/gtd4w1cq/production/e46a5dce8b323b3601995bb54dc8d818cab0b7bf-4096x2305.jpg?auto=format",
+    "width": 4096,
+    "height": 2305
+  },
+  {
+    "file": "ref-2.jpg",
+    "url": "https://cdn.sanity.io/images/gtd4w1cq/production/c45d469722841bcffddc4bb2520582f0e6c414d8-864x864.jpg?auto=format",
+    "width": 864,
+    "height": 864
+  },
+  {
+    "file": "ref-3.jpg",
+    "url": "https://cdn.sanity.io/images/gtd4w1cq/production/777d84280036889f8fdfe4d472b682d251d8d55c-1536x1153.jpg?auto=format",
+    "width": 1536,
+    "height": 1153
+  },
+  {
+    "file": "ref-4.jpg",
+    "url": "https://cdn.sanity.io/images/gtd4w1cq/production/88f41084d5adc91d9835c009738c0f6d20f0cdee-4096x2305.jpg?auto=format",
+    "width": 4096,
+    "height": 2305
+  }
+]

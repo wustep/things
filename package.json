@@ -3,18 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Things: a black-void 3D shelf for products you drop in by URL.",
+  "description": "Things: a quiet, dark shelf of objects you drop in by URL.",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit -p tsconfig.json && vite build",
     "preview": "vite preview",
     "ingest": "tsx scripts/ingest.ts",
-    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.scripts.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.scripts.json",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "refine": "tsx scripts/refine.ts",
+    "images": "npm --prefix tools/images install --no-audit --no-fund --silent && tsx tools/images/build.ts"
   },
   "dependencies": {
     "three": "^0.170.0"
   },
   "devDependencies": {
+    "@fontsource/ibm-plex-mono": "^5.2.7",
+    "@fontsource/spectral": "^5.2.8",
     "@gltf-transform/core": "^4.5.0",
     "@gltf-transform/extensions": "^4.5.0",
     "@gltf-transform/functions": "^4.5.0",

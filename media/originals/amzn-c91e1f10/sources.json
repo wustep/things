@@ -1,0 +1,50 @@
+[
+  {
+    "file": "ref-0.jpg",
+    "url": "https://m.media-amazon.com/images/I/61SuknAHcpL.jpg",
+    "width": 2560,
+    "height": 2560
+  },
+  {
+    "file": "ref-1.jpg",
+    "url": "https://m.media-amazon.com/images/I/71VdEOixprL.jpg",
+    "width": 1707,
+    "height": 2560
+  },
+  {
+    "file": "ref-2.jpg",
+    "url": "https://m.media-amazon.com/images/I/61xq8IXL+5L._AC_SL1500_.jpg",
+    "width": 1313,
+    "height": 1500
+  },
+  {
+    "file": "ref-3.jpg",
+    "url": "https://m.media-amazon.com/images/I/61HSWtG5vcL._AC_SL1500_.jpg",
+    "width": 1313,
+    "height": 1500
+  },
+  {
+    "file": "ref-4.jpg",
+    "url": "https://m.media-amazon.com/images/I/61iKtID5WqL._AC_SL1500_.jpg",
+    "width": 1313,
+    "height": 1500
+  },
+  {
+    "file": "ref-5.jpg",
+    "url": "https://m.media-amazon.com/images/I/61YKhpzp5UL._AC_SL1500_.jpg",
+    "width": 1313,
+    "height": 1500
+  },
+  {
+    "file": "ref-6.jpg",
+    "url": "https://m.media-amazon.com/images/I/71paB8L5u4L._AC_SL1500_.jpg",
+    "width": 877,
+    "height": 1500
+  },
+  {
+    "file": "ref-7.jpg",
+    "url": "https://images-na.ssl-images-amazon.com/images/I/71qCL2DSv7L._AC_UL348_SR348,348_.jpg",
+    "width": 348,
+    "height": 348
+  }
+]

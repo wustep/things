@@ -1,0 +1,26 @@
+[
+  {
+    "file": "ref-0.jpg",
+    "url": "https://cdn-images.article.com/products/SKU23432/2890x1500/image155665.jpg",
+    "width": 4000,
+    "height": 4000
+  },
+  {
+    "file": "ref-1.jpg",
+    "url": "https://cdn-images.article.com/products/SKU23432/2890x1500/image156007.jpg",
+    "width": 4000,
+    "height": 4000
+  },
+  {
+    "file": "ref-2.jpg",
+    "url": "https://cdn-images.article.com/products/SKU23432/2890x1500/image169877.jpg",
+    "width": 4000,
+    "height": 4000
+  },
+  {
+    "file": "ref-3.jpg",
+    "url": "https://cdn-images.article.com/productbundles/691/HERO_DESKTOP/productbundle691-1770837120040.jpg?w=640&fit=max",
+    "width": 640,
+    "height": 640
+  }
+]

@@ -126,7 +126,12 @@ function applyAmazon($: Cheerio, out: Extracted) {
       .trim();
     if (p) out.price = p;
   }
-  // Gallery images live in a JSON attribute: {"url": [w, h], ...}
+  // The gallery's full-size photos (SL1500) sit in the image block's JSON. They lead: the
+  // downloader stops after --max-refs photos, so the 500px "large" copies of the same shots
+  // further down must not use up the slots first.
+  const html = $.html();
+  for (const m of html.matchAll(/"hiRes":"(https:[^"]+)"/g)) out.images.push(m[1]);
+  // Then the gallery's JSON attribute ({"url": [w, h], ...}) and the plain <img>s.
   $('#landingImage, #imgBlkFront, .a-dynamic-image, #altImages img').each((_, el) => {
     const dyn = $(el).attr('data-a-dynamic-image');
     if (dyn) {
@@ -141,12 +146,23 @@ function applyAmazon($: Cheerio, out: Extracted) {
     const hires = $(el).attr('data-old-hires') || $(el).attr('src');
     if (hires) out.images.push(upsizeAmazon(hires));
   });
-  // Color/alt thumbnails are tiny; request the large variant.
-  const colorImages = $.html().match(/"hiRes":"(https:[^"]+)"/g) ?? [];
-  for (const m of colorImages) {
-    const u = m.match(/"hiRes":"(https:[^"]+)"/)?.[1];
-    if (u) out.images.push(u);
+}
+
+/**
+ * Shopify's CDN scales on request (`?width=493`, `_600x600.jpg`); without those hints it serves
+ * the photo as uploaded. Theme markup usually asks for a thumbnail-sized copy.
+ */
+export function fullSizeImageUrl(u: string): string {
+  let url: URL;
+  try {
+    url = new URL(u);
+  } catch {
+    return u;
   }
+  if (!/(^|\.)cdn\.shopify\.com$/.test(url.hostname) && !url.pathname.includes('/cdn/shop/')) return u;
+  for (const key of ['width', 'height', 'crop']) url.searchParams.delete(key);
+  url.pathname = url.pathname.replace(/_(?:\d+x\d*|x\d+|pico|icon|thumb|small|compact|medium|large|grande)(?=(?:@\dx)?\.\w+$)/, '');
+  return url.toString();
 }
 
 function upsizeAmazon(u: string): string {
@@ -276,4 +292,56 @@ export function formatPrice(amount: string, currency?: string): string {
   const sym = currency ? SYMBOLS[currency.toUpperCase()] ?? `${currency.toUpperCase()} ` : '$';
   const fixed = Number.isInteger(num) ? num.toString() : num.toFixed(2);
   return `${sym}${fixed}`;
+}
+
+// ---------- Shopify ----------
+
+/** Shopify product pages also answer at `<product-url>.js` and `<product-url>.json`. */
+export function shopifyProductEndpoints(pageUrl: string): string[] {
+  const u = new URL(pageUrl);
+  if (!/\/products\/[^/]+\/?$/.test(u.pathname)) return [];
+  const variant = u.searchParams.get('variant');
+  u.pathname = u.pathname.replace(/\/$/, '');
+  u.search = '';
+  u.hash = '';
+  return ['.js', '.json'].map((ext) => {
+    const e = new URL(u);
+    e.pathname += ext;
+    if (variant) e.searchParams.set('variant', variant);
+    return e.toString();
+  });
+}
+
+/**
+ * Read Shopify's public product JSON: `/products/<handle>.js` (images as URL strings, prices in
+ * cents) or `/products/<handle>.json` (`{product}`, images as `{src}`, prices as display
+ * strings). Neither reliably says which currency the shop uses, so a price only comes out when
+ * one is declared; never guess dollars.
+ */
+export function extractShopifyProduct(value: unknown, pageUrl: string): Extracted {
+  if (!value || typeof value !== 'object') throw new Error('not a product response');
+  const wrapped = (value as Record<string, unknown>).product;
+  const p = (wrapped && typeof wrapped === 'object' ? wrapped : value) as Record<string, unknown>;
+  if (typeof p.title !== 'string' || !Array.isArray(p.images)) throw new Error('not a Shopify product');
+
+  const images = dedupe(
+    p.images
+      .map((img) => (typeof img === 'string' ? img : str((img as Record<string, unknown> | null)?.src)))
+      .filter((u): u is string => !!u)
+      .map((u) => absolutize(u, pageUrl))
+      .filter(isLikelyProductImage),
+  );
+
+  const variantId = new URL(pageUrl).searchParams.get('variant');
+  const variants = Array.isArray(p.variants) ? (p.variants as Record<string, unknown>[]) : [];
+  const variant = variants.find((v) => String(v?.id) === variantId) ?? variants[0];
+  const rawPrice = variant?.price ?? p.price;
+  const currency = str(p.currency) ?? str(variant?.price_currency);
+  let price: string | undefined;
+  if (currency && typeof rawPrice === 'number') price = formatPrice(String(rawPrice / 100), currency);
+  else if (currency && typeof rawPrice === 'string' && rawPrice.trim()) price = formatPrice(rawPrice, currency);
+
+  const html = str(p.description) ?? str(p.body_html);
+  const description = html ? clean(cheerio.load(html).text()).slice(0, 400) || undefined : undefined;
+  return { title: clean(p.title), brand: str(p.vendor), price, description, images, declared: images.length };
 }

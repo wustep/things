@@ -5,29 +5,36 @@
  *   npm run ingest -- <url> [<url> ...]
  *   npm run ingest -- batch.json            # JSON array of urls or {url, title?, brand?, price?, section?}
  *   npm run ingest -- --force <url>         # re-ingest even if the item already exists
+ *   npm run ingest -- --mesh <url>          # also ask Meshy for a 3D model (paid; needs MESHY_API_KEY)
  *   npm run ingest -- --remesh <url>        # give an existing item a Meshy model from the photos it already has
  *   npm run ingest -- --remove <id|url>     # drop an item and its files
  *   npm run ingest -- --list
+ *   npm run ingest -- --originals [<id|batch.json> ...]  # re-download full-size photos only
  *
- * Flags: --force, --remesh (existing items keep their photos and metadata and only get a model;
- * with --force it also replaces a model they already have), --no-mesh (skip Meshy even if
- * MESHY_API_KEY is set), --max-refs N (default 6), --parallel N (work on N entries at once; default 1).
+ * Flags: --force, --mesh (opt in to Meshy; without it, or --remesh, Meshy is never called even if
+ * MESHY_API_KEY is set), --remesh (implies --mesh; existing items keep their photos and metadata and
+ * only get a model; with --force it also replaces a model they already have), --no-mesh (the
+ * default; kept for old scripts), --max-refs N (default 6), --parallel N (work on N entries at
+ * once; default 1).
  * Batch entries may also carry `image` (primary image URL), `images` (more reference image URLs),
+ * `maxRefs` (this entry's --max-refs),
  * `section` (a shelf label such as "Office"), `shape: 'card' | 'box' | 'cylinder'` and `meshTask`
  * (the id of a Meshy task that already succeeded, to attach its model instead of paying for a new one).
  *
- * Writes data/items.json and public/items/<id>/{primary.png, ref-N.jpg, model.glb?}.
+ * Writes data/items.json, public/items/<id>/{primary.png, ref-N.jpg, model.glb?} and the untouched
+ * downloads in media/originals/<id>/. New files are
+ * built in a staging folder and swapped in only on success, so a failed --force keeps the old ones.
  * Idempotent: the same URL always maps to the same id and is skipped unless --force.
  */
 import { createHash } from 'node:crypto';
-import { existsSync } from 'node:fs';
-import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { existsSync, readFileSync } from 'node:fs';
+import { readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { titleWithoutBrand } from '../shared/text.ts';
 import type { Asset, Item, ModelAsset, ProceduralAsset, ProceduralShape } from '../shared/types.ts';
 import { buildProceduralAsset } from './lib/asset.ts';
-import { extractProduct, type Extracted } from './lib/extract.ts';
+import { extractProduct, extractShopifyProduct, fullSizeImageUrl, shopifyProductEndpoints, type Extracted } from './lib/extract.ts';
 import { fetchBinary, fetchHtml } from './lib/fetch.ts';
 import { slimGlb } from './lib/glb.ts';
 import {
@@ -40,10 +47,17 @@ import {
   type ProcessedPrimary,
 } from './lib/images.ts';
 import { fetchTaskGlb, generateGlb, MAX_MESH_IMAGES, meshyAvailable } from './lib/meshy.ts';
+import { stageAssets, writeFileAtomic } from './lib/store.ts';
+import type { Finish } from './lib/refine.ts';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+// THINGS_ROOT points ingest at another checkout-shaped folder (the tests use a temp dir).
+const ROOT = process.env.THINGS_ROOT
+  ? path.resolve(process.env.THINGS_ROOT)
+  : path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DATA_FILE = path.join(ROOT, 'data', 'items.json');
 const PUBLIC_ITEMS = path.join(ROOT, 'public', 'items');
+/** Full-resolution downloads, exactly as the shop served them. Not deployed; `npm run images` reads them. */
+const ORIGINALS = path.join(ROOT, 'media', 'originals');
 const ENV_FILE = path.join(ROOT, '.env');
 const DEFAULT_MAX_REFS = 6;
 const MAX_PARALLEL = 8;
@@ -72,6 +86,8 @@ interface BatchEntry {
   image?: string;
   /** More reference photos of the product, tried before anything scraped from the page. */
   images?: string[];
+  /** Keep at most this many photos for this entry (overrides --max-refs), e.g. to pin one variant's own. */
+  maxRefs?: number;
   /** Force the procedural shape instead of guessing from the title and cut-out. */
   shape?: ProceduralShape;
   /** A Meshy task that already succeeded: use its GLB instead of creating a new task. */
@@ -83,7 +99,10 @@ interface Options {
   remesh: boolean;
   remove: boolean;
   list: boolean;
-  noMesh: boolean;
+  /** Only (re)download full-resolution originals for items already on the shelf. */
+  originals: boolean;
+  /** Ask Meshy for a model. Off unless --mesh or --remesh: models cost credits. */
+  mesh: boolean;
   maxRefs: number;
   parallel: number;
   inputs: string[];
@@ -101,18 +120,26 @@ async function main() {
     const remaining = items.filter((it) => !opts.inputs.some((q) => q === it.id || q === it.url || idForUrl(q) === it.id));
     for (const it of items.filter((it) => !remaining.includes(it))) {
       await rm(path.join(PUBLIC_ITEMS, it.id), { recursive: true, force: true });
+      await rm(path.join(ORIGINALS, it.id), { recursive: true, force: true });
       console.log(`removed ${it.id} (${it.title})`);
     }
     await saveItems(remaining);
     return;
   }
+  if (opts.originals) {
+    await backfillOriginals(items, opts);
+    return;
+  }
   if (opts.inputs.length === 0) {
     console.error(
-      'usage: npm run ingest -- <url> [<url> ...] | <batch.json> | --remove <id> | --list  [--force] [--remesh] [--no-mesh] [--max-refs N] [--parallel N]',
+      'usage: npm run ingest -- <url> [<url> ...] | <batch.json> | --remove <id> | --list | --originals [<id> ...]  [--force] [--mesh] [--remesh] [--max-refs N] [--parallel N]',
     );
     process.exit(1);
   }
 
+  if (opts.mesh && !opts.remesh && !meshyAvailable()) {
+    console.log('--mesh: MESHY_API_KEY is not set; making image-based assets only');
+  }
   const entries = await expandInputs(opts.inputs);
   const order = new Map(entries.map((e, i) => [idForUrl(e.url) ?? e.url, i]));
   let ok = 0, skipped = 0, failed = 0;
@@ -164,7 +191,11 @@ async function ingestOne(entry: BatchEntry, id: string, existing: Item | undefin
     finalUrl = page.finalUrl;
     extracted = extractProduct(page.html, finalUrl);
   } catch (err) {
-    log(`page fetch failed (${(err as Error).message}); continuing with overrides only`);
+    log(`page fetch failed (${(err as Error).message}); trying product JSON and overrides`);
+  }
+  // Thin metadata (client-rendered theme, bot wall): Shopify's public product JSON often still works.
+  if (!extracted.images.length || !extracted.title || !extracted.price) {
+    extracted = mergeExtracted(extracted, await fetchShopifyProduct(finalUrl, log));
   }
   const overrides = [entry.image, ...(entry.images ?? [])].filter((u): u is string => typeof u === 'string' && u.length > 0);
   for (const u of overrides) {
@@ -180,56 +211,184 @@ async function ingestOne(entry: BatchEntry, id: string, existing: Item | undefin
   const section = entry.section?.trim() || existing?.section;
   log(`title: ${title}${brand ? `  brand: ${brand}` : ''}${price ? `  price: ${price}` : ''}${section ? `  section: ${section}` : ''}`);
 
-  const dir = path.join(PUBLIC_ITEMS, id);
-  await rm(dir, { recursive: true, force: true });
-  await mkdir(dir, { recursive: true });
+  // Build into a staging folder; the item's current files are only replaced once this succeeds.
+  let downloaded: Ref[] = [];
+  const item = await stageAssets(path.join(PUBLIC_ITEMS, id), async (dir) => {
+    const refs = (downloaded = await downloadReferences(extracted.images, extracted.declared, finalUrl, dir, entry.maxRefs ?? opts.maxRefs, log));
+    if (refs.length === 0) throw new Error('no usable images found on the page');
 
-  const refs = await downloadReferences(extracted.images, extracted.declared, finalUrl, dir, opts.maxRefs, log);
-  if (refs.length === 0) throw new Error('no usable images found on the page');
+    const processed = new Map<Ref, ProcessedPrimary>();
+    const { primary, index } = await choosePrimary(refs, processed);
+    if (index !== 0) {
+      log(`primary: using reference ${index + 1} (larger subject than the first image)`);
+      refs.unshift(...refs.splice(index, 1)); // keep item.images "primary first"
+    }
+    await writeFile(path.join(dir, 'primary.png'), primary.png);
+    log(`primary cut-out ${primary.width}x${primary.height}, background removed ${(primary.removedFraction * 100).toFixed(0)}%, palette ${primary.palette.join(' ')}`);
 
-  const processed = new Map<Ref, ProcessedPrimary>();
-  const { primary, index } = await choosePrimary(refs, processed);
-  if (index !== 0) {
-    log(`primary: using reference ${index + 1} (larger subject than the first image)`);
-    refs.unshift(...refs.splice(index, 1)); // keep item.images "primary first"
-  }
-  await writeFile(path.join(dir, 'primary.png'), primary.png);
-  log(`primary cut-out ${primary.width}x${primary.height}, background removed ${(primary.removedFraction * 100).toFixed(0)}%, palette ${primary.palette.join(' ')}`);
+    const publicDir = `/items/${id}`;
+    const procedural = buildProceduralAsset({
+      title,
+      texture: `${publicDir}/primary.png`,
+      aspect: primary.aspect,
+      palette: primary.palette,
+      removedFraction: primary.removedFraction,
+    });
+    if (entry.shape) {
+      if (!SHAPES.includes(entry.shape)) throw new Error(`unknown shape "${entry.shape}" (use ${SHAPES.join(' | ')})`);
+      procedural.shape = entry.shape;
+    }
+    let asset: Asset = procedural;
 
-  const publicDir = `/items/${id}`;
-  const procedural = buildProceduralAsset({
-    title,
-    texture: `${publicDir}/primary.png`,
-    aspect: primary.aspect,
-    palette: primary.palette,
-    removedFraction: primary.removedFraction,
+    if (opts.mesh && meshyAvailable()) {
+      try {
+        asset = await meshAsset(entry, refs, processed, dir, procedural, log, id);
+      } catch (err) {
+        log(`mesh generation failed, keeping procedural asset: ${(err as Error).message}`);
+      }
+    }
+
+    return {
+      id,
+      url: entry.url,
+      domain: new URL(finalUrl).hostname.replace(/^www\./, ''),
+      title,
+      brand,
+      price,
+      section,
+      description: extracted.description,
+      // Stephen's notes belong to him, not to the shop page: a re-ingest carries them over.
+      ...(existing?.commentary ? { commentary: existing.commentary } : {}),
+      images: refs.map((r) => `${publicDir}/${r.file}`),
+      asset,
+      addedAt: new Date().toISOString(),
+    };
   });
-  if (entry.shape) {
-    if (!SHAPES.includes(entry.shape)) throw new Error(`unknown shape "${entry.shape}" (use ${SHAPES.join(' | ')})`);
-    procedural.shape = entry.shape;
-  }
-  let asset: Asset = procedural;
+  await saveOriginals(id, downloaded, log);
+  return item;
+}
 
-  if (meshyAvailable() && !opts.noMesh) {
+/**
+ * Keep the untouched downloads next to (not inside) the deployed files: `media/originals/<id>/`
+ * holds ref-N.<ext> as the shop served it plus sources.json (where each came from). The 2D
+ * image set (`npm run images`) is built from these, so a better processing pass never has to
+ * go back to the shop. Swapped in whole, like the public folder.
+ */
+async function saveOriginals(id: string, refs: Ref[], log: (m: string) => void): Promise<void> {
+  if (refs.length === 0) return;
+  await stageAssets(path.join(ORIGINALS, id), async (dir) => {
+    const sources = [];
+    for (const r of refs) {
+      const file = r.file.replace(/\.jpg$/, `.${extensionFor(r.buffer)}`);
+      await writeFile(path.join(dir, file), r.buffer);
+      sources.push({ file, url: r.url, width: r.width, height: r.height });
+    }
+    await writeFile(path.join(dir, 'sources.json'), JSON.stringify(sources, null, 2) + '\n');
+  });
+  log(`originals: ${refs.length} full-size photos in ${path.relative(ROOT, path.join(ORIGINALS, id))}`);
+}
+
+/**
+ * --originals: for items already on the shelf, download the page's photos again at full size
+ * into media/originals/<id>/ without touching items.json or public/items (so the 3D models and
+ * cut-outs stay exactly as they are). Batch-file entries may add `image`/`images` URLs for
+ * better shots than the page offers. With no inputs, every item that has no originals yet.
+ */
+async function backfillOriginals(items: Item[], opts: Options): Promise<void> {
+  const entries = await expandInputs(opts.inputs.filter((q) => !items.some((it) => it.id === q)));
+  const wanted = opts.inputs.length
+    ? items.filter((it) => opts.inputs.includes(it.id) || entries.some((e) => idForUrl(e.url) === it.id))
+    : items.filter((it) => opts.force || !existsSync(path.join(ORIGINALS, it.id, 'sources.json')));
+  let ok = 0;
+  await inParallel(wanted, opts.parallel, async (it) => {
+    const log = (m: string) => console.log(`      ${it.id}  ${m}`);
+    console.log(`fetch ${it.id}  ${it.url}`);
+    const entry = entries.find((e) => idForUrl(e.url) === it.id);
+    let extracted: Extracted = { images: [], declared: 0 };
+    let finalUrl = it.url;
     try {
-      asset = await meshAsset(entry, refs, processed, dir, procedural, log);
+      const page = await fetchHtml(it.url);
+      finalUrl = page.finalUrl;
+      extracted = extractProduct(page.html, finalUrl);
     } catch (err) {
-      log(`mesh generation failed, keeping procedural asset: ${(err as Error).message}`);
+      log(`page fetch failed (${(err as Error).message})`);
+    }
+    if (!extracted.images.length) extracted = mergeExtracted(extracted, await fetchShopifyProduct(finalUrl, log));
+    const overrides = [entry?.image, ...(entry?.images ?? [])].filter((u): u is string => !!u && /^https?:\/\//i.test(u));
+    extracted.images.unshift(...overrides);
+    extracted.declared += overrides.length;
+    try {
+      const scratch = path.join(ORIGINALS, `.${it.id}.refs-${process.pid}`);
+      const refs = await stageAssets(scratch, (dir) => downloadReferences(extracted.images, extracted.declared, finalUrl, dir, entry?.maxRefs ?? opts.maxRefs, log));
+      await rm(scratch, { recursive: true, force: true });
+      if (refs.length === 0) throw new Error('no usable images');
+      await saveOriginals(it.id, refs, log);
+      ok++;
+    } catch (err) {
+      const kept = existsSync(path.join(ORIGINALS, it.id, 'sources.json'));
+      if (!kept && (await originalsFromDisk(it, log))) ok++;
+      else console.error(`fail  ${it.id}  ${(err as Error).message}${kept ? '; existing originals kept' : ''}`);
+    }
+  });
+  console.log(`\n${ok} of ${wanted.length} items have fresh originals in ${path.relative(ROOT, ORIGINALS)}`);
+}
+
+/**
+ * The shop now blocks us (or dropped the page): the photos this item was first ingested with are
+ * the best there is, so they become its originals, marked as the 1200px copies they are.
+ */
+async function originalsFromDisk(it: Item, log: (m: string) => void): Promise<boolean> {
+  const refs: Ref[] = [];
+  for (const pub of it.images) {
+    const full = path.join(ROOT, 'public', pub);
+    if (!existsSync(full)) continue;
+    const buffer = await readFile(full);
+    const { width, height } = (await decode(buffer)).bitmap;
+    refs.push({ file: path.basename(pub), url: `public${pub} (ingest copy; the shop blocked a fresh download)`, width, height, buffer, jpg: buffer, declared: true, hash: '', pixels: width * height });
+  }
+  if (refs.length === 0) return false;
+  log('shop unavailable: the photos already on disk become the originals');
+  await saveOriginals(it.id, refs, log);
+  return true;
+}
+
+function extensionFor(buf: Buffer): string {
+  if (buf[0] === 0x89 && buf[1] === 0x50) return 'png';
+  if (buf.toString('ascii', 8, 12) === 'WEBP') return 'webp';
+  if (buf.toString('ascii', 4, 12).startsWith('ftypavi')) return 'avif';
+  if (buf.toString('ascii', 0, 3) === 'GIF') return 'gif';
+  return 'jpg';
+}
+
+/** Try `<product-url>.js`, then `.json`. Undefined when the URL is not a Shopify product or both fail. */
+async function fetchShopifyProduct(pageUrl: string, log: (m: string) => void): Promise<Extracted | undefined> {
+  for (const endpoint of shopifyProductEndpoints(pageUrl)) {
+    try {
+      const { html } = await fetchHtml(endpoint);
+      const shop = extractShopifyProduct(JSON.parse(html), pageUrl);
+      log(`shopify product JSON: ${shop.images.length} images  ${endpoint.slice(0, 90)}`);
+      return shop;
+    } catch {
+      /* not Shopify, or this endpoint is blocked: try the next */
     }
   }
+  return undefined;
+}
 
+/**
+ * Page metadata wins field by field. The product JSON's images only lead when the page declared
+ * none of its own (anything it has then was scraped from <img> tags and may be other products).
+ */
+function mergeExtracted(page: Extracted, shop: Extracted | undefined): Extracted {
+  if (!shop) return page;
+  const shopImagesFirst = page.declared === 0;
   return {
-    id,
-    url: entry.url,
-    domain: new URL(finalUrl).hostname.replace(/^www\./, ''),
-    title,
-    brand,
-    price,
-    section,
-    description: extracted.description,
-    images: refs.map((r) => `${publicDir}/${r.file}`),
-    asset,
-    addedAt: new Date().toISOString(),
+    title: page.title ?? shop.title,
+    brand: page.brand ?? shop.brand,
+    price: page.price ?? shop.price,
+    description: page.description ?? shop.description,
+    images: shopImagesFirst ? [...shop.images, ...page.images] : page.images,
+    declared: shopImagesFirst ? shop.declared : page.declared,
   };
 }
 
@@ -244,7 +403,7 @@ async function remeshOne(entry: BatchEntry, existing: Item, opts: Options): Prom
   const tag = opts.parallel > 1 ? `${id}  ` : '';
   const log = (m: string) => console.log(`      ${tag}${m}`);
   console.log(`mesh  ${id}  ${existing.title}`);
-  if (!meshyAvailable() || opts.noMesh) throw new Error('--remesh needs MESHY_API_KEY (and not --no-mesh)');
+  if (!opts.mesh || !meshyAvailable()) throw new Error('--remesh needs MESHY_API_KEY (and not --no-mesh)');
 
   const dir = path.join(PUBLIC_ITEMS, id);
   const refs: Ref[] = [];
@@ -254,7 +413,7 @@ async function remeshOne(entry: BatchEntry, existing: Item, opts: Options): Prom
     if (!existsSync(full)) continue;
     const jpg = await readFile(full);
     // The photos on disk all passed the download filters; treat them as the page's own.
-    refs.push({ file, buffer: jpg, jpg, declared: true, hash: '', pixels: 0 });
+    refs.push({ file, url: '', width: 0, height: 0, buffer: jpg, jpg, declared: true, hash: '', pixels: 0 });
   }
   if (refs.length === 0) throw new Error('no reference photos on disk; re-ingest with --force');
 
@@ -279,20 +438,22 @@ async function meshAsset(
   dir: string,
   fallback: ProceduralAsset,
   log: (m: string) => void,
+  itemId = path.basename(dir),
 ): Promise<ModelAsset> {
-  const publicDir = `/items/${path.basename(dir)}`;
+  const publicDir = `/items/${itemId}`;
   const chosen = await chooseMeshReferences(refs, processed, log);
   const raw = entry.meshTask
     ? await fetchTaskGlb(entry.meshTask, log)
     : await generateGlb(chosen.map((r) => ({ data: r.jpg, mime: 'image/jpeg' as const })), log);
   let glb = raw;
   try {
-    glb = await slimGlb(raw, log);
+    glb = await slimGlb(raw, log, finishFor(path.basename(dir)));
     log(`model.glb ${kb(raw)} KB from Meshy, ${kb(glb)} KB slimmed`);
   } catch (err) {
     log(`could not slim the GLB, keeping Meshy's original (${kb(raw)} KB): ${(err as Error).message}`);
   }
-  await writeFile(path.join(dir, 'model.glb'), glb);
+  // --remesh writes into the live folder: never leave a truncated model behind.
+  await writeFileAtomic(path.join(dir, 'model.glb'), glb);
   return {
     kind: 'glb',
     url: `${publicDir}/model.glb`,
@@ -304,6 +465,10 @@ async function meshAsset(
 
 interface Ref {
   file: string;
+  /** Where the original came from (empty for photos reused from disk by --remesh). */
+  url: string;
+  width: number;
+  height: number;
   /** The original download. */
   buffer: Buffer;
   /** The normalized JPEG written to disk (flattened, at most 1200px). */
@@ -398,8 +563,9 @@ async function downloadReferences(
 ): Promise<Ref[]> {
   const refs: Ref[] = [];
   const seen = new Set<string>();
-  for (const [i, url] of candidates.entries()) {
+  for (const [i, candidate] of candidates.entries()) {
     if (refs.length >= maxRefs) break;
+    const url = fullSizeImageUrl(candidate);
     try {
       const { buffer, contentType } = await fetchBinary(url, referer);
       if (!/^image\//.test(contentType) && !looksLikeImage(buffer)) continue;
@@ -418,7 +584,7 @@ async function downloadReferences(
         if (pixels > twin.pixels * 1.2) {
           const { jpg } = await normalizeReference(buffer);
           await writeFile(path.join(dir, twin.file), jpg);
-          Object.assign(twin, { buffer, jpg, hash, pixels, declared: twin.declared || declared });
+          Object.assign(twin, { url, width, height, buffer, jpg, hash, pixels, declared: twin.declared || declared });
           log(`${twin.file} upgraded to ${width}x${height}  ${url.slice(0, 90)}`);
         }
         continue;
@@ -426,7 +592,7 @@ async function downloadReferences(
       const { jpg } = await normalizeReference(buffer);
       const file = `ref-${refs.length}.jpg`;
       await writeFile(path.join(dir, file), jpg);
-      refs.push({ file, buffer, jpg, declared, hash, pixels });
+      refs.push({ file, url, width, height, buffer, jpg, declared, hash, pixels });
       log(`ref ${refs.length}/${maxRefs}  ${width}x${height}  ${url.slice(0, 90)}`);
     } catch {
       /* skip broken images */
@@ -459,10 +625,7 @@ let saving: Promise<void> = Promise.resolve();
 function saveItems(items: Item[]): Promise<void> {
   saving = saving
     .catch(() => undefined)
-    .then(async () => {
-      await mkdir(path.dirname(DATA_FILE), { recursive: true });
-      await writeFile(DATA_FILE, JSON.stringify(items, null, 2) + '\n');
-    });
+    .then(() => writeFileAtomic(DATA_FILE, JSON.stringify(items, null, 2) + '\n'));
   return saving;
 }
 
@@ -514,7 +677,8 @@ function parseArgs(argv: string[]): Options {
     remesh: false,
     remove: false,
     list: false,
-    noMesh: false,
+    originals: false,
+    mesh: false,
     maxRefs: DEFAULT_MAX_REFS,
     parallel: 1,
     inputs: [],
@@ -528,10 +692,12 @@ function parseArgs(argv: string[]): Options {
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--force' || a === '-f') opts.force = true;
-    else if (a === '--remesh') opts.remesh = true;
+    else if (a === '--remesh') opts.remesh = opts.mesh = true;
     else if (a === '--remove' || a === '--rm') opts.remove = true;
     else if (a === '--list' || a === '-l') opts.list = true;
-    else if (a === '--no-mesh') opts.noMesh = true;
+    else if (a === '--originals') opts.originals = true;
+    else if (a === '--mesh') opts.mesh = true;
+    else if (a === '--no-mesh') opts.mesh = false;
     else if (a === '--max-refs' || a.startsWith('--max-refs=')) [opts.maxRefs, i] = intFlag(a, i, '--max-refs', 50);
     else if (a === '--parallel' || a.startsWith('--parallel=')) [opts.parallel, i] = intFlag(a, i, '--parallel', MAX_PARALLEL);
     else if (a.startsWith('-')) throw new Error(`unknown flag ${a}`);
@@ -590,3 +756,13 @@ main().catch((err) => {
   console.error(err);
   process.exit(1);
 });
+
+/** Per-item refine settings (data/mesh-finish.json), or the defaults. */
+function finishFor(id: string): Finish {
+  try {
+    const all = JSON.parse(readFileSync(path.join(ROOT, 'data', 'mesh-finish.json'), 'utf8')) as Record<string, Finish>;
+    return all[id] ?? {};
+  } catch {
+    return {};
+  }
+}

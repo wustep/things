@@ -1,0 +1,38 @@
+[
+  {
+    "file": "ref-0.jpg",
+    "url": "https://rnb.scene7.com/is/image/roomandboard/?src=ir{roomandboardrender/errol_sidechr_20_lth?obj=wood&show&src=rpt_W&obj=color&show&src=rpt_b13-lb01}&scl=1",
+    "width": 2174,
+    "height": 3000
+  },
+  {
+    "file": "ref-1.jpg",
+    "url": "https://rnb.scene7.com/is/image/roomandboard/decker_140731_21e1?$prodzoom0$&size=2400,2400&scl=1",
+    "width": 2400,
+    "height": 1653
+  },
+  {
+    "file": "ref-2.jpg",
+    "url": "https://rnb.scene7.com/is/image/roomandboard/colby_579167_24e1?$prodzoom0$&size=2400,2400&scl=1",
+    "width": 2051,
+    "height": 2400
+  },
+  {
+    "file": "ref-3.jpg",
+    "url": "https://rnb.scene7.com/is/image/roomandboard/?layer=0&src=swxl_buriblack&layer=1&src=swxl_buriblack_preview&layer=comp&crop=15%2C0%2C370%2C200&%24proddd%24",
+    "width": 370,
+    "height": 200
+  },
+  {
+    "file": "ref-4.jpg",
+    "url": "https://rnb.scene7.com/is/image/roomandboard/IA_FC_kitchen?$thumbnail$&size=900,900&scl=1",
+    "width": 900,
+    "height": 654
+  },
+  {
+    "file": "ref-5.jpg",
+    "url": "https://rnb.scene7.com/is/image/roomandboard/IA_FC_smallspacedining?$thumbnail$&size=900,900&scl=1",
+    "width": 900,
+    "height": 654
+  }
+]

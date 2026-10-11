@@ -1,0 +1,2477 @@
+{
+  "ugmonk-5117191f": {
+    "hero": {
+      "base": "/items/ugmonk-5117191f/2d/hero.ca657329",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 1168,
+      "mode": "cutout",
+      "subject": [
+        0.0456,
+        0.0625,
+        0.9088,
+        0.8255
+      ],
+      "tone": "#a9978d"
+    },
+    "gallery": [
+      {
+        "base": "/items/ugmonk-5117191f/2d/photo-1.ca657329",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1587
+      },
+      {
+        "base": "/items/ugmonk-5117191f/2d/photo-2.ca657329",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1587
+      },
+      {
+        "base": "/items/ugmonk-5117191f/2d/photo-3.ca657329",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1587
+      },
+      {
+        "base": "/items/ugmonk-5117191f/2d/photo-4.ca657329",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1587
+      }
+    ],
+    "key": "ca657329d534"
+  },
+  "ugmonk-ef1055c7": {
+    "hero": {
+      "base": "/items/ugmonk-ef1055c7/2d/hero.a9886117",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 1446,
+      "mode": "cutout",
+      "subject": [
+        0.0457,
+        0.0505,
+        0.9087,
+        0.8588
+      ],
+      "tone": "#d3d3d3"
+    },
+    "gallery": [
+      {
+        "base": "/items/ugmonk-ef1055c7/2d/photo-1.a9886117",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1587
+      },
+      {
+        "base": "/items/ugmonk-ef1055c7/2d/photo-2.a9886117",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1587
+      },
+      {
+        "base": "/items/ugmonk-ef1055c7/2d/photo-3.a9886117",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1587
+      },
+      {
+        "base": "/items/ugmonk-ef1055c7/2d/photo-4.a9886117",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1587
+      }
+    ],
+    "key": "a988611782fd"
+  },
+  "ergonofis-aba25b63": {
+    "hero": {
+      "base": "/items/ergonofis-aba25b63/2d/hero.d4a945ed",
+      "widths": [
+        480,
+        799
+      ],
+      "width": 799,
+      "height": 559,
+      "mode": "cutout",
+      "subject": [
+        0.0451,
+        0.0644,
+        0.9099,
+        0.8193
+      ],
+      "tone": "#c7b89c"
+    },
+    "gallery": [
+      {
+        "base": "/items/ergonofis-aba25b63/2d/photo-1.d4a945ed",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/ergonofis-aba25b63/2d/photo-2.d4a945ed",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1282
+      }
+    ],
+    "key": "d4a945edbec0"
+  },
+  "ergonofis-b544e709": {
+    "hero": {
+      "base": "/items/ergonofis-b544e709/2d/hero.951817e5",
+      "widths": [
+        480,
+        960,
+        1116
+      ],
+      "width": 1116,
+      "height": 1484,
+      "mode": "cutout",
+      "subject": [
+        0.0582,
+        0.0438,
+        0.8835,
+        0.8774
+      ],
+      "tone": "#a1a2a1"
+    },
+    "gallery": [
+      {
+        "base": "/items/ergonofis-b544e709/2d/photo-1.951817e5",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/ergonofis-b544e709/2d/photo-2.951817e5",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1282
+      }
+    ],
+    "key": "951817e51fc0"
+  },
+  "amzn-f76e128e": {
+    "hero": {
+      "base": "/items/amzn-f76e128e/2d/hero.53c3e480",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 1028,
+      "mode": "cutout",
+      "subject": [
+        0.0455,
+        0.0708,
+        0.909,
+        0.8017
+      ],
+      "tone": "#434445"
+    },
+    "gallery": [
+      {
+        "base": "/items/amzn-f76e128e/2d/photo-1.53c3e480",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "53c3e480fac4"
+  },
+  "jossandmain-cc12a72d": {
+    "hero": {
+      "base": "/items/jossandmain-cc12a72d/2d/hero.d9708c15",
+      "widths": [
+        345
+      ],
+      "width": 345,
+      "height": 235,
+      "mode": "cutout",
+      "subject": [
+        0.0464,
+        0.0681,
+        0.9072,
+        0.8128
+      ],
+      "tone": "#656658"
+    },
+    "gallery": [],
+    "key": "d9708c156614"
+  },
+  "westelm-0d4a26d0": {
+    "hero": {
+      "base": "/items/westelm-0d4a26d0/2d/hero.9519470c",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 1538,
+      "mode": "cutout",
+      "subject": [
+        0.0454,
+        0.0472,
+        0.9092,
+        0.8676
+      ],
+      "tone": "#88543d"
+    },
+    "gallery": [
+      {
+        "base": "/items/westelm-0d4a26d0/2d/photo-1.9519470c",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/westelm-0d4a26d0/2d/photo-2.9519470c",
+        "widths": [
+          496
+        ],
+        "width": 496,
+        "height": 496
+      }
+    ],
+    "key": "9519470c7048"
+  },
+  "amzn-c91e1f10": {
+    "hero": {
+      "base": "/items/amzn-c91e1f10/2d/hero.31495dad",
+      "widths": [
+        480,
+        960,
+        1566
+      ],
+      "width": 1566,
+      "height": 2649,
+      "mode": "cutout",
+      "subject": [
+        0.0741,
+        0.0438,
+        0.8519,
+        0.8773
+      ],
+      "tone": "#dedddf"
+    },
+    "gallery": [
+      {
+        "base": "/items/amzn-c91e1f10/2d/photo-1.31495dad",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "base": "/items/amzn-c91e1f10/2d/photo-2.31495dad",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1462
+      },
+      {
+        "base": "/items/amzn-c91e1f10/2d/photo-3.31495dad",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1462
+      }
+    ],
+    "key": "31495dad5259"
+  },
+  "bludot-db8b63f5": {
+    "hero": {
+      "base": "/items/bludot-db8b63f5/2d/hero.07d9ea50",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 1791,
+      "mode": "cutout",
+      "subject": [
+        0.0493,
+        0.044,
+        0.9014,
+        0.8771
+      ],
+      "tone": "#857d76"
+    },
+    "gallery": [],
+    "key": "07d9ea50bdd2"
+  },
+  "roomandboard-ce472b14": {
+    "hero": {
+      "base": "/items/roomandboard-ce472b14/2d/hero.3abc89f6",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 852,
+      "mode": "cutout",
+      "subject": [
+        0.0453,
+        0.0852,
+        0.9094,
+        0.7609
+      ],
+      "tone": "#8a6858"
+    },
+    "gallery": [
+      {
+        "base": "/items/roomandboard-ce472b14/2d/photo-1.3abc89f6",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1528
+      },
+      {
+        "base": "/items/roomandboard-ce472b14/2d/photo-2.3abc89f6",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "base": "/items/roomandboard-ce472b14/2d/photo-3.3abc89f6",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "base": "/items/roomandboard-ce472b14/2d/photo-4.3abc89f6",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 853
+      }
+    ],
+    "key": "3abc89f6cc1d"
+  },
+  "amazon-945ed6e2": {
+    "hero": {
+      "base": "/items/amazon-945ed6e2/2d/hero.b0fded6f",
+      "widths": [
+        480,
+        926
+      ],
+      "width": 926,
+      "height": 1593,
+      "mode": "cutout",
+      "subject": [
+        0.0756,
+        0.0439,
+        0.8488,
+        0.877
+      ],
+      "tone": "#a5a5a5"
+    },
+    "gallery": [
+      {
+        "base": "/items/amazon-945ed6e2/2d/photo-1.b0fded6f",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/amazon-945ed6e2/2d/photo-2.b0fded6f",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/amazon-945ed6e2/2d/photo-3.b0fded6f",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "b0fded6fbd78"
+  },
+  "theartifox-f5289f2b": {
+    "hero": {
+      "base": "/items/theartifox-f5289f2b/2d/hero.10bbb3b7",
+      "widths": [
+        480,
+        960
+      ],
+      "width": 960,
+      "height": 1459,
+      "mode": "cutout",
+      "subject": [
+        0.067,
+        0.0441,
+        0.8659,
+        0.8771
+      ],
+      "tone": "#9d8068"
+    },
+    "gallery": [
+      {
+        "base": "/items/theartifox-f5289f2b/2d/photo-1.10bbb3b7",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/theartifox-f5289f2b/2d/photo-2.10bbb3b7",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/theartifox-f5289f2b/2d/photo-3.10bbb3b7",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/theartifox-f5289f2b/2d/photo-4.10bbb3b7",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "10bbb3b73105"
+  },
+  "amzn-a0753bc5": {
+    "hero": {
+      "base": "/items/amzn-a0753bc5/2d/hero.bf6febca",
+      "widths": [
+        480,
+        960,
+        1296
+      ],
+      "width": 1296,
+      "height": 1709,
+      "mode": "cutout",
+      "subject": [
+        0.0579,
+        0.0439,
+        0.8843,
+        0.8771
+      ],
+      "tone": "#766060"
+    },
+    "gallery": [
+      {
+        "base": "/items/amzn-a0753bc5/2d/photo-1.bf6febca",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/amzn-a0753bc5/2d/photo-2.bf6febca",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/amzn-a0753bc5/2d/photo-3.bf6febca",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "bf6febcaf95d"
+  },
+  "roomandboard-03a90ea7": {
+    "hero": {
+      "base": "/items/roomandboard-03a90ea7/2d/hero.789b2736",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 2208,
+      "mode": "cutout",
+      "subject": [
+        0.0607,
+        0.044,
+        0.8787,
+        0.8772
+      ],
+      "tone": "#72584c"
+    },
+    "gallery": [
+      {
+        "base": "/items/roomandboard-03a90ea7/2d/photo-1.789b2736",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1498
+      },
+      {
+        "base": "/items/roomandboard-03a90ea7/2d/photo-2.789b2736",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 882
+      },
+      {
+        "base": "/items/roomandboard-03a90ea7/2d/photo-3.789b2736",
+        "widths": [
+          370
+        ],
+        "width": 370,
+        "height": 200
+      }
+    ],
+    "key": "789b27361a84"
+  },
+  "amzn-f530eeab": {
+    "hero": {
+      "base": "/items/amzn-f530eeab/2d/hero.70295377",
+      "widths": [
+        480,
+        560
+      ],
+      "width": 560,
+      "height": 920,
+      "mode": "cutout",
+      "subject": [
+        0.0714,
+        0.0435,
+        0.8571,
+        0.8772
+      ],
+      "tone": "#a8a8a8"
+    },
+    "gallery": [
+      {
+        "base": "/items/amzn-f530eeab/2d/photo-1.70295377",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/amzn-f530eeab/2d/photo-2.70295377",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/amzn-f530eeab/2d/photo-3.70295377",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "70295377aec1"
+  },
+  "amzn-1fc53358": {
+    "hero": {
+      "base": "/items/amzn-1fc53358/2d/hero.cf4ed6e6",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 1495,
+      "mode": "cutout",
+      "subject": [
+        0.0454,
+        0.0485,
+        0.9093,
+        0.8641
+      ],
+      "tone": "#7d7e7d"
+    },
+    "gallery": [
+      {
+        "base": "/items/amzn-1fc53358/2d/photo-1.cf4ed6e6",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/amzn-1fc53358/2d/photo-2.cf4ed6e6",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1600
+      }
+    ],
+    "key": "cf4ed6e6a0b2"
+  },
+  "dwr-c60bfcc5": {
+    "hero": {
+      "base": "/items/dwr-c60bfcc5/2d/hero.226ef7c1",
+      "widths": [
+        480,
+        832
+      ],
+      "width": 832,
+      "height": 3235,
+      "mode": "cutout",
+      "subject": [
+        0.1707,
+        0.0439,
+        0.6587,
+        0.8773
+      ],
+      "tone": "#c7c7c7"
+    },
+    "gallery": [],
+    "key": "226ef7c161bf"
+  },
+  "jamescookartworkshop-b0e89a91": {
+    "hero": {
+      "base": "/items/jamescookartworkshop-b0e89a91/2d/hero.ba6e144c",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 2216,
+      "mode": "photo",
+      "subject": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "tone": "#949494"
+    },
+    "gallery": [
+      {
+        "base": "/items/jamescookartworkshop-b0e89a91/2d/photo-1.ba6e144c",
+        "widths": [
+          640,
+          1080
+        ],
+        "width": 1080,
+        "height": 1350
+      },
+      {
+        "base": "/items/jamescookartworkshop-b0e89a91/2d/photo-2.ba6e144c",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1777
+      },
+      {
+        "base": "/items/jamescookartworkshop-b0e89a91/2d/photo-3.ba6e144c",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1776
+      },
+      {
+        "base": "/items/jamescookartworkshop-b0e89a91/2d/photo-4.ba6e144c",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1774
+      }
+    ],
+    "key": "ba6e144cd886"
+  },
+  "etsy-55c9006b": {
+    "hero": {
+      "base": "/items/etsy-55c9006b/2d/hero.8f820270",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 2334,
+      "mode": "cutout",
+      "subject": [
+        0.0642,
+        0.044,
+        0.8716,
+        0.8769
+      ],
+      "tone": "#6a6967"
+    },
+    "gallery": [
+      {
+        "base": "/items/etsy-55c9006b/2d/photo-1.8f820270",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 854
+      },
+      {
+        "base": "/items/etsy-55c9006b/2d/photo-2.8f820270",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/etsy-55c9006b/2d/photo-3.8f820270",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "8f8202706edf"
+  },
+  "amazon-b05badce": {
+    "hero": {
+      "base": "/items/amazon-b05badce/2d/hero.b82db635",
+      "widths": [
+        480,
+        960,
+        1416
+      ],
+      "width": 1416,
+      "height": 534,
+      "mode": "cutout",
+      "subject": [
+        0.0452,
+        0.1199,
+        0.9096,
+        0.6629
+      ],
+      "tone": "#7c6166"
+    },
+    "gallery": [
+      {
+        "base": "/items/amazon-b05badce/2d/photo-1.b82db635",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 973
+      },
+      {
+        "base": "/items/amazon-b05badce/2d/photo-2.b82db635",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 742
+      },
+      {
+        "base": "/items/amazon-b05badce/2d/photo-3.b82db635",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "b82db63520b5"
+  },
+  "roli-0e3366f5": {
+    "hero": {
+      "base": "/items/roli-0e3366f5/2d/hero.4809235c",
+      "widths": [
+        426
+      ],
+      "width": 426,
+      "height": 700,
+      "mode": "cutout",
+      "subject": [
+        0.0728,
+        0.0443,
+        0.8545,
+        0.8771
+      ],
+      "tone": "#3d3d3e"
+    },
+    "gallery": [
+      {
+        "base": "/items/roli-0e3366f5/2d/photo-1.4809235c",
+        "widths": [
+          640,
+          1200
+        ],
+        "width": 1200,
+        "height": 677
+      }
+    ],
+    "key": "4809235c504c"
+  },
+  "boss-55cd4543": {
+    "hero": {
+      "base": "/items/boss-55cd4543/2d/hero.8aa2f735",
+      "widths": [
+        480,
+        929
+      ],
+      "width": 929,
+      "height": 844,
+      "mode": "cutout",
+      "subject": [
+        0.0452,
+        0.0498,
+        0.9096,
+        0.8602
+      ],
+      "tone": "#a73a3c"
+    },
+    "gallery": [
+      {
+        "base": "/items/boss-55cd4543/2d/photo-1.8aa2f735",
+        "widths": [
+          406
+        ],
+        "width": 406,
+        "height": 330
+      },
+      {
+        "base": "/items/boss-55cd4543/2d/photo-2.8aa2f735",
+        "widths": [
+          640,
+          1180
+        ],
+        "width": 1180,
+        "height": 664
+      },
+      {
+        "base": "/items/boss-55cd4543/2d/photo-3.8aa2f735",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 800
+      }
+    ],
+    "key": "8aa2f7355630"
+  },
+  "amazon-421bd010": {
+    "hero": {
+      "base": "/items/amazon-421bd010/2d/hero.abec1bad",
+      "widths": [
+        480,
+        960
+      ],
+      "width": 960,
+      "height": 1250,
+      "mode": "cutout",
+      "subject": [
+        0.0571,
+        0.0439,
+        0.8857,
+        0.8775
+      ],
+      "tone": "#987352"
+    },
+    "gallery": [
+      {
+        "base": "/items/amazon-421bd010/2d/photo-1.abec1bad",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1303
+      },
+      {
+        "base": "/items/amazon-421bd010/2d/photo-2.abec1bad",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/amazon-421bd010/2d/photo-3.abec1bad",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "abec1badf189"
+  },
+  "peakdesign-8f476d14": {
+    "hero": {
+      "base": "/items/peakdesign-8f476d14/2d/hero.afc74a79",
+      "widths": [
+        480,
+        960,
+        1122
+      ],
+      "width": 1122,
+      "height": 1548,
+      "mode": "cutout",
+      "subject": [
+        0.0606,
+        0.0439,
+        0.8788,
+        0.8773
+      ],
+      "tone": "#575b51"
+    },
+    "gallery": [
+      {
+        "base": "/items/peakdesign-8f476d14/2d/photo-1.afc74a79",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/peakdesign-8f476d14/2d/photo-2.afc74a79",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "afc74a792231"
+  },
+  "peakdesign-e3a72cf8": {
+    "hero": {
+      "base": "/items/peakdesign-e3a72cf8/2d/hero.c347b721",
+      "widths": [
+        480,
+        960
+      ],
+      "width": 960,
+      "height": 498,
+      "mode": "cutout",
+      "subject": [
+        0.0456,
+        0.0879,
+        0.9087,
+        0.7539
+      ],
+      "tone": "#a2a19e"
+    },
+    "gallery": [],
+    "key": "c347b72105ff"
+  },
+  "peakdesign-709dfa64": {
+    "hero": {
+      "base": "/items/peakdesign-709dfa64/2d/hero.5e1e20fc",
+      "widths": [
+        480,
+        960,
+        1079
+      ],
+      "width": 1079,
+      "height": 585,
+      "mode": "cutout",
+      "subject": [
+        0.0454,
+        0.0838,
+        0.9092,
+        0.7658
+      ],
+      "tone": "#333334"
+    },
+    "gallery": [
+      {
+        "base": "/items/peakdesign-709dfa64/2d/photo-1.5e1e20fc",
+        "widths": [
+          640,
+          1024
+        ],
+        "width": 1024,
+        "height": 1024
+      },
+      {
+        "base": "/items/peakdesign-709dfa64/2d/photo-2.5e1e20fc",
+        "widths": [
+          640,
+          1024
+        ],
+        "width": 1024,
+        "height": 1024
+      },
+      {
+        "base": "/items/peakdesign-709dfa64/2d/photo-3.5e1e20fc",
+        "widths": [
+          640,
+          1024
+        ],
+        "width": 1024,
+        "height": 1024
+      }
+    ],
+    "key": "5e1e20fc1c02"
+  },
+  "amzn-0f80deec": {
+    "hero": {
+      "base": "/items/amzn-0f80deec/2d/hero.c286f078",
+      "widths": [
+        480,
+        960
+      ],
+      "width": 960,
+      "height": 1683,
+      "mode": "cutout",
+      "subject": [
+        0.077,
+        0.0439,
+        0.846,
+        0.877
+      ],
+      "tone": "#9aa6a1"
+    },
+    "gallery": [
+      {
+        "base": "/items/amzn-0f80deec/2d/photo-1.c286f078",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 689
+      },
+      {
+        "base": "/items/amzn-0f80deec/2d/photo-2.c286f078",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 375
+      }
+    ],
+    "key": "c286f0787abf"
+  },
+  "orientwatchusa-5b000bba": {
+    "hero": {
+      "base": "/items/orientwatchusa-5b000bba/2d/hero.af0097c0",
+      "widths": [
+        480,
+        847
+      ],
+      "width": 847,
+      "height": 1239,
+      "mode": "cutout",
+      "subject": [
+        0.0638,
+        0.0436,
+        0.8725,
+        0.8773
+      ],
+      "tone": "#888889"
+    },
+    "gallery": [
+      {
+        "base": "/items/orientwatchusa-5b000bba/2d/photo-1.af0097c0",
+        "widths": [
+          640,
+          1080
+        ],
+        "width": 1080,
+        "height": 1080
+      },
+      {
+        "base": "/items/orientwatchusa-5b000bba/2d/photo-2.af0097c0",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1919
+      },
+      {
+        "base": "/items/orientwatchusa-5b000bba/2d/photo-3.af0097c0",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1919
+      },
+      {
+        "base": "/items/orientwatchusa-5b000bba/2d/photo-4.af0097c0",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1920
+      }
+    ],
+    "key": "af0097c02e9b"
+  },
+  "us-nothing-db5358fa": {
+    "hero": {
+      "base": "/items/us-nothing-db5358fa/2d/hero.b5036261",
+      "widths": [
+        480,
+        960,
+        1372
+      ],
+      "width": 1372,
+      "height": 1984,
+      "mode": "cutout",
+      "subject": [
+        0.0634,
+        0.0439,
+        0.8732,
+        0.877
+      ],
+      "tone": "#878888"
+    },
+    "gallery": [
+      {
+        "base": "/items/us-nothing-db5358fa/2d/photo-1.b5036261",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 720
+      },
+      {
+        "base": "/items/us-nothing-db5358fa/2d/photo-2.b5036261",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 961
+      },
+      {
+        "base": "/items/us-nothing-db5358fa/2d/photo-3.b5036261",
+        "widths": [
+          640,
+          864
+        ],
+        "width": 864,
+        "height": 864
+      },
+      {
+        "base": "/items/us-nothing-db5358fa/2d/photo-4.b5036261",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 720
+      }
+    ],
+    "key": "b50362618c22"
+  },
+  "remsen-f65a1f42": {
+    "hero": {
+      "base": "/items/remsen-f65a1f42/2d/hero.b977a125",
+      "widths": [
+        480,
+        960,
+        1482
+      ],
+      "width": 1482,
+      "height": 982,
+      "mode": "cutout",
+      "subject": [
+        0.0452,
+        0.0682,
+        0.9096,
+        0.8086
+      ],
+      "tone": "#948f8b"
+    },
+    "gallery": [
+      {
+        "base": "/items/remsen-f65a1f42/2d/photo-1.b977a125",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1707
+      },
+      {
+        "base": "/items/remsen-f65a1f42/2d/photo-2.b977a125",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1707
+      },
+      {
+        "base": "/items/remsen-f65a1f42/2d/photo-3.b977a125",
+        "widths": [
+          640,
+          990
+        ],
+        "width": 990,
+        "height": 1337
+      },
+      {
+        "base": "/items/remsen-f65a1f42/2d/photo-4.b977a125",
+        "widths": [
+          640,
+          859
+        ],
+        "width": 859,
+        "height": 1160
+      }
+    ],
+    "key": "b977a1250611"
+  },
+  "journeyofficial-67ef95f6": {
+    "hero": {
+      "base": "/items/journeyofficial-67ef95f6/2d/hero.4c2efdd0",
+      "widths": [
+        480,
+        598
+      ],
+      "width": 598,
+      "height": 990,
+      "mode": "cutout",
+      "subject": [
+        0.0719,
+        0.0434,
+        0.8562,
+        0.8778
+      ],
+      "tone": "#6c6c6c"
+    },
+    "gallery": [
+      {
+        "base": "/items/journeyofficial-67ef95f6/2d/photo-1.4c2efdd0",
+        "widths": [
+          640,
+          1000
+        ],
+        "width": 1000,
+        "height": 1000
+      },
+      {
+        "base": "/items/journeyofficial-67ef95f6/2d/photo-2.4c2efdd0",
+        "widths": [
+          640,
+          1000
+        ],
+        "width": 1000,
+        "height": 1000
+      },
+      {
+        "base": "/items/journeyofficial-67ef95f6/2d/photo-3.4c2efdd0",
+        "widths": [
+          640,
+          1000
+        ],
+        "width": 1000,
+        "height": 1000
+      }
+    ],
+    "key": "4c2efdd0ff8f"
+  },
+  "amazon-3f443256": {
+    "hero": {
+      "base": "/items/amazon-3f443256/2d/hero.ced802c4",
+      "widths": [
+        480,
+        625
+      ],
+      "width": 625,
+      "height": 1710,
+      "mode": "cutout",
+      "subject": [
+        0.12,
+        0.0439,
+        0.76,
+        0.8772
+      ],
+      "tone": "#aaab8b"
+    },
+    "gallery": [
+      {
+        "base": "/items/amazon-3f443256/2d/photo-1.ced802c4",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/amazon-3f443256/2d/photo-2.ced802c4",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "ced802c427b5"
+  },
+  "article-f1bb2888": {
+    "hero": {
+      "base": "/items/article-f1bb2888/2d/hero.f25eca66",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 2591,
+      "mode": "cutout",
+      "subject": [
+        0.0708,
+        0.0437,
+        0.8583,
+        0.8772
+      ],
+      "tone": "#dfc6a0"
+    },
+    "gallery": [
+      {
+        "base": "/items/article-f1bb2888/2d/photo-1.f25eca66",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/article-f1bb2888/2d/photo-2.f25eca66",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/article-f1bb2888/2d/photo-3.f25eca66",
+        "widths": [
+          640
+        ],
+        "width": 640,
+        "height": 640
+      }
+    ],
+    "key": "f25eca667e6d"
+  },
+  "westelm-807ef4ee": {
+    "hero": {
+      "base": "/items/westelm-807ef4ee/2d/hero.ea152b11",
+      "widths": [
+        480,
+        960
+      ],
+      "width": 960,
+      "height": 1908,
+      "mode": "cutout",
+      "subject": [
+        0.0874,
+        0.044,
+        0.8252,
+        0.8773
+      ],
+      "tone": "#a6643e"
+    },
+    "gallery": [
+      {
+        "base": "/items/westelm-807ef4ee/2d/photo-1.ea152b11",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1281
+      }
+    ],
+    "key": "ea152b1141b0"
+  },
+  "article-c5f4a3af": {
+    "hero": {
+      "base": "/items/article-c5f4a3af/2d/hero.0bba868c",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 2148,
+      "mode": "cutout",
+      "subject": [
+        0.0591,
+        0.044,
+        0.8818,
+        0.8771
+      ],
+      "tone": "#e4cfad"
+    },
+    "gallery": [
+      {
+        "base": "/items/article-c5f4a3af/2d/photo-1.0bba868c",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/article-c5f4a3af/2d/photo-2.0bba868c",
+        "widths": [
+          640
+        ],
+        "width": 640,
+        "height": 640
+      },
+      {
+        "base": "/items/article-c5f4a3af/2d/photo-3.0bba868c",
+        "widths": [
+          640
+        ],
+        "width": 640,
+        "height": 640
+      }
+    ],
+    "key": "0bba868c0ebc"
+  },
+  "ikea-58ff40a7": {
+    "hero": {
+      "base": "/items/ikea-58ff40a7/2d/hero.bc97b12a",
+      "widths": [
+        480,
+        960,
+        1177
+      ],
+      "width": 1177,
+      "height": 1530,
+      "mode": "cutout",
+      "subject": [
+        0.0569,
+        0.0438,
+        0.8862,
+        0.8771
+      ],
+      "tone": "#cfcabf"
+    },
+    "gallery": [
+      {
+        "base": "/items/ikea-58ff40a7/2d/photo-1.bc97b12a",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/ikea-58ff40a7/2d/photo-2.bc97b12a",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/ikea-58ff40a7/2d/photo-3.bc97b12a",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "bc97b12abf37"
+  },
+  "westelm-59a707a0": {
+    "hero": {
+      "base": "/items/westelm-59a707a0/2d/hero.11a285ce",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 1101,
+      "mode": "cutout",
+      "subject": [
+        0.0456,
+        0.0662,
+        0.9089,
+        0.8152
+      ],
+      "tone": "#6b6461"
+    },
+    "gallery": [
+      {
+        "base": "/items/westelm-59a707a0/2d/photo-1.11a285ce",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/westelm-59a707a0/2d/photo-2.11a285ce",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/westelm-59a707a0/2d/photo-3.11a285ce",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "11a285ce0b24"
+  },
+  "philips-hue-9e653c7b": {
+    "hero": {
+      "base": "/items/philips-hue-9e653c7b/2d/hero.638cfcc5",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 2066,
+      "mode": "cutout",
+      "subject": [
+        0.0568,
+        0.044,
+        0.8864,
+        0.8771
+      ],
+      "tone": "#d1b0c6"
+    },
+    "gallery": [
+      {
+        "base": "/items/philips-hue-9e653c7b/2d/photo-1.638cfcc5",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/philips-hue-9e653c7b/2d/photo-2.638cfcc5",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/philips-hue-9e653c7b/2d/photo-3.638cfcc5",
+        "widths": [
+          500
+        ],
+        "width": 500,
+        "height": 400
+      }
+    ],
+    "key": "638cfcc5e2e1"
+  },
+  "westelm-7ff32545": {
+    "hero": {
+      "base": "/items/westelm-7ff32545/2d/hero.65176eb4",
+      "widths": [
+        480,
+        960,
+        1428
+      ],
+      "width": 1428,
+      "height": 686,
+      "mode": "cutout",
+      "subject": [
+        0.0455,
+        0.0948,
+        0.909,
+        0.7347
+      ],
+      "tone": "#c5beb4"
+    },
+    "gallery": [
+      {
+        "base": "/items/westelm-7ff32545/2d/photo-1.65176eb4",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "65176eb49ba9"
+  },
+  "ikea-b292ec09": {
+    "hero": {
+      "base": "/items/ikea-b292ec09/2d/hero.4bf895b7",
+      "widths": [
+        480,
+        960,
+        1233
+      ],
+      "width": 1233,
+      "height": 1532,
+      "mode": "cutout",
+      "subject": [
+        0.0543,
+        0.0437,
+        0.8913,
+        0.8773
+      ],
+      "tone": "#dec4a9"
+    },
+    "gallery": [
+      {
+        "base": "/items/ikea-b292ec09/2d/photo-1.4bf895b7",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/ikea-b292ec09/2d/photo-2.4bf895b7",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/ikea-b292ec09/2d/photo-3.4bf895b7",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "4bf895b79347"
+  },
+  "amazon-534aae5e": {
+    "hero": {
+      "base": "/items/amazon-534aae5e/2d/hero.c6bc28fd",
+      "widths": [
+        480,
+        839
+      ],
+      "width": 839,
+      "height": 1186,
+      "mode": "cutout",
+      "subject": [
+        0.062,
+        0.0438,
+        0.876,
+        0.8769
+      ],
+      "tone": "#c0bfbf"
+    },
+    "gallery": [
+      {
+        "base": "/items/amazon-534aae5e/2d/photo-1.c6bc28fd",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/amazon-534aae5e/2d/photo-2.c6bc28fd",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/amazon-534aae5e/2d/photo-3.c6bc28fd",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "c6bc28fdeb61"
+  },
+  "amazon-f9715de1": {
+    "hero": {
+      "base": "/items/amazon-f9715de1/2d/hero.2caa7ca9",
+      "widths": [
+        480,
+        960,
+        1378
+      ],
+      "width": 1378,
+      "height": 1270,
+      "mode": "cutout",
+      "subject": [
+        0.0457,
+        0.0496,
+        0.9086,
+        0.8614
+      ],
+      "tone": "#abaaa9"
+    },
+    "gallery": [
+      {
+        "base": "/items/amazon-f9715de1/2d/photo-1.2caa7ca9",
+        "widths": [
+          640,
+          1267
+        ],
+        "width": 1267,
+        "height": 1360
+      },
+      {
+        "base": "/items/amazon-f9715de1/2d/photo-2.2caa7ca9",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/amazon-f9715de1/2d/photo-3.2caa7ca9",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "2caa7ca977ea"
+  },
+  "yohann-f0afe31c": {
+    "hero": {
+      "base": "/items/yohann-f0afe31c/2d/hero.7564c4cb",
+      "widths": [
+        480,
+        960,
+        1322
+      ],
+      "width": 1322,
+      "height": 1012,
+      "mode": "cutout",
+      "subject": [
+        0.0454,
+        0.0593,
+        0.9092,
+        0.834
+      ],
+      "tone": "#d29a67"
+    },
+    "gallery": [
+      {
+        "base": "/items/yohann-f0afe31c/2d/photo-1.7564c4cb",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 720
+      },
+      {
+        "base": "/items/yohann-f0afe31c/2d/photo-2.7564c4cb",
+        "widths": [
+          640,
+          1268
+        ],
+        "width": 1268,
+        "height": 1267
+      },
+      {
+        "base": "/items/yohann-f0afe31c/2d/photo-3.7564c4cb",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 720
+      }
+    ],
+    "key": "7564c4cb8e3e"
+  },
+  "revivalrugs-86802fd7": {
+    "hero": {
+      "base": "/items/revivalrugs-86802fd7/2d/hero.9effaac5",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 517,
+      "mode": "cutout",
+      "subject": [
+        0.0457,
+        0.1414,
+        0.9086,
+        0.6048
+      ],
+      "tone": "#454536"
+    },
+    "gallery": [
+      {
+        "base": "/items/revivalrugs-86802fd7/2d/photo-1.9effaac5",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 915
+      },
+      {
+        "base": "/items/revivalrugs-86802fd7/2d/photo-2.9effaac5",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "base": "/items/revivalrugs-86802fd7/2d/photo-3.9effaac5",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 853
+      }
+    ],
+    "key": "9effaac51981"
+  },
+  "roomandboard-604fe316": {
+    "hero": {
+      "base": "/items/roomandboard-604fe316/2d/hero.42bd0a6d",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 910,
+      "mode": "cutout",
+      "subject": [
+        0.0456,
+        0.0802,
+        0.9088,
+        0.7759
+      ],
+      "tone": "#5d453a"
+    },
+    "gallery": [
+      {
+        "base": "/items/roomandboard-604fe316/2d/photo-1.42bd0a6d",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1575
+      }
+    ],
+    "key": "42bd0a6d1c43"
+  },
+  "amazon-1fd6380c": {
+    "hero": {
+      "base": "/items/amazon-1fd6380c/2d/hero.b179b9b9",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 1350,
+      "mode": "cutout",
+      "subject": [
+        0.0453,
+        0.0537,
+        0.9094,
+        0.8492
+      ],
+      "tone": "#bda489"
+    },
+    "gallery": [
+      {
+        "base": "/items/amazon-1fd6380c/2d/photo-1.b179b9b9",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "b179b9b907be"
+  },
+  "etsy-c0af13ae": {
+    "hero": {
+      "base": "/items/etsy-c0af13ae/2d/hero.26757933",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 1022,
+      "mode": "cutout",
+      "subject": [
+        0.0456,
+        0.0713,
+        0.9089,
+        0.8005
+      ],
+      "tone": "#b0865c"
+    },
+    "gallery": [
+      {
+        "base": "/items/etsy-c0af13ae/2d/photo-1.26757933",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1919
+      },
+      {
+        "base": "/items/etsy-c0af13ae/2d/photo-2.26757933",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/etsy-c0af13ae/2d/photo-3.26757933",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1908
+      }
+    ],
+    "key": "26757933c564"
+  },
+  "amazon-57d10ff1": {
+    "hero": {
+      "base": "/items/amazon-57d10ff1/2d/hero.80b1cd30",
+      "widths": [
+        480,
+        960,
+        1095
+      ],
+      "width": 1095,
+      "height": 2662,
+      "mode": "cutout",
+      "subject": [
+        0.1068,
+        0.044,
+        0.7863,
+        0.8772
+      ],
+      "tone": "#c9beb9"
+    },
+    "gallery": [
+      {
+        "base": "/items/amazon-57d10ff1/2d/photo-1.80b1cd30",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1463
+      },
+      {
+        "base": "/items/amazon-57d10ff1/2d/photo-2.80b1cd30",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1463
+      }
+    ],
+    "key": "80b1cd308104"
+  },
+  "amazon-436fc733": {
+    "hero": {
+      "base": "/items/amazon-436fc733/2d/hero.b44aa12a",
+      "widths": [
+        480,
+        944
+      ],
+      "width": 944,
+      "height": 1201,
+      "mode": "cutout",
+      "subject": [
+        0.0561,
+        0.0441,
+        0.8877,
+        0.8768
+      ],
+      "tone": "#3f3f3e"
+    },
+    "gallery": [
+      {
+        "base": "/items/amazon-436fc733/2d/photo-1.b44aa12a",
+        "widths": [
+          640,
+          1200
+        ],
+        "width": 1200,
+        "height": 1500
+      },
+      {
+        "base": "/items/amazon-436fc733/2d/photo-2.b44aa12a",
+        "widths": [
+          640,
+          1200
+        ],
+        "width": 1200,
+        "height": 1500
+      },
+      {
+        "base": "/items/amazon-436fc733/2d/photo-3.b44aa12a",
+        "widths": [
+          640,
+          1200
+        ],
+        "width": 1200,
+        "height": 1500
+      }
+    ],
+    "key": "b44aa12ae3d4"
+  },
+  "dyson-a11c9a91": {
+    "hero": {
+      "base": "/items/dyson-a11c9a91/2d/hero.e460bdc7",
+      "widths": [
+        443
+      ],
+      "width": 443,
+      "height": 1152,
+      "mode": "cutout",
+      "subject": [
+        0.1151,
+        0.0443,
+        0.7698,
+        0.8767
+      ],
+      "tone": "#8d8f91"
+    },
+    "gallery": [
+      {
+        "base": "/items/dyson-a11c9a91/2d/photo-1.e460bdc7",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 720
+      },
+      {
+        "base": "/items/dyson-a11c9a91/2d/photo-2.e460bdc7",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 720
+      }
+    ],
+    "key": "e460bdc704e6"
+  },
+  "apple-47da18d0": {
+    "hero": {
+      "base": "/items/apple-47da18d0/2d/hero.7a521b53",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 1051,
+      "mode": "cutout",
+      "subject": [
+        0.0455,
+        0.0693,
+        0.909,
+        0.8061
+      ],
+      "tone": "#795197"
+    },
+    "gallery": [
+      {
+        "base": "/items/apple-47da18d0/2d/photo-1.7a521b53",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "7a521b5377fe"
+  },
+  "apple-3facb22e": {
+    "hero": {
+      "base": "/items/apple-3facb22e/2d/hero.d2c4b3f9",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 462,
+      "mode": "cutout",
+      "subject": [
+        0.0455,
+        0.1577,
+        0.909,
+        0.559
+      ],
+      "tone": "#d0d0d1"
+    },
+    "gallery": [
+      {
+        "base": "/items/apple-3facb22e/2d/photo-1.d2c4b3f9",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/apple-3facb22e/2d/photo-2.d2c4b3f9",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/apple-3facb22e/2d/photo-3.d2c4b3f9",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "d2c4b3f9e7d7"
+  },
+  "amazon-96467ee5": {
+    "hero": {
+      "base": "/items/amazon-96467ee5/2d/hero.b3ba99ac",
+      "widths": [
+        480,
+        960,
+        1118
+      ],
+      "width": 1118,
+      "height": 883,
+      "mode": "cutout",
+      "subject": [
+        0.0456,
+        0.0578,
+        0.9088,
+        0.8392
+      ],
+      "tone": "#e1e1e1"
+    },
+    "gallery": [
+      {
+        "base": "/items/amazon-96467ee5/2d/photo-1.b3ba99ac",
+        "widths": [
+          640,
+          938
+        ],
+        "width": 938,
+        "height": 1500
+      },
+      {
+        "base": "/items/amazon-96467ee5/2d/photo-2.b3ba99ac",
+        "widths": [
+          640,
+          938
+        ],
+        "width": 938,
+        "height": 1500
+      },
+      {
+        "base": "/items/amazon-96467ee5/2d/photo-3.b3ba99ac",
+        "widths": [
+          640,
+          938
+        ],
+        "width": 938,
+        "height": 1500
+      }
+    ],
+    "key": "b3ba99acc182"
+  },
+  "amazon-ad8ad72f": {
+    "hero": {
+      "base": "/items/amazon-ad8ad72f/2d/hero.9079c025",
+      "widths": [
+        480,
+        960,
+        1091
+      ],
+      "width": 1091,
+      "height": 1664,
+      "mode": "cutout",
+      "subject": [
+        0.0669,
+        0.0439,
+        0.8662,
+        0.8774
+      ],
+      "tone": "#d8d8d8"
+    },
+    "gallery": [
+      {
+        "base": "/items/amazon-ad8ad72f/2d/photo-1.9079c025",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/amazon-ad8ad72f/2d/photo-2.9079c025",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/amazon-ad8ad72f/2d/photo-3.9079c025",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "9079c025febc"
+  },
+  "anker-2866be47": {
+    "hero": {
+      "base": "/items/anker-2866be47/2d/hero.fa41065f",
+      "widths": [
+        480,
+        960,
+        1379
+      ],
+      "width": 1379,
+      "height": 3010,
+      "mode": "cutout",
+      "subject": [
+        0.0957,
+        0.0439,
+        0.8086,
+        0.8771
+      ],
+      "tone": "#404244"
+    },
+    "gallery": [
+      {
+        "base": "/items/anker-2866be47/2d/photo-1.fa41065f",
+        "widths": [
+          640,
+          1200
+        ],
+        "width": 1200,
+        "height": 1500
+      },
+      {
+        "base": "/items/anker-2866be47/2d/photo-2.fa41065f",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1600
+      },
+      {
+        "base": "/items/anker-2866be47/2d/photo-3.fa41065f",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1600
+      }
+    ],
+    "key": "fa41065ff43b"
+  }
+}

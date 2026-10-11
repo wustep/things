@@ -8,6 +8,7 @@ import { Logger, NodeIO, type Document, type Texture } from '@gltf-transform/cor
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 import { dedup, prune, quantize } from '@gltf-transform/functions';
 import { decode } from './images.ts';
+import { refineDocument, type Finish } from './refine.ts';
 
 /** Base colour and normal maps carry the detail. */
 const MAX_TEXTURE = 1024;
@@ -16,7 +17,7 @@ const SMALL_TEXTURE = 512;
 
 type Role = 'baseColor' | 'normal' | 'metallicRoughness' | 'occlusion' | 'emissive' | 'other';
 
-export async function slimGlb(glb: Buffer, log?: (msg: string) => void): Promise<Buffer> {
+export async function slimGlb(glb: Buffer, log?: (msg: string) => void, finish: Finish = {}): Promise<Buffer> {
   const io = new NodeIO().registerExtensions(ALL_EXTENSIONS);
   const doc = await io.readBinary(new Uint8Array(glb));
   doc.setLogger(new Logger(Logger.Verbosity.SILENT)); // the transforms narrate every pruned accessor otherwise
@@ -41,6 +42,13 @@ export async function slimGlb(glb: Buffer, log?: (msg: string) => void): Promise
     } catch (err) {
       log?.(`texture ${tex.getName() || role} left as-is: ${(err as Error).message}`);
     }
+  }
+
+  // Even out Meshy's patchy atlas, lift near-blacks, floor roughness (scripts/lib/refine.ts).
+  try {
+    await refineDocument(doc, finish, log);
+  } catch (err) {
+    log?.(`refine skipped: ${(err as Error).message}`);
   }
 
   await doc.transform(

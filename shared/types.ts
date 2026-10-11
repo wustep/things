@@ -61,6 +61,11 @@ export interface Item {
   description?: string;
   /** Shelf grouping, e.g. a Moonsift collection section ("Office", "Home"). */
   section?: string;
+  /**
+   * Stephen's notes on the thing, in Markdown. Written in the detail view while `npm run dev` is
+   * serving (saved back here); read-only on the static site. Ingest never touches it.
+   */
+  commentary?: string;
   /** Public paths to reference images, primary first. */
   images: string[];
   asset: Asset;

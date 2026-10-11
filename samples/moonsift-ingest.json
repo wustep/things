@@ -14,67 +14,85 @@
     "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_2ggaNkdLJtKkjDjlZsw8.jpg"
   },
   {
-    "url": "https://ergonofis.com/en-us/products/sway-standing-desk?_pos=3&_psq=ergonifis&_ss=e&_v=1.0&variant=43994522255609",
-    "title": "Ergonofis Sway Standing Desk",
-    "price": "$1755",
+    "url": "https://ergonofis.com/products/sway-standing-desk?variant=45146331512911",
+    "title": "Sway Standing Desk",
+    "brand": "ergonofis",
+    "price": "$2,595",
     "section": "Office",
-    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_FXAGz2WuhPJ4PD4FyVxO.jpg"
+    "image": "https://cdn.shopify.com/s/files/1/0707/4752/1103/files/sway-standing-desk-857746.png",
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0707/4752/1103/files/sway-standing-desk-2611869.png",
+      "https://cdn.shopify.com/s/files/1/0707/4752/1103/files/sway-standing-desk-9166652.png"
+    ],
+    "maxRefs": 3
   },
   {
     "url": "https://amzn.to/4bAIa1U",
-    "title": "Logitech MX Master 3S",
+    "title": "MX Master 3S",
     "price": "$89.99",
     "section": "Office",
-    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_iZ8yEHnb6iKIlyE92K9T.jpg"
+    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_iZ8yEHnb6iKIlyE92K9T.jpg",
+    "brand": "Logitech"
   },
   {
     "url": "https://www.jossandmain.com/furniture/pdp/joss-main-alix-78-recessed-arm-chesterfield-sofa-j111809464.html",
-    "title": "Joss & Main Alix 78'' Recessed Arm Chesterfield Sofa",
+    "title": "Alix 78″ Recessed Arm Chesterfield Sofa",
     "price": "$1899",
     "section": "Home",
-    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_sbBQLDuhJWFCkkePluJm.jpg"
+    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_sbBQLDuhJWFCkkePluJm.jpg",
+    "brand": "Joss & Main"
   },
   {
     "url": "https://www.westelm.com/products/calgary-tiered-bookshelf-h6978/",
     "title": "Calgary Tiered Bookshelf",
     "price": "$1199",
     "section": "Home",
-    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_meHpI58q3V47IHPVjaof.jpg"
+    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_meHpI58q3V47IHPVjaof.jpg",
+    "brand": "West Elm",
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0908/3348/6130/files/calgary-tiered-bookshelf-70-xl_f02460ac-0c50-4ef8-a356-db1f581c7048.jpg",
+      "https://cdn.shopify.com/s/files/1/0908/3348/6130/files/calgary-tiered-bookshelf-70-xl.jpg"
+    ]
   },
   {
     "url": "https://amzn.to/4sLMhhN",
-    "title": "Yamazaki Home Tower Laundry Basket",
+    "title": "Tower Laundry Basket",
     "price": "$78.00",
     "section": "Home",
-    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_mG5MZUvbVyeMxZI17feP.jpg"
+    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_mG5MZUvbVyeMxZI17feP.jpg",
+    "brand": "Yamazaki Home"
   },
   {
-    "url": "https://www.bludot.com/products/perch-outdoor-lounge-chair?variant=44723226968243",
-    "title": "Blu Dot Perch Outdoor Lounge Chair",
-    "price": "$1,595.00",
+    "url": "https://www.bludot.com/products/perch-outdoor-lounge-chair?variant=44723226771635",
+    "title": "Perch Outdoor Lounge Chair",
+    "brand": "Blu Dot",
+    "price": "$1,276",
     "section": "Home",
-    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_QUe7k9jgFVIF1ZdNgEPi.jpg"
+    "image": "https://cdn.shopify.com/s/files/1/0681/5943/9027/files/ph1_clgchr_cl_fronlow_2_1faab315-c8c2-4779-8e07-96fe97d773c8.jpg",
+    "maxRefs": 1
   },
   {
     "url": "https://www.roomandboard.com/catalog/office/conference-room-tables/ventura-conference-tables/284351?CHAR_284351_VENTURA_COLL_WOOD=WA",
     "title": "Ventura Dining Table",
     "price": "$2799",
     "section": "Home",
-    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_KOM4F5jlyEMXkiXXO9PD.jpg"
+    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_KOM4F5jlyEMXkiXXO9PD.jpg",
+    "brand": "Room & Board"
   },
   {
-    "url": "https://amzn.to/3LyV7yQ",
-    "title": "simplehuman 60L Trash Can",
-    "price": "$149.98",
-    "section": "Home",
-    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_Xf2fxWNxNShDO5TGhVoi.jpg"
+    "url": "https://www.amazon.com/dp/B011MHN6S2",
+    "title": "45L Semi-Round Sensor Can, Brushed Stainless Steel",
+    "brand": "simplehuman",
+    "price": "$124.99",
+    "section": "Home"
   },
   {
     "url": "https://theartifox.com/collections/side/products/side-white-oak",
-    "title": "ARTIFOX Side Table (White Oak)",
+    "title": "Side Table (White Oak)",
     "price": "$1190",
     "section": "Home",
-    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_UmxY14oPnjzfaJQ6z7CG.jpg"
+    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_UmxY14oPnjzfaJQ6z7CG.jpg",
+    "brand": "Artifox"
   },
   {
     "url": "https://amzn.to/3LE6jtS",
@@ -88,14 +106,16 @@
     "title": "Errol Dining Chair",
     "price": "$529.00",
     "section": "Home",
-    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_XiSQlmrfaGY4OSClDNAP.jpg"
+    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_XiSQlmrfaGY4OSClDNAP.jpg",
+    "brand": "Room & Board"
   },
   {
     "url": "https://amzn.to/3ZixSfw",
-    "title": "BLUEAIR Air Purifier",
+    "title": "Air Purifier",
     "price": "$139",
     "section": "Home",
-    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_6bMynQ1O0r7CNlKauH6D.jpg"
+    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_6bMynQ1O0r7CNlKauH6D.jpg",
+    "brand": "Blueair"
   },
   {
     "url": "https://amzn.to/4jTkxUE",
@@ -120,16 +140,25 @@
   },
   {
     "url": "https://www.jamescookartworkshop.com/pages/ea-the-bestsellers-collection",
-    "title": "James Cook Artwork Shop",
+    "title": "Bestsellers Collection",
     "section": "Misc",
-    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_u6cXuHhZg7FzPhOn7gKT.jpg"
+    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_u6cXuHhZg7FzPhOn7gKT.jpg",
+    "brand": "James Cook"
   },
   {
     "url": "https://us.nothing.tech/products/headphone-1?variant=46734988705944",
-    "title": "Nothing Headphone (1)",
-    "price": "$299",
+    "title": "Headphone (1)",
+    "price": "$199",
     "section": "Misc",
-    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_NYKUrszFZKs0e2VnmfhY.jpg"
+    "image": "https://cdn.shopify.com/s/files/1/0579/8091/1768/files/headphone-1-white-3_4-view-thumbnail.webp?v=1788842815",
+    "images": [
+      "https://cdn.sanity.io/images/gtd4w1cq/production/e46a5dce8b323b3601995bb54dc8d818cab0b7bf-4096x2305.jpg?auto=format",
+      "https://cdn.sanity.io/images/gtd4w1cq/production/c45d469722841bcffddc4bb2520582f0e6c414d8-864x864.jpg?auto=format",
+      "https://cdn.sanity.io/images/gtd4w1cq/production/777d84280036889f8fdfe4d472b682d251d8d55c-1536x1153.jpg?auto=format",
+      "https://cdn.sanity.io/images/gtd4w1cq/production/88f41084d5adc91d9835c009738c0f6d20f0cdee-4096x2305.jpg?auto=format"
+    ],
+    "maxRefs": 5,
+    "brand": "Nothing"
   },
   {
     "url": "https://remsen.co/products/the-pill-container",

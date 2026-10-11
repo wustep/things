@@ -1,0 +1,98 @@
+{
+  "ugmonk-5117191f": {
+    "harmonize": 0.3,
+    "spread": 40
+  },
+  "ugmonk-ef1055c7": {
+    "harmonize": 0.3,
+    "spread": 40
+  },
+  "amzn-f76e128e": {
+    "harmonize": 0.9,
+    "spread": 200,
+    "flatten": 0.45,
+    "lift": 0.025
+  },
+  "jossandmain-cc12a72d": {
+    "harmonize": 0.6,
+    "spread": 120
+  },
+  "westelm-0d4a26d0": {
+    "harmonize": 0.35,
+    "spread": 40
+  },
+  "amzn-c91e1f10": {
+    "harmonize": 0.8,
+    "spread": 160,
+    "flatten": 0.35
+  },
+  "roomandboard-ce472b14": {
+    "harmonize": 0.6,
+    "spread": 120
+  },
+  "theartifox-f5289f2b": {
+    "harmonize": 0.45,
+    "spread": 60
+  },
+  "amzn-a0753bc5": {
+    "harmonize": 0.35,
+    "spread": 40,
+    "glass": {
+      "min": 0.8,
+      "alpha": 0.2
+    }
+  },
+  "roomandboard-03a90ea7": {
+    "harmonize": 0.5,
+    "spread": 80,
+    "lift": 0.015
+  },
+  "amzn-f530eeab": {
+    "harmonize": 0.9,
+    "spread": 240,
+    "flatten": 0.55
+  },
+  "amzn-1fc53358": {
+    "harmonize": 0.4,
+    "spread": 60
+  },
+  "peakdesign-8f476d14": {
+    "harmonize": 0.8,
+    "spread": 160,
+    "flatten": 0.35,
+    "lift": 0.01
+  },
+  "amzn-0f80deec": {
+    "harmonize": 0.25,
+    "spread": 30
+  },
+  "jamescookartworkshop-b0e89a91": {
+    "harmonize": 0.2,
+    "spread": 30
+  },
+  "remsen-f65a1f42": {
+    "harmonize": 0.6,
+    "spread": 120,
+    "roughnessMin": 0.34
+  },
+  "journeyofficial-67ef95f6": {
+    "harmonize": 0.5,
+    "spread": 80,
+    "lift": 0.02
+  },
+  "amazon-b05badce": {
+    "harmonize": 0.5,
+    "spread": 80,
+    "lift": 0.02
+  },
+  "roli-0e3366f5": {
+    "harmonize": 0.8,
+    "spread": 200,
+    "flatten": 0.5,
+    "lift": 0.025
+  },
+  "amazon-3f443256": {
+    "harmonize": 0.5,
+    "spread": 80
+  }
+}

@@ -68,7 +68,7 @@ export interface ProcessedPrimary {
 }
 
 export type DecodedImage = Awaited<ReturnType<typeof Jimp.fromBuffer>>;
-type Img = DecodedImage;
+export type Img = DecodedImage;
 
 export async function decode(buffer: Buffer): Promise<Img> {
   return Jimp.fromBuffer(buffer);
@@ -104,12 +104,21 @@ export async function normalizeReference(buffer: Buffer, maxSide = 1200): Promis
  */
 export async function processPrimary(buffer: Buffer, maxSide = 1024): Promise<ProcessedPrimary> {
   const img = await decode(buffer);
-  flattenOntoWhite(img);
+  // A source that is already a cut-out (transparent PNG/WebP) carries a better mask than any
+  // color keying could produce, and keying would eat white highlights inside it. Keep its alpha.
+  const sourceAlpha = hasMeaningfulAlpha(img.bitmap.data);
+  if (!sourceAlpha) flattenOntoWhite(img);
   fit(img, 1400);
 
   const { width, height, data } = img.bitmap;
-  const bg = estimateBackground(data, width, height);
-  const removed = bg ? keyOutBackground(data, width, height, bg) : 0;
+  let removed: number;
+  if (sourceAlpha) {
+    removed = 0;
+    for (let o = 3; o < data.length; o += 4) if (data[o] < 24) removed++;
+  } else {
+    const bg = estimateBackground(data, width, height);
+    removed = bg ? keyOutBackground(data, width, height, bg) : 0;
+  }
   const removedFraction = removed / (width * height);
 
   const box = opaqueBounds(data, width, height);
@@ -174,6 +183,20 @@ function fit(img: Img, maxSide: number) {
   const { width, height } = img.bitmap;
   const scale = maxSide / Math.max(width, height);
   if (scale < 1) img.resize({ w: Math.round(width * scale), h: Math.round(height * scale) });
+}
+
+/**
+ * True when at least 1% of the pixels are see-through. A stray translucent pixel (or a fully
+ * opaque PNG that merely has an alpha channel) does not count as an existing cut-out.
+ */
+export function hasMeaningfulAlpha(data: Buffer, minFraction = 0.01): boolean {
+  const pixels = data.length / 4;
+  const needed = Math.max(1, Math.ceil(pixels * minFraction));
+  let seeThrough = 0;
+  for (let o = 3; o < data.length; o += 4) {
+    if (data[o] < 250 && ++seeThrough >= needed) return true;
+  }
+  return false;
 }
 
 /** Composite semi-transparent sources onto white so keying behaves predictably. */

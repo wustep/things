@@ -4,38 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="description" content="Things: a black-void shelf of products you drop in by URL." />
+    <meta name="theme-color" content="#14120f" />
+    <meta name="description" content="Things: a quiet shelf of objects, and notes on them." />
     <title>Things</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
   <body>
-    <canvas id="stage" aria-label="A shelf of things floating in the dark"></canvas>
+    <a class="skip" href="#shelf">Skip to the shelf</a>
+    <header class="masthead"><h1 class="mark" id="mark"><a href="/" data-home>Things</a><span id="count" class="mark-count"></span></h1></header>
 
-    <div class="brand" aria-hidden="true">Things<span id="count"></span></div>
-    <nav id="sections" class="sections" aria-label="Sections" hidden></nav>
+    <main id="shelf" class="cabinet" tabindex="-1" aria-label="The shelf" aria-busy="true">
+      <noscript><p class="cabinet-note">Things needs JavaScript to lay out the shelf.</p></noscript>
+    </main>
 
-    <section id="empty" class="empty" aria-live="polite">
-      <p class="empty-title">Nothing here yet.</p>
-      <p id="empty-hint" class="empty-hint" hidden>Paste or drop a product URL to put it on the shelf.</p>
-      <pre class="empty-cmd">npm run ingest -- https://example.com/product</pre>
-    </section>
+    <div id="detail" class="detail" role="dialog" aria-modal="true" aria-labelledby="detail-title" hidden></div>
 
-    <a id="card" class="card" href="#" target="_blank" rel="noopener noreferrer" aria-live="polite" aria-hidden="true" data-keep-hover>
-      <img id="card-thumb" class="card-thumb" alt="" decoding="async" />
-      <span class="card-body">
-        <span id="card-brand" class="card-brand" hidden></span>
-        <span id="card-title" class="card-title"></span>
-        <span class="card-foot">
-          <span id="card-price" class="card-price" hidden></span>
-          <span id="card-domain" class="card-domain"></span>
-        </span>
-      </span>
-      <span class="card-open" aria-hidden="true">&#8599;</span>
-    </a>
-
-    <div id="status" class="status" role="status"></div>
-    <div id="drop" class="drop" aria-hidden="true"><span>Drop to add</span></div>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
 
     <script type="module" src="/src/main.ts"></script>
   </body>

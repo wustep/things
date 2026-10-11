@@ -1,0 +1,26 @@
+[
+  {
+    "file": "ref-0.jpg",
+    "url": "https://m.media-amazon.com/images/I/41ThWw7JAWL.jpg",
+    "width": 1200,
+    "height": 1920
+  },
+  {
+    "file": "ref-1.jpg",
+    "url": "https://m.media-amazon.com/images/I/619XU0T5GzL._SL1500_.jpg",
+    "width": 938,
+    "height": 1500
+  },
+  {
+    "file": "ref-2.jpg",
+    "url": "https://m.media-amazon.com/images/I/61i1o89SVWL._SL1500_.jpg",
+    "width": 938,
+    "height": 1500
+  },
+  {
+    "file": "ref-3.jpg",
+    "url": "https://m.media-amazon.com/images/I/61-lnzfd2KL._SL1500_.jpg",
+    "width": 938,
+    "height": 1500
+  }
+]

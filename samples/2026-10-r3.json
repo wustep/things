@@ -1,0 +1,52 @@
+[
+  {
+    "url": "https://ergonofis.com/products/single-dual-monitor-arms?variant=45146352910415",
+    "title": "Monitor Arm, White",
+    "brand": "ergonofis",
+    "price": "$165",
+    "section": "Office",
+    "image": "https://cdn.shopify.com/s/files/1/0707/4752/1103/files/monitor-arm-266353.png",
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0707/4752/1103/files/monitor-arm-4915546.png",
+      "https://cdn.shopify.com/s/files/1/0707/4752/1103/files/monitor-arm-5217862.png"
+    ],
+    "maxRefs": 3
+  },
+  {
+    "url": "https://www.peakdesign.com/products/wash-pouch?Size=Small&Color=Sage",
+    "title": "Small Wash Pouch, Sage",
+    "brand": "Peak Design",
+    "price": "$49.95",
+    "section": "Misc",
+    "image": "https://cdn.shopify.com/s/files/1/2986/1172/files/small-wash-pouch-sage-1.jpg",
+    "maxRefs": 1
+  },
+  {
+    "url": "https://www.peakdesign.com/products/small-tech-pouch-black",
+    "title": "Small Tech Pouch, Black",
+    "brand": "Peak Design",
+    "price": "$49.95",
+    "section": "Misc",
+    "image": "https://cdn.shopify.com/s/files/1/2986/1172/files/smalltechpouch-black-159A0505_10187358-9116-45c9-bf04-93a326319830.jpg",
+    "images": [
+      "https://cdn.shopify.com/s/files/1/2986/1172/files/smalltechpouch-black-159A8743_c9585f02-c4f4-4602-bca5-370bf1ef346c.jpg",
+      "https://cdn.shopify.com/s/files/1/2986/1172/files/smalltechpouch-black-159A8711_3c5ea126-f16e-4b55-939e-0da00eca9c76.jpg",
+      "https://cdn.shopify.com/s/files/1/2986/1172/files/smalltechpouch-black-159A2211_30a8208a-9dc4-4027-be52-17c2c0212ca1.jpg"
+    ],
+    "maxRefs": 4
+  },
+  {
+    "url": "https://www.amazon.com/dp/B07Q38FWFJ",
+    "title": "Kalimba Thumb Piano, 17 Keys",
+    "brand": "Newlam",
+    "price": "$26.39",
+    "section": "Music",
+    "image": "https://m.media-amazon.com/images/I/71YrxkpiSrL._AC_SL1200_.jpg",
+    "images": [
+      "https://m.media-amazon.com/images/I/81yTVVsjFnL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/817QdjFU0rL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/81E0H7yzIbL._AC_SL1500_.jpg"
+    ],
+    "maxRefs": 4
+  }
+]

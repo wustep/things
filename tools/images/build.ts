@@ -56,7 +56,9 @@ type HeroPick =
        * Also key out backdrop-coloured pixels inside the object (an open frame). true: anything
        * within a few levels of the backdrop, soft ramp (it would eat a white object). 'exact': only
        * sizeable patches that are the backdrop colour itself, so a white object on a white
-       * backdrop keeps its body and loses the backdrop seen through it. 'clear': for clear acrylic
+       * backdrop keeps its body and loses the backdrop seen through it. 'through': like 'exact', but
+       * only patches thick enough to be an opening you see through (a ring's middle); thinner ones
+       * are glare on chrome or gloss, the backdrop reflected, and stay (the Loop earplugs). 'clear': for clear acrylic
        * or glass on a white backdrop, how far each pixel is from the backdrop becomes the matte
        * (together with the model's), so the backdrop seen through it goes and thin clear edges the
        * model missed come back. 'grow': for a shaded backdrop the model kept in a gap (between two
@@ -70,7 +72,7 @@ type HeroPick =
        * neutral, the way clear edges catch the light in a dim room. Flat panels that only show the
        * backdrop go, so there is no milky fill and no glare slabs. Off by default.
        */
-      holes?: boolean | 'exact' | 'clear' | 'grow' | 'fill' | 'glass';
+      holes?: boolean | 'exact' | 'through' | 'clear' | 'grow' | 'fill' | 'glass';
       /** Which model draws the matte: 'general' (default, solid and crisp) or 'matting' (keeps partial alpha: clear acrylic, glass). */
       matte?: MatteModel;
       /**
@@ -88,9 +90,11 @@ type HeroPick =
        */
       floor?: [number, number][];
     };
+/** A gallery photo; crop is [left, top, width, height] in fractions, as for the hero (trim a frame's backdrop edge). */
+type GalleryPick = string | { file: string; crop?: [number, number, number, number] };
 interface Pick {
   hero?: HeroPick;
-  gallery?: string[];
+  gallery?: GalleryPick[];
 }
 
 export interface MediaImage {
@@ -161,7 +165,7 @@ async function saveManifest(manifest: Record<string, MediaEntry>, items: { id: s
   await rename(tmp, MANIFEST_FILE);
 }
 
-type Holes = boolean | 'exact' | 'clear' | 'grow' | 'fill' | 'glass';
+type Holes = boolean | 'exact' | 'through' | 'clear' | 'grow' | 'fill' | 'glass';
 
 function heroOf(pick: Pick): { file: string; mode: 'cutout' | 'photo'; crop?: [number, number, number, number]; holes: Holes; matte: MatteModel; lay: boolean; frame: boolean; floor?: [number, number][] } {
   const h = pick.hero ?? 'ref-0.jpg';
@@ -171,7 +175,7 @@ function heroOf(pick: Pick): { file: string; mode: 'cutout' | 'photo'; crop?: [n
         file: h.file,
         mode: h.mode ?? 'cutout',
         crop: h.crop,
-        holes: h.holes === 'exact' || h.holes === 'clear' || h.holes === 'grow' || h.holes === 'fill' || h.holes === 'glass' ? h.holes : !!h.holes,
+        holes: h.holes === 'exact' || h.holes === 'through' || h.holes === 'clear' || h.holes === 'grow' || h.holes === 'fill' || h.holes === 'glass' ? h.holes : !!h.holes,
         matte: h.matte === 'matting' ? 'matting' : 'general',
         lay: !!h.lay,
         frame: !!h.frame,
@@ -181,8 +185,21 @@ function heroOf(pick: Pick): { file: string; mode: 'cutout' | 'photo'; crop?: [n
 
 async function inputKey(id: string, pick: Pick): Promise<string> {
   const hash = createHash('sha1').update(JSON.stringify({ PIPELINE, model: MODELS[heroOf(pick).matte].sha256, pick }));
-  for (const file of [heroOf(pick).file, ...(pick.gallery ?? [])]) hash.update(await readFile(originalPath(id, file)));
+  for (const file of [heroOf(pick).file, ...(pick.gallery ?? []).map((g) => galleryOf(g).file)]) hash.update(await readFile(originalPath(id, file)));
   return hash.digest('hex').slice(0, 12);
+}
+
+function galleryOf(g: GalleryPick): { file: string; crop?: [number, number, number, number] } {
+  return typeof g === 'string' ? { file: g } : g;
+}
+
+/** crop: [left, top, width, height] in fractions of the (auto-oriented) photo. */
+async function cropTo(img: sharp.Sharp, crop: [number, number, number, number]): Promise<sharp.Sharp> {
+  const m = await img.metadata();
+  const [l, t, w, h] = crop;
+  const W = m.autoOrient?.width ?? m.width!, H = m.autoOrient?.height ?? m.height!;
+  const left = Math.round(l * W), top = Math.round(t * H);
+  return sharp(await img.extract({ left, top, width: Math.min(W - left, Math.round(w * W)), height: Math.min(H - top, Math.round(h * H)) }).toBuffer());
 }
 
 function originalPath(id: string, file: string): string {
@@ -202,13 +219,7 @@ async function buildItem(id: string, pick: Pick, key: string): Promise<MediaEntr
 
   // ---------- hero ----------
   let img = sharp(await readFile(originalPath(id, hero.file))).rotate();
-  if (hero.crop) {
-    const m = await img.metadata();
-    const [l, t, w, h] = hero.crop;
-    const W = m.autoOrient?.width ?? m.width!, H = m.autoOrient?.height ?? m.height!;
-    const left = Math.round(l * W), top = Math.round(t * H);
-    img = sharp(await img.extract({ left, top, width: Math.min(W - left, Math.round(w * W)), height: Math.min(H - top, Math.round(h * H)) }).toBuffer());
-  }
+  if (hero.crop) img = await cropTo(img, hero.crop);
   const base = await img
     .resize(WORK_SIDE, WORK_SIDE, { fit: 'inside', withoutEnlargement: true })
     .ensureAlpha()
@@ -236,8 +247,11 @@ async function buildItem(id: string, pick: Pick, key: string): Promise<MediaEntr
 
   // ---------- gallery ----------
   const gallery: MediaImage[] = [];
-  for (const [i, file] of (pick.gallery ?? []).entries()) {
-    const g = sharp(await readFile(originalPath(id, file))).rotate().flatten({ background: '#ffffff' });
+  for (const [i, entry] of (pick.gallery ?? []).entries()) {
+    const { file, crop } = galleryOf(entry);
+    let photo = sharp(await readFile(originalPath(id, file))).rotate();
+    if (crop) photo = await cropTo(photo, crop);
+    const g = photo.flatten({ background: '#ffffff' });
     const { width = 0, height = 0 } = await g.clone().resize(WORK_SIDE, WORK_SIDE, { fit: 'inside', withoutEnlargement: true }).toBuffer({ resolveWithObject: true }).then((r) => r.info);
     const name = `photo-${i + 1}.${v}`;
     const widths = await encodeSet(g, width, GALLERY_WIDTHS, path.join(staging, name));
@@ -332,6 +346,7 @@ async function cutout(rgba: Buffer, alphaIn: Float32Array, W0: number, H0: numbe
   await debugMask('1b-refined', alpha, W, H);
   const bg = backgroundColour(rgba, alpha, W, H);
   if (holes === 'exact') keyBackdropPatches(rgba, alpha, bg, W, H);
+  else if (holes === 'through') keyBackdropPatches(rgba, alpha, bg, W, H, 3, Math.round(Math.max(W, H) * 0.02));
   else if (holes === 'grow') growBackdrop(rgba, alpha, bg, W, H);
   else if (holes === 'fill') fillEnclosed(alpha, W, H);
   else if (holes === 'clear') {
@@ -654,9 +669,10 @@ function defringe(rgb: Float32Array, alpha: Float32Array, W: number, H: number) 
  * its base bars). Those openings show the backdrop itself: flat, within a level or two of it. Each
  * connected patch of such pixels bigger than a crumb goes, and its rim fades with distance from
  * the backdrop colour, so anti-aliased edges stay clean and a white body a few levels off the
- * backdrop is left alone.
+ * backdrop is left alone. With minThick (holes: 'through'), a patch goes only if a square of
+ * that half-width fits inside it somewhere: an opening is a broad patch, glare on chrome a thin arc.
  */
-function keyBackdropPatches(rgba: Buffer, alpha: Float32Array, bg: [number, number, number], W: number, H: number, TOL = 3) {
+function keyBackdropPatches(rgba: Buffer, alpha: Float32Array, bg: [number, number, number], W: number, H: number, TOL = 3, minThick = 0) {
   const n = W * H;
   const RAMP = 18;
   const dist = new Uint8Array(n);
@@ -664,6 +680,13 @@ function keyBackdropPatches(rgba: Buffer, alpha: Float32Array, bg: [number, numb
     dist[i] = Math.max(Math.abs(rgba[i * 4] - bg[0]), Math.abs(rgba[i * 4 + 1] - bg[1]), Math.abs(rgba[i * 4 + 2] - bg[2]));
   }
   const minArea = Math.max(64, Math.round(n * 0.0002));
+  // Where a backdrop-coloured square of half-width minThick fits (erode = dilate the complement).
+  let core: Uint8Array | null = null;
+  if (minThick > 0) {
+    core = new Uint8Array(n);
+    for (let i = 0; i < n; i++) core[i] = dist[i] > TOL ? 1 : 0;
+    dilate(core, W, H, minThick);
+  }
   const patch = new Uint8Array(n);
   const seen = new Uint8Array(n);
   const stack: number[] = [];
@@ -684,7 +707,7 @@ function keyBackdropPatches(rgba: Buffer, alpha: Float32Array, bg: [number, numb
         }
       }
     }
-    if (members.length >= minArea) for (const p of members) patch[p] = 1;
+    if (members.length >= minArea && (!core || members.some((p) => !core![p]))) for (const p of members) patch[p] = 1;
   }
   const rim = patch.slice();
   dilate(rim, W, H, Math.max(2, Math.round(Math.max(W, H) * 0.0015)));

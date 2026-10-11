@@ -12,6 +12,10 @@ import { groupItems } from './sections.ts';
 export interface StageEvents {
   hover(node: ItemNode | null): void;
   select(node: ItemNode): void;
+  /** Models arriving: `ready` of `total` built (failed ones count as done). */
+  progress(ready: number, total: number): void;
+  /** The GPU dropped the WebGL context; the browser may hand it back. */
+  lost(lost: boolean): void;
 }
 
 /** Idle yaw amplitude (radians) per kind; keeps the front toward the camera. */
@@ -100,6 +104,15 @@ export class Stage {
     this.world.add(this.dust);
 
     this.bindPointer();
+    this.bindKeys();
+    canvas.addEventListener('webglcontextlost', (e) => {
+      e.preventDefault(); // ask for it back
+      this.events.lost(true);
+    });
+    canvas.addEventListener('webglcontextrestored', () => {
+      this.events.lost(false);
+      this.invalidate();
+    });
     window.addEventListener('resize', this.resize);
     this.resize();
   }
@@ -140,6 +153,9 @@ export class Stage {
     this.autoFrame = true;
     this.relayout();
 
+    const total = items.length;
+    let ready = items.filter((item) => this.nodes.has(item.id)).length;
+    this.events.progress(ready, total);
     await Promise.all(
       items
         .filter((item) => !this.nodes.has(item.id) && !this.pending.has(item.id))
@@ -162,6 +178,7 @@ export class Stage {
             console.error(`[things] ${item.id}: could not build`, err);
           } finally {
             this.pending.delete(item.id);
+            this.events.progress(++ready, total);
           }
         }),
     );
@@ -289,8 +306,10 @@ export class Stage {
     const band = this.focus === null ? undefined : this.layout.bands.find((b) => b.label === this.focus);
     const extent = band ?? { ...this.layout, y: 0, rows: this.layout.rows };
     // Pad for item footprint (~FIT) plus breathing room so a section zoom does not clip the band.
-    const halfW = extent.halfWidth + 1.85;
-    const halfH = extent.halfHeight + 1.65;
+    // Portrait screens are width-bound, so the side margin there is kept to the item itself.
+    const portrait = this.camera.aspect < 1;
+    const halfW = extent.halfWidth + (portrait ? 0.95 : 1.85);
+    const halfH = extent.halfHeight + (portrait ? 1.25 : 1.65);
     const vfov = THREE.MathUtils.degToRad(this.camera.fov);
     const hfov = 2 * Math.atan(Math.tan(vfov / 2) * this.camera.aspect);
     const byWidth = halfW / Math.tan(hfov / 2);
@@ -335,6 +354,12 @@ export class Stage {
     c.addEventListener('pointerdown', (e) => {
       this.pressed = { x: e.clientX, y: e.clientY };
     });
+    // Double-click the void (not a thing: a click there already opened its page) to put the
+    // camera back on the whole shelf after orbiting or zooming.
+    c.addEventListener('dblclick', (e) => {
+      const at = new THREE.Vector2((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
+      if (!this.pick(at)) this.resetView();
+    });
     c.addEventListener('pointerup', (e) => {
       const p = this.pressed;
       this.pressed = null;
@@ -349,6 +374,58 @@ export class Stage {
         this.events.select(node);
       }
     });
+  }
+
+  /** Frame the whole shelf again, as on load. */
+  resetView() {
+    this.focusSection(null);
+  }
+
+  /**
+   * Keyboard: arrows walk the shelf (left/right along it, up/down to the nearest thing on the
+   * next shelf), Enter opens the hovered thing, Escape lets go and reframes the shelf.
+   */
+  private bindKeys() {
+    this.canvas.tabIndex = 0;
+    window.addEventListener('keydown', (e) => {
+      const target = e.target as HTMLElement | null;
+      if (e.metaKey || e.ctrlKey || e.altKey || (target && (target.isContentEditable || /^(input|textarea|select)$/i.test(target.tagName)))) return;
+      if (e.key === 'Escape') {
+        this.setHovered(null);
+        this.resetView();
+        return;
+      }
+      if (e.key === 'Enter' && this.hovered && target?.closest?.('a, button') == null) {
+        this.events.select(this.hovered);
+        return;
+      }
+      const dir = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, 1], ArrowDown: [0, -1] }[e.key];
+      if (!dir) return;
+      e.preventDefault();
+      this.setHovered(this.neighbour(dir[0], dir[1]));
+    });
+  }
+
+  private neighbour(dx: number, dy: number): ItemNode | null {
+    const built = this.order.map((id) => this.nodes.get(id)).filter((n): n is ItemNode => !!n);
+    if (!built.length) return null;
+    const cur = this.hovered;
+    if (!cur) return dx < 0 || dy < 0 ? built[built.length - 1] : built[0];
+    if (dx) {
+      const i = built.indexOf(cur);
+      return built[(i + dx + built.length) % built.length];
+    }
+    const p = this.targets.get(cur.item.id)!.position;
+    let best: ItemNode | null = null;
+    let bestScore = Infinity;
+    for (const n of built) {
+      const q = this.targets.get(n.item.id)!.position;
+      const rise = (q.y - p.y) * dy;
+      if (rise < 0.5) continue; // must be on a shelf in that direction
+      const score = rise * 2 + Math.abs(q.x - p.x);
+      if (score < bestScore) (bestScore = score), (best = n);
+    }
+    return best ?? cur;
   }
 
   private pick(at: THREE.Vector2): ItemNode | null {

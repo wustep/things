@@ -41,7 +41,9 @@ const RADIUS = 12;
 
 /** Wide viewports get long shelves; portrait ones stack shorter shelves instead. */
 export function maxPerRow(viewportAspect: number): number {
-  if (viewportAspect < 0.7) return 2;
+  // A phone held upright: three across keeps everything on one screen at a readable size
+  // (two across made a 13-shelf tower of postage stamps).
+  if (viewportAspect < 0.7) return 3;
   if (viewportAspect < 1.1) return 3;
   if (viewportAspect < 1.5) return 5;
   return 7;

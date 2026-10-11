@@ -47,6 +47,21 @@ export class Hud {
     this.empty.classList.toggle('is-visible', n === 0);
   }
 
+  /** While models arrive the wordmark count reads "9 / 24", then settles back to the total. */
+  setProgress(ready: number, total: number) {
+    const loading = ready < total;
+    this.count.textContent = total === 0 ? '' : loading ? `${ready} / ${total}` : String(total);
+    this.count.classList.toggle('is-loading', loading);
+  }
+
+  /** No WebGL at all: say so plainly in the empty-state spot instead of showing a black page. */
+  unavailable() {
+    this.empty.querySelector('.empty-title')!.textContent = 'This shelf needs WebGL, which this browser has turned off.';
+    this.emptyHint.hidden = true;
+    this.empty.querySelector('.empty-cmd')?.remove();
+    this.empty.classList.add('is-visible');
+  }
+
   /** Section labels with live counts; hidden when nothing on the shelf has a section. */
   setSections(groups: SectionGroup[]) {
     const named = groups.filter((g): g is SectionGroup & { label: string } => !!g.label);

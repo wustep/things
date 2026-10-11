@@ -39,6 +39,9 @@ body {
 #stage.is-dragging {
   cursor: grabbing;
 }
+#stage:focus-visible {
+  outline: none;
+}
 
 /* Wordmark: the only permanent chrome. */
 .brand {
@@ -55,6 +58,13 @@ body {
 .brand span:not(:empty)::before {
   content: "·";
   margin: 0 0.55em;
+}
+.brand span {
+  font-variant-numeric: tabular-nums;
+  transition: opacity 300ms ease;
+}
+.brand span.is-loading {
+  opacity: 0.55;
 }
 
 .empty {

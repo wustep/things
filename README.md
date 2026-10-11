@@ -15,6 +15,9 @@ npm run dev          # http://localhost:5173
 
 The dev server starts with the shelf in `data/items.json`. Drag to orbit, scroll to zoom,
 hover (or tap) a thing for its card, click the thing or the card to open the product page.
+The arrow keys walk the shelf with the same card (Enter opens it, Escape lets go), and a
+double-click on empty space puts the camera back on the whole shelf. `?procedural` in the URL
+shows every thing's fallback shape (cut-out card, carton or turned bottle) instead of its model.
 Items with a `section` are grouped into their own shelves, and on wider screens the section
 labels under the wordmark show live counts; click one to frame that section.
 

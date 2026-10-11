@@ -791,7 +791,8 @@
       ]
     },
     "addedAt": "2026-10-11T04:04:10.460Z",
-    "description": "The whole movie in one 24\" x 36\" print: the film rendered at one frame per second, then stitched together left to right, top to bottom at 1200 dpi. Frames are not included with prints."
+    "description": "The whole movie in one 24\" x 36\" print: the film rendered at one frame per second, then stitched together left to right, top to bottom at 1200 dpi. Frames are not included with prints.",
+    "commentary": "I have the one for Everything Everywhere All at Once and La La Land."
   },
   {
     "id": "amazon-b05badce",
@@ -949,7 +950,7 @@
     "domain": "jamcorder.com",
     "title": "Jamcorder",
     "brand": "Jamcorder",
-    "price": "$99.99",
+    "price": "$175",
     "section": "Music",
     "description": "Have you ever thought, “wow, I wish I recorded that”? With Jamcorder, you did. Jamcorder is a tiny device you attach to your digital piano that quietly captures everything you play — effortlessly, for life.",
     "images": [
@@ -972,7 +973,8 @@
         "#0d1318"
       ]
     },
-    "addedAt": "2026-10-11T20:25:20.437Z"
+    "addedAt": "2026-10-11T20:25:20.437Z",
+    "commentary": "Always-on recording for my keyboard. Nice for capturing improv ideas rather than letting them disappear into the void. Never have to press a record button again."
   },
   {
     "id": "peakdesign-8f476d14",
@@ -1181,7 +1183,8 @@
         "#0e0f0f"
       ]
     },
-    "addedAt": "2026-10-11T02:30:48.765Z"
+    "addedAt": "2026-10-11T02:30:48.765Z",
+    "commentary": "Surprisingly comfy, good sound quality, cute headphones."
   },
   {
     "id": "remsen-f65a1f42",
@@ -1501,7 +1504,8 @@
         "#e7ccb1"
       ]
     },
-    "addedAt": "2026-10-11T03:04:29.078Z"
+    "addedAt": "2026-10-11T03:04:29.078Z",
+    "commentary": "Versatile, stable stools that don’t break the bank."
   },
   {
     "id": "amazon-534aae5e",
@@ -1790,7 +1794,8 @@
         "#f2f2f4"
       ]
     },
-    "addedAt": "2026-10-11T03:18:02.288Z"
+    "addedAt": "2026-10-11T03:18:02.288Z",
+    "commentary": "Our front door smart lock. Nice to be able to open without carrying keys or typing anything. You can also give codes to guests or turn off auto-lock as needed."
   },
   {
     "id": "dyson-a11c9a91",

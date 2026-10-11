@@ -630,15 +630,8 @@
         "#2b2c2c"
       ],
       "refs": [
-        "/items/amzn-1fc53358/ref-1.jpg",
-        "/items/amzn-1fc53358/ref-0.jpg",
-        "/items/amzn-1fc53358/ref-3.jpg"
+        "/items/amzn-1fc53358/ref-0.jpg"
       ],
-      "orientation": {
-        "upright": "tip",
-        "face": "keep",
-        "yawDeg": 0
-      },
       "fallback": {
         "kind": "procedural",
         "shape": "card",

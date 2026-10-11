@@ -136,7 +136,7 @@ Which photo is used, and which others go in the gallery, is chosen in `data/phot
 
 ```json
 "remsen-f65a1f42": { "hero": "ref-6.jpg", "gallery": ["ref-5.jpg", "ref-7.jpg"] },
-"westelm-0d4a26d0": { "hero": { "file": "ref-0.jpg", "mode": "photo", "crop": [0.04, 0, 0.74, 1] } },
+"jamescookartworkshop-b0e89a91": { "hero": { "file": "ref-1.jpg", "mode": "photo" } },
 "roli-0e3366f5": { "hero": { "file": "ref-2.jpg", "holes": true } }
 ```
 

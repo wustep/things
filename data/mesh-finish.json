@@ -7,11 +7,6 @@
     "harmonize": 0.3,
     "spread": 40
   },
-  "ergonofis-cb36d4e7": {
-    "harmonize": 0.5,
-    "spread": 80,
-    "lift": 0.012
-  },
   "amzn-f76e128e": {
     "harmonize": 0.9,
     "spread": 200,
@@ -30,10 +25,6 @@
     "harmonize": 0.8,
     "spread": 160,
     "flatten": 0.35
-  },
-  "bludot-9c7c4924": {
-    "harmonize": 0.5,
-    "spread": 80
   },
   "roomandboard-ce472b14": {
     "harmonize": 0.6,

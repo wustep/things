@@ -90,49 +90,32 @@
     "addedAt": "2026-09-14T05:28:45.125Z"
   },
   {
-    "id": "ergonofis-cb36d4e7",
-    "url": "https://ergonofis.com/en-us/products/sway-standing-desk?_pos=3&_psq=ergonifis&_ss=e&_v=1.0&variant=43994522255609",
+    "id": "ergonofis-aba25b63",
+    "url": "https://ergonofis.com/products/sway-standing-desk?variant=45146331512911",
     "domain": "ergonofis.com",
     "title": "Sway Standing Desk",
     "brand": "ergonofis",
-    "price": "$1755",
+    "price": "$2,595",
     "section": "Office",
     "description": "Crafted from premium solid wood, the Sway Standing Desk offers lasting durability and a distinctive, timeless design. Every detail—from the seamless finishes to the intuitive swipe technology for height adjustment—is designed to elevate both comfort and functionality. Ideal for those seeking a desk that looks as good as it performs, the Sway combines refined craftsmanship with ergonomic innovation",
     "images": [
-      "/items/ergonofis-cb36d4e7/ref-1.jpg",
-      "/items/ergonofis-cb36d4e7/ref-0.jpg",
-      "/items/ergonofis-cb36d4e7/ref-2.jpg",
-      "/items/ergonofis-cb36d4e7/ref-3.jpg",
-      "/items/ergonofis-cb36d4e7/ref-4.jpg",
-      "/items/ergonofis-cb36d4e7/ref-5.jpg"
+      "/items/ergonofis-aba25b63/ref-1.jpg",
+      "/items/ergonofis-aba25b63/ref-0.jpg",
+      "/items/ergonofis-aba25b63/ref-2.jpg"
     ],
     "asset": {
-      "kind": "glb",
-      "url": "/items/ergonofis-cb36d4e7/model.glb",
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/ergonofis-aba25b63/primary.png",
+      "aspect": 0.9648,
       "palette": [
-        "#ceb296",
-        "#919191",
-        "#525252",
-        "#2c2c2c"
-      ],
-      "refs": [
-        "/items/ergonofis-cb36d4e7/ref-1.jpg",
-        "/items/ergonofis-cb36d4e7/ref-0.jpg"
-      ],
-      "fallback": {
-        "kind": "procedural",
-        "shape": "card",
-        "texture": "/items/ergonofis-cb36d4e7/primary.png",
-        "aspect": 1.5284,
-        "palette": [
-          "#ceb296",
-          "#919191",
-          "#525252",
-          "#2c2c2c"
-        ]
-      }
+        "#af9871",
+        "#cbcaca",
+        "#2d2d2d",
+        "#070707"
+      ]
     },
-    "addedAt": "2026-09-14T05:28:44.440Z"
+    "addedAt": "2026-10-11T02:00:00.729Z"
   },
   {
     "id": "amzn-f76e128e",
@@ -301,53 +284,30 @@
     "brand": "Yamazaki Home"
   },
   {
-    "id": "bludot-9c7c4924",
-    "url": "https://www.bludot.com/products/perch-outdoor-lounge-chair?variant=44723226968243",
+    "id": "bludot-db8b63f5",
+    "url": "https://www.bludot.com/products/perch-outdoor-lounge-chair?variant=44723226771635",
     "domain": "bludot.com",
     "title": "Perch Outdoor Lounge Chair",
     "brand": "Blu Dot",
-    "price": "$1,595.00",
+    "price": "$1,276",
     "section": "Home",
     "description": "Rectangular FSC®-certified teak slats and a matte white or grey aluminum frame cut a stylish and airy swath, whether it be the Riviera or the suburbs of Reno. Perch makes every day look like vacation. Beautiful to behold from the back side, the side side or the front side, the collection is made lounge-worthy with cushions covered in mildew and fade resistant Sunbrella® fabric.",
     "images": [
-      "/items/bludot-9c7c4924/ref-0.jpg",
-      "/items/bludot-9c7c4924/ref-1.jpg",
-      "/items/bludot-9c7c4924/ref-2.jpg",
-      "/items/bludot-9c7c4924/ref-3.jpg",
-      "/items/bludot-9c7c4924/ref-4.jpg"
+      "/items/bludot-db8b63f5/ref-0.jpg"
     ],
     "asset": {
-      "kind": "glb",
-      "url": "/items/bludot-9c7c4924/model.glb",
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/bludot-db8b63f5/primary.png",
+      "aspect": 0.9248,
       "palette": [
-        "#93684c",
-        "#b7aa9a",
-        "#d9d2c8",
-        "#fefefe"
-      ],
-      "refs": [
-        "/items/bludot-9c7c4924/ref-0.jpg",
-        "/items/bludot-9c7c4924/ref-3.jpg"
-      ],
-      "fallback": {
-        "kind": "procedural",
-        "shape": "card",
-        "texture": "/items/bludot-9c7c4924/primary.png",
-        "aspect": 0.9248,
-        "palette": [
-          "#93684c",
-          "#b7aa9a",
-          "#d9d2c8",
-          "#fefefe"
-        ]
-      },
-      "orientation": {
-        "upright": "keep",
-        "face": "keep",
-        "yawDeg": 0
-      }
+        "#915736",
+        "#463c36",
+        "#75706a",
+        "#ffffff"
+      ]
     },
-    "addedAt": "2026-09-14T05:31:26.934Z"
+    "addedAt": "2026-10-11T01:59:44.979Z"
   },
   {
     "id": "roomandboard-ce472b14",

@@ -4,5 +4,19 @@
     "url": "public/items/westelm-0d4a26d0/ref-0.jpg (ingest copy; the shop blocked a fresh download)",
     "width": 496,
     "height": 496
+  },
+  {
+    "file": "ref-1.jpg",
+    "url": "https://cdn.shopify.com/s/files/1/0908/3348/6130/files/calgary-tiered-bookshelf-70-xl_f02460ac-0c50-4ef8-a356-db1f581c7048.jpg",
+    "width": 2000,
+    "height": 2000,
+    "note": "West Elm studio photo; westelm.com answers 403, so it comes from the copy furniturefinder hosts on its Shopify CDN"
+  },
+  {
+    "file": "ref-2.jpg",
+    "url": "https://cdn.shopify.com/s/files/1/0908/3348/6130/files/calgary-tiered-bookshelf-70-xl.jpg",
+    "width": 2000,
+    "height": 2000,
+    "note": "West Elm studio photo; westelm.com answers 403, so it comes from the copy furniturefinder hosts on its Shopify CDN"
   }
 ]

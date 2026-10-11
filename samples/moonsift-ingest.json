@@ -14,11 +14,17 @@
     "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_2ggaNkdLJtKkjDjlZsw8.jpg"
   },
   {
-    "url": "https://ergonofis.com/en-us/products/sway-standing-desk?_pos=3&_psq=ergonifis&_ss=e&_v=1.0&variant=43994522255609",
-    "title": "Ergonofis Sway Standing Desk",
-    "price": "$1755",
+    "url": "https://ergonofis.com/products/sway-standing-desk?variant=45146331512911",
+    "title": "Sway Standing Desk",
+    "brand": "ergonofis",
+    "price": "$2,595",
     "section": "Office",
-    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_FXAGz2WuhPJ4PD4FyVxO.jpg"
+    "image": "https://cdn.shopify.com/s/files/1/0707/4752/1103/files/sway-standing-desk-857746.png",
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0707/4752/1103/files/sway-standing-desk-2611869.png",
+      "https://cdn.shopify.com/s/files/1/0707/4752/1103/files/sway-standing-desk-9166652.png"
+    ],
+    "maxRefs": 3
   },
   {
     "url": "https://amzn.to/4bAIa1U",
@@ -42,7 +48,11 @@
     "price": "$1199",
     "section": "Home",
     "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_meHpI58q3V47IHPVjaof.jpg",
-    "brand": "West Elm"
+    "brand": "West Elm",
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0908/3348/6130/files/calgary-tiered-bookshelf-70-xl_f02460ac-0c50-4ef8-a356-db1f581c7048.jpg",
+      "https://cdn.shopify.com/s/files/1/0908/3348/6130/files/calgary-tiered-bookshelf-70-xl.jpg"
+    ]
   },
   {
     "url": "https://amzn.to/4sLMhhN",
@@ -53,11 +63,13 @@
     "brand": "Yamazaki Home"
   },
   {
-    "url": "https://www.bludot.com/products/perch-outdoor-lounge-chair?variant=44723226968243",
-    "title": "Blu Dot Perch Outdoor Lounge Chair",
-    "price": "$1,595.00",
+    "url": "https://www.bludot.com/products/perch-outdoor-lounge-chair?variant=44723226771635",
+    "title": "Perch Outdoor Lounge Chair",
+    "brand": "Blu Dot",
+    "price": "$1,276",
     "section": "Home",
-    "image": "https://storage.googleapis.com/moonsift-web-product-images/moonimage_QUe7k9jgFVIF1ZdNgEPi.jpg"
+    "image": "https://cdn.shopify.com/s/files/1/0681/5943/9027/files/ph1_clgchr_cl_fronlow_2_1faab315-c8c2-4779-8e07-96fe97d773c8.jpg",
+    "maxRefs": 1
   },
   {
     "url": "https://www.roomandboard.com/catalog/office/conference-room-tables/ventura-conference-tables/284351?CHAR_284351_VENTURA_COLL_WOOD=WA",

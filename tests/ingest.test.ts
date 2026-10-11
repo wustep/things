@@ -143,6 +143,11 @@ test('CLI: ingest, skip, failed --force keeps old files, Shopify fallback, never
     assert.equal(items[0].asset.kind, 'procedural');
     const texture = path.join(root, 'public', items[0].asset.texture);
     const photo = await readFile(texture);
+    // The download is kept byte for byte (not the 1200px JPEG) for `npm run images`.
+    const originals = path.join(root, 'media/originals', items[0].id);
+    assert.deepEqual(await readFile(path.join(originals, 'ref-0.png')), png);
+    const sources = JSON.parse(await readFile(path.join(originals, 'sources.json'), 'utf8'));
+    assert.equal(sources[0].url, `${server.base}/photo.png`);
 
     assert.match((await run([`${server.base}/thing?utm_source=again`])).log, /1 skipped/);
 
@@ -157,6 +162,14 @@ test('CLI: ingest, skip, failed --force keeps old files, Shopify fallback, never
       [],
     );
     blocked = false;
+
+    // Commentary is Stephen's, not the shop's: a successful --force re-ingest keeps it.
+    const noted = JSON.parse(before);
+    noted[0].commentary = 'Bought it **twice**.';
+    await writeFile(file, JSON.stringify(noted, null, 2));
+    const again = await run(['--force', `${server.base}/thing`]);
+    assert.equal(again.code, 0, again.log);
+    assert.equal(JSON.parse(await readFile(file, 'utf8'))[0].commentary, 'Bought it **twice**.');
 
     const shop = await run(['--no-mesh', `${server.base}/products/lamp`]);
     assert.equal(shop.code, 0, shop.log);

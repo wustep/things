@@ -126,7 +126,12 @@ function applyAmazon($: Cheerio, out: Extracted) {
       .trim();
     if (p) out.price = p;
   }
-  // Gallery images live in a JSON attribute: {"url": [w, h], ...}
+  // The gallery's full-size photos (SL1500) sit in the image block's JSON. They lead: the
+  // downloader stops after --max-refs photos, so the 500px "large" copies of the same shots
+  // further down must not use up the slots first.
+  const html = $.html();
+  for (const m of html.matchAll(/"hiRes":"(https:[^"]+)"/g)) out.images.push(m[1]);
+  // Then the gallery's JSON attribute ({"url": [w, h], ...}) and the plain <img>s.
   $('#landingImage, #imgBlkFront, .a-dynamic-image, #altImages img').each((_, el) => {
     const dyn = $(el).attr('data-a-dynamic-image');
     if (dyn) {
@@ -141,12 +146,23 @@ function applyAmazon($: Cheerio, out: Extracted) {
     const hires = $(el).attr('data-old-hires') || $(el).attr('src');
     if (hires) out.images.push(upsizeAmazon(hires));
   });
-  // Color/alt thumbnails are tiny; request the large variant.
-  const colorImages = $.html().match(/"hiRes":"(https:[^"]+)"/g) ?? [];
-  for (const m of colorImages) {
-    const u = m.match(/"hiRes":"(https:[^"]+)"/)?.[1];
-    if (u) out.images.push(u);
+}
+
+/**
+ * Shopify's CDN scales on request (`?width=493`, `_600x600.jpg`); without those hints it serves
+ * the photo as uploaded. Theme markup usually asks for a thumbnail-sized copy.
+ */
+export function fullSizeImageUrl(u: string): string {
+  let url: URL;
+  try {
+    url = new URL(u);
+  } catch {
+    return u;
   }
+  if (!/(^|\.)cdn\.shopify\.com$/.test(url.hostname) && !url.pathname.includes('/cdn/shop/')) return u;
+  for (const key of ['width', 'height', 'crop']) url.searchParams.delete(key);
+  url.pathname = url.pathname.replace(/_(?:\d+x\d*|x\d+|pico|icon|thumb|small|compact|medium|large|grande)(?=(?:@\dx)?\.\w+$)/, '');
+  return url.toString();
 }
 
 function upsizeAmazon(u: string): string {

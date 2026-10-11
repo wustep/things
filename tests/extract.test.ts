@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { extractShopifyProduct, shopifyProductEndpoints } from '../scripts/lib/extract.ts';
+import { extractShopifyProduct, fullSizeImageUrl, shopifyProductEndpoints } from '../scripts/lib/extract.ts';
 
 const url = 'https://shop.example/products/lamp';
 
@@ -58,4 +58,16 @@ test('Shopify endpoints only for /products/<handle> URLs, keeping the variant', 
   ]);
   assert.deepEqual(shopifyProductEndpoints('https://shop.example/collections/all'), []);
   assert.deepEqual(shopifyProductEndpoints('https://shop.example/products/lamp/reviews'), []);
+});
+
+test('Shopify CDN image URLs lose their size hints', () => {
+  assert.equal(
+    fullSizeImageUrl('https://remsen.co/cdn/shop/files/img_3.jpg?v=1786027687&width=493'),
+    'https://remsen.co/cdn/shop/files/img_3.jpg?v=1786027687',
+  );
+  assert.equal(
+    fullSizeImageUrl('https://cdn.shopify.com/s/files/1/0026/files/watch_600x600.png?v=1'),
+    'https://cdn.shopify.com/s/files/1/0026/files/watch.png?v=1',
+  );
+  assert.equal(fullSizeImageUrl('https://example.com/a.jpg?width=493'), 'https://example.com/a.jpg?width=493');
 });

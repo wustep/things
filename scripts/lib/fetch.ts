@@ -9,6 +9,8 @@ const BASE_HEADERS: Record<string, string> = {
   'cache-control': 'no-cache',
 };
 
+const PLAIN_HEADERS: Record<string, string> = { 'user-agent': UA, accept: '*/*' };
+
 /** Largest product page (or product JSON) we will read. Real pages are well under this. */
 export const MAX_PAGE_BYTES = 6 * 1024 * 1024;
 /** Largest single image we will download. */
@@ -20,7 +22,15 @@ export async function fetchHtml(
   timeoutMs = DEFAULT_TIMEOUT_MS,
   maxBytes = MAX_PAGE_BYTES,
 ): Promise<{ html: string; finalUrl: string }> {
-  const res = await download(url, BASE_HEADERS, timeoutMs, maxBytes);
+  let res;
+  try {
+    res = await download(url, BASE_HEADERS, timeoutMs, maxBytes);
+  } catch (err) {
+    // Some bot walls (DWR's, for one) score a full browser header set from a non-browser TLS
+    // stack as a bot, yet let a plain request through. One quieter retry before giving up.
+    if (!/^HTTP 403\b/.test((err as Error).message)) throw err;
+    res = await download(url, PLAIN_HEADERS, timeoutMs, maxBytes);
+  }
   return { html: res.buffer.toString('utf8'), finalUrl: res.finalUrl };
 }
 

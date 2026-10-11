@@ -50,9 +50,16 @@ document.addEventListener('click', (e) => {
 });
 
 function openItem(item: Item) {
-  detail.show(item, { index: walk.indexOf(item), total: walk.length });
+  const i = walk.indexOf(item);
+  detail.show(item, { index: i, total: walk.length });
   shelfEl.inert = true;
   detail.focusStart();
+  // Once this thing's own picture has had its turn, warm the ones on either side of it.
+  const neighbours = [walk[(i + 1) % walk.length], walk[(i - 1 + walk.length) % walk.length]];
+  const idle = window.requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 300));
+  idle(() => {
+    if (detail.openId === item.id) detail.prefetch(neighbours.filter((n) => n && n.id !== item.id));
+  });
 }
 
 function closeDetail() {

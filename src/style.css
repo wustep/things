@@ -447,8 +447,13 @@ html.is-detail body {
   height: auto;
   animation: appear 0.5s var(--ease) both;
 }
+/*
+ * Shop photos are mostly lit for a white web page. In this room a pure-white studio backdrop is a
+ * light box, so photos are shown a little dimmed, like a print on the back wall in lamplight.
+ */
 .stage-pic.is-photo img {
   border-radius: 3px;
+  filter: brightness(0.88) saturate(0.96);
 }
 .stage-pic.is-missing img {
   display: none;
@@ -507,6 +512,9 @@ html.is-detail body {
 }
 .thumb img {
   object-fit: cover;
+}
+.thumb.is-photo img {
+  filter: brightness(0.88);
 }
 .thumb.is-cutout img {
   object-fit: contain;
@@ -802,12 +810,15 @@ html.is-detail body {
   }
   .tag {
     gap: 4px;
-    margin-top: 15px;
+    margin-top: 13px;
     padding: 2px 2px 4px;
   }
+  /* Slots are narrow on a phone: a long name gets another line or two rather than losing its end. */
   .tag-name {
     font-size: 13.5px;
-    line-height: 1.25;
+    line-height: 1.22;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
   }
   .tag-maker {
     font-size: 9px;

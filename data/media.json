@@ -2672,5 +2672,64 @@
     },
     "gallery": [],
     "key": "87fe85083d5d"
+  },
+  "etsy-57abe791": {
+    "hero": {
+      "base": "/items/etsy-57abe791/2d/hero.9b4aadf0",
+      "widths": [
+        480,
+        960,
+        1600
+      ],
+      "width": 1600,
+      "height": 893,
+      "mode": "cutout",
+      "subject": [
+        0.0453,
+        0.0812,
+        0.9094,
+        0.8377
+      ],
+      "tone": "#c8c4bd"
+    },
+    "gallery": [
+      {
+        "base": "/items/etsy-57abe791/2d/photo-1.9b4aadf0",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "base": "/items/etsy-57abe791/2d/photo-2.9b4aadf0",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 854
+      },
+      {
+        "base": "/items/etsy-57abe791/2d/photo-3.9b4aadf0",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "base": "/items/etsy-57abe791/2d/photo-4.9b4aadf0",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 854
+      }
+    ],
+    "key": "9b4aadf02617"
   }
 }

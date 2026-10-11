@@ -1895,5 +1895,35 @@
       ]
     },
     "addedAt": "2026-10-11T03:18:00.042Z"
+  },
+  {
+    "id": "etsy-57abe791",
+    "url": "https://www.etsy.com/listing/574168262/leather-valet-tray-large-white-suede",
+    "domain": "etsy.com",
+    "title": "Leather Valet Tray, Large, White Suede",
+    "brand": "BarWR",
+    "price": "$58.00",
+    "section": "Carry",
+    "description": "・ This tray is made in Los Angeles from vegetable tanned leather and smooth cowhide WHITE suede leather, then molded, finished by hand. ・ Natural vegetable tanned leather will darken and gain character with regular use ・ Made in Los Angeles, CA ・ Dimensions: 8-3/4&quot; wide x 7 1/8&quot; long ・ The simple style create for unlimited home organization and display. ・ Great Item for your office, rest",
+    "images": [
+      "/items/etsy-57abe791/ref-0.jpg",
+      "/items/etsy-57abe791/ref-1.jpg",
+      "/items/etsy-57abe791/ref-2.jpg",
+      "/items/etsy-57abe791/ref-3.jpg",
+      "/items/etsy-57abe791/ref-4.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/etsy-57abe791/primary.png",
+      "aspect": 1.8092,
+      "palette": [
+        "#4a2b1a",
+        "#7a5233",
+        "#8f7969",
+        "#b2bab8"
+      ]
+    },
+    "addedAt": "2026-10-11T20:23:12.503Z"
   }
 ]

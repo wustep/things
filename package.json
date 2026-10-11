@@ -12,7 +12,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.scripts.json",
     "test": "node --import tsx --test tests/*.test.ts",
     "refine": "tsx scripts/refine.ts",
-    "images": "npm --prefix tools/images install --no-audit --no-fund --silent && tsx tools/images/build.ts"
+    "images": "npm --prefix tools/images install --no-audit --no-fund --silent && tsx tools/images/build.ts && tsx tools/images/share.ts"
   },
   "dependencies": {
     "three": "^0.170.0"

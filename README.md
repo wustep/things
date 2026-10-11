@@ -17,11 +17,17 @@ The shelf shows everything in `data/items.json`, one case per `section` (Office,
 packed into as many shelves as the window needs. Click a thing (or Tab to it and press Enter;
 the arrow keys walk the shelf) to open it. In the detail view, ← and → (or a sideways swipe on a
 phone) step through the collection, Esc goes back to the shelf, and the thumbnails switch between the cut-out and
-the shop's own photos.
+the shop's own photos. With a mouse, click the big picture for a closer look (move to look
+around; click or Esc to leave).
 
 Every thing has its own address, `/t/<maker-and-name>` (for example
 `/t/ugmonk-analog-complete-kit`); the item id works too (`/t/ugmonk-5117191f`). Links can be
 shared and reloaded, and Back returns to the shelf.
+
+A shared link unfurls with the thing's name, a line about it (maker, price and shop, then the
+note or the shop's words) and a share card: the cut-out standing on a shelf in the same dark
+room. The build writes one page per thing for this (`scripts/lib/share-pages.ts`; the app inside
+is the same), and `npm run images` makes the cards (`tools/images/share.ts`).
 
 ## Notes
 

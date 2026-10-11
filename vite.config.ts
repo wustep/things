@@ -1,13 +1,15 @@
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import { thingsDevIngest } from './scripts/lib/dev-ingest.ts';
+import { thingsSharePages } from './scripts/lib/share-pages.ts';
 
 const page = (p: string) => fileURLToPath(new URL(p, import.meta.url));
 
 // Deploying under a sub-path (e.g. GitHub Pages)? BASE_PATH=/things/ npm run build
 export default defineConfig({
   base: process.env.BASE_PATH ?? '/',
-  plugins: [thingsDevIngest()],
+  // Share pages: one HTML page per thing, so a shared link unfurls with its name and picture.
+  plugins: [thingsDevIngest(), thingsSharePages()],
   build: {
     target: 'es2022',
     // Two pages: the 2D collection at / and the archived three.js shelf at /3d. They share no

@@ -133,7 +133,11 @@ export class Shelf {
         tier.style.setProperty('--stage', `${stageH}px`);
         const list = el('ul', 'tier-things');
         list.setAttribute('role', 'list');
-        for (const p of row) list.append(this.thing(p, stageH, eager-- > 0));
+        // A shelf that isn't full gives its things a little more air (up to one more gap each), and
+        // whatever is left stays as even margins at both ends rather than all on the right.
+        const slack = width - row.reduce((sum, p) => sum + p.slot, 0);
+        const air = Math.max(0, Math.min(slack / row.length, m.gap));
+        for (const p of row) list.append(this.thing(p, stageH, eager-- > 0, air));
         tier.append(list);
         section.append(tier);
       }
@@ -144,12 +148,12 @@ export class Shelf {
     if (focusedId) this.linkFor(focusedId)?.focus({ preventScroll: true });
   }
 
-  private thing(p: Placed, stageH: number, eager: boolean): HTMLLIElement {
+  private thing(p: Placed, stageH: number, eager: boolean, air = 0): HTMLLIElement {
     const { item } = p;
     const hero = heroFor(item);
     const name = titleWithoutBrand(item.title, item.brand);
     const li = el('li', 'thing');
-    li.style.width = `${p.slot}px`;
+    li.style.width = `${p.slot + air}px`;
 
     const a = el('a', 'thing-link') as HTMLAnchorElement;
     a.href = itemPath(this.slugs.get(item.id) ?? item.id);

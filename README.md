@@ -104,7 +104,8 @@ add what it doesn't know:
 
 `section` groups things on the shelf. `image` is used as the primary photo and `images` add
 more; both are tried before anything the page declares (handy for pinning one variant, as
-`samples/2026-10-additions.json` does for the small metal Nelson lamp). When the brand is known
+`samples/2026-10-additions.json` does for the small metal Nelson lamp). `maxRefs` caps that
+entry's photos, so a variant can keep only its own (the charcoal Perch, the white-oak Sway). When the brand is known
 it is stripped from the title ("Simplehuman 60L Trash Can" becomes "60L Trash Can" under a
 Simplehuman line) so the tag never says it twice. Items are identified by a stable id derived
 from the URL (tracking parameters are ignored; Amazon URLs collapse to their ASIN).

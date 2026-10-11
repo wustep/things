@@ -17,6 +17,7 @@
  * default; kept for old scripts), --max-refs N (default 6), --parallel N (work on N entries at
  * once; default 1).
  * Batch entries may also carry `image` (primary image URL), `images` (more reference image URLs),
+ * `maxRefs` (this entry's --max-refs),
  * `section` (a shelf label such as "Office"), `shape: 'card' | 'box' | 'cylinder'` and `meshTask`
  * (the id of a Meshy task that already succeeded, to attach its model instead of paying for a new one).
  *
@@ -85,6 +86,8 @@ interface BatchEntry {
   image?: string;
   /** More reference photos of the product, tried before anything scraped from the page. */
   images?: string[];
+  /** Keep at most this many photos for this entry (overrides --max-refs), e.g. to pin one variant's own. */
+  maxRefs?: number;
   /** Force the procedural shape instead of guessing from the title and cut-out. */
   shape?: ProceduralShape;
   /** A Meshy task that already succeeded: use its GLB instead of creating a new task. */
@@ -211,7 +214,7 @@ async function ingestOne(entry: BatchEntry, id: string, existing: Item | undefin
   // Build into a staging folder; the item's current files are only replaced once this succeeds.
   let downloaded: Ref[] = [];
   const item = await stageAssets(path.join(PUBLIC_ITEMS, id), async (dir) => {
-    const refs = (downloaded = await downloadReferences(extracted.images, extracted.declared, finalUrl, dir, opts.maxRefs, log));
+    const refs = (downloaded = await downloadReferences(extracted.images, extracted.declared, finalUrl, dir, entry.maxRefs ?? opts.maxRefs, log));
     if (refs.length === 0) throw new Error('no usable images found on the page');
 
     const processed = new Map<Ref, ProcessedPrimary>();
@@ -316,7 +319,7 @@ async function backfillOriginals(items: Item[], opts: Options): Promise<void> {
     extracted.declared += overrides.length;
     try {
       const scratch = path.join(ORIGINALS, `.${it.id}.refs-${process.pid}`);
-      const refs = await stageAssets(scratch, (dir) => downloadReferences(extracted.images, extracted.declared, finalUrl, dir, opts.maxRefs, log));
+      const refs = await stageAssets(scratch, (dir) => downloadReferences(extracted.images, extracted.declared, finalUrl, dir, entry?.maxRefs ?? opts.maxRefs, log));
       await rm(scratch, { recursive: true, force: true });
       if (refs.length === 0) throw new Error('no usable images');
       await saveOriginals(it.id, refs, log);

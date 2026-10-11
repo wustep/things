@@ -139,7 +139,7 @@ export function thingsSharePages(): Plugin {
         });
         const html = sharePage(template, meta);
         await mkdir(path.join(outDir, 't'), { recursive: true });
-        for (const key of new Set([slug, item.id])) {
+        for (const key of new Set([slug, item.id, ...(item.aliases ?? [])])) {
           await writeFile(path.join(outDir, 't', key), html);
           pages++;
         }

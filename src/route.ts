@@ -1,9 +1,9 @@
 /**
  * Every thing has its own address: /t/<slug>, e.g. /t/ugmonk-analog-complete-kit. The slug comes
  * from the maker and name, so it reads well when shared; the item id (/t/ugmonk-5117191f) always
- * works too, so a renamed thing's old id links still resolve.
+ * works too, and so do a renamed thing's earlier slugs (`aliases`), so old links still resolve.
  */
-export { slugify, slugsFor } from '../shared/slug.ts';
+export { resolveKey, slugify, slugsFor } from '../shared/slug.ts';
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 

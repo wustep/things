@@ -30,3 +30,12 @@ export function slugsFor(items: Pick<Item, 'id' | 'title' | 'brand'>[]): Map<str
   }
   return out;
 }
+
+/** The thing a /t/<key> address means: its current slug, its id, or one of its earlier slugs. */
+export function resolveKey<T extends Pick<Item, 'id' | 'aliases'>>(items: T[], slugs: Map<string, string>, key: string): T | undefined {
+  return (
+    items.find((it) => slugs.get(it.id) === key) ??
+    items.find((it) => it.id === key) ??
+    items.find((it) => it.aliases?.includes(key))
+  );
+}

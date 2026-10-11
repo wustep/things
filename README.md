@@ -22,8 +22,10 @@ around (click again to leave); from the keyboard, Z zooms in and the arrows look
 always closes the view, zoomed or not.
 
 Every thing has its own address, `/t/<maker-and-name>` (for example
-`/t/ugmonk-analog-complete-kit`); the item id works too (`/t/ugmonk-5117191f`). Links can be
-shared and reloaded, and Back returns to the shelf.
+`/t/ugmonk-analog-complete-kit`); the item id works too (`/t/ugmonk-5117191f`). When a thing is
+renamed, its old slug goes in its `aliases` and keeps working: the viewer moves on to the new
+address, and the build writes a share page for the old one too. Links can be shared and
+reloaded, and Back returns to the shelf.
 
 A shared link unfurls with the thing's name, a line about it (maker, price and shop, then the
 note or the shop's words) and a share card: the cut-out standing on a shelf in the same dark

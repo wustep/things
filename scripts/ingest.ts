@@ -261,6 +261,8 @@ async function ingestOne(entry: BatchEntry, id: string, existing: Item | undefin
       description: extracted.description,
       // Stephen's notes belong to him, not to the shop page: a re-ingest carries them over.
       ...(existing?.commentary ? { commentary: existing.commentary } : {}),
+      // So do earlier slugs: old /t/ links keep working after a re-ingest renames the thing.
+      ...(existing?.aliases?.length ? { aliases: existing.aliases } : {}),
       images: refs.map((r) => `${publicDir}/${r.file}`),
       asset,
       addedAt: new Date().toISOString(),

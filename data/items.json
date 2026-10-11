@@ -224,41 +224,38 @@
   },
   {
     "id": "jossandmain-cc12a72d",
-    "url": "https://www.jossandmain.com/furniture/pdp/joss-main-alix-78-recessed-arm-chesterfield-sofa-j111809464.html",
+    "url": "https://www.jossandmain.com/furniture/pdp/joss-main-bari-91-upholstered-sofa-j001334207.html?piid=830869401%2C841047075",
     "domain": "jossandmain.com",
-    "title": "Alix 78″ Recessed Arm Chesterfield Sofa",
-    "price": "$1899",
+    "title": "Bari 91″ Upholstered Sofa",
+    "brand": "Joss & Main",
+    "price": "$1,779",
     "section": "Home",
+    "aliases": [
+      "joss-and-main-alix-78-recessed-arm-chesterfield-sofa"
+    ],
     "images": [
-      "/items/jossandmain-cc12a72d/ref-0.jpg"
+      "/items/jossandmain-cc12a72d/ref-0.jpg",
+      "/items/jossandmain-cc12a72d/ref-1.jpg",
+      "/items/jossandmain-cc12a72d/ref-2.jpg",
+      "/items/jossandmain-cc12a72d/ref-3.jpg",
+      "/items/jossandmain-cc12a72d/ref-4.jpg",
+      "/items/jossandmain-cc12a72d/ref-5.jpg",
+      "/items/jossandmain-cc12a72d/ref-6.jpg"
     ],
     "asset": {
-      "kind": "glb",
-      "url": "/items/jossandmain-cc12a72d/model.glb",
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/jossandmain-cc12a72d/primary.png",
+      "aspect": 1.4949,
       "palette": [
-        "#27281b",
-        "#565946",
-        "#90908c",
-        "#cccccb"
-      ],
-      "refs": [
-        "/items/jossandmain-cc12a72d/ref-0.jpg"
-      ],
-      "fallback": {
-        "kind": "procedural",
-        "shape": "card",
-        "texture": "/items/jossandmain-cc12a72d/primary.png",
-        "aspect": 1.5479,
-        "palette": [
-          "#27281b",
-          "#565946",
-          "#90908c",
-          "#cccccb"
-        ]
-      }
+        "#6c5735",
+        "#272a14",
+        "#888888",
+        "#b0b1b2"
+      ]
     },
     "addedAt": "2026-09-14T05:28:41.300Z",
-    "brand": "Joss & Main"
+    "description": "A bold statement piece with a low, tuxedo-inspired silhouette and a tight tufted back. Solid parawood frame with corner-block reinforced joinery on tapered solid wood legs in a warm, weathered finish; fiber-wrapped foam over sinuous springs seats four. Shown in Sapphire Olive velvet with Aspen Gray legs."
   },
   {
     "id": "westelm-0d4a26d0",
@@ -686,11 +683,14 @@
   },
   {
     "id": "jamescookartworkshop-b0e89a91",
-    "url": "https://www.jamescookartworkshop.com/pages/ea-the-bestsellers-collection",
+    "url": "https://www.jamescookartworkshop.com/",
     "domain": "jamescookartworkshop.com",
-    "title": "Bestsellers Collection",
+    "title": "Typewriter Artwork",
     "brand": "James Cook",
     "section": "Home",
+    "aliases": [
+      "james-cook-bestsellers-collection"
+    ],
     "description": "James Cook Artwork Shop",
     "images": [
       "/items/jamescookartworkshop-b0e89a91/ref-0.jpg",
@@ -732,12 +732,15 @@
   },
   {
     "id": "etsy-55c9006b",
-    "url": "https://www.etsy.com/listing/1814690193/interstellar-full-movie-print-whole",
+    "url": "https://www.etsy.com/listing/1590574600/choose-your-own-movie-print-whole-movie",
     "domain": "etsy.com",
-    "title": "Interstellar Whole Movie Poster (Details)",
+    "title": "Movie Frames Poster",
     "brand": "BendingPixelsShop",
     "price": "$59.99",
     "section": "Home",
+    "aliases": [
+      "bendingpixelsshop-interstellar-whole-movie-poster-details"
+    ],
     "images": [
       "/items/etsy-55c9006b/ref-0.jpg",
       "/items/etsy-55c9006b/ref-1.jpg",

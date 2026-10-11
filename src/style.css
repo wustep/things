@@ -19,6 +19,8 @@
   --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
   --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
+  /* A critically damped spring (no overshoot), sampled for linear(). */
+  --spring: linear(0, 0.0398, 0.1302, 0.2413, 0.3554, 0.4629, 0.5591, 0.6424, 0.7127, 0.771, 0.8188, 0.8574, 0.8883, 0.9129, 0.9323, 0.9476, 0.9596, 0.9689, 0.9761, 0.9817, 0.986, 0.9893, 0.9919, 0.9938, 0.9953, 0.9964, 0.9973, 0.998, 0.9985, 0.9988, 0.9991, 0.9993, 1);
   --gutter: 40px;
   /* The gutter, widened where a notch or rounded corner needs it. */
   --side-l: max(var(--gutter), env(safe-area-inset-left));
@@ -813,13 +815,83 @@ html.is-detail .cabinet {
 
 /* ---------- picking a thing off the shelf ---------- */
 
+/*
+ * The picture travels on a critically damped spring (no overshoot): it leaves at once and settles
+ * gently. Closing is a little quicker than opening, the way putting something back is.
+ */
 ::view-transition-group(thing-hero) {
-  animation-duration: 0.5s;
-  animation-timing-function: var(--ease);
+  animation-duration: 0.56s;
+  animation-timing-function: var(--spring);
 }
+html.is-closing::view-transition-group(thing-hero) {
+  animation-duration: 0.46s;
+}
+/*
+ * Both ends are the same image file, in boxes of the same shape. Only the sharper one is drawn on
+ * the way, the stage's big picture scaled down, so nothing cross-fades into a ghost and the
+ * shelf's small picture is never blown up. (If the big picture wasn't ready in time, the two
+ * cross-fade as usual.)
+ */
+::view-transition-old(thing-hero),
+::view-transition-new(thing-hero) {
+  height: 100%;
+}
+html.is-opening:not(.is-unready)::view-transition-old(thing-hero),
+html.is-closing::view-transition-new(thing-hero) {
+  animation: none;
+  opacity: 0;
+}
+html.is-opening:not(.is-unready)::view-transition-new(thing-hero),
+html.is-closing::view-transition-old(thing-hero) {
+  animation: none;
+  opacity: 1;
+  mix-blend-mode: normal;
+}
+/* The room behind it fades over the first half of the picture's flight. */
 ::view-transition-old(root),
 ::view-transition-new(root) {
-  animation-duration: 0.28s;
+  animation-duration: 0.3s;
+  animation-timing-function: cubic-bezier(0.33, 0, 0.2, 1);
+}
+/* The words follow the picture: they rise in a beat after it leaves, and step aside at once on close. */
+html.is-opening .info,
+html.is-closing .info {
+  view-transition-name: thing-info;
+}
+::view-transition-new(thing-info) {
+  animation: info-in 0.42s var(--ease) 0.12s both;
+}
+::view-transition-old(thing-info) {
+  animation: info-out 0.14s ease-out both;
+}
+@keyframes info-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+@keyframes info-out {
+  to {
+    opacity: 0;
+  }
+}
+/*
+ * Mid-flight, the shelf holds still: the lift a focused thing gets and its fade-in would otherwise
+ * start after the snapshot and nudge the landing. A stage picture that arrived with its view (flown
+ * in, slid in or cross-faded) has no fade of its own; the attribute stays, so the fade doesn't
+ * start once the transition ends.
+ */
+html.is-morphing .thing-pic,
+html.is-morphing .thing-pic img {
+  transition: none;
+}
+.stage-pic img[data-arrived] {
+  animation: none;
+}
+/* Stepping with the arrows: one quick cross-fade from this thing to the next. */
+html.is-stepping::view-transition-old(root),
+html.is-stepping::view-transition-new(root) {
+  animation-duration: 0.22s;
 }
 
 /* ---------- phones ---------- */

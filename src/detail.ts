@@ -77,6 +77,11 @@ export class Detail {
     return this.isOpen ? this.item?.id ?? null : null;
   }
 
+  /** True while a swipe is handing over to the next thing (its sheet slides in on its own). */
+  get sliding(): boolean {
+    return this.enterFrom !== null;
+  }
+
   /** True while a note is being written: navigation away would lose it. */
   get busy(): boolean {
     return this.editing && this.draft !== (this.item?.commentary ?? '');
@@ -126,9 +131,9 @@ export class Detail {
     this.root.querySelector<HTMLElement>('#detail-title')?.focus({ preventScroll: true });
   }
 
-  /** The element the shelf picture morphs into. */
-  stageImage(): HTMLElement | null {
-    return this.root.querySelector('.stage-pic');
+  /** The picture the shelf's morphs into: the image itself, so both ends have its exact box. */
+  stageImage(): HTMLImageElement | null {
+    return this.root.querySelector('.stage-pic img');
   }
 
   // ---------- render ----------
@@ -219,6 +224,9 @@ export class Detail {
     this.root.replaceChildren(sheet);
     this.renderNotes();
     if (this.enterFrom && !this.reduceMotion.matches) {
+      // A picture that's already here slides in with its sheet rather than fading in behind it.
+      const img = this.stageImage();
+      if (img?.complete && img.naturalWidth > 0) img.dataset.arrived = '';
       slide(body, [`${this.enterFrom * 28}%`, '0px'], [0, 1], 240);
       this.enterFrom = null;
     }

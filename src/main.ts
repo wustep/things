@@ -19,6 +19,7 @@ let openedFromShelf = false;
 const shelfEl = document.getElementById('shelf') as HTMLElement;
 const detailEl = document.getElementById('detail') as HTMLElement;
 const countEl = document.getElementById('count') as HTMLElement;
+const creditEl = document.getElementById('credit') as HTMLElement;
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
 const shelf = new Shelf(shelfEl, {
@@ -58,6 +59,7 @@ function openItem(item: Item) {
   const i = walk.indexOf(item);
   detail.show(item, { index: i, total: walk.length });
   shelfEl.inert = true;
+  creditEl.inert = true;
   detail.focusStart();
   // Once this thing's own picture has had its turn, warm the ones on either side of it, unless
   // the visitor has asked to save data.
@@ -107,6 +109,7 @@ function applyRoute(animate: boolean) {
     () => {
       detail.hide();
       shelfEl.inert = false;
+      creditEl.inert = false;
       openedFromShelf = false;
       // Back where you were: focus returns to the thing you had open (it must be un-inert first).
       link?.focus({ preventScroll: true });

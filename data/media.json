@@ -1491,64 +1491,6 @@
     ],
     "key": "53a93e0a13ae"
   },
-  "journeyofficial-67ef95f6": {
-    "hero": {
-      "base": "/items/journeyofficial-67ef95f6/2d/hero.9d4adf5b",
-      "widths": [
-        480,
-        768
-      ],
-      "width": 768,
-      "height": 966,
-      "mode": "cutout",
-      "subject": [
-        0.0573,
-        0.0455,
-        0.8854,
-        0.9089
-      ],
-      "tone": "#5d5e60"
-    },
-    "gallery": [
-      {
-        "base": "/items/journeyofficial-67ef95f6/2d/photo-1.9d4adf5b",
-        "widths": [
-          640,
-          1000
-        ],
-        "width": 1000,
-        "height": 1000
-      },
-      {
-        "base": "/items/journeyofficial-67ef95f6/2d/photo-2.9d4adf5b",
-        "widths": [
-          640,
-          1000
-        ],
-        "width": 1000,
-        "height": 1000
-      },
-      {
-        "base": "/items/journeyofficial-67ef95f6/2d/photo-3.9d4adf5b",
-        "widths": [
-          640,
-          1000
-        ],
-        "width": 1000,
-        "height": 1000
-      },
-      {
-        "base": "/items/journeyofficial-67ef95f6/2d/photo-4.9d4adf5b",
-        "widths": [
-          640,
-          1000
-        ],
-        "width": 1000,
-        "height": 1000
-      }
-    ],
-    "key": "9d4adf5b1de8"
-  },
   "amazon-3f443256": {
     "hero": {
       "base": "/items/amazon-3f443256/2d/hero.0cc43f9a",

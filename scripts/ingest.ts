@@ -32,6 +32,7 @@ import { readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { affiliateUrl, amazonAsin } from '../shared/amazon.ts';
+import { cleanLink } from '../shared/links.ts';
 import { titleWithoutBrand } from '../shared/text.ts';
 import type { Asset, Item, ModelAsset, ProceduralAsset, ProceduralShape } from '../shared/types.ts';
 import { buildProceduralAsset } from './lib/asset.ts';
@@ -148,6 +149,9 @@ async function main() {
     let id = entry.url;
     try {
       id = idFor(entry.url);
+      // A stored link may have lost tracking or no-op params since its id was made: match it too.
+      const byLink = items.find((it) => cleanLink(it.url) === cleanLink(affiliateUrl(entry.url)));
+      if (!items.some((it) => it.id === id) && byLink) id = byLink.id;
       const existing = items.find((it) => it.id === id);
       let item: Item;
       if (existing && opts.remesh) {
@@ -252,7 +256,7 @@ async function ingestOne(entry: BatchEntry, id: string, existing: Item | undefin
     return {
       id,
       // Amazon links (short links resolved by the fetch) are stored canonical, with the affiliate tag.
-      url: affiliateUrl(amazonAsin(finalUrl) ? finalUrl : entry.url),
+      url: cleanLink(affiliateUrl(amazonAsin(finalUrl) ? finalUrl : entry.url)),
       domain: new URL(finalUrl).hostname.replace(/^www\./, ''),
       title,
       brand,

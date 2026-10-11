@@ -117,7 +117,10 @@ more; both are tried before anything the page declares (handy for pinning one va
 entry's photos, so a variant can keep only its own (the charcoal Perch, the white-oak Sway). When the brand is known
 it is stripped from the title ("Simplehuman 60L Trash Can" becomes "60L Trash Can" under a
 Simplehuman line) so the tag never says it twice. Items are identified by a stable id derived
-from the URL (tracking parameters are ignored; Amazon URLs collapse to their ASIN).
+from the URL (tracking parameters are ignored; Amazon URLs collapse to their ASIN). Links are stored and shown
+without tracking (`shared/links.ts`: ad-click ids, `utm_*`, referral and shop-search params); what picks
+the product (`?variant=`, a colour option, Joss & Main's `piid`) stays, and Amazon links are left to the
+affiliate rule. A re-ingest finds its thing by that clean link too, so a link that lost a param keeps its id.
 
 ## The 2D image set
 

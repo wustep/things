@@ -4,6 +4,7 @@
  * written here and are saved back to that file; the built site shows them read-only.
  */
 import { affiliateUrl } from '../shared/amazon.ts';
+import { cleanLink } from '../shared/links.ts';
 import type { Item } from '../shared/types.ts';
 import { shopText, titleWithoutBrand } from '../shared/text.ts';
 import { renderMarkdown } from './markdown.ts';
@@ -195,7 +196,7 @@ export class Detail {
     const facts = el('p', 'info-facts');
     if (item.price) facts.append(Object.assign(el('span', 'info-price'), { textContent: item.price }));
     const shop = el('a', 'info-shop') as HTMLAnchorElement;
-    shop.href = affiliateUrl(item.url);
+    shop.href = affiliateUrl(cleanLink(item.url));
     shop.target = '_blank';
     shop.rel = 'noopener noreferrer';
     shop.append(`View at ${item.domain}`, Object.assign(el('span', 'info-shop-arrow'), { textContent: '↗', ariaHidden: 'true' }));

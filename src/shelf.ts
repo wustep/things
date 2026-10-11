@@ -31,7 +31,7 @@ function metricsFor(width: number): Metrics {
     minObject: phone ? 62 : 70,
     minSlot: phone ? 104 : 136,
     gap: phone ? 18 : 40,
-    headroom: phone ? 22 : 34,
+    headroom: phone ? 16 : 34,
   };
 }
 

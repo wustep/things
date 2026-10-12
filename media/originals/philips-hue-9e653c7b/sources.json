@@ -29,5 +29,26 @@
     "width": 2500,
     "height": 2500,
     "note": "the page's transparent render, added by hand so the hero keeps its own alpha"
+  },
+  {
+    "file": "ref-5.jpg",
+    "url": "https://www.assets.signify.com/is/image/Signify/046677590826-929003853701-Hue-WCA-810-A19-E26-1P-NAM-APP-1",
+    "width": 2400,
+    "height": 2400,
+    "note": "single bulb lit white, front, white backdrop, no text (philips-hue.com)"
+  },
+  {
+    "file": "ref-6.jpg",
+    "url": "https://www.assets.signify.com/is/image/Signify/Philips-Hue-Standard-A19-Warm-Close-16x9-PUP-1",
+    "width": 1920,
+    "height": 1080,
+    "note": "bulb glowing warm inside a glass floor lamp, full-res of ref-3, no text (philips-hue.com)"
+  },
+  {
+    "file": "ref-7.jpg",
+    "url": "https://www.assets.signify.com/is/image/Signify/Hue_WCA-A19-E26-A60-E27-100W-carousel-PUP_04",
+    "width": 2400,
+    "height": 1920,
+    "note": "bulbs in a glass pendant and colour accents over a dining table, full-res of ref-2, no text (philips-hue.com)"
   }
 ]

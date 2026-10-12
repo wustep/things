@@ -28,5 +28,33 @@
     "url": "https://static.roland.com/products/rc-505mkii/images/rc-505mkii_top_gal.jpg",
     "width": 1100,
     "height": 634
+  },
+  {
+    "file": "ref-5.jpg",
+    "url": "https://static.roland.com/products/rc-505mkii/images/rc-505mkii_02_gal.jpg",
+    "width": 1680,
+    "height": 1050,
+    "note": "hands on the track controls, close-up, no text (boss.info)"
+  },
+  {
+    "file": "ref-6.jpg",
+    "url": "https://static.roland.com/products/rc-505mkii/images/rc-505mkii_hero.jpg",
+    "width": 1600,
+    "height": 1068,
+    "note": "lit up on a road case with headphones, no text (boss.info)"
+  },
+  {
+    "file": "ref-7.jpg",
+    "url": "https://static.roland.com/products/rc-505mkii/images/rc-505mkii_content_photo_01.jpg",
+    "width": 1180,
+    "height": 829,
+    "note": "close-up of the left end, FX buttons and input knob, no text (boss.info)"
+  },
+  {
+    "file": "ref-8.jpg",
+    "url": "https://static.roland.com/products/rc-505mkii/images/rc-505mkii_07_gal.jpg",
+    "width": 1680,
+    "height": 1050,
+    "note": "rear panel with the ports, on white, no text (boss.info)"
   }
 ]

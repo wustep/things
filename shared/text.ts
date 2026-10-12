@@ -90,3 +90,21 @@ export function shopText(description: string | null | undefined): string | undef
   if (t.length < 60 || !/\s\S+\s\S+\s\S+\s/.test(t)) return undefined;
   return t;
 }
+
+/**
+ * Prices show in whole dollars: "$89.99" → "$90", "$1529.00" → "$1,529", "$1199" → "$1,199".
+ * Rounds to the nearest dollar (half up) and groups thousands with commas. Anything that isn't a
+ * single symbol-prefixed amount (a range, words, a missing price) comes back unchanged.
+ */
+export function wholeDollars(price: string): string;
+export function wholeDollars(price: string | null | undefined): string | undefined;
+export function wholeDollars(price: string | null | undefined): string | undefined {
+  if (price == null) return undefined;
+  const t = price.trim();
+  const m = t.match(/^([^\d\s.,-]*)\s*(\d[\d,]*(?:\.\d+)?)$/);
+  if (!m) return t;
+  const num = Number(m[2].replace(/,/g, ''));
+  if (!Number.isFinite(num)) return t;
+  const whole = Math.round(num + 1e-9);
+  return `${m[1]}${whole.toLocaleString('en-US')}`;
+}

@@ -33,7 +33,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { affiliateUrl, amazonAsin } from '../shared/amazon.ts';
 import { cleanLink } from '../shared/links.ts';
-import { titleWithoutBrand } from '../shared/text.ts';
+import { titleWithoutBrand, wholeDollars } from '../shared/text.ts';
 import type { Asset, Item, ModelAsset, ProceduralAsset, ProceduralShape } from '../shared/types.ts';
 import { buildProceduralAsset } from './lib/asset.ts';
 import { extractProduct, extractShopifyProduct, fullSizeImageUrl, shopifyProductEndpoints, type Extracted } from './lib/extract.ts';
@@ -212,7 +212,7 @@ async function ingestOne(entry: BatchEntry, id: string, existing: Item | undefin
   const brand = entry.brand ?? extracted.brand;
   // The brand gets its own line on the card, so it comes out of the title.
   const title = titleWithoutBrand(entry.title ?? extracted.title ?? titleFromUrl(entry.url), brand);
-  const price = (entry.price ?? extracted.price)?.trim() || undefined;
+  const price = wholeDollars((entry.price ?? extracted.price)?.trim() || undefined);
   const section = entry.section?.trim() || existing?.section;
   log(`title: ${title}${brand ? `  brand: ${brand}` : ''}${price ? `  price: ${price}` : ''}${section ? `  section: ${section}` : ''}`);
 
@@ -427,7 +427,7 @@ async function remeshOne(entry: BatchEntry, existing: Item, opts: Options): Prom
 
   const brand = entry.brand ?? existing.brand;
   const title = titleWithoutBrand(entry.title ?? existing.title, brand);
-  const price = entry.price?.trim() || existing.price;
+  const price = wholeDollars(entry.price?.trim() || existing.price);
   const section = entry.section?.trim() || existing.section;
   log(`title: ${title}${brand ? `  brand: ${brand}` : ''}${price ? `  price: ${price}` : ''}${section ? `  section: ${section}` : ''}`);
 

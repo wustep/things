@@ -6,7 +6,7 @@
 import { affiliateUrl } from '../shared/amazon.ts';
 import { cleanLink } from '../shared/links.ts';
 import type { Item } from '../shared/types.ts';
-import { shopText, titleWithoutBrand } from '../shared/text.ts';
+import { shopText, titleWithoutBrand, wholeDollars } from '../shared/text.ts';
 import { renderMarkdown } from './markdown.ts';
 import { galleryFor, heroFor, picture, type MediaImage } from './media.ts';
 import { el } from './shelf.ts';
@@ -199,7 +199,7 @@ export class Detail {
     info.append(h1);
 
     const facts = el('p', 'info-facts');
-    if (item.price) facts.append(Object.assign(el('span', 'info-price'), { textContent: item.price }));
+    if (item.price) facts.append(Object.assign(el('span', 'info-price'), { textContent: wholeDollars(item.price) }));
     const shop = el('a', 'info-shop') as HTMLAnchorElement;
     shop.href = affiliateUrl(cleanLink(item.url));
     shop.target = '_blank';

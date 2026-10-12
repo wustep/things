@@ -52,5 +52,19 @@
     "url": "https://content.cylindo.com/api/v2/4951/products/ERROL%20SIDE%20CHR/frames/20/ERROL_SIDE_CHR.jpg?feature=UPHOLSTERY:AS108360&feature=FINISH:WALNUT&size=3000",
     "width": 3000,
     "height": 3000
+  },
+  {
+    "file": "ref-9.jpg",
+    "url": "https://content.cylindo.com/api/v2/4951/products/ERROL%20SIDE%20CHR/frames/1/ERROL_SIDE_CHR.jpg?feature=UPHOLSTERY:AS108360&feature=FINISH:WALNUT&size=3000",
+    "width": 3000,
+    "height": 3000,
+    "note": "straight front, walnut with Burl black leather, white backdrop, no text (Room & Board configurator render via Cylindo)"
+  },
+  {
+    "file": "ref-10.jpg",
+    "url": "https://content.cylindo.com/api/v2/4951/products/ERROL%20SIDE%20CHR/frames/16/ERROL_SIDE_CHR.jpg?feature=UPHOLSTERY:AS108360&feature=FINISH:WALNUT&size=3000",
+    "width": 3000,
+    "height": 3000,
+    "note": "straight back, walnut with Burl black leather, white backdrop, no text (Room & Board configurator render via Cylindo)"
   }
 ]

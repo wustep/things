@@ -124,11 +124,11 @@
   },
   {
     "id": "ergonofis-aba25b63",
-    "url": "https://ergonofis.com/products/sway-standing-desk?variant=45146331512911",
+    "url": "https://ergonofis.com/products/sway-standing-desk?variant=45146331480143",
     "domain": "ergonofis.com",
-    "title": "Sway Standing Desk",
+    "title": "Sway Standing Desk, 24″ × 48″",
     "brand": "ergonofis",
-    "price": "$2,595",
+    "price": "$2,295",
     "section": "Office",
     "description": "Crafted from premium solid wood, the Sway Standing Desk offers lasting durability and a distinctive, timeless design. Every detail—from the seamless finishes to the intuitive swipe technology for height adjustment—is designed to elevate both comfort and functionality. Ideal for those seeking a desk that looks as good as it performs, the Sway combines refined craftsmanship with ergonomic innovation",
     "images": [
@@ -149,7 +149,10 @@
       ]
     },
     "addedAt": "2026-10-11T02:00:00.729Z",
-    "commentary": "This might be the only standing desk in the world that doesn't have ugly controls"
+    "commentary": "This might be the only standing desk in the world that doesn't have ugly controls",
+    "aliases": [
+      "ergonofis-sway-standing-desk"
+    ]
   },
   {
     "id": "steelcase-41758f2b",
@@ -157,7 +160,7 @@
     "domain": "steelcase.com",
     "title": "Series 1 Task Chair, Medium Blue",
     "brand": "Steelcase",
-    "price": "$429",
+    "price": "$589",
     "section": "Office",
     "description": "Steelcase Series 1 is an ergonomic chair that provides essential ergonomics, lumbar support, and quality at a great value for any office, home or otherwise.",
     "images": [
@@ -186,7 +189,7 @@
     "domain": "ergonofis.com",
     "title": "Monitor Arm, White",
     "brand": "ergonofis",
-    "price": "$165",
+    "price": "$195",
     "section": "Office",
     "description": "Free up desk space and work comfortably with the Monitor Arm. Customize your setup with a single or dual arm, and even add a laptop tray, for the flexibility that fits your needs. With full 360° rotation, a wide tilt range, and effortless switching between landscape and portrait, it keeps your screen right where you want it. Easy to install and exceptionally stable, the arm secures to your standin",
     "images": [
@@ -213,7 +216,7 @@
     "url": "https://www.amazon.com/dp/B0FB21526X?tag=wustep09-20",
     "domain": "amazon.com",
     "title": "MX Master 3S",
-    "price": "$90",
+    "price": "$100",
     "section": "Office",
     "description": "Amazon.com: Logitech MX Master 3S Bluetooth Wireless Mouse No Receiver - Graphite | MagSpeed Scrolling, 8K DPI tracking, Quiet clicks, Programmable buttons, Bluetooth, Windows PC, Mac, Linux, Chrome : Electronics",
     "images": [
@@ -259,7 +262,7 @@
     "domain": "jossandmain.com",
     "title": "Bari 91″ Upholstered Sofa",
     "brand": "Joss & Main",
-    "price": "$1,779",
+    "price": "$2,099",
     "section": "Home",
     "aliases": [
       "joss-and-main-alix-78-recessed-arm-chesterfield-sofa"
@@ -377,7 +380,7 @@
     "domain": "bludot.com",
     "title": "Perch Outdoor Lounge Chair",
     "brand": "Blu Dot",
-    "price": "$1,276",
+    "price": "$1,595",
     "section": "Home",
     "description": "Rectangular FSC®-certified teak slats and a matte white or grey aluminum frame cut a stylish and airy swath, whether it be the Riviera or the suburbs of Reno. Perch makes every day look like vacation. Beautiful to behold from the back side, the side side or the front side, the collection is made lounge-worthy with cushions covered in mildew and fade resistant Sunbrella® fabric.",
     "images": [
@@ -441,7 +444,7 @@
     "domain": "amazon.com",
     "title": "45L Semi-Round Sensor Can",
     "brand": "simplehuman",
-    "price": "$125",
+    "price": "$150",
     "section": "Home",
     "description": "Buy simplehuman 45 Liter / 12 Gallon Semi-Round Automatic Sensor Trash Can, Brushed Stainless Steel: Kitchen Trash Cans - Amazon.com ✓ FREE DELIVERY possible on eligible purchases",
     "images": [
@@ -516,7 +519,7 @@
     "domain": "amazon.com",
     "title": "Acrylic Record Player Stand",
     "brand": "solaround",
-    "price": "$219",
+    "price": "$199",
     "section": "Home",
     "description": "Amazon.com: solaround Acrylic Record Player Stand, with Vinyl Storage, Turntable Stand, Vinyl Record Storage Table for Living Room (Clear, 31.5'' x 15.7'' x 29'') : Home & Kitchen",
     "images": [
@@ -604,7 +607,7 @@
     "domain": "amazon.com",
     "title": "Air Purifier",
     "brand": "Blueair",
-    "price": "$139",
+    "price": "$140",
     "section": "Home",
     "description": "Buy BLUEAIR Air Purifiers for Home Bedroom Dorm up to 1,138 Ft², Blue 511i Max | WiFi, Auto Mode, Compact, Quiet 19dB HEPASilent Filtration, AHAM Verified, Washable Pre-Filter, Captures Pet Hair, Allergens: Travel-Size Air Purifiers - Amazon.com ✓ FREE DELIVERY possible on eligible purchases",
     "images": [
@@ -649,7 +652,7 @@
     "domain": "amazon.com",
     "title": "Charging Station",
     "brand": "Anker",
-    "price": "$78",
+    "price": "$110",
     "section": "Home",
     "description": "Amazon.com: Anker MagGo 3-in-1 MagSafe-Compatible Qi2 15W Foldable Charging Station | Qi2-Certified Wireless Charging Stand for iPhone 17 - 12 Series, AirPods, Apple Watch Ultra(Non-Battery, Adapter Included) : Cell Phones & Accessories",
     "images": [
@@ -1131,7 +1134,7 @@
     "domain": "orientwatchusa.com",
     "title": "Bambino Version 9",
     "brand": "Orient",
-    "price": "$385",
+    "price": "$525",
     "section": "Carry",
     "description": "The ninth iteration of the Orient Bambino reinterprets the 24 hour sub-dial with a sun and a moon. But the real star is the intricate detailing on the dial and sub-dials, which culminate into its sophisticated design.",
     "images": [
@@ -1162,7 +1165,7 @@
     "domain": "us.nothing.tech",
     "title": "Headphone (1)",
     "brand": "Nothing",
-    "price": "$199",
+    "price": "$299",
     "section": "Carry",
     "images": [
       "/items/us-nothing-db5358fa/ref-0.jpg",
@@ -1430,7 +1433,7 @@
     "domain": "philips-hue.com",
     "title": "White and Color Ambiance A19, 2-Pack",
     "brand": "Philips Hue",
-    "price": "$72",
+    "price": "$99",
     "section": "Home",
     "description": "Bring the benefits of natural daylight into your home with our smartest bulb yet, redesigned to feature Chromasync™ precision color-matching as well as full-spectrum white light. Achieve your ideal color or tone of white light, then customize even further with ultra-low dimming from full brightness all the way down to 0.2%.",
     "images": [
@@ -1460,7 +1463,7 @@
     "domain": "westelm.com",
     "title": "Ceres Performance Rug",
     "brand": "West Elm",
-    "price": "$479",
+    "price": "$599",
     "section": "Home",
     "images": [
       "/items/westelm-7ff32545/ref-0.jpg",
@@ -1572,7 +1575,7 @@
     "domain": "yohann.com",
     "title": "MacBook Stand Wood, Oak",
     "brand": "Yohann",
-    "price": "$200",
+    "price": "$209",
     "section": "Office",
     "description": "This solid wood MacBook stand raises your laptop's screen to a comfortable working height, so you can maintain an upright sitting posture. The stand is made from natural oak and walnut wood, complementing perfectly your workspace. ● Allows for an upright sitting posture ● Free up more space on your desk● Designed in Switzerland● Crafted in Italy and Germany",
     "images": [
@@ -1631,7 +1634,7 @@
     "domain": "revivalrugs.com",
     "title": "Hart in Olive Jute Rug",
     "brand": "Revival Rugs",
-    "price": "$359",
+    "price": "$449",
     "section": "Home",
     "description": "Hart Colorways",
     "images": [
@@ -1687,7 +1690,7 @@
     "domain": "amazon.com",
     "title": "2-Tier Bamboo Shoe Rack",
     "brand": "Oceanstar",
-    "price": "$33",
+    "price": "$50",
     "section": "Home",
     "description": "Buy Oceanstar 2-Tier Bamboo Shoe Rack, Brown, SR1309 | Lightweight: Free Standing Shoe Racks - Amazon.com ✓ FREE DELIVERY possible on eligible purchases",
     "images": [
@@ -1715,7 +1718,7 @@
     "domain": "etsy.com",
     "title": "Solid Oak Coat Rack (6 Hooks)",
     "brand": "Weco",
-    "price": "$89",
+    "price": "$118",
     "section": "Home",
     "description": "Crafted by hand from solid oak, this wall-mounted coat rack blends natural character with practical everyday use. Strong, reliable, and timeless in design, it provides an attractive way to keep your space tidy while showcasing the distinctive grain patterns of real oak. Each piece is individually handmade, ensuring durability and giving every rack its own unique look thanks to the natural variatio",
     "images": [
@@ -1773,7 +1776,7 @@
     "domain": "amazon.com",
     "title": "FamiLock S3 Max Smart Lock",
     "brand": "eufy",
-    "price": "$327",
+    "price": "$400",
     "section": "Home",
     "description": "eufy Security Video Smart Lock FamiLock S3 Max with Palm Vein Recognition | Internal Video Screen, BHMA Grade 1, Keyless Entry Front Door Lock, WiFi Deadbolt+2K HD Doorbell Camera,16GB Built-in Storage - Amazon.com",
     "images": [
@@ -1803,7 +1806,7 @@
     "domain": "dyson.com",
     "title": "Pure Hot + Cool HP01",
     "brand": "Dyson",
-    "price": "$500",
+    "price": "$530",
     "section": "Home",
     "images": [
       "/items/dyson-a11c9a91/ref-0.jpg",
@@ -1886,7 +1889,7 @@
     "domain": "amazon.com",
     "title": "Pro 7 Mesh Wi-Fi, 3-Pack",
     "brand": "eero",
-    "price": "$595",
+    "price": "$800",
     "section": "Home",
     "description": "Amazon.com: Amazon eero Pro 7 tri-band mesh Wi-Fi 7 router (newest model) - Supports internet plans up to 5 Gbps, Coverage up to 6,000 sq. ft., 3-pack : Everything Else",
     "images": [
@@ -1913,7 +1916,7 @@
     "domain": "amazon.com",
     "title": "80-Pint Dehumidifier",
     "brand": "Waykar",
-    "price": "$218",
+    "price": "$270",
     "section": "Home",
     "description": "Amazon.com - Waykar 80 Pints 5000 Sq. Ft 2025 Energy Star Dehumidifier for Basement | 90° Auto Swing, 30%–80% Humidity Control for home, Continuous drainage support, Whole-House Dehumidification, Auto-defrost",
     "images": [
@@ -1971,7 +1974,7 @@
     "domain": "etsy.com",
     "title": "Leather Valet Tray, Large, White Suede",
     "brand": "BarWR",
-    "price": "$58",
+    "price": "$64",
     "section": "Home",
     "description": "・ This tray is made in Los Angeles from vegetable tanned leather and smooth cowhide WHITE suede leather, then molded, finished by hand. ・ Natural vegetable tanned leather will darken and gain character with regular use ・ Made in Los Angeles, CA ・ Dimensions: 8-3/4\" wide x 7 1/8\" long ・ The simple style create for unlimited home organization and display. ・ Great Item for your office, rest",
     "images": [
@@ -2001,7 +2004,7 @@
     "domain": "amazon.com",
     "title": "Experience 2 Plus Earplugs, Silver",
     "brand": "Loop",
-    "price": "$36",
+    "price": "$40",
     "section": "Carry",
     "description": "Reusable high-fidelity earplugs: 17 dB (SNR) of noise reduction that keeps music crisp, plus Loop Mute for extra coverage. For concerts, festivals, sports, DJs and nightlife.",
     "images": [

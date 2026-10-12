@@ -10,5 +10,19 @@
     "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/studio-display-vesa-witb-202203?wid=2000&hei=2000&fmt=png-alpha",
     "width": 2000,
     "height": 2000
+  },
+  {
+    "file": "ref-2.jpg",
+    "url": "https://www.apple.com/v/studio-display/f/images/overview/stands/vesa_mount_endframe__bv0lgr0nx602_large_2x.jpg",
+    "width": 548,
+    "height": 1084,
+    "note": "front, rotated to portrait on the VESA mount, no stand, no text (apple.com)"
+  },
+  {
+    "file": "ref-3.jpg",
+    "url": "https://www.apple.com/v/studio-display/f/images/overview/stands/vesa_mount_startframe__d5vrs1gh5nyq_large_2x.jpg",
+    "width": 548,
+    "height": 1084,
+    "note": "side profile showing the VESA mount adapter, no stand, no text (apple.com)"
   }
 ]

@@ -16,5 +16,26 @@
     "url": "https://content.cylindo.com/api/v2/4951/products/EVAN%20BNCH%2054X19X18H/frames/8/EVAN_BENCH.jpg?feature=UPHOLSTERY:AS108670&feature=FINISH:WALNUT&size=3000",
     "width": 3000,
     "height": 3000
+  },
+  {
+    "file": "ref-3.jpg",
+    "url": "https://content.cylindo.com/api/v2/4951/products/EVAN%20BNCH%2054X19X18H/frames/4/EVAN_BENCH.jpg?feature=UPHOLSTERY:AS108670&feature=FINISH:WALNUT&size=3000",
+    "width": 3000,
+    "height": 3000,
+    "note": "front three-quarter, walnut with Pesaro black leather, white backdrop, no text (Room & Board configurator render via Cylindo)"
+  },
+  {
+    "file": "ref-4.jpg",
+    "url": "https://content.cylindo.com/api/v2/4951/products/EVAN%20BNCH%2054X19X18H/frames/12/EVAN_BENCH.jpg?feature=UPHOLSTERY:AS108670&feature=FINISH:WALNUT&size=3000",
+    "width": 3000,
+    "height": 3000,
+    "note": "back three-quarter, walnut with Pesaro black leather, white backdrop, no text (Room & Board configurator render via Cylindo)"
+  },
+  {
+    "file": "ref-5.jpg",
+    "url": "https://content.cylindo.com/api/v2/4951/products/EVAN%20BNCH%2054X19X18H/frames/28/EVAN_BENCH.jpg?feature=UPHOLSTERY:AS108670&feature=FINISH:WALNUT&size=3000",
+    "width": 3000,
+    "height": 3000,
+    "note": "low three-quarter from the other end, walnut with Pesaro black leather, no text (Room & Board configurator render via Cylindo)"
   }
 ]

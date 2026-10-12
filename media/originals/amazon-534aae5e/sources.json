@@ -22,5 +22,33 @@
     "url": "https://m.media-amazon.com/images/I/71Pn4loiriL._AC_SL1500_.jpg",
     "width": 1500,
     "height": 1500
+  },
+  {
+    "file": "ref-4.jpg",
+    "url": "https://wokyis.com/cdn/shop/files/2_cc961bf8-057f-4779-b324-c0b8145291f1.jpg",
+    "width": 1500,
+    "height": 1500,
+    "note": "front and back on a shelf, no text (wokyis.com M5 80Gbps product page); the hero is the front one cut out"
+  },
+  {
+    "file": "ref-5.jpg",
+    "url": "https://wokyis.com/cdn/shop/files/6_72696eca-8c8a-4972-a643-b38f63fe96e9.jpg",
+    "width": 1500,
+    "height": 1800,
+    "note": "back three-quarter with the ports and the M.2 bay open, no text (wokyis.com)"
+  },
+  {
+    "file": "ref-6.jpg",
+    "url": "https://wokyis.com/cdn/shop/files/4_b03c7420-9e7c-4f62-b0d8-b987d94ad630.jpg",
+    "width": 1500,
+    "height": 1800,
+    "note": "on a Mac mini on a desk, no text (wokyis.com)"
+  },
+  {
+    "file": "ref-7.jpg",
+    "url": "https://wokyis.com/cdn/shop/files/7_532117ae-ef79-4109-a5b0-b5c2539e9bd3.jpg",
+    "width": 1500,
+    "height": 1800,
+    "note": "front with the box and what comes in it, no text (wokyis.com)"
   }
 ]

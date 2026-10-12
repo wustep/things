@@ -35,7 +35,7 @@
   "dyson-a11c9a91": { "hero": "ref-0.png", "gallery": [] },
   "philips-hue-9e653c7b": { "hero": "ref-4.png", "gallery": ["ref-0.jpg"] },
   "etsy-c0af13ae": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-2.jpg", "ref-3.jpg"] },
-  "amazon-534aae5e": { "hero": { "file": "ref-0.jpg", "crop": [0.5, 0, 0.5, 0.76], "floor": [[0, 0.664], [0.16, 0.664], [0.165, 0.596], [0.585, 0.63], [0.59, 0.717], [0.74, 0.717], [0.745, 0.683], [1, 0.683]] }, "gallery": [] },
+  "amazon-534aae5e": { "hero": { "file": "ref-4.jpg", "crop": [0.02, 0.22, 0.48, 0.47] }, "gallery": ["ref-4.jpg", "ref-5.jpg", "ref-7.jpg", "ref-6.jpg"] },
   "amazon-f9715de1": { "hero": { "file": "ref-1.jpg", "crop": [0, 0, 1, 0.8] }, "gallery": ["ref-0.jpg", "ref-3.jpg"] },
   "yohann-f0afe31c": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-2.jpg", "ref-3.jpg"] },
   "ikea-b292ec09": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-3.jpg", "ref-4.jpg", "ref-5.jpg", "ref-6.jpg"] },

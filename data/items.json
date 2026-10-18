@@ -2478,5 +2478,35 @@
       ]
     },
     "addedAt": "2026-10-18T04:06:53.618Z"
+  },
+  {
+    "id": "amazon-0f7d0411",
+    "url": "https://www.amazon.com/dp/B0CHWRXH8B?tag=wustep09-20",
+    "domain": "amazon.com",
+    "title": "AirPods Pro 2 (USB-C)",
+    "brand": "Apple",
+    "price": "$249",
+    "section": "Carry",
+    "description": "Apple's in-ear noise cancelling earbuds on the H2 chip: Active Noise Cancellation, Adaptive Audio, Transparency and Personalized Spatial Audio, with the Hearing Aid feature. Up to 6 hours per charge, 30 with the MagSafe case (USB-C), which has a speaker and lanyard loop. IP54.",
+    "images": [
+      "/items/amazon-0f7d0411/ref-0.jpg",
+      "/items/amazon-0f7d0411/ref-1.jpg",
+      "/items/amazon-0f7d0411/ref-2.jpg",
+      "/items/amazon-0f7d0411/ref-3.jpg",
+      "/items/amazon-0f7d0411/ref-4.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/amazon-0f7d0411/primary.png",
+      "aspect": 1.0189,
+      "palette": [
+        "#6f6f6f",
+        "#b1b1b1",
+        "#2e2e2e",
+        "#f2f2f3"
+      ]
+    },
+    "addedAt": "2026-10-18T17:51:18.310Z"
   }
 ]

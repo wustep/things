@@ -4123,5 +4123,64 @@
       }
     ],
     "key": "4fed37558dc4"
+  },
+  "amazon-0f7d0411": {
+    "hero": {
+      "base": "/items/amazon-0f7d0411/2d/hero.079eb986",
+      "widths": [
+        480,
+        960,
+        1414
+      ],
+      "width": 1414,
+      "height": 1699,
+      "mode": "cutout",
+      "subject": [
+        0.0545,
+        0.0453,
+        0.8911,
+        0.9094
+      ],
+      "tone": "#d3d3d4"
+    },
+    "gallery": [
+      {
+        "base": "/items/amazon-0f7d0411/2d/photo-1.079eb986",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/amazon-0f7d0411/2d/photo-2.079eb986",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/amazon-0f7d0411/2d/photo-3.079eb986",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/amazon-0f7d0411/2d/photo-4.079eb986",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "079eb98621c1"
   }
 }

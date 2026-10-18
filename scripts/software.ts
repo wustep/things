@@ -16,9 +16,14 @@
  *   }
  *
  * `icon.app` takes the icon macOS shows for the installed app (scripts/lib/app-icon.swift), in the
- * default light style whatever the Mac's own icon style is. `icon.url` downloads one; `mask` is
+ * default light style whatever the Mac's own icon style is; `own` takes the app's own artwork
+ * from its bundle where macOS 26 would set it on a grey plate (with `inset`, below, where that
+ * artwork is drawn a little off the grid). `icon.url` downloads one; `mask` is
  * for an App Store icon, which comes as a full square, and gives it the rounded-square outline it
- * has on the phone. A shot is an image URL, or a frame of the maker's own video (ffmpeg) where
+ * has on the phone, and `inset` sets it into the macOS icon grid as well, so it stands as big as
+ * the icons macOS draws. `icon.mark` is for a tool with no app icon of its own (a CLI): the
+ * maker's vector mark on a plate of its colour, as its site's icon shows it, in that same grid.
+ * A shot is an image URL, or a frame of the maker's own video (ffmpeg) where
  * the site only shows the app in motion. Writes media/originals/<id>/ (icon.png, shot-N.<ext>, sources.json),
  * public/items/<id>/primary.png, and the item's entries in items.json, photos.json and sizes.json.
  * A thing's note and when it was added are kept on a re-run.
@@ -35,7 +40,7 @@ import type { Item, Platform } from '../shared/types.ts';
 import { buildProceduralAsset } from './lib/asset.ts';
 import { fetchBinary } from './lib/fetch.ts';
 import { idFor } from './lib/ids.ts';
-import { decode, processPrimary } from './lib/images.ts';
+import { decode, encodePng, processPrimary } from './lib/images.ts';
 import { stageAssets, writeFileAtomic } from './lib/store.ts';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -57,7 +62,7 @@ export interface SoftwareEntry {
   price?: string;
   platforms: Platform[];
   description?: string;
-  icon: { app: string } | { url: string; mask?: boolean };
+  icon: { app: string; own?: boolean; inset?: boolean } | { url: string; mask?: boolean; inset?: boolean } | { mark: string; plate: string; scale: number };
   shots: (string | { video: string; at: number })[];
 }
 
@@ -156,22 +161,109 @@ async function buildApp(id: string, url: string, entry: SoftwareEntry, existing?
 /** The app's icon as a transparent PNG, and where it came from. */
 async function iconFor(entry: SoftwareEntry): Promise<{ png: Buffer; source: string }> {
   if ('app' in entry.icon) {
-    const app = entry.icon.app;
+    const { app, own, inset } = entry.icon;
     if (!existsSync(path.join(app, 'Contents', 'Info.plist'))) throw new Error(`${app} is not installed`);
-    return { png: drawnByMacOS(app), source: `${path.basename(app)}: the icon macOS shows for it (default style), 1024 px` };
+    const how = own ? 'its own icon artwork from the bundle' : 'the icon macOS shows for it (default style)';
+    const png = drawnByMacOS(app, own);
+    return { png: inset ? await inMacGrid(png) : png, source: `${path.basename(app)}: ${how}, 1024 px${inset ? ', in the macOS icon grid' : ''}` };
   }
-  const { buffer } = await fetchBinary(entry.icon.url);
-  return { png: entry.icon.mask ? await roundedSquare(buffer) : buffer, source: entry.icon.url + (entry.icon.mask ? ' (rounded-square outline applied)' : '') };
+  if ('mark' in entry.icon) {
+    const { mark, plate, scale } = entry.icon;
+    const svg = path.join(os.tmpdir(), `things-mark-${process.pid}.svg`);
+    try {
+      await writeFile(svg, (await fetchBinary(mark)).buffer);
+      return { png: await inMacGrid(await onPlate(drawnByMacOS(svg), plate, scale)), source: `${mark} (on a ${plate} plate at ${scale}, in the macOS icon grid)` };
+    } finally {
+      rmSync(svg, { force: true });
+    }
+  }
+  const { url, mask, inset } = entry.icon;
+  const { buffer } = await fetchBinary(url);
+  if (inset) return { png: await inMacGrid(buffer), source: `${url} (in the macOS icon grid)` };
+  return { png: mask ? await roundedSquare(buffer) : buffer, source: url + (mask ? ' (rounded-square outline applied)' : '') };
 }
 
-/** The installed app's icon as macOS draws it, at 1024 px. */
-function drawnByMacOS(app: string): Buffer {
+/** The installed app's icon as macOS draws it (or its own artwork, or an SVG), at 1024 px. */
+function drawnByMacOS(app: string, own = false): Buffer {
   const out = path.join(os.tmpdir(), `things-icon-${process.pid}.png`);
   try {
-    execFileSync('swift', [path.join(HERE, 'lib', 'app-icon.swift'), app, out, '-AppleIconAppearanceTheme', 'RegularLight', '-AppleInterfaceStyle', 'Light']);
+    execFileSync('swift', [path.join(HERE, 'lib', 'app-icon.swift'), app, out, ...(own ? ['--own'] : []), '-AppleIconAppearanceTheme', 'RegularLight', '-AppleInterfaceStyle', 'Light']);
     return readFileSync(out);
   } finally {
     rmSync(out, { force: true });
+  }
+}
+
+/** A mark (transparent, 1024 px) centred on a square plate of one colour, at `scale` of its side. */
+async function onPlate(markPng: Buffer, plate: string, scale: number): Promise<Buffer> {
+  const mark = await decode(markPng);
+  const side = Math.round(1024 * scale);
+  mark.resize({ w: side, h: side });
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(plate.slice(i, i + 2), 16));
+  const out = Buffer.alloc(1024 * 1024 * 4);
+  for (let i = 0; i < out.length; i += 4) out.set([r, g, b, 255], i);
+  over(out, 1024, mark.bitmap.data, side, (1024 - side) >> 1, (1024 - side) >> 1);
+  return encodePng(out, 1024, 1024);
+}
+
+/**
+ * A full-square icon set into the macOS icon grid, so it stands next to the ones macOS draws: an
+ * 824 px rounded square centred on a 1024 px canvas, with the soft shadow below it (black at 25%,
+ * blurred by σ 14, 8 px down: what macOS's own icons measure).
+ */
+async function inMacGrid(buffer: Buffer): Promise<Buffer> {
+  const BODY = 824, AT = (1024 - BODY) / 2;
+  const img = await decode(await roundedSquare(await opaquePart(buffer)));
+  img.resize({ w: BODY, h: BODY });
+  const body = img.bitmap.data;
+  const shadow = new Float32Array(1024 * 1024);
+  for (let y = 0; y < BODY; y++) for (let x = 0; x < BODY; x++) shadow[(y + AT + 8) * 1024 + x + AT] = body[(y * BODY + x) * 4 + 3] / 255;
+  // Three box blurs of radius 14 come within a hair of a gaussian of σ 14.
+  for (let pass = 0; pass < 3; pass++) boxBlur(shadow, 1024, 14);
+  const out = Buffer.alloc(1024 * 1024 * 4);
+  for (let i = 0; i < shadow.length; i++) out[i * 4 + 3] = Math.round(shadow[i] * 0.25 * 255);
+  over(out, 1024, body, BODY, AT, AT);
+  return encodePng(out, 1024, 1024);
+}
+
+/** An icon cropped to its body (alpha over half), so artwork drawn with its own margin and shadow fills the grid like a full square. */
+async function opaquePart(buffer: Buffer): Promise<Buffer> {
+  const img = await decode(buffer);
+  const { width: w, height: h, data } = img.bitmap;
+  let x0 = w, y0 = h, x1 = -1, y1 = -1;
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    if (data[(y * w + x) * 4 + 3] <= 128) continue;
+    x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y);
+  }
+  if (x1 < 0 || (x0 === 0 && y0 === 0 && x1 === w - 1 && y1 === h - 1)) return buffer;
+  return img.crop({ x: x0, y: y0, w: x1 - x0 + 1, h: y1 - y0 + 1 }).getBuffer('image/png');
+}
+
+/** Paints a square RGBA image over another at (x0, y0), source-over. */
+function over(dst: Buffer, dstSide: number, src: Buffer, srcSide: number, x0: number, y0: number) {
+  for (let y = 0; y < srcSide; y++) for (let x = 0; x < srcSide; x++) {
+    const s = (y * srcSide + x) * 4, d = ((y + y0) * dstSide + x + x0) * 4;
+    const sa = src[s + 3] / 255, da = dst[d + 3] / 255, a = sa + da * (1 - sa);
+    if (!a) continue;
+    for (let c = 0; c < 3; c++) dst[d + c] = Math.round((src[s + c] * sa + dst[d + c] * da * (1 - sa)) / a);
+    dst[d + 3] = Math.round(a * 255);
+  }
+}
+
+/** A box blur of radius r over a square field, horizontally then vertically. */
+function boxBlur(field: Float32Array, side: number, r: number) {
+  const line = new Float32Array(side);
+  for (const [step, stride] of [[1, side], [side, 1]]) {
+    for (let k = 0; k < side; k++) {
+      const start = k * stride;
+      let sum = 0;
+      for (let i = -r; i <= r; i++) sum += field[start + Math.min(side - 1, Math.max(0, i)) * step];
+      for (let i = 0; i < side; i++) {
+        line[i] = sum / (2 * r + 1);
+        sum += field[start + Math.min(side - 1, i + r + 1) * step] - field[start + Math.max(0, i - r) * step];
+      }
+      for (let i = 0; i < side; i++) field[start + i * step] = line[i];
+    }
   }
 }
 

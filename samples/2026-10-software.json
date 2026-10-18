@@ -54,6 +54,31 @@
     "price": "Free · Pro $20/mo · Max from $100/mo"
   },
   {
+    "url": "https://claude.com/product/claude-code",
+    "title": "Claude Code",
+    "platforms": [
+      "CLI"
+    ],
+    "price": "Pro $20/mo · Max from $100/mo",
+    "description": "Claude Code is an agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster by executing routine tasks, explaining complex code, and handling git workflows — all through natural language commands.",
+    "icon": {
+      "mark": "https://claude.com/favicon.svg",
+      "plate": "#30302E",
+      "scale": 0.7
+    },
+    "shots": [
+      {
+        "video": "https://raw.githubusercontent.com/anthropics/claude-code/main/demo.gif",
+        "at": 13
+      },
+      {
+        "video": "https://raw.githubusercontent.com/anthropics/claude-code/main/demo.gif",
+        "at": 28
+      },
+      "https://assets.claude.com/d4645137a0c197beee5313fedbf9417d035452fc.webp"
+    ]
+  },
+  {
     "url": "https://www.notion.com",
     "title": "Notion",
     "platforms": [
@@ -151,7 +176,9 @@
     "price": "Free · Pro $50/mo · Max $200/mo",
     "description": "Free and open source native macOS terminal built on Ghostty. Vertical tabs, notification rings when agents need attention, split panes, and a CLI for programmability.",
     "icon": {
-      "app": "/Applications/cmux.app"
+      "app": "/Applications/cmux.app",
+      "own": true,
+      "inset": true
     },
     "shots": [
       "https://cmux.com/_next/image?url=%2F_next%2Fstatic%2Fimmutable%2Fmedia%2Flanding-image.1y26igml71ekg.png&w=3840&q=85",
@@ -164,7 +191,7 @@
     "url": "https://herdr.dev",
     "title": "Herdr",
     "platforms": [
-      "macOS"
+      "CLI"
     ],
     "price": "Free",
     "description": "Herdr is the runtime your coding agents live on. It holds real terminals open on your laptop, your desktop or a box you rent, so the work survives the lid closing — and you can attach again from anything with a keyboard.",
@@ -252,7 +279,7 @@
     "description": "Strong is the simplest and most intuitive workout tracker, designed to help you get better results from your workouts. Whether you want to gain strength or just stay healthy, join over 1.2 million people who have downloaded Strong to stay on track in the gym.",
     "icon": {
       "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/8d/54/be/8d54beea-e0d4-0691-ce75-176226a03458/AppIcon_PROD-0-0-1x_U007emarketing-0-8-0-sRGB-85-220.png/1024x1024bb.png",
-      "mask": true
+      "inset": true
     },
     "shots": [
       "https://cdn.prod.website-files.com/60656f5fc7baf6df6e77b7dd/6090ff52f9bb18ee2aca7d43_Strong%20Family%20(S5).png",

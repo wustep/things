@@ -1,7 +1,7 @@
 [
   {
     "file": "icon.png",
-    "url": "cmux.app: the icon macOS shows for it (default style), 1024 px",
+    "url": "cmux.app: its own icon artwork from the bundle, 1024 px, in the macOS icon grid",
     "width": 1024,
     "height": 1024
   },

@@ -74,6 +74,11 @@ export async function decode(buffer: Buffer): Promise<Img> {
   return Jimp.fromBuffer(buffer);
 }
 
+/** RGBA pixels as a PNG. */
+export async function encodePng(data: Buffer, width: number, height: number): Promise<Buffer> {
+  return Jimp.fromBitmap({ data, width, height }).getBuffer('image/png');
+}
+
 /**
  * Perceptual hash of a decoded image. The same photo at different sizes (a CDN's thumbnail
  * ladder) hashes alike; a different angle of the product does not.

@@ -74,5 +74,6 @@
   "cleanshot-57af7612": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.jpg", "shot-2.png", "shot-3.png", "shot-4.png"] },
   "strongboxsafe-81c39099": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.png", "shot-2.png", "shot-3.png"] },
   "strong-ce183fe2": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.png", "shot-2.png", "shot-3.png"] },
-  "mimestream-f56ebd89": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.png", "shot-2.png", "shot-3.png"] }
+  "mimestream-f56ebd89": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.png", "shot-2.png", "shot-3.png"] },
+  "claude-49e6ac3e": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.png", "shot-2.png", "shot-3.webp"] }
 }

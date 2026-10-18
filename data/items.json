@@ -2114,6 +2114,33 @@
     "price": "Free · Pro $20/mo · Max from $100/mo"
   },
   {
+    "id": "claude-49e6ac3e",
+    "url": "https://claude.com/product/claude-code",
+    "domain": "claude.com",
+    "title": "Claude Code",
+    "price": "Pro $20/mo · Max from $100/mo",
+    "description": "Claude Code is an agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster by executing routine tasks, explaining complex code, and handling git workflows — all through natural language commands.",
+    "section": "Software",
+    "platforms": [
+      "CLI"
+    ],
+    "images": [
+      "/items/claude-49e6ac3e/primary.png"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/claude-49e6ac3e/primary.png",
+      "aspect": 0.9967,
+      "palette": [
+        "#d97757",
+        "#6c493c",
+        "#30302e"
+      ]
+    },
+    "addedAt": "2026-10-18T07:52:59.245Z"
+  },
+  {
     "id": "notion-4bad20c5",
     "url": "https://www.notion.com",
     "domain": "notion.com",
@@ -2274,12 +2301,11 @@
       "kind": "procedural",
       "shape": "card",
       "texture": "/items/cmux-6ba58564/primary.png",
-      "aspect": 0.9956,
+      "aspect": 0.9967,
       "palette": [
-        "#4f91ec",
-        "#93c3ea",
-        "#bcbcbc",
-        "#f0f0f0"
+        "#54b0f6",
+        "#b2d4ef",
+        "#f5f6f6"
       ]
     },
     "addedAt": "2026-10-18T04:06:45.578Z"
@@ -2293,7 +2319,7 @@
     "description": "Herdr is the runtime your coding agents live on. It holds real terminals open on your laptop, your desktop or a box you rent, so the work survives the lid closing — and you can attach again from anything with a keyboard.",
     "section": "Software",
     "platforms": [
-      "macOS"
+      "CLI"
     ],
     "images": [
       "/items/herdr-6f4c704e/primary.png"
@@ -2403,6 +2429,7 @@
     "url": "https://www.strong.app",
     "domain": "strong.app",
     "title": "Strong",
+    "price": "Free · Pro $5/mo",
     "description": "Strong is the simplest and most intuitive workout tracker, designed to help you get better results from your workouts. Whether you want to gain strength or just stay healthy, join over 1.2 million people who have downloaded Strong to stay on track in the gym.",
     "section": "Software",
     "platforms": [
@@ -2415,15 +2442,14 @@
       "kind": "procedural",
       "shape": "card",
       "texture": "/items/strong-ce183fe2/primary.png",
-      "aspect": 1,
+      "aspect": 0.9967,
       "palette": [
         "#35a7ff",
         "#182936",
         "#f4f5f5"
       ]
     },
-    "addedAt": "2026-10-18T04:06:52.315Z",
-    "price": "Free · Pro $5/mo"
+    "addedAt": "2026-10-18T04:06:52.315Z"
   },
   {
     "id": "mimestream-f56ebd89",

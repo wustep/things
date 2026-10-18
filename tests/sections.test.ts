@@ -42,13 +42,15 @@ test('renaming the case keeps every /t/ link: slugs come from maker and name, no
 
 test('every app says where it runs, and only apps do', () => {
   for (const it of shelf) {
-    if (isSoftware(it)) assert.ok(it.platforms?.length && it.platforms.every((p) => p === 'macOS' || p === 'iOS'), `${it.id} platforms`);
+    if (isSoftware(it)) assert.ok(it.platforms?.length && it.platforms.every((p) => p === 'macOS' || p === 'iOS' || p === 'CLI'), `${it.id} platforms`);
     else assert.equal(it.platforms, undefined, `${it.id} is a thing, not an app`);
   }
   const runs = (title: string) => shelf.find((it) => it.title === title)?.platforms;
   assert.deepEqual(runs('Strong'), ['iOS']);
   assert.deepEqual(runs('Retro'), ['iOS']);
   assert.deepEqual(runs('Mimestream'), ['macOS']);
+  assert.deepEqual(runs('Claude Code'), ['CLI']);
+  assert.deepEqual(runs('Herdr'), ['CLI']);
   for (const both of ['Notion', 'Notion Calendar', 'Claude', 'Grok Bot', 'Raycast', 'Arc', 'Strongbox', 'Wispr Flow']) {
     assert.deepEqual(runs(both), ['macOS', 'iOS'], both);
   }

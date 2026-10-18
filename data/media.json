@@ -3478,6 +3478,55 @@
     ],
     "key": "03a298e6b57e"
   },
+  "claude-49e6ac3e": {
+    "hero": {
+      "base": "/items/claude-49e6ac3e/2d/hero.254daa9d",
+      "widths": [
+        480,
+        906
+      ],
+      "width": 906,
+      "height": 906,
+      "mode": "cutout",
+      "subject": [
+        0.0453,
+        0.0453,
+        0.9095,
+        0.9095
+      ],
+      "tone": "#4f3d36"
+    },
+    "gallery": [
+      {
+        "base": "/items/claude-49e6ac3e/2d/photo-1.254daa9d",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 818
+      },
+      {
+        "base": "/items/claude-49e6ac3e/2d/photo-2.254daa9d",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 818
+      },
+      {
+        "base": "/items/claude-49e6ac3e/2d/photo-3.254daa9d",
+        "widths": [
+          640,
+          920
+        ],
+        "width": 920,
+        "height": 920
+      }
+    ],
+    "key": "254daa9d9a82"
+  },
   "notion-4bad20c5": {
     "hero": {
       "base": "/items/notion-4bad20c5/2d/hero.ccc60843",
@@ -3726,7 +3775,7 @@
   },
   "cmux-6ba58564": {
     "hero": {
-      "base": "/items/cmux-6ba58564/2d/hero.66d75d95",
+      "base": "/items/cmux-6ba58564/2d/hero.022b0e66",
       "widths": [
         480,
         906
@@ -3740,11 +3789,11 @@
         0.9095,
         0.9095
       ],
-      "tone": "#d4d9de"
+      "tone": "#e1ebf5"
     },
     "gallery": [
       {
-        "base": "/items/cmux-6ba58564/2d/photo-1.66d75d95",
+        "base": "/items/cmux-6ba58564/2d/photo-1.022b0e66",
         "widths": [
           640,
           1280
@@ -3753,7 +3802,7 @@
         "height": 741
       },
       {
-        "base": "/items/cmux-6ba58564/2d/photo-2.66d75d95",
+        "base": "/items/cmux-6ba58564/2d/photo-2.022b0e66",
         "widths": [
           640,
           1280
@@ -3762,7 +3811,7 @@
         "height": 803
       },
       {
-        "base": "/items/cmux-6ba58564/2d/photo-3.66d75d95",
+        "base": "/items/cmux-6ba58564/2d/photo-3.022b0e66",
         "widths": [
           640,
           1280
@@ -3771,7 +3820,7 @@
         "height": 735
       },
       {
-        "base": "/items/cmux-6ba58564/2d/photo-4.66d75d95",
+        "base": "/items/cmux-6ba58564/2d/photo-4.022b0e66",
         "widths": [
           640,
           1280
@@ -3780,7 +3829,7 @@
         "height": 803
       }
     ],
-    "key": "66d75d95452d"
+    "key": "022b0e66cd63"
   },
   "herdr-6f4c704e": {
     "hero": {
@@ -3980,26 +4029,25 @@
   },
   "strong-ce183fe2": {
     "hero": {
-      "base": "/items/strong-ce183fe2/2d/hero.6b1a90bb",
+      "base": "/items/strong-ce183fe2/2d/hero.4f4e6bda",
       "widths": [
         480,
-        960,
-        1126
+        906
       ],
-      "width": 1126,
-      "height": 1126,
+      "width": 906,
+      "height": 906,
       "mode": "cutout",
       "subject": [
         0.0453,
         0.0453,
-        0.9094,
-        0.9094
+        0.9095,
+        0.9095
       ],
       "tone": "#223e54"
     },
     "gallery": [
       {
-        "base": "/items/strong-ce183fe2/2d/photo-1.6b1a90bb",
+        "base": "/items/strong-ce183fe2/2d/photo-1.4f4e6bda",
         "widths": [
           640,
           1280
@@ -4008,7 +4056,7 @@
         "height": 800
       },
       {
-        "base": "/items/strong-ce183fe2/2d/photo-2.6b1a90bb",
+        "base": "/items/strong-ce183fe2/2d/photo-2.4f4e6bda",
         "widths": [
           640,
           1242
@@ -4017,7 +4065,7 @@
         "height": 2208
       },
       {
-        "base": "/items/strong-ce183fe2/2d/photo-3.6b1a90bb",
+        "base": "/items/strong-ce183fe2/2d/photo-3.4f4e6bda",
         "widths": [
           640,
           1242
@@ -4026,7 +4074,7 @@
         "height": 2208
       }
     ],
-    "key": "6b1a90bbf788"
+    "key": "4f4e6bda44f9"
   },
   "mimestream-f56ebd89": {
     "hero": {

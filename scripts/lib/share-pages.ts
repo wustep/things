@@ -52,7 +52,7 @@ export function plain(md: string): string {
 /** What a preview says about a thing: maker, price and shop, then Stephen's note or the shop's words. */
 export function metaFor(item: Item, opts: { url: string; image?: ShareMeta['image'] }): ShareMeta {
   const name = titleWithoutBrand(item.title, item.brand);
-  const facts = [item.brand, [wholeDollars(item.price), item.domain].filter(Boolean).join(' at ')].filter(Boolean).join(' · ');
+  const facts = [item.brand, item.platforms?.join(' and '), [wholeDollars(item.price), item.domain].filter(Boolean).join(' at ')].filter(Boolean).join(' · ');
   const words = item.commentary?.trim() ? plain(item.commentary) : shopText(item.description) ?? '';
   return {
     title: name,

@@ -7,6 +7,7 @@ import { affiliateUrl } from '../shared/amazon.ts';
 import { cleanLink } from '../shared/links.ts';
 import type { Item } from '../shared/types.ts';
 import { shopText, titleWithoutBrand, wholeDollars } from '../shared/text.ts';
+import { isSoftware } from './sections.ts';
 import { renderMarkdown } from './markdown.ts';
 import { galleryFor, heroFor, picture, type MediaImage } from './media.ts';
 import { el } from './shelf.ts';
@@ -193,7 +194,11 @@ export class Detail {
 
     // Words
     const info = el('div', 'info');
-    if (item.section) info.append(Object.assign(el('p', 'info-section'), { textContent: item.section }));
+    if (item.section || item.platforms?.length) {
+      const where = Object.assign(el('p', 'info-section'), { textContent: item.section ?? '' });
+      for (const p of item.platforms ?? []) where.append(Object.assign(el('span', 'info-platform'), { textContent: p }));
+      info.append(where);
+    }
     if (item.brand) info.append(Object.assign(el('p', 'info-maker'), { textContent: item.brand }));
     const h1 = Object.assign(el('h1', 'info-title'), { id: 'detail-title', textContent: name, tabIndex: -1 });
     info.append(h1);
@@ -307,6 +312,8 @@ export class Detail {
       eager: true,
     });
     pic.className = `stage-pic is-${f.kind === 'hero' ? (f.img as ReturnType<typeof heroFor>).mode : 'photo'}`;
+    // An app's icon stays icon-sized up close; blown up to fill the stage it reads as a poster.
+    if (f.kind === 'hero' && isSoftware(this.item!)) pic.classList.add('is-icon');
     if (f.kind === 'hero') pic.style.setProperty('--tone', (f.img as ReturnType<typeof heroFor>).tone);
     const img = pic.querySelector('img')!;
     img.addEventListener('error', () => pic.classList.add('is-missing'), { once: true });

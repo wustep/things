@@ -51,6 +51,8 @@ export interface ModelAsset {
 
 export type Asset = ProceduralAsset | ModelAsset;
 
+export type Platform = 'macOS' | 'iOS';
+
 export interface Item {
   id: string;
   url: string;
@@ -61,6 +63,8 @@ export interface Item {
   description?: string;
   /** Shelf grouping, e.g. a Moonsift collection section ("Office", "Home"). */
   section?: string;
+  /** Software only: where it runs ("macOS", "iOS"), shown as a small label on the shelf and up close. */
+  platforms?: Platform[];
   /**
    * Earlier /t/ slugs, from before a rename. They keep resolving (the viewer moves the address on
    * to the current slug, and the build writes a share page for each), so old links never break.

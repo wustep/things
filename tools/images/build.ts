@@ -84,6 +84,12 @@ type HeroPick =
       /** Flat art to show framed: the picture (after crop) goes into a thin black frame and stands like an object. */
       frame?: boolean;
       /**
+       * An app's official icon (a transparent PNG): its own alpha and its own colours, exactly as
+       * drawn (no white balance or defringe, which would shift a brand colour), minus the soft drop
+       * shadow macOS icons carry, so the tile sits on the shelf line instead of floating above it.
+       */
+      icon?: boolean;
+      /**
        * The object's bottom edge as [x, y] points (fractions of the photo after crop, left to
        * right); everything below the line through them is cleared. For a floor reflection under a
        * base seen at an angle, which a rectangular crop can't take off without clipping the base.
@@ -167,10 +173,10 @@ async function saveManifest(manifest: Record<string, MediaEntry>, items: { id: s
 
 type Holes = boolean | 'exact' | 'through' | 'clear' | 'grow' | 'fill' | 'glass';
 
-function heroOf(pick: Pick): { file: string; mode: 'cutout' | 'photo'; crop?: [number, number, number, number]; holes: Holes; matte: MatteModel; lay: boolean; frame: boolean; floor?: [number, number][] } {
+function heroOf(pick: Pick): { file: string; mode: 'cutout' | 'photo'; crop?: [number, number, number, number]; holes: Holes; matte: MatteModel; lay: boolean; frame: boolean; icon: boolean; floor?: [number, number][] } {
   const h = pick.hero ?? 'ref-0.jpg';
   return typeof h === 'string'
-    ? { file: h, mode: 'cutout', holes: false, matte: 'general', lay: false, frame: false }
+    ? { file: h, mode: 'cutout', holes: false, matte: 'general', lay: false, frame: false, icon: false }
     : {
         file: h.file,
         mode: h.mode ?? 'cutout',
@@ -179,6 +185,7 @@ function heroOf(pick: Pick): { file: string; mode: 'cutout' | 'photo'; crop?: [n
         matte: h.matte === 'matting' ? 'matting' : 'general',
         lay: !!h.lay,
         frame: !!h.frame,
+        icon: !!h.icon,
         floor: h.floor,
       };
 }
@@ -234,6 +241,10 @@ async function buildItem(id: string, pick: Pick, key: string): Promise<MediaEntr
     heroOut = await cutout(framed.rgba, framed.alpha, framed.W, framed.H, false, true);
   } else if (hero.mode === 'photo') {
     heroOut = await framePhoto(rgba, W, H);
+  } else if (hero.icon) {
+    const own = await existingAlpha(rgba, W, H);
+    if (!own) throw new Error(`icon ${hero.file} has no transparency`);
+    heroOut = await cutout(rgba, own, W, H, false, true, false, undefined, true);
   } else {
     const own = await existingAlpha(rgba, W, H);
     heroOut = await cutout(rgba, own ?? (await segment(rgba, W, H, hero.matte)), W, H, hero.holes, !!own, hero.lay, hero.floor);
@@ -333,7 +344,7 @@ function glassMatte(rgba: Buffer, alpha: Float32Array, bg: number[], W: number, 
 
 // ---------- cut-out ----------
 
-async function cutout(rgba: Buffer, alphaIn: Float32Array, W0: number, H0: number, holes: Holes = false, own = false, lay = false, floor?: [number, number][]) {
+async function cutout(rgba: Buffer, alphaIn: Float32Array, W0: number, H0: number, holes: Holes = false, own = false, lay = false, floor?: [number, number][], icon = false) {
   let W = W0, H = H0;
   const n = W * H;
   await debugMask('1-model', alphaIn, W, H);
@@ -402,8 +413,14 @@ async function cutout(rgba: Buffer, alphaIn: Float32Array, W0: number, H0: numbe
   }
 
   if (floor) clearBelow(alpha, W, H, floor);
-  defringe(rgb, alpha, W, H);
-  normalizeColour(rgb, alpha, n);
+  if (icon) {
+    // The tile is opaque; the drop shadow under it is the only faint alpha, so a ramp just above
+    // its strength takes it off and keeps the tile's anti-aliased edge.
+    for (let i = 0; i < n; i++) alpha[i] = clamp((alpha[i] - 0.4) / 0.35, 0, 1);
+  } else {
+    defringe(rgb, alpha, W, H);
+    normalizeColour(rgb, alpha, n);
+  }
   if (lay) ({ rgb, alpha, W, H } = layFlat(rgb, alpha, W, H));
 
   // Trim to the object.

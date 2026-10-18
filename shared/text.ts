@@ -93,18 +93,19 @@ export function shopText(description: string | null | undefined): string | undef
 
 /**
  * Prices show in whole dollars: "$89.99" → "$90", "$1529.00" → "$1,529", "$1199" → "$1,199".
- * Rounds to the nearest dollar (half up) and groups thousands with commas. Anything that isn't a
- * single symbol-prefixed amount (a range, words, a missing price) comes back unchanged.
+ * Rounds to the nearest dollar (half up) and groups thousands with commas. A plan's period stays
+ * as written ("$49.99/yr" → "$50/yr", "$20/mo" as is). Anything that isn't a single
+ * symbol-prefixed amount (a range, words, a missing price) comes back unchanged.
  */
 export function wholeDollars(price: string): string;
 export function wholeDollars(price: string | null | undefined): string | undefined;
 export function wholeDollars(price: string | null | undefined): string | undefined {
   if (price == null) return undefined;
   const t = price.trim();
-  const m = t.match(/^([^\d\s.,-]*)\s*(\d[\d,]*(?:\.\d+)?)$/);
+  const m = t.match(/^([^\d\s.,/-]*)\s*(\d[\d,]*(?:\.\d+)?)(\s*\/\s*[a-z]+)?$/i);
   if (!m) return t;
   const num = Number(m[2].replace(/,/g, ''));
   if (!Number.isFinite(num)) return t;
   const whole = Math.round(num + 1e-9);
-  return `${m[1]}${whole.toLocaleString('en-US')}`;
+  return `${m[1]}${whole.toLocaleString('en-US')}${m[3] ?? ''}`;
 }

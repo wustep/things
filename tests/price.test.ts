@@ -18,6 +18,15 @@ test('wholeDollars rounds to the nearest dollar and groups thousands', () => {
   assert.equal(wholeDollars('€12.40'), '€12');
 });
 
+test('wholeDollars keeps a plan period and rounds only the amount', () => {
+  assert.equal(wholeDollars('$20/mo'), '$20/mo');
+  assert.equal(wholeDollars('$8/mo'), '$8/mo');
+  assert.equal(wholeDollars('$49.99/yr'), '$50/yr');
+  assert.equal(wholeDollars('$4.99 / mo'), '$5 / mo');
+  assert.equal(wholeDollars('$1,199.50/year'), '$1,200/year');
+  assert.equal(wholeDollars('$20/mo – $200/mo'), '$20/mo – $200/mo');
+});
+
 test('wholeDollars leaves non-prices alone', () => {
   assert.equal(wholeDollars(undefined), undefined);
   assert.equal(wholeDollars(null), undefined);

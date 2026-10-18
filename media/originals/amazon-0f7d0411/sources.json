@@ -1,0 +1,7 @@
+[
+  { "file": "ref-0.jpg", "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MTJV3?wid=2000&hei=2000&fmt=jpeg&qlt=95", "width": 2000, "height": 2000, "note": "open MagSafe case (USB-C) with both buds (apple.com store, MTJV3)" },
+  { "file": "ref-1.jpg", "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MTJV3_AV1?wid=2000&hei=2000&fmt=jpeg&qlt=95", "width": 2000, "height": 2000, "note": "both buds (apple.com store)" },
+  { "file": "ref-2.jpg", "url": "https://m.media-amazon.com/images/I/51NRGHU2NoL.jpg", "width": 2560, "height": 2560, "note": "both buds, close (Amazon main image)" },
+  { "file": "ref-3.jpg", "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MTJV3_AV4?wid=2000&hei=2000&fmt=jpeg&qlt=95", "width": 2000, "height": 2000, "note": "closed case, USB-C port and cable (apple.com store)" },
+  { "file": "ref-4.jpg", "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MTJV3_AV5?wid=2000&hei=2000&fmt=jpeg&qlt=95", "width": 2000, "height": 2000, "note": "case from the side, lid open (apple.com store)" }
+]

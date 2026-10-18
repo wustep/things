@@ -6,7 +6,7 @@
 import { affiliateUrl } from '../shared/amazon.ts';
 import { cleanLink } from '../shared/links.ts';
 import type { Item } from '../shared/types.ts';
-import { plans, shopText, titleWithoutBrand, wholeDollars } from '../shared/text.ts';
+import { describedBy, plans, shopText, titleWithoutBrand, wholeDollars } from '../shared/text.ts';
 import { isSoftware } from './sections.ts';
 import { renderMarkdown } from './markdown.ts';
 import { galleryFor, heroFor, picture, type MediaImage } from './media.ts';
@@ -227,7 +227,15 @@ export class Detail {
     if (about) {
       const d = el('section', 'from-shop');
       d.setAttribute('aria-labelledby', 'from-shop-label');
-      const h = Object.assign(el('h2', 'info-label'), { id: 'from-shop-label', textContent: `What ${item.domain} says` });
+      const h = Object.assign(el('h2', 'info-label'), { id: 'from-shop-label' });
+      const by = describedBy(item);
+      if (by.url) {
+        // The words are the maker's, not the shop's the link goes to: name that page and link it.
+        const a = Object.assign(el('a', 'info-label-link') as HTMLAnchorElement, { href: by.url, target: '_blank', rel: 'noopener noreferrer', textContent: by.domain });
+        h.append('What ', a, ' says');
+      } else {
+        h.textContent = `What ${by.domain} says`;
+      }
       d.append(h, Object.assign(el('p'), { textContent: about }));
       info.append(d);
     }

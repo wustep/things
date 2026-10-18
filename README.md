@@ -121,7 +121,10 @@ from the URL (tracking parameters are ignored; Amazon URLs collapse to their ASI
 without tracking (`shared/links.ts`: ad-click ids, `utm_*`, referral and shop-search params); what picks
 the product (`?variant=`, a colour option, Joss & Main's `piid`) stays, and Amazon links are left to the
 affiliate rule. An official Associates short link (`https://link.amazon/<code>`, from SiteStripe with the tag) is
-stored as is, its `domain` stays `amazon.com` (the shop label), and a `--force` re-ingest keeps it. A re-ingest finds its thing by that clean link too, so a link that lost a param keeps its id.
+stored as is, its `domain` stays `amazon.com` (the shop label), and a `--force` re-ingest keeps it.
+A thing that moved to Amazon but keeps its maker's words has `descriptionSource: { domain, url }`: the
+detail view's "What … says" heading then names that site and links its page (a re-ingest takes the new page's
+words and drops it). A re-ingest finds its thing by that clean link too, so a link that lost a param keeps its id.
 
 ## Software
 

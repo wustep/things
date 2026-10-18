@@ -988,6 +988,10 @@
     "price": "$600",
     "section": "Carry",
     "description": "Meet the next leap in luggage. Roller Pro Carry-On is a 4-wheeled travel roller in a class of its own, built differently from the ground up to hold more...",
+    "descriptionSource": {
+      "domain": "peakdesign.com",
+      "url": "https://www.peakdesign.com/products/roller-pro?Color=Sage"
+    },
     "images": [
       "/items/peakdesign-8f476d14/ref-0.jpg",
       "/items/peakdesign-8f476d14/ref-1.jpg",
@@ -1035,6 +1039,10 @@
     "price": "$50",
     "section": "Carry",
     "description": "Dopp kit, ditty bag, toiletry bag, call it what you will—it’s one of the most essential travel carry tools, and can also be one of the most frustrating....",
+    "descriptionSource": {
+      "domain": "peakdesign.com",
+      "url": "https://www.peakdesign.com/products/wash-pouch"
+    },
     "images": [
       "/items/peakdesign-e3a72cf8/ref-0.jpg"
     ],
@@ -1061,6 +1069,10 @@
     "price": "$50",
     "section": "Carry",
     "description": "Whether storing cables, everyday gear, or travel essentials, Tech Pouch offers unrivaled organization and ease of access.",
+    "descriptionSource": {
+      "domain": "peakdesign.com",
+      "url": "https://www.peakdesign.com/products/small-tech-pouch-black"
+    },
     "images": [
       "/items/peakdesign-709dfa64/ref-2.jpg",
       "/items/peakdesign-709dfa64/ref-0.jpg",
@@ -1863,6 +1875,10 @@
     "price": "$149",
     "section": "Office",
     "description": "Magic Keyboard with Touch ID features a sleek design and rechargeable battery and pairs automatically with your Mac. Buy now.",
+    "descriptionSource": {
+      "domain": "apple.com",
+      "url": "https://www.apple.com/shop/product/MJLY4LL/A/magic-keyboard-with-touch-id-for-mac-models-with-apple-silicon-usb-c-us-english"
+    },
     "images": [
       "/items/apple-3facb22e/ref-0.jpg",
       "/items/apple-3facb22e/ref-1.jpg",

@@ -706,6 +706,19 @@ html.is-detail .credit {
   text-transform: uppercase;
   color: var(--faint);
 }
+/* A quiet link in a label: the label's own colour, a hairline underline that firms up on hover. */
+.info-label-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--hair);
+  text-underline-offset: 4px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+.info-label-link:hover,
+.info-label-link:focus-visible {
+  color: var(--ink-2);
+  text-decoration-color: currentColor;
+}
 .notes-body {
   font: 400 19px/1.62 var(--serif);
   color: var(--ink);

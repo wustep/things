@@ -121,3 +121,13 @@ function wholePlan(plan: string): string {
   const whole = Math.round(num + 1e-9);
   return `${m[1]}${m[2]}${whole.toLocaleString('en-US')}${m[4] ?? ''}${m[5]}`;
 }
+
+/**
+ * Who the shop text is from, for the "What … says" heading: the item's own shop, or, when the words
+ * came from another site (`descriptionSource`), that site with a link to the page they came from.
+ */
+export function describedBy(item: { domain: string; descriptionSource?: { domain: string; url: string } }): { domain: string; url?: string } {
+  const s = item.descriptionSource;
+  if (s?.domain && s.domain !== item.domain && /^https:\/\//.test(s.url)) return { domain: s.domain, url: s.url };
+  return { domain: item.domain };
+}

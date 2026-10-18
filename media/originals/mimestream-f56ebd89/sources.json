@@ -1,0 +1,26 @@
+[
+  {
+    "file": "icon.png",
+    "url": "Mimestream.app: the icon macOS shows for it (default style), 1024 px",
+    "width": 1024,
+    "height": 1024
+  },
+  {
+    "file": "shot-1.png",
+    "url": "https://mimestream.com/assets/images/hero.png",
+    "width": 2404,
+    "height": 1456
+  },
+  {
+    "file": "shot-2.png",
+    "url": "https://mimestream.com/assets/images/hero-dark.png",
+    "width": 2404,
+    "height": 1456
+  },
+  {
+    "file": "shot-3.png",
+    "url": "https://mimestream.com/assets/images/compose-window.png",
+    "width": 1503,
+    "height": 1015
+  }
+]

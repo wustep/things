@@ -24,6 +24,15 @@ test('a thing鈥檚 preview: its name, then maker, price and shop, then the shop鈥
   assert.match(m.description, /^ergonofis 路 \$2,595 at ergonofis\.com\. Crafted from premium solid wood/);
 });
 
+test('an app鈥檚 preview says where it runs, and keeps its plan鈥檚 period', () => {
+  const app = { ...desk, title: 'Mimestream', brand: undefined, price: '$50/yr', domain: 'mimestream.com', platforms: ['macOS'] } as unknown as Item;
+  assert.match(metaFor(app, { url: 'u' }).description, /^macOS 路 \$50\/yr at mimestream\.com\. /);
+  const phone = { ...app, title: 'Strong', price: undefined, domain: 'strong.app', platforms: ['iOS'] } as unknown as Item;
+  assert.match(metaFor(phone, { url: 'u' }).description, /^iOS 路 strong\.app\. /);
+  const both = { ...app, title: 'Notion', price: 'Free 路 Plus $9.99/mo', domain: 'notion.com', platforms: ['macOS', 'iOS'] } as unknown as Item;
+  assert.match(metaFor(both, { url: 'u' }).description, /^macOS and iOS 路 Free, Plus \$10\/mo at notion\.com\. /);
+});
+
 test('a note, when there is one, speaks instead of the shop', () => {
   const m = metaFor({ ...desk, commentary: 'I **stand** at it most mornings. [More](https://x.y)' } as Item, { url: 'u' });
   assert.match(m.description, /ergonofis\.com\. I stand at it most mornings\. More$/);

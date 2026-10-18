@@ -18,6 +18,25 @@ test('wholeDollars rounds to the nearest dollar and groups thousands', () => {
   assert.equal(wholeDollars('€12.40'), '€12');
 });
 
+test('wholeDollars keeps a plan period and rounds only the amount', () => {
+  assert.equal(wholeDollars('$20/mo'), '$20/mo');
+  assert.equal(wholeDollars('$8/mo'), '$8/mo');
+  assert.equal(wholeDollars('$49.99/yr'), '$50/yr');
+  assert.equal(wholeDollars('$4.99 / mo'), '$5 / mo');
+  assert.equal(wholeDollars('$1,199.50/year'), '$1,200/year');
+  assert.equal(wholeDollars('$20/mo – $200/mo'), '$20/mo – $200/mo');
+});
+
+test('wholeDollars rounds each of an app\'s plans and keeps their names', () => {
+  assert.equal(wholeDollars('Free · Plus $9.99/mo'), 'Free · Plus $10/mo');
+  assert.equal(wholeDollars('Free · Pro $20/mo · Max $100/mo'), 'Free · Pro $20/mo · Max $100/mo');
+  assert.equal(wholeDollars('Basic $29.50 one-time · Cloud Pro $8/mo'), 'Basic $30 one-time · Cloud Pro $8/mo');
+  assert.equal(wholeDollars('Pro $4.99/mo billed yearly'), 'Pro $5/mo billed yearly');
+  assert.equal(wholeDollars('Free · Lifetime $1,199.99'), 'Free · Lifetime $1,200');
+  assert.equal(wholeDollars('Free · Pro $10 – $20'), 'Free · Pro $10 – $20');
+  assert.equal(wholeDollars('Free'), 'Free');
+});
+
 test('wholeDollars leaves non-prices alone', () => {
   assert.equal(wholeDollars(undefined), undefined);
   assert.equal(wholeDollars(null), undefined);

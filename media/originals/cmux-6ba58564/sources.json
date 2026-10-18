@@ -1,0 +1,32 @@
+[
+  {
+    "file": "icon.png",
+    "url": "cmux.app: its own icon artwork from the bundle, 1024 px, in the macOS icon grid",
+    "width": 1024,
+    "height": 1024
+  },
+  {
+    "file": "shot-1.png",
+    "url": "https://cmux.com/_next/image?url=%2F_next%2Fstatic%2Fimmutable%2Fmedia%2Flanding-image.1y26igml71ekg.png&w=3840&q=85",
+    "width": 3840,
+    "height": 2224
+  },
+  {
+    "file": "shot-2.png",
+    "url": "https://raw.githubusercontent.com/manaflow-ai/cmux/main/docs/assets/vertical-horizontal-tabs-and-splits.png",
+    "width": 3456,
+    "height": 2168
+  },
+  {
+    "file": "shot-3.png",
+    "url": "https://raw.githubusercontent.com/manaflow-ai/cmux/main/docs/assets/claude-code-teams.png",
+    "width": 2770,
+    "height": 1590
+  },
+  {
+    "file": "shot-4.png",
+    "url": "https://raw.githubusercontent.com/manaflow-ai/cmux/main/docs/assets/ssh.png",
+    "width": 3110,
+    "height": 1952
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "file": "icon.png",
+    "url": "CleanShot X.app: the icon macOS shows for it (default style), 1024 px",
+    "width": 1024,
+    "height": 1024
+  },
+  {
+    "file": "shot-1.jpg",
+    "url": "https://cleanshot.com/_nuxt/thumbnail.BhMSh2Te.jpg",
+    "width": 1620,
+    "height": 1080
+  },
+  {
+    "file": "shot-2.png",
+    "url": "https://cleanshot.com/video/home/backgroundtool.mp4 (frame at 3.69s)",
+    "width": 1360,
+    "height": 960
+  },
+  {
+    "file": "shot-3.png",
+    "url": "https://cleanshot.com/video/home/videoeditor.mp4 (frame at 13.5s)",
+    "width": 2384,
+    "height": 1100
+  },
+  {
+    "file": "shot-4.png",
+    "url": "https://cleanshot.com/video/home/quickaccess.mp4 (frame at 4.306s)",
+    "width": 1360,
+    "height": 960
+  }
+]

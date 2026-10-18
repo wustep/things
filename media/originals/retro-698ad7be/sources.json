@@ -1,0 +1,26 @@
+[
+  {
+    "file": "icon.png",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/37/e9/71/37e971e8-3614-baa2-eefb-c6a049f85d42/AppIcon-Chrome-0-0-1x_U007ephone-0-0-0-1-0-0-sRGB-85-220.png/1024x1024bb.png (rounded-square outline applied)",
+    "width": 1024,
+    "height": 1024
+  },
+  {
+    "file": "shot-1.png",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/68/69/a3/6869a3c7-2d0d-147c-b8ed-b6a028925c60/1-Home_iOS_EN.png/1290x0w.png",
+    "width": 1284,
+    "height": 2778
+  },
+  {
+    "file": "shot-2.png",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/50/27/eb/5027ebec-9957-2dab-7cc2-d9f06f122250/2-Journals_iOS_EN.png/1290x0w.png",
+    "width": 1284,
+    "height": 2778
+  },
+  {
+    "file": "shot-3.png",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/af/9d/1e/af9d1ed3-fa05-8825-2149-5fd5edee3ace/3-Postcard_iOS_EN.png/1290x0w.png",
+    "width": 1284,
+    "height": 2778
+  }
+]

@@ -9,6 +9,7 @@
     "build": "tsc --noEmit -p tsconfig.json && vite build",
     "preview": "vite preview",
     "ingest": "tsx scripts/ingest.ts",
+    "software": "tsx scripts/software.ts",
     "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.scripts.json",
     "test": "node --import tsx --test tests/*.test.ts",
     "test:e2e": "npm run build && node --import tsx --test --test-concurrency=1 tests/e2e/*.test.ts",

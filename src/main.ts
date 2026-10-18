@@ -5,7 +5,7 @@ import { initialItems, normalizeItems } from './data.ts';
 import { announce, Detail } from './detail.ts';
 import { extractUrls, ingestAvailable, ingestUrls } from './ingest-client.ts';
 import { setMedia } from './media.ts';
-import { groupItems } from './sections.ts';
+import { groupItems, isSoftware } from './sections.ts';
 import { currentKey, homePath, itemPath, resolveKey, slugsFor } from './route.ts';
 import { Shelf } from './shelf.ts';
 
@@ -241,7 +241,9 @@ function show(next: Item[]) {
   items = next;
   slugs = slugsFor(items);
   walk = shelfOrder(items);
-  countEl.textContent = items.length ? String(items.length) : '';
+  // Things you can hold; the apps have their own count on the Software case.
+  const things = items.filter((it) => !isSoftware(it)).length;
+  countEl.textContent = things ? String(things) : '';
   shelf.set(items, slugs, { eager: !detail.isOpen && !currentKey() });
   const id = detail.openId;
   if (id) {

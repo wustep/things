@@ -3330,5 +3330,799 @@
       }
     ],
     "key": "90d3f46c8ed4"
+  },
+  "x-d45e6cc9": {
+    "hero": {
+      "base": "/items/x-d45e6cc9/2d/hero.4ba3bc52",
+      "widths": [
+        480,
+        906
+      ],
+      "width": 906,
+      "height": 906,
+      "mode": "cutout",
+      "subject": [
+        0.0453,
+        0.0453,
+        0.9095,
+        0.9095
+      ],
+      "tone": "#909090"
+    },
+    "gallery": [
+      {
+        "base": "/items/x-d45e6cc9/2d/photo-1.4ba3bc52",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1707
+      },
+      {
+        "base": "/items/x-d45e6cc9/2d/photo-2.4ba3bc52",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1707
+      },
+      {
+        "base": "/items/x-d45e6cc9/2d/photo-3.4ba3bc52",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1707
+      }
+    ],
+    "key": "4ba3bc527376"
+  },
+  "raycast-3be38941": {
+    "hero": {
+      "base": "/items/raycast-3be38941/2d/hero.b0678618",
+      "widths": [
+        480,
+        906
+      ],
+      "width": 906,
+      "height": 906,
+      "mode": "cutout",
+      "subject": [
+        0.0453,
+        0.0453,
+        0.9095,
+        0.9095
+      ],
+      "tone": "#463132"
+    },
+    "gallery": [
+      {
+        "base": "/items/raycast-3be38941/2d/photo-1.b0678618",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 837
+      },
+      {
+        "base": "/items/raycast-3be38941/2d/photo-2.b0678618",
+        "widths": [
+          640,
+          1257
+        ],
+        "width": 1257,
+        "height": 1256
+      },
+      {
+        "base": "/items/raycast-3be38941/2d/photo-3.b0678618",
+        "widths": [
+          640,
+          1257
+        ],
+        "width": 1257,
+        "height": 1256
+      }
+    ],
+    "key": "b06786183cca"
+  },
+  "claude-e7d0a9a3": {
+    "hero": {
+      "base": "/items/claude-e7d0a9a3/2d/hero.03a298e6",
+      "widths": [
+        480,
+        906
+      ],
+      "width": 906,
+      "height": 906,
+      "mode": "cutout",
+      "subject": [
+        0.0453,
+        0.0453,
+        0.9095,
+        0.9095
+      ],
+      "tone": "#ea876b"
+    },
+    "gallery": [
+      {
+        "base": "/items/claude-e7d0a9a3/2d/photo-1.03a298e6",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1707
+      },
+      {
+        "base": "/items/claude-e7d0a9a3/2d/photo-2.03a298e6",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1707
+      },
+      {
+        "base": "/items/claude-e7d0a9a3/2d/photo-3.03a298e6",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1707
+      }
+    ],
+    "key": "03a298e6b57e"
+  },
+  "claude-49e6ac3e": {
+    "hero": {
+      "base": "/items/claude-49e6ac3e/2d/hero.254daa9d",
+      "widths": [
+        480,
+        906
+      ],
+      "width": 906,
+      "height": 906,
+      "mode": "cutout",
+      "subject": [
+        0.0453,
+        0.0453,
+        0.9095,
+        0.9095
+      ],
+      "tone": "#4f3d36"
+    },
+    "gallery": [
+      {
+        "base": "/items/claude-49e6ac3e/2d/photo-1.254daa9d",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 818
+      },
+      {
+        "base": "/items/claude-49e6ac3e/2d/photo-2.254daa9d",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 818
+      },
+      {
+        "base": "/items/claude-49e6ac3e/2d/photo-3.254daa9d",
+        "widths": [
+          640,
+          920
+        ],
+        "width": 920,
+        "height": 920
+      }
+    ],
+    "key": "254daa9d9a82"
+  },
+  "notion-4bad20c5": {
+    "hero": {
+      "base": "/items/notion-4bad20c5/2d/hero.ccc60843",
+      "widths": [
+        480,
+        906
+      ],
+      "width": 906,
+      "height": 906,
+      "mode": "cutout",
+      "subject": [
+        0.0453,
+        0.0453,
+        0.9095,
+        0.9095
+      ],
+      "tone": "#bcbcbc"
+    },
+    "gallery": [
+      {
+        "base": "/items/notion-4bad20c5/2d/photo-1.ccc60843",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 800
+      },
+      {
+        "base": "/items/notion-4bad20c5/2d/photo-2.ccc60843",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/notion-4bad20c5/2d/photo-3.ccc60843",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "ccc608438da7"
+  },
+  "notion-7cdf9905": {
+    "hero": {
+      "base": "/items/notion-7cdf9905/2d/hero.fc9249fb",
+      "widths": [
+        480,
+        906
+      ],
+      "width": 906,
+      "height": 906,
+      "mode": "cutout",
+      "subject": [
+        0.0453,
+        0.0453,
+        0.9095,
+        0.9095
+      ],
+      "tone": "#b1b1b1"
+    },
+    "gallery": [
+      {
+        "base": "/items/notion-7cdf9905/2d/photo-1.fc9249fb",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 739
+      },
+      {
+        "base": "/items/notion-7cdf9905/2d/photo-2.fc9249fb",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 635
+      },
+      {
+        "base": "/items/notion-7cdf9905/2d/photo-3.fc9249fb",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 627
+      }
+    ],
+    "key": "fc9249fb7427"
+  },
+  "retro-698ad7be": {
+    "hero": {
+      "base": "/items/retro-698ad7be/2d/hero.a5db48a4",
+      "widths": [
+        480,
+        960,
+        1126
+      ],
+      "width": 1126,
+      "height": 1126,
+      "mode": "cutout",
+      "subject": [
+        0.0453,
+        0.0453,
+        0.9094,
+        0.9094
+      ],
+      "tone": "#c2c2c2"
+    },
+    "gallery": [
+      {
+        "base": "/items/retro-698ad7be/2d/photo-1.a5db48a4",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 2769
+      },
+      {
+        "base": "/items/retro-698ad7be/2d/photo-2.a5db48a4",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 2769
+      },
+      {
+        "base": "/items/retro-698ad7be/2d/photo-3.a5db48a4",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 2769
+      }
+    ],
+    "key": "a5db48a4588c"
+  },
+  "arc-d3ddbad3": {
+    "hero": {
+      "base": "/items/arc-d3ddbad3/2d/hero.ef382551",
+      "widths": [
+        480,
+        906
+      ],
+      "width": 906,
+      "height": 906,
+      "mode": "cutout",
+      "subject": [
+        0.0453,
+        0.0453,
+        0.9095,
+        0.9095
+      ],
+      "tone": "#dec3d8"
+    },
+    "gallery": [
+      {
+        "base": "/items/arc-d3ddbad3/2d/photo-1.ef382551",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "base": "/items/arc-d3ddbad3/2d/photo-2.ef382551",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "base": "/items/arc-d3ddbad3/2d/photo-3.ef382551",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 853
+      }
+    ],
+    "key": "ef382551fdd3"
+  },
+  "onorca-267b72a1": {
+    "hero": {
+      "base": "/items/onorca-267b72a1/2d/hero.35d6dc67",
+      "widths": [
+        480,
+        906
+      ],
+      "width": 906,
+      "height": 906,
+      "mode": "cutout",
+      "subject": [
+        0.0453,
+        0.0453,
+        0.9095,
+        0.9095
+      ],
+      "tone": "#282828"
+    },
+    "gallery": [
+      {
+        "base": "/items/onorca-267b72a1/2d/photo-1.35d6dc67",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 801
+      },
+      {
+        "base": "/items/onorca-267b72a1/2d/photo-2.35d6dc67",
+        "widths": [
+          640,
+          800
+        ],
+        "width": 800,
+        "height": 450
+      },
+      {
+        "base": "/items/onorca-267b72a1/2d/photo-3.35d6dc67",
+        "widths": [
+          640,
+          960
+        ],
+        "width": 960,
+        "height": 540
+      }
+    ],
+    "key": "35d6dc673b87"
+  },
+  "cmux-6ba58564": {
+    "hero": {
+      "base": "/items/cmux-6ba58564/2d/hero.022b0e66",
+      "widths": [
+        480,
+        906
+      ],
+      "width": 906,
+      "height": 906,
+      "mode": "cutout",
+      "subject": [
+        0.0453,
+        0.0453,
+        0.9095,
+        0.9095
+      ],
+      "tone": "#e1ebf5"
+    },
+    "gallery": [
+      {
+        "base": "/items/cmux-6ba58564/2d/photo-1.022b0e66",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 741
+      },
+      {
+        "base": "/items/cmux-6ba58564/2d/photo-2.022b0e66",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 803
+      },
+      {
+        "base": "/items/cmux-6ba58564/2d/photo-3.022b0e66",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 735
+      },
+      {
+        "base": "/items/cmux-6ba58564/2d/photo-4.022b0e66",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 803
+      }
+    ],
+    "key": "022b0e66cd63"
+  },
+  "herdr-6f4c704e": {
+    "hero": {
+      "base": "/items/herdr-6f4c704e/2d/hero.b57002c4",
+      "widths": [
+        480,
+        564
+      ],
+      "width": 564,
+      "height": 564,
+      "mode": "cutout",
+      "subject": [
+        0.0461,
+        0.0461,
+        0.9078,
+        0.9078
+      ],
+      "tone": "#97999a"
+    },
+    "gallery": [
+      {
+        "base": "/items/herdr-6f4c704e/2d/photo-1.b57002c4",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 720
+      },
+      {
+        "base": "/items/herdr-6f4c704e/2d/photo-2.b57002c4",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 720
+      }
+    ],
+    "key": "b57002c4ebe5"
+  },
+  "wisprflow-348a38f4": {
+    "hero": {
+      "base": "/items/wisprflow-348a38f4/2d/hero.5b9e6d7c",
+      "widths": [
+        480,
+        906
+      ],
+      "width": 906,
+      "height": 906,
+      "mode": "cutout",
+      "subject": [
+        0.0453,
+        0.0453,
+        0.9095,
+        0.9095
+      ],
+      "tone": "#4f4a59"
+    },
+    "gallery": [
+      {
+        "base": "/items/wisprflow-348a38f4/2d/photo-1.5b9e6d7c",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 851
+      },
+      {
+        "base": "/items/wisprflow-348a38f4/2d/photo-2.5b9e6d7c",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 851
+      },
+      {
+        "base": "/items/wisprflow-348a38f4/2d/photo-3.5b9e6d7c",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 851
+      }
+    ],
+    "key": "5b9e6d7cdd5f"
+  },
+  "cleanshot-57af7612": {
+    "hero": {
+      "base": "/items/cleanshot-57af7612/2d/hero.aeafa8ab",
+      "widths": [
+        480,
+        906
+      ],
+      "width": 906,
+      "height": 906,
+      "mode": "cutout",
+      "subject": [
+        0.0453,
+        0.0453,
+        0.9095,
+        0.9095
+      ],
+      "tone": "#3d8ac1"
+    },
+    "gallery": [
+      {
+        "base": "/items/cleanshot-57af7612/2d/photo-1.aeafa8ab",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "base": "/items/cleanshot-57af7612/2d/photo-2.aeafa8ab",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 904
+      },
+      {
+        "base": "/items/cleanshot-57af7612/2d/photo-3.aeafa8ab",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 591
+      },
+      {
+        "base": "/items/cleanshot-57af7612/2d/photo-4.aeafa8ab",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 904
+      }
+    ],
+    "key": "aeafa8ab2ab0"
+  },
+  "strongboxsafe-81c39099": {
+    "hero": {
+      "base": "/items/strongboxsafe-81c39099/2d/hero.c8344878",
+      "widths": [
+        480,
+        906
+      ],
+      "width": 906,
+      "height": 906,
+      "mode": "cutout",
+      "subject": [
+        0.0453,
+        0.0453,
+        0.9095,
+        0.9095
+      ],
+      "tone": "#4a6ebe"
+    },
+    "gallery": [
+      {
+        "base": "/items/strongboxsafe-81c39099/2d/photo-1.c8344878",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 800
+      },
+      {
+        "base": "/items/strongboxsafe-81c39099/2d/photo-2.c8344878",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 800
+      },
+      {
+        "base": "/items/strongboxsafe-81c39099/2d/photo-3.c8344878",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 800
+      }
+    ],
+    "key": "c83448784082"
+  },
+  "strong-ce183fe2": {
+    "hero": {
+      "base": "/items/strong-ce183fe2/2d/hero.4f4e6bda",
+      "widths": [
+        480,
+        906
+      ],
+      "width": 906,
+      "height": 906,
+      "mode": "cutout",
+      "subject": [
+        0.0453,
+        0.0453,
+        0.9095,
+        0.9095
+      ],
+      "tone": "#223e54"
+    },
+    "gallery": [
+      {
+        "base": "/items/strong-ce183fe2/2d/photo-1.4f4e6bda",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 800
+      },
+      {
+        "base": "/items/strong-ce183fe2/2d/photo-2.4f4e6bda",
+        "widths": [
+          640,
+          1242
+        ],
+        "width": 1242,
+        "height": 2208
+      },
+      {
+        "base": "/items/strong-ce183fe2/2d/photo-3.4f4e6bda",
+        "widths": [
+          640,
+          1242
+        ],
+        "width": 1242,
+        "height": 2208
+      }
+    ],
+    "key": "4f4e6bda44f9"
+  },
+  "mimestream-f56ebd89": {
+    "hero": {
+      "base": "/items/mimestream-f56ebd89/2d/hero.4fed3755",
+      "widths": [
+        480,
+        906
+      ],
+      "width": 906,
+      "height": 906,
+      "mode": "cutout",
+      "subject": [
+        0.0453,
+        0.0453,
+        0.9095,
+        0.9095
+      ],
+      "tone": "#63b1ea"
+    },
+    "gallery": [
+      {
+        "base": "/items/mimestream-f56ebd89/2d/photo-1.4fed3755",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 775
+      },
+      {
+        "base": "/items/mimestream-f56ebd89/2d/photo-2.4fed3755",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 775
+      },
+      {
+        "base": "/items/mimestream-f56ebd89/2d/photo-3.4fed3755",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 864
+      }
+    ],
+    "key": "4fed37558dc4"
   }
 }

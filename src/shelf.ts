@@ -191,7 +191,7 @@ export class Shelf {
     const a = el('a', 'thing-link') as HTMLAnchorElement;
     a.href = itemPath(this.slugs.get(item.id) ?? item.id);
     a.dataset.id = item.id;
-    a.setAttribute('aria-label', [item.brand, name].filter(Boolean).join(', '));
+    a.setAttribute('aria-label', [item.brand, name, item.platforms?.join(' and ')].filter(Boolean).join(', '));
 
     const stage = el('span', 'thing-stage');
     stage.style.height = `${stageH}px`;
@@ -214,6 +214,7 @@ export class Shelf {
     const tag = el('span', 'tag');
     if (item.brand) tag.append(Object.assign(el('span', 'tag-maker'), { textContent: item.brand }));
     tag.append(Object.assign(el('span', 'tag-name'), { textContent: name }));
+    if (item.platforms?.length) tag.append(Object.assign(el('span', 'tag-platform'), { textContent: item.platforms.join(' + ') }));
 
     a.append(stage, tag);
     li.append(a);

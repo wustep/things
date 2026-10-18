@@ -287,6 +287,13 @@ html.is-detail .cabinet {
   text-transform: uppercase;
   color: var(--faint);
 }
+/* Where an app runs, quieter than its maker; "macOS" keeps its own spelling, so no uppercase. */
+.tag-platform {
+  font: 400 9.5px/1.2 var(--mono);
+  letter-spacing: 0.08em;
+  color: var(--faint);
+  opacity: 0.8;
+}
 .tag-name {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -504,6 +511,11 @@ html.is-detail .credit {
   height: auto;
   animation: appear 0.5s var(--ease) both;
 }
+/* An app icon up close: about the size it would be held at, not stretched to the stage. */
+.stage-pic.is-icon img {
+  max-width: min(100%, 280px);
+  max-height: min(100%, 280px);
+}
 /*
  * Shop photos are mostly lit for a white web page. In this room a pure-white studio backdrop is a
  * light box, so photos are shown a little dimmed, like a print on the back wall in lamplight.
@@ -613,6 +625,17 @@ html.is-detail .credit {
   text-transform: uppercase;
   color: var(--faint);
 }
+.info-platform {
+  margin-left: 1.1em;
+  padding: 3px 6px 2px;
+  border: 1px solid color-mix(in srgb, var(--faint) 45%, transparent);
+  border-radius: 3px;
+  letter-spacing: 0.08em;
+  text-transform: none;
+}
+.info-platform + .info-platform {
+  margin-left: 0.5em;
+}
 .info-maker {
   margin: 0;
   font: 400 12px/1.3 var(--mono);
@@ -638,6 +661,9 @@ html.is-detail .credit {
 .info-price {
   color: var(--ink);
   font-variant-numeric: tabular-nums;
+}
+.info-plan {
+  white-space: nowrap;
 }
 .info-shop {
   /* A taller hit area than the line it sits on, without moving the line. */
@@ -1007,6 +1033,13 @@ html.is-stepping::view-transition-new(root) {
     aspect-ratio: var(--ar, 1);
     max-height: min(52vh, 460px);
     min-height: 220px;
+  }
+  .stage:has(.is-icon) {
+    max-height: 240px;
+  }
+  .stage-pic.is-icon img {
+    max-width: min(100%, 152px);
+    max-height: min(100%, 152px);
   }
   /* The strip runs to the screen's edges, so it scrolls like the rest of the phone. */
   .thumbs {

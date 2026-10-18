@@ -59,5 +59,21 @@
   "jamcorder-2240bbb5": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-2.jpg", "ref-3.webp", "ref-4.webp", "ref-5.webp"] },
   "peakdesign-e3a72cf8": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-2.jpg", "ref-3.jpg", "ref-4.jpg"] },
   "peakdesign-709dfa64": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-2.jpg", "ref-4.jpg", "ref-5.jpg", "ref-6.jpg", "ref-7.jpg"] },
-  "amazon-091b2237": { "hero": "ref-0.png", "gallery": ["ref-4.png", "ref-1.png", "ref-2.png", "ref-3.png"] }
+  "amazon-091b2237": { "hero": "ref-0.png", "gallery": ["ref-4.png", "ref-1.png", "ref-2.png", "ref-3.png"] },
+  "x-d45e6cc9": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.png", "shot-2.png", "shot-3.png"] },
+  "raycast-3be38941": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.png", "shot-2.png", "shot-3.png"] },
+  "claude-e7d0a9a3": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.png", "shot-2.png", "shot-3.png"] },
+  "notion-4bad20c5": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.jpg", "shot-2.jpg", "shot-3.png"] },
+  "notion-7cdf9905": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.png", "shot-2.png", "shot-3.png"] },
+  "retro-698ad7be": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.png", "shot-2.png", "shot-3.png"] },
+  "arc-d3ddbad3": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.png", "shot-2.png", "shot-3.png"] },
+  "onorca-267b72a1": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.jpg", "shot-2.jpg", "shot-3.jpg"] },
+  "cmux-6ba58564": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.png", "shot-2.png", "shot-3.png", "shot-4.png"] },
+  "herdr-6f4c704e": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.png", "shot-2.png"] },
+  "wisprflow-348a38f4": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.png", "shot-2.png", "shot-3.png"] },
+  "cleanshot-57af7612": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.jpg", "shot-2.png", "shot-3.png", "shot-4.png"] },
+  "strongboxsafe-81c39099": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.png", "shot-2.png", "shot-3.png"] },
+  "strong-ce183fe2": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.png", "shot-2.png", "shot-3.png"] },
+  "mimestream-f56ebd89": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.png", "shot-2.png", "shot-3.png"] },
+  "claude-49e6ac3e": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.png", "shot-2.png", "shot-3.webp"] }
 }

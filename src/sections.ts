@@ -29,3 +29,10 @@ export function groupItems(items: Item[]): SectionGroup[] {
   if (loose.length) groups.push({ items: loose });
   return groups;
 }
+
+/** The case for apps. Its things are icons, not objects: they never count toward the shelf's things. */
+export const SOFTWARE = 'Software';
+
+export function isSoftware(item: Item): boolean {
+  return item.section?.trim() === SOFTWARE;
+}

@@ -15,7 +15,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import type { Plugin } from 'vite';
 import { slugsFor } from '../../shared/slug.ts';
-import { shopText, titleWithoutBrand, wholeDollars } from '../../shared/text.ts';
+import { plans, shopText, titleWithoutBrand, wholeDollars } from '../../shared/text.ts';
 import type { Item } from '../../shared/types.ts';
 
 export const SITE_URL = 'https://things.wustep.me';
@@ -52,7 +52,9 @@ export function plain(md: string): string {
 /** What a preview says about a thing: maker, price and shop, then Stephen's note or the shop's words. */
 export function metaFor(item: Item, opts: { url: string; image?: ShareMeta['image'] }): ShareMeta {
   const name = titleWithoutBrand(item.title, item.brand);
-  const facts = [item.brand, [wholeDollars(item.price), item.domain].filter(Boolean).join(' at ')].filter(Boolean).join(' · ');
+  // An app's plans read as a list here, so the " · " between facts stays the only dot.
+  const price = item.price ? plans(wholeDollars(item.price)).join(', ') : undefined;
+  const facts = [item.brand, item.platforms?.join(' and '), [price, item.domain].filter(Boolean).join(' at ')].filter(Boolean).join(' · ');
   const words = item.commentary?.trim() ? plain(item.commentary) : shopText(item.description) ?? '';
   return {
     title: name,

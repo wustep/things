@@ -31,7 +31,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { affiliateUrl, amazonAsin } from '../shared/amazon.ts';
+import { affiliateUrl, amazonAsin, isAmazonShortLink } from '../shared/amazon.ts';
 import { cleanLink } from '../shared/links.ts';
 import { titleWithoutBrand, wholeDollars } from '../shared/text.ts';
 import type { Asset, Item, ModelAsset, ProceduralAsset, ProceduralShape } from '../shared/types.ts';
@@ -169,6 +169,8 @@ async function main() {
           return;
         }
         item = await ingestOne(entry, id, existing, opts);
+        // A re-ingest keeps an official short link the thing already had (it resolves to the same product).
+        if (existing && isAmazonShortLink(existing.url)) item = { ...item, url: existing.url, domain: existing.domain };
       }
       placeItem(items, item, order);
       await saveItems(items); // save incrementally so a later failure loses nothing

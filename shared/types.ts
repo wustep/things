@@ -61,6 +61,11 @@ export interface Item {
   brand?: string;
   price?: string;
   description?: string;
+  /**
+   * Where `description` was written, when that isn't the shop `url` goes to: a thing that now links
+   * to Amazon keeps its maker's words, and the detail view names and links the maker's page for them.
+   */
+  descriptionSource?: { domain: string; url: string };
   /** Shelf grouping, e.g. a Moonsift collection section ("Office", "Home"). */
   section?: string;
   /** Software only: where it runs ("macOS", "iOS"), shown as a small label on the shelf and up close. */

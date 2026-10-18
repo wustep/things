@@ -5,7 +5,7 @@
  * formats, crops, cache keys). Amazon links are left exactly as they are: affiliateUrl() owns them.
  */
 
-const AMAZON = /(^|\.)(amazon\.[a-z.]+|amzn\.(to|com)|a\.co)$/i;
+const AMAZON = /(^|\.)(amazon\.[a-z.]+|amzn\.(to|com)|a\.co)$|^link\.amazon$/i;
 
 /** Query keys that only say how someone arrived, never what they see. */
 const TRACKING_KEYS = new Set([

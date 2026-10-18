@@ -1,0 +1,272 @@
+[
+  {
+    "url": "https://x.ai/bot",
+    "title": "Grok Bot",
+    "brand": "xAI",
+    "platforms": [
+      "macOS"
+    ],
+    "description": "Meet Grok Bot, AI teammates and AI coworkers you can hand real work to. Grok Bots sign in, work across your tools and websites, and keep going even after you close your laptop.",
+    "icon": {
+      "app": "/Applications/Grok Bot.app"
+    },
+    "shots": [
+      "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/0f/34/40/0f34400c-e2af-6e24-72b6-1886317ae385/AS1__U00b7_Team_of_agents__U00b7_Portrait.png/2048x0w.png",
+      "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/d1/bb/30/d1bb305f-a24f-45e9-0f00-2ecb94cf606d/AS1__U00b7_Work_with_many_at_once__U00b7_Portrait.png/2048x0w.png",
+      "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/e5/1b/81/e51b81f3-029a-dc78-bbec-2ee848a6e35a/AS4__U00b7_Comes_back_finished__U00b7_Portrait.png/2048x0w.png"
+    ]
+  },
+  {
+    "url": "https://www.raycast.com",
+    "title": "Raycast",
+    "platforms": [
+      "macOS"
+    ],
+    "price": "Free",
+    "description": "A collection of powerful productivity tools all within an extendable launcher.",
+    "icon": {
+      "app": "/Applications/Raycast.app"
+    },
+    "shots": [
+      "https://www.raycast.com/uploads/clipboard-history.png",
+      "https://www.raycast.com/_next/static/immutable/media/calculator.44iwy8ski7hsb.png",
+      "https://www.raycast.com/_next/static/immutable/media/file-search.1h2o4dmp-4j8e.png"
+    ]
+  },
+  {
+    "url": "https://claude.com/download",
+    "title": "Claude",
+    "brand": "Anthropic",
+    "platforms": [
+      "macOS"
+    ],
+    "description": "Meet Claude, your AI problem solver and thinking partner. Claude works with you to write, research, code, and tackle complex problems and hard questions with depth and precision.",
+    "icon": {
+      "app": "/Applications/Claude.app"
+    },
+    "shots": [
+      "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/52/b1/32/52b1328f-91c1-e667-d843-95e86e69cc64/US__U00282_U0029.png/2048x0w.png",
+      "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/8c/97/6e/8c976e62-436f-7cdf-c8ab-c593404bca3b/Code_Review.png/2048x0w.png",
+      "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/93/49/93/9349932d-2c17-644c-5d1d-1787aad81dd4/Write.png/2048x0w.png"
+    ]
+  },
+  {
+    "url": "https://www.notion.com",
+    "title": "Notion",
+    "platforms": [
+      "macOS"
+    ],
+    "description": "Notion is an AI-powered all-in-one workspace that helps individuals and teams write notes, manage tasks, organize projects, and collaborate in one place.",
+    "icon": {
+      "app": "/Applications/Notion.app"
+    },
+    "shots": [
+      "https://images.ctfassets.net/spoqsaf9291f/3kVtQWll6jUqQepQ0kaYlz/382b34f23ecb349129239f0b649aba8c/web-homepage-hero-1920x1200_final.jpg",
+      "https://images.ctfassets.net/spoqsaf9291f/37B39r8J6IrO7wtJ1CrpXh/0bf4bcb1e873d5269bf306dff83c78dd/capture_mobile.jpg",
+      "https://images.ctfassets.net/spoqsaf9291f/4U19kO5gM7RYsJa4Xr2oGF/806a8c048e2a03bf4886d3085a03986d/image.png"
+    ]
+  },
+  {
+    "url": "https://www.notion.com/product/calendar",
+    "title": "Notion Calendar",
+    "brand": "Notion",
+    "platforms": [
+      "macOS"
+    ],
+    "price": "Free",
+    "description": "Notion Calendar lets you schedule meetings and control your time like never before. It deeply integrates with Google Calendar accounts so that all your events are synced.",
+    "icon": {
+      "app": "/Applications/Notion Calendar.app"
+    },
+    "shots": [
+      "https://images.ctfassets.net/spoqsaf9291f/7EWqLAfUzISdAyar5OfCmC/8bb13a2cfa74b429be771d66f1cc6570/personal-block-events.png",
+      "https://images.ctfassets.net/spoqsaf9291f/7t9TzEqVMWWGDDV16opOa5/61eb8f1d0acfc631ef1fbe55b363c026/menu-bar.png",
+      "https://images.ctfassets.net/spoqsaf9291f/gkcayL4vNST8B6DESuxHG/ed9a881ac193f2b57e3b7257aa68bd03/notion-db-integration.png"
+    ]
+  },
+  {
+    "url": "https://retro.app",
+    "title": "Retro",
+    "platforms": [
+      "iOS"
+    ],
+    "price": "Free",
+    "description": "Retro is a weekly photo journal that (1) brings you closer to the people you actually care about and (2) helps you appreciate your own life - all without the distractions and pressure of big social media.",
+    "icon": {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/37/e9/71/37e971e8-3614-baa2-eefb-c6a049f85d42/AppIcon-Chrome-0-0-1x_U007ephone-0-0-0-1-0-0-sRGB-85-220.png/1024x1024bb.png",
+      "mask": true
+    },
+    "shots": [
+      "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/68/69/a3/6869a3c7-2d0d-147c-b8ed-b6a028925c60/1-Home_iOS_EN.png/1290x0w.png",
+      "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/50/27/eb/5027ebec-9957-2dab-7cc2-d9f06f122250/2-Journals_iOS_EN.png/1290x0w.png",
+      "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/af/9d/1e/af9d1ed3-fa05-8825-2149-5fd5edee3ace/3-Postcard_iOS_EN.png/1290x0w.png"
+    ]
+  },
+  {
+    "url": "https://arc.net",
+    "title": "Arc",
+    "brand": "The Browser Company",
+    "platforms": [
+      "macOS"
+    ],
+    "price": "Free",
+    "description": "Experience a calmer, more personal internet in this browser designed for you. Let go of the clicks, the clutter, the distractions with the Arc browser.",
+    "icon": {
+      "app": "/Applications/Arc.app"
+    },
+    "shots": [
+      "https://arc.net/space-swiping.png",
+      "https://arc.net/theme-picker.png",
+      "https://arc.net/zero-chrome.png"
+    ]
+  },
+  {
+    "url": "https://www.onorca.dev",
+    "title": "Orca",
+    "platforms": [
+      "macOS"
+    ],
+    "price": "Free",
+    "description": "Orca is the Agent Development Environment (ADE) for shipping with coding agents. Run Claude Code, Codex, Gemini, Cursor CLI, and every other CLI agent in parallel across isolated worktrees.",
+    "icon": {
+      "url": "https://raw.githubusercontent.com/stablyai/orca/main/resources/build/icon.png"
+    },
+    "shots": [
+      "https://raw.githubusercontent.com/stablyai/orca/main/docs/assets/readme-hero.jpg",
+      "https://www.onorca.dev/whats-new/posters/orca-split-screen.jpg",
+      "https://raw.githubusercontent.com/stablyai/orca/main/docs/assets/feature-wall/mobile-companion-app-showcase.jpg"
+    ]
+  },
+  {
+    "url": "https://cmux.com",
+    "title": "cmux",
+    "platforms": [
+      "macOS"
+    ],
+    "price": "Free",
+    "description": "Free and open source native macOS terminal built on Ghostty. Vertical tabs, notification rings when agents need attention, split panes, and a CLI for programmability.",
+    "icon": {
+      "app": "/Applications/cmux.app"
+    },
+    "shots": [
+      "https://cmux.com/_next/image?url=%2F_next%2Fstatic%2Fimmutable%2Fmedia%2Flanding-image.1y26igml71ekg.png&w=3840&q=85",
+      "https://raw.githubusercontent.com/manaflow-ai/cmux/main/docs/assets/vertical-horizontal-tabs-and-splits.png",
+      "https://raw.githubusercontent.com/manaflow-ai/cmux/main/docs/assets/claude-code-teams.png",
+      "https://raw.githubusercontent.com/manaflow-ai/cmux/main/docs/assets/ssh.png"
+    ]
+  },
+  {
+    "url": "https://herdr.dev",
+    "title": "Herdr",
+    "platforms": [
+      "macOS"
+    ],
+    "price": "Free",
+    "description": "Herdr is the runtime your coding agents live on. It holds real terminals open on your laptop, your desktop or a box you rent, so the work survives the lid closing — and you can attach again from anything with a keyboard.",
+    "icon": {
+      "url": "https://raw.githubusercontent.com/herdrdev/herdr/master/assets/logo.png",
+      "mask": true
+    },
+    "shots": [
+      "https://raw.githubusercontent.com/herdrdev/herdr/master/assets/screenshot.png",
+      {
+        "video": "https://github.com/user-attachments/assets/043ec09f-4bdd-41d5-aee0-8fda6b83e267",
+        "at": 21.5
+      }
+    ]
+  },
+  {
+    "url": "https://wisprflow.ai",
+    "title": "Wispr Flow",
+    "brand": "Wispr",
+    "platforms": [
+      "macOS"
+    ],
+    "description": "Wispr Flow is the AI voice keyboard and speech to text app built for speed and accuracy. It works inside any app—including Slack, Messages, Email, WhatsApp, ChatGPT, and Docs—instantly turning your spoken words into polished, formatted writing.",
+    "icon": {
+      "app": "/Applications/Wispr Flow.app"
+    },
+    "shots": [
+      "https://cdn.prod.website-files.com/682fa12727f78b943ed45584/6a3dcd4b5e942844812a8925_CleanShot%202026-06-25%20at%2017.01.06%402x.png",
+      "https://cdn.prod.website-files.com/682fa12727f78b943ed45584/6a3dcd57130052abffef9c19_CleanShot%202026-06-25%20at%2017.01.12%402x.png",
+      "https://cdn.prod.website-files.com/682fa12727f78b943ed45584/6a3dcd84ea71520f895c1ad6_CleanShot%202026-06-25%20at%2017.00.58%402x.png"
+    ]
+  },
+  {
+    "url": "https://cleanshot.com",
+    "title": "CleanShot X",
+    "platforms": [
+      "macOS"
+    ],
+    "price": "$35",
+    "description": "CleanShot X is the best screenshot and screen recording app for Mac with a built-in annotation tool, Cloud uploading, scrolling capture, and a lot more.",
+    "icon": {
+      "app": "/Applications/CleanShot X.app"
+    },
+    "shots": [
+      "https://cleanshot.com/_nuxt/thumbnail.BhMSh2Te.jpg",
+      {
+        "video": "https://cleanshot.com/video/home/backgroundtool.mp4",
+        "at": 3.69
+      },
+      {
+        "video": "https://cleanshot.com/video/home/videoeditor.mp4",
+        "at": 13.5
+      },
+      {
+        "video": "https://cleanshot.com/video/home/quickaccess.mp4",
+        "at": 4.306
+      }
+    ]
+  },
+  {
+    "url": "https://strongboxsafe.com",
+    "title": "Strongbox",
+    "platforms": [
+      "macOS"
+    ],
+    "description": "Strongbox is an application for keeping all your passwords safely stored and protected by one master password. Supporting the open source Password Safe and KeePass formats.",
+    "icon": {
+      "app": "/Applications/Strongbox.app"
+    },
+    "shots": [
+      "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource126/v4/97/aa/9b/97aa9b20-ff7c-1005-fe53-ce776b2bfa4f/8722a1a7-0b39-41d4-b672-e12eaec6fa1b_main.png/2880x0w.png",
+      "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource126/v4/65/d0/e1/65d0e1a5-d449-5bbe-6262-f99ece4c6a45/f37d5a6f-c4fe-4d13-a774-1274ee11a4b9_totp.png/2880x0w.png",
+      "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource116/v4/66/4a/0c/664a0c52-30b0-505c-147f-a0cf0d9ba3ef/03f488aa-5b77-43ff-bf40-be98af3cd0a8_pass-prefs.png/2880x0w.png"
+    ]
+  },
+  {
+    "url": "https://www.strong.app",
+    "title": "Strong",
+    "platforms": [
+      "iOS"
+    ],
+    "description": "Strong is the simplest and most intuitive workout tracker, designed to help you get better results from your workouts. Whether you want to gain strength or just stay healthy, join over 1.2 million people who have downloaded Strong to stay on track in the gym.",
+    "icon": {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/8d/54/be/8d54beea-e0d4-0691-ce75-176226a03458/AppIcon_PROD-0-0-1x_U007emarketing-0-8-0-sRGB-85-220.png/1024x1024bb.png",
+      "mask": true
+    },
+    "shots": [
+      "https://cdn.prod.website-files.com/60656f5fc7baf6df6e77b7dd/6090ff52f9bb18ee2aca7d43_Strong%20Family%20(S5).png",
+      "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/1c/7f/1e/1c7f1e91-708e-606b-bfb0-c010610945e2/mzl.qtzamdcd.png/1290x0w.png",
+      "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/6a/56/9e/6a569e5d-4181-b3fa-d66e-ceb3bcb1a9f5/mzl.csytjdkx.png/1290x0w.png"
+    ]
+  },
+  {
+    "url": "https://mimestream.com",
+    "title": "Mimestream",
+    "platforms": [
+      "macOS"
+    ],
+    "price": "$50/yr",
+    "description": "Mimestream combines the power of macOS with Gmail's advanced features for a new kind of email client that lets you move through your email effortlessly.",
+    "icon": {
+      "app": "/Applications/Mimestream.app"
+    },
+    "shots": [
+      "https://mimestream.com/assets/images/hero.png",
+      "https://mimestream.com/assets/images/hero-dark.png",
+      "https://mimestream.com/assets/images/compose-window.png"
+    ]
+  }
+]

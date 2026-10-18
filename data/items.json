@@ -2025,5 +2025,423 @@
       ]
     },
     "addedAt": "2026-10-11T20:36:24.746Z"
+  },
+  {
+    "id": "x-d45e6cc9",
+    "url": "https://x.ai/bot",
+    "domain": "x.ai",
+    "title": "Grok Bot",
+    "brand": "xAI",
+    "description": "Meet Grok Bot, AI teammates and AI coworkers you can hand real work to. Grok Bots sign in, work across your tools and websites, and keep going even after you close your laptop.",
+    "section": "Software",
+    "platforms": [
+      "macOS"
+    ],
+    "images": [
+      "/items/x-d45e6cc9/primary.png"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/x-d45e6cc9/primary.png",
+      "aspect": 0.9956,
+      "palette": [
+        "#999999",
+        "#4a4a4b",
+        "#cfcfd0",
+        "#1a1a1a"
+      ]
+    },
+    "addedAt": "2026-10-18T04:06:34.549Z"
+  },
+  {
+    "id": "raycast-3be38941",
+    "url": "https://www.raycast.com",
+    "domain": "raycast.com",
+    "title": "Raycast",
+    "price": "Free",
+    "description": "A collection of powerful productivity tools all within an extendable launcher.",
+    "section": "Software",
+    "platforms": [
+      "macOS"
+    ],
+    "images": [
+      "/items/raycast-3be38941/primary.png"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/raycast-3be38941/primary.png",
+      "aspect": 0.9956,
+      "palette": [
+        "#b13036",
+        "#6f2f31",
+        "#f8d4d5",
+        "#2b2828"
+      ]
+    },
+    "addedAt": "2026-10-18T04:06:35.775Z"
+  },
+  {
+    "id": "claude-e7d0a9a3",
+    "url": "https://claude.com/download",
+    "domain": "claude.com",
+    "title": "Claude",
+    "brand": "Anthropic",
+    "description": "Meet Claude, your AI problem solver and thinking partner. Claude works with you to write, research, code, and tackle complex problems and hard questions with depth and precision.",
+    "section": "Software",
+    "platforms": [
+      "macOS"
+    ],
+    "images": [
+      "/items/claude-e7d0a9a3/primary.png"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/claude-e7d0a9a3/primary.png",
+      "aspect": 0.9956,
+      "palette": [
+        "#e46b48",
+        "#ffa37c",
+        "#f2c5b7",
+        "#f9f9f9"
+      ]
+    },
+    "addedAt": "2026-10-18T04:06:38.116Z"
+  },
+  {
+    "id": "notion-4bad20c5",
+    "url": "https://www.notion.com",
+    "domain": "notion.com",
+    "title": "Notion",
+    "description": "Notion is an AI-powered all-in-one workspace that helps individuals and teams write notes, manage tasks, organize projects, and collaborate in one place.",
+    "section": "Software",
+    "platforms": [
+      "macOS"
+    ],
+    "images": [
+      "/items/notion-4bad20c5/primary.png"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/notion-4bad20c5/primary.png",
+      "aspect": 0.9956,
+      "palette": [
+        "#525252",
+        "#cfcecf",
+        "#262626",
+        "#f9f9f9"
+      ]
+    },
+    "addedAt": "2026-10-18T04:06:39.240Z"
+  },
+  {
+    "id": "notion-7cdf9905",
+    "url": "https://www.notion.com/product/calendar",
+    "domain": "notion.com",
+    "title": "Notion Calendar",
+    "brand": "Notion",
+    "price": "Free",
+    "description": "Notion Calendar lets you schedule meetings and control your time like never before. It deeply integrates with Google Calendar accounts so that all your events are synced.",
+    "section": "Software",
+    "platforms": [
+      "macOS"
+    ],
+    "images": [
+      "/items/notion-7cdf9905/primary.png"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/notion-7cdf9905/primary.png",
+      "aspect": 0.9956,
+      "palette": [
+        "#787878",
+        "#aaaaaa",
+        "#262626",
+        "#f9f9f9"
+      ]
+    },
+    "addedAt": "2026-10-18T04:06:39.846Z"
+  },
+  {
+    "id": "retro-698ad7be",
+    "url": "https://retro.app",
+    "domain": "retro.app",
+    "title": "Retro",
+    "price": "Free",
+    "description": "Retro is a weekly photo journal that (1) brings you closer to the people you actually care about and (2) helps you appreciate your own life - all without the distractions and pressure of big social media.",
+    "section": "Software",
+    "platforms": [
+      "iOS"
+    ],
+    "images": [
+      "/items/retro-698ad7be/primary.png"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/retro-698ad7be/primary.png",
+      "aspect": 1,
+      "palette": [
+        "#8d8d8d",
+        "#4f4f4f",
+        "#161616",
+        "#ffffff"
+      ]
+    },
+    "addedAt": "2026-10-18T04:06:42.499Z"
+  },
+  {
+    "id": "arc-d3ddbad3",
+    "url": "https://arc.net",
+    "domain": "arc.net",
+    "title": "Arc",
+    "brand": "The Browser Company",
+    "price": "Free",
+    "description": "Experience a calmer, more personal internet in this browser designed for you. Let go of the clicks, the clutter, the distractions with the Arc browser.",
+    "section": "Software",
+    "platforms": [
+      "macOS"
+    ],
+    "images": [
+      "/items/arc-d3ddbad3/primary.png"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/arc-d3ddbad3/primary.png",
+      "aspect": 0.9911,
+      "palette": [
+        "#1a007f",
+        "#1942cd",
+        "#ff6378",
+        "#ffffff"
+      ]
+    },
+    "addedAt": "2026-10-18T04:06:43.469Z"
+  },
+  {
+    "id": "onorca-267b72a1",
+    "url": "https://www.onorca.dev",
+    "domain": "onorca.dev",
+    "title": "Orca",
+    "price": "Free",
+    "description": "Orca is the Agent Development Environment (ADE) for shipping with coding agents. Run Claude Code, Codex, Gemini, Cursor CLI, and every other CLI agent in parallel across isolated worktrees.",
+    "section": "Software",
+    "platforms": [
+      "macOS"
+    ],
+    "images": [
+      "/items/onorca-267b72a1/primary.png"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/onorca-267b72a1/primary.png",
+      "aspect": 0.9967,
+      "palette": [
+        "#b3b3b3",
+        "#2d2c2d",
+        "#f3f3f3",
+        "#080808"
+      ]
+    },
+    "addedAt": "2026-10-18T04:06:44.147Z"
+  },
+  {
+    "id": "cmux-6ba58564",
+    "url": "https://cmux.com",
+    "domain": "cmux.com",
+    "title": "cmux",
+    "price": "Free",
+    "description": "Free and open source native macOS terminal built on Ghostty. Vertical tabs, notification rings when agents need attention, split panes, and a CLI for programmability.",
+    "section": "Software",
+    "platforms": [
+      "macOS"
+    ],
+    "images": [
+      "/items/cmux-6ba58564/primary.png"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/cmux-6ba58564/primary.png",
+      "aspect": 0.9956,
+      "palette": [
+        "#4f91ec",
+        "#93c3ea",
+        "#bcbcbc",
+        "#f0f0f0"
+      ]
+    },
+    "addedAt": "2026-10-18T04:06:45.578Z"
+  },
+  {
+    "id": "herdr-6f4c704e",
+    "url": "https://herdr.dev",
+    "domain": "herdr.dev",
+    "title": "Herdr",
+    "price": "Free",
+    "description": "Herdr is the runtime your coding agents live on. It holds real terminals open on your laptop, your desktop or a box you rent, so the work survives the lid closing — and you can attach again from anything with a keyboard.",
+    "section": "Software",
+    "platforms": [
+      "macOS"
+    ],
+    "images": [
+      "/items/herdr-6f4c704e/primary.png"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/herdr-6f4c704e/primary.png",
+      "aspect": 1,
+      "palette": [
+        "#6b6f70",
+        "#373b3e",
+        "#adafae",
+        "#d6d6d6"
+      ]
+    },
+    "addedAt": "2026-10-18T04:06:47.668Z"
+  },
+  {
+    "id": "wisprflow-348a38f4",
+    "url": "https://wisprflow.ai",
+    "domain": "wisprflow.ai",
+    "title": "Wispr Flow",
+    "brand": "Wispr",
+    "description": "Wispr Flow is the AI voice keyboard and speech to text app built for speed and accuracy. It works inside any app—including Slack, Messages, Email, WhatsApp, ChatGPT, and Docs—instantly turning your spoken words into polished, formatted writing.",
+    "section": "Software",
+    "platforms": [
+      "macOS"
+    ],
+    "images": [
+      "/items/wisprflow-348a38f4/primary.png"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/wisprflow-348a38f4/primary.png",
+      "aspect": 0.9956,
+      "palette": [
+        "#060311",
+        "#383047",
+        "#625c6d",
+        "#d8d8d9"
+      ]
+    },
+    "addedAt": "2026-10-18T04:06:48.643Z"
+  },
+  {
+    "id": "cleanshot-57af7612",
+    "url": "https://cleanshot.com",
+    "domain": "cleanshot.com",
+    "title": "CleanShot X",
+    "price": "$35",
+    "description": "CleanShot X is the best screenshot and screen recording app for Mac with a built-in annotation tool, Cloud uploading, scrolling capture, and a lot more.",
+    "section": "Software",
+    "platforms": [
+      "macOS"
+    ],
+    "images": [
+      "/items/cleanshot-57af7612/primary.png"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/cleanshot-57af7612/primary.png",
+      "aspect": 0.9956,
+      "palette": [
+        "#1290ef",
+        "#35c9f8",
+        "#91c6e3",
+        "#494c56"
+      ]
+    },
+    "addedAt": "2026-10-18T04:06:50.332Z"
+  },
+  {
+    "id": "strongboxsafe-81c39099",
+    "url": "https://strongboxsafe.com",
+    "domain": "strongboxsafe.com",
+    "title": "Strongbox",
+    "description": "Strongbox is an application for keeping all your passwords safely stored and protected by one master password. Supporting the open source Password Safe and KeePass formats.",
+    "section": "Software",
+    "platforms": [
+      "macOS"
+    ],
+    "images": [
+      "/items/strongboxsafe-81c39099/primary.png"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/strongboxsafe-81c39099/primary.png",
+      "aspect": 0.9956,
+      "palette": [
+        "#1544ac",
+        "#446abe",
+        "#5b8af2",
+        "#f8f8f8"
+      ]
+    },
+    "addedAt": "2026-10-18T04:06:51.499Z"
+  },
+  {
+    "id": "strong-ce183fe2",
+    "url": "https://www.strong.app",
+    "domain": "strong.app",
+    "title": "Strong",
+    "description": "Strong is the simplest and most intuitive workout tracker, designed to help you get better results from your workouts. Whether you want to gain strength or just stay healthy, join over 1.2 million people who have downloaded Strong to stay on track in the gym.",
+    "section": "Software",
+    "platforms": [
+      "iOS"
+    ],
+    "images": [
+      "/items/strong-ce183fe2/primary.png"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/strong-ce183fe2/primary.png",
+      "aspect": 1,
+      "palette": [
+        "#35a7ff",
+        "#182936",
+        "#f4f5f5"
+      ]
+    },
+    "addedAt": "2026-10-18T04:06:52.315Z"
+  },
+  {
+    "id": "mimestream-f56ebd89",
+    "url": "https://mimestream.com",
+    "domain": "mimestream.com",
+    "title": "Mimestream",
+    "price": "$50/yr",
+    "description": "Mimestream combines the power of macOS with Gmail's advanced features for a new kind of email client that lets you move through your email effortlessly.",
+    "section": "Software",
+    "platforms": [
+      "macOS"
+    ],
+    "images": [
+      "/items/mimestream-f56ebd89/primary.png"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/mimestream-f56ebd89/primary.png",
+      "aspect": 0.9956,
+      "palette": [
+        "#0089ea",
+        "#47b7fe",
+        "#a0a0a0",
+        "#eef4f8"
+      ]
+    },
+    "addedAt": "2026-10-18T04:06:53.618Z"
   }
 ]

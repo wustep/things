@@ -1,0 +1,26 @@
+[
+  {
+    "file": "icon.png",
+    "url": "Strongbox.app: the icon macOS shows for it (default style), 1024 px",
+    "width": 1024,
+    "height": 1024
+  },
+  {
+    "file": "shot-1.png",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource126/v4/97/aa/9b/97aa9b20-ff7c-1005-fe53-ce776b2bfa4f/8722a1a7-0b39-41d4-b672-e12eaec6fa1b_main.png/2880x0w.png",
+    "width": 2880,
+    "height": 1800
+  },
+  {
+    "file": "shot-2.png",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource126/v4/65/d0/e1/65d0e1a5-d449-5bbe-6262-f99ece4c6a45/f37d5a6f-c4fe-4d13-a774-1274ee11a4b9_totp.png/2880x0w.png",
+    "width": 2880,
+    "height": 1800
+  },
+  {
+    "file": "shot-3.png",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource116/v4/66/4a/0c/664a0c52-30b0-505c-147f-a0cf0d9ba3ef/03f488aa-5b77-43ff-bf40-be98af3cd0a8_pass-prefs.png/2880x0w.png",
+    "width": 2880,
+    "height": 1800
+  }
+]

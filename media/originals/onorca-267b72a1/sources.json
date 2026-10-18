@@ -1,0 +1,26 @@
+[
+  {
+    "file": "icon.png",
+    "url": "https://raw.githubusercontent.com/stablyai/orca/main/resources/build/icon.png",
+    "width": 1024,
+    "height": 1024
+  },
+  {
+    "file": "shot-1.jpg",
+    "url": "https://raw.githubusercontent.com/stablyai/orca/main/docs/assets/readme-hero.jpg",
+    "width": 1998,
+    "height": 1250
+  },
+  {
+    "file": "shot-2.jpg",
+    "url": "https://www.onorca.dev/whats-new/posters/orca-split-screen.jpg",
+    "width": 800,
+    "height": 450
+  },
+  {
+    "file": "shot-3.jpg",
+    "url": "https://raw.githubusercontent.com/stablyai/orca/main/docs/assets/feature-wall/mobile-companion-app-showcase.jpg",
+    "width": 960,
+    "height": 540
+  }
+]

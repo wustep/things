@@ -1,0 +1,20 @@
+[
+  {
+    "file": "icon.png",
+    "url": "https://raw.githubusercontent.com/herdrdev/herdr/master/assets/logo.png (rounded-square outline applied)",
+    "width": 512,
+    "height": 512
+  },
+  {
+    "file": "shot-1.png",
+    "url": "https://raw.githubusercontent.com/herdrdev/herdr/master/assets/screenshot.png",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "shot-2.png",
+    "url": "https://github.com/user-attachments/assets/043ec09f-4bdd-41d5-aee0-8fda6b83e267 (frame at 21.5s)",
+    "width": 1280,
+    "height": 720
+  }
+]

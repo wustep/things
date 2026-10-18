@@ -1,0 +1,26 @@
+[
+  {
+    "file": "icon.png",
+    "url": "Arc.app: the icon macOS shows for it (default style), 1024 px",
+    "width": 1024,
+    "height": 1024
+  },
+  {
+    "file": "shot-1.png",
+    "url": "https://arc.net/space-swiping.png",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "file": "shot-2.png",
+    "url": "https://arc.net/theme-picker.png",
+    "width": 1400,
+    "height": 933
+  },
+  {
+    "file": "shot-3.png",
+    "url": "https://arc.net/zero-chrome.png",
+    "width": 1400,
+    "height": 933
+  }
+]

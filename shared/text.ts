@@ -94,18 +94,30 @@ export function shopText(description: string | null | undefined): string | undef
 /**
  * Prices show in whole dollars: "$89.99" → "$90", "$1529.00" → "$1,529", "$1199" → "$1,199".
  * Rounds to the nearest dollar (half up) and groups thousands with commas. A plan's period stays
- * as written ("$49.99/yr" → "$50/yr", "$20/mo" as is). Anything that isn't a single
- * symbol-prefixed amount (a range, words, a missing price) comes back unchanged.
+ * as written ("$49.99/yr" → "$50/yr", "$20/mo" as is). An app's plans, joined by " · ", round one
+ * by one, each keeping its name and any trailing words ("Free · Plus $9.99/mo" → "Free · Plus
+ * $10/mo", "$29 one-time"). Anything that isn't a symbol-prefixed amount (a range, words, a
+ * missing price) comes back unchanged.
  */
 export function wholeDollars(price: string): string;
 export function wholeDollars(price: string | null | undefined): string | undefined;
 export function wholeDollars(price: string | null | undefined): string | undefined {
   if (price == null) return undefined;
-  const t = price.trim();
-  const m = t.match(/^([^\d\s.,/-]*)\s*(\d[\d,]*(?:\.\d+)?)(\s*\/\s*[a-z]+)?$/i);
-  if (!m) return t;
-  const num = Number(m[2].replace(/,/g, ''));
-  if (!Number.isFinite(num)) return t;
+  return plans(price).map(wholePlan).join(PLAN_SEP);
+}
+
+const PLAN_SEP = ' · ';
+
+/** An app's plans, as written: "Free · Pro $20/mo" → ["Free", "Pro $20/mo"]. A single price is one plan. */
+export function plans(price: string): string[] {
+  return price.trim().split(/\s+·\s+/);
+}
+
+function wholePlan(plan: string): string {
+  const m = plan.match(/^((?:[A-Za-z][\w+.-]*\s+)*)([^\d\s.,/-]*)\s*(\d[\d,]*(?:\.\d+)?)(\s*\/\s*[a-z]+)?((?:\s+[a-z][a-z-]*)*)$/i);
+  if (!m) return plan;
+  const num = Number(m[3].replace(/,/g, ''));
+  if (!Number.isFinite(num)) return plan;
   const whole = Math.round(num + 1e-9);
-  return `${m[1]}${whole.toLocaleString('en-US')}${m[3] ?? ''}`;
+  return `${m[1]}${m[2]}${whole.toLocaleString('en-US')}${m[4] ?? ''}${m[5]}`;
 }

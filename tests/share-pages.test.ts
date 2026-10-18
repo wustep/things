@@ -29,6 +29,8 @@ test('an app’s preview says where it runs, and keeps its plan’s period', () 
   assert.match(metaFor(app, { url: 'u' }).description, /^macOS · \$50\/yr at mimestream\.com\. /);
   const phone = { ...app, title: 'Strong', price: undefined, domain: 'strong.app', platforms: ['iOS'] } as unknown as Item;
   assert.match(metaFor(phone, { url: 'u' }).description, /^iOS · strong\.app\. /);
+  const both = { ...app, title: 'Notion', price: 'Free · Plus $9.99/mo', domain: 'notion.com', platforms: ['macOS', 'iOS'] } as unknown as Item;
+  assert.match(metaFor(both, { url: 'u' }).description, /^macOS and iOS · Free, Plus \$10\/mo at notion\.com\. /);
 });
 
 test('a note, when there is one, speaks instead of the shop', () => {

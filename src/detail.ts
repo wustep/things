@@ -6,7 +6,7 @@
 import { affiliateUrl } from '../shared/amazon.ts';
 import { cleanLink } from '../shared/links.ts';
 import type { Item } from '../shared/types.ts';
-import { shopText, titleWithoutBrand, wholeDollars } from '../shared/text.ts';
+import { plans, shopText, titleWithoutBrand, wholeDollars } from '../shared/text.ts';
 import { isSoftware } from './sections.ts';
 import { renderMarkdown } from './markdown.ts';
 import { galleryFor, heroFor, picture, type MediaImage } from './media.ts';
@@ -204,7 +204,15 @@ export class Detail {
     info.append(h1);
 
     const facts = el('p', 'info-facts');
-    if (item.price) facts.append(Object.assign(el('span', 'info-price'), { textContent: wholeDollars(item.price) }));
+    if (item.price) {
+      // An app's plans wrap between plans, never inside one.
+      const price = el('span', 'info-price');
+      plans(wholeDollars(item.price)).forEach((plan, i) => {
+        if (i) price.append(' · ');
+        price.append(Object.assign(el('span', 'info-plan'), { textContent: plan }));
+      });
+      facts.append(price);
+    }
     const shop = el('a', 'info-shop') as HTMLAnchorElement;
     shop.href = affiliateUrl(cleanLink(item.url));
     shop.target = '_blank';

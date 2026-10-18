@@ -2031,11 +2031,11 @@
     "url": "https://x.ai/bot",
     "domain": "x.ai",
     "title": "Grok Bot",
-    "brand": "xAI",
-    "description": "Meet Grok Bot, AI teammates and AI coworkers you can hand real work to. Grok Bots sign in, work across your tools and websites, and keep going even after you close your laptop.",
+    "description": "A desktop assistant app for Grok Bots: AI agents you hand tasks to, which work across your apps and websites. You can also message them from your phone.",
     "section": "Software",
     "platforms": [
-      "macOS"
+      "macOS",
+      "iOS"
     ],
     "images": [
       "/items/x-d45e6cc9/primary.png"
@@ -2052,18 +2052,20 @@
         "#1a1a1a"
       ]
     },
-    "addedAt": "2026-10-18T04:06:34.549Z"
+    "addedAt": "2026-10-18T04:06:34.549Z",
+    "price": "Premium $30/mo · Super $100/mo · Ultra $200/mo"
   },
   {
     "id": "raycast-3be38941",
     "url": "https://www.raycast.com",
     "domain": "raycast.com",
     "title": "Raycast",
-    "price": "Free",
+    "price": "Free · Pro $10/mo · Plus $20/mo · Max $50/mo",
     "description": "A collection of powerful productivity tools all within an extendable launcher.",
     "section": "Software",
     "platforms": [
-      "macOS"
+      "macOS",
+      "iOS"
     ],
     "images": [
       "/items/raycast-3be38941/primary.png"
@@ -2087,11 +2089,11 @@
     "url": "https://claude.com/download",
     "domain": "claude.com",
     "title": "Claude",
-    "brand": "Anthropic",
     "description": "Meet Claude, your AI problem solver and thinking partner. Claude works with you to write, research, code, and tackle complex problems and hard questions with depth and precision.",
     "section": "Software",
     "platforms": [
-      "macOS"
+      "macOS",
+      "iOS"
     ],
     "images": [
       "/items/claude-e7d0a9a3/primary.png"
@@ -2108,7 +2110,8 @@
         "#f9f9f9"
       ]
     },
-    "addedAt": "2026-10-18T04:06:38.116Z"
+    "addedAt": "2026-10-18T04:06:38.116Z",
+    "price": "Free · Pro $20/mo · Max from $100/mo"
   },
   {
     "id": "notion-4bad20c5",
@@ -2118,7 +2121,8 @@
     "description": "Notion is an AI-powered all-in-one workspace that helps individuals and teams write notes, manage tasks, organize projects, and collaborate in one place.",
     "section": "Software",
     "platforms": [
-      "macOS"
+      "macOS",
+      "iOS"
     ],
     "images": [
       "/items/notion-4bad20c5/primary.png"
@@ -2135,19 +2139,20 @@
         "#f9f9f9"
       ]
     },
-    "addedAt": "2026-10-18T04:06:39.240Z"
+    "addedAt": "2026-10-18T04:06:39.240Z",
+    "price": "Free · Plus $12/mo · Business $24/mo"
   },
   {
     "id": "notion-7cdf9905",
     "url": "https://www.notion.com/product/calendar",
     "domain": "notion.com",
     "title": "Notion Calendar",
-    "brand": "Notion",
     "price": "Free",
     "description": "Notion Calendar lets you schedule meetings and control your time like never before. It deeply integrates with Google Calendar accounts so that all your events are synced.",
     "section": "Software",
     "platforms": [
-      "macOS"
+      "macOS",
+      "iOS"
     ],
     "images": [
       "/items/notion-7cdf9905/primary.png"
@@ -2171,7 +2176,7 @@
     "url": "https://retro.app",
     "domain": "retro.app",
     "title": "Retro",
-    "price": "Free",
+    "price": "Free · Premium $5/mo",
     "description": "Retro is a weekly photo journal that (1) brings you closer to the people you actually care about and (2) helps you appreciate your own life - all without the distractions and pressure of big social media.",
     "section": "Software",
     "platforms": [
@@ -2199,12 +2204,12 @@
     "url": "https://arc.net",
     "domain": "arc.net",
     "title": "Arc",
-    "brand": "The Browser Company",
     "price": "Free",
     "description": "Experience a calmer, more personal internet in this browser designed for you. Let go of the clicks, the clutter, the distractions with the Arc browser.",
     "section": "Software",
     "platforms": [
-      "macOS"
+      "macOS",
+      "iOS"
     ],
     "images": [
       "/items/arc-d3ddbad3/primary.png"
@@ -2256,7 +2261,7 @@
     "url": "https://cmux.com",
     "domain": "cmux.com",
     "title": "cmux",
-    "price": "Free",
+    "price": "Free · Pro $50/mo · Max $200/mo",
     "description": "Free and open source native macOS terminal built on Ghostty. Vertical tabs, notification rings when agents need attention, split panes, and a CLI for programmability.",
     "section": "Software",
     "platforms": [
@@ -2312,11 +2317,11 @@
     "url": "https://wisprflow.ai",
     "domain": "wisprflow.ai",
     "title": "Wispr Flow",
-    "brand": "Wispr",
     "description": "Wispr Flow is the AI voice keyboard and speech to text app built for speed and accuracy. It works inside any app—including Slack, Messages, Email, WhatsApp, ChatGPT, and Docs—instantly turning your spoken words into polished, formatted writing.",
     "section": "Software",
     "platforms": [
-      "macOS"
+      "macOS",
+      "iOS"
     ],
     "images": [
       "/items/wisprflow-348a38f4/primary.png"
@@ -2333,14 +2338,15 @@
         "#d8d8d9"
       ]
     },
-    "addedAt": "2026-10-18T04:06:48.643Z"
+    "addedAt": "2026-10-18T04:06:48.643Z",
+    "price": "Free · Pro $15/mo"
   },
   {
     "id": "cleanshot-57af7612",
     "url": "https://cleanshot.com",
     "domain": "cleanshot.com",
     "title": "CleanShot X",
-    "price": "$35",
+    "price": "Basic $35 one-time · Pro $12/mo",
     "description": "CleanShot X is the best screenshot and screen recording app for Mac with a built-in annotation tool, Cloud uploading, scrolling capture, and a lot more.",
     "section": "Software",
     "platforms": [
@@ -2371,7 +2377,8 @@
     "description": "Strongbox is an application for keeping all your passwords safely stored and protected by one master password. Supporting the open source Password Safe and KeePass formats.",
     "section": "Software",
     "platforms": [
-      "macOS"
+      "macOS",
+      "iOS"
     ],
     "images": [
       "/items/strongboxsafe-81c39099/primary.png"
@@ -2388,7 +2395,8 @@
         "#f8f8f8"
       ]
     },
-    "addedAt": "2026-10-18T04:06:51.499Z"
+    "addedAt": "2026-10-18T04:06:51.499Z",
+    "price": "Free · Pro $3/mo"
   },
   {
     "id": "strong-ce183fe2",
@@ -2414,14 +2422,15 @@
         "#f4f5f5"
       ]
     },
-    "addedAt": "2026-10-18T04:06:52.315Z"
+    "addedAt": "2026-10-18T04:06:52.315Z",
+    "price": "Free · Pro $5/mo"
   },
   {
     "id": "mimestream-f56ebd89",
     "url": "https://mimestream.com",
     "domain": "mimestream.com",
     "title": "Mimestream",
-    "price": "$50/yr",
+    "price": "$5/mo",
     "description": "Mimestream combines the power of macOS with Gmail's advanced features for a new kind of email client that lets you move through your email effortlessly.",
     "section": "Software",
     "platforms": [

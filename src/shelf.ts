@@ -214,7 +214,7 @@ export class Shelf {
     const tag = el('span', 'tag');
     if (item.brand) tag.append(Object.assign(el('span', 'tag-maker'), { textContent: item.brand }));
     tag.append(Object.assign(el('span', 'tag-name'), { textContent: name }));
-    if (item.platforms?.length) tag.append(Object.assign(el('span', 'tag-platform'), { textContent: item.platforms.join(' · ') }));
+    if (item.platforms?.length) tag.append(Object.assign(el('span', 'tag-platform'), { textContent: item.platforms.join(' + ') }));
 
     a.append(stage, tag);
     li.append(a);

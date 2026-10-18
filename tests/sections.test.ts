@@ -45,7 +45,17 @@ test('every app says where it runs, and only apps do', () => {
     if (isSoftware(it)) assert.ok(it.platforms?.length && it.platforms.every((p) => p === 'macOS' || p === 'iOS'), `${it.id} platforms`);
     else assert.equal(it.platforms, undefined, `${it.id} is a thing, not an app`);
   }
-  assert.deepEqual(shelf.find((it) => it.title === 'Strong')?.platforms, ['iOS']);
+  const runs = (title: string) => shelf.find((it) => it.title === title)?.platforms;
+  assert.deepEqual(runs('Strong'), ['iOS']);
+  assert.deepEqual(runs('Retro'), ['iOS']);
+  assert.deepEqual(runs('Mimestream'), ['macOS']);
+  for (const both of ['Notion', 'Notion Calendar', 'Claude', 'Grok Bot', 'Raycast', 'Arc', 'Strongbox', 'Wispr Flow']) {
+    assert.deepEqual(runs(both), ['macOS', 'iOS'], both);
+  }
+});
+
+test('apps go by their own names, with no maker line', () => {
+  for (const app of shelf.filter(isSoftware)) assert.equal(app.brand, undefined, `${app.id} brand`);
 });
 
 test('apps stand as small icons with their own gallery, and never count as things', () => {

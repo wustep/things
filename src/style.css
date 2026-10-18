@@ -662,6 +662,9 @@ html.is-detail .credit {
   color: var(--ink);
   font-variant-numeric: tabular-nums;
 }
+.info-plan {
+  white-space: nowrap;
+}
 .info-shop {
   /* A taller hit area than the line it sits on, without moving the line. */
   display: inline-block;

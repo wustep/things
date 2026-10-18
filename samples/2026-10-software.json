@@ -124,7 +124,7 @@
     "description": "Retro is a weekly photo journal that (1) brings you closer to the people you actually care about and (2) helps you appreciate your own life - all without the distractions and pressure of big social media.",
     "icon": {
       "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/37/e9/71/37e971e8-3614-baa2-eefb-c6a049f85d42/AppIcon-Chrome-0-0-1x_U007ephone-0-0-0-1-0-0-sRGB-85-220.png/1024x1024bb.png",
-      "mask": true
+      "inset": true
     },
     "shots": [
       "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/68/69/a3/6869a3c7-2d0d-147c-b8ed-b6a028925c60/1-Home_iOS_EN.png/1290x0w.png",
@@ -197,7 +197,7 @@
     "description": "Herdr is the runtime your coding agents live on. It holds real terminals open on your laptop, your desktop or a box you rent, so the work survives the lid closing — and you can attach again from anything with a keyboard.",
     "icon": {
       "url": "https://raw.githubusercontent.com/herdrdev/herdr/master/assets/logo.png",
-      "mask": true
+      "inset": true
     },
     "shots": [
       "https://raw.githubusercontent.com/herdrdev/herdr/master/assets/screenshot.png",

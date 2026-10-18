@@ -1,9 +1,9 @@
 [
   {
     "file": "icon.png",
-    "url": "https://raw.githubusercontent.com/herdrdev/herdr/master/assets/logo.png (rounded-square outline applied)",
-    "width": 512,
-    "height": 512
+    "url": "https://raw.githubusercontent.com/herdrdev/herdr/master/assets/logo.png (in the macOS icon grid)",
+    "width": 1024,
+    "height": 1024
   },
   {
     "file": "shot-1.png",

@@ -3627,26 +3627,25 @@
   },
   "retro-698ad7be": {
     "hero": {
-      "base": "/items/retro-698ad7be/2d/hero.a5db48a4",
+      "base": "/items/retro-698ad7be/2d/hero.6b6b19b1",
       "widths": [
         480,
-        960,
-        1126
+        906
       ],
-      "width": 1126,
-      "height": 1126,
+      "width": 906,
+      "height": 906,
       "mode": "cutout",
       "subject": [
         0.0453,
         0.0453,
-        0.9094,
-        0.9094
+        0.9095,
+        0.9095
       ],
       "tone": "#c2c2c2"
     },
     "gallery": [
       {
-        "base": "/items/retro-698ad7be/2d/photo-1.a5db48a4",
+        "base": "/items/retro-698ad7be/2d/photo-1.6b6b19b1",
         "widths": [
           640,
           1280
@@ -3655,7 +3654,7 @@
         "height": 2769
       },
       {
-        "base": "/items/retro-698ad7be/2d/photo-2.a5db48a4",
+        "base": "/items/retro-698ad7be/2d/photo-2.6b6b19b1",
         "widths": [
           640,
           1280
@@ -3664,7 +3663,7 @@
         "height": 2769
       },
       {
-        "base": "/items/retro-698ad7be/2d/photo-3.a5db48a4",
+        "base": "/items/retro-698ad7be/2d/photo-3.6b6b19b1",
         "widths": [
           640,
           1280
@@ -3673,7 +3672,7 @@
         "height": 2769
       }
     ],
-    "key": "a5db48a4588c"
+    "key": "6b6b19b1be40"
   },
   "arc-d3ddbad3": {
     "hero": {
@@ -3833,25 +3832,25 @@
   },
   "herdr-6f4c704e": {
     "hero": {
-      "base": "/items/herdr-6f4c704e/2d/hero.b57002c4",
+      "base": "/items/herdr-6f4c704e/2d/hero.26bb1638",
       "widths": [
         480,
-        564
+        906
       ],
-      "width": 564,
-      "height": 564,
+      "width": 906,
+      "height": 906,
       "mode": "cutout",
       "subject": [
-        0.0461,
-        0.0461,
-        0.9078,
-        0.9078
+        0.0453,
+        0.0453,
+        0.9095,
+        0.9095
       ],
       "tone": "#97999a"
     },
     "gallery": [
       {
-        "base": "/items/herdr-6f4c704e/2d/photo-1.b57002c4",
+        "base": "/items/herdr-6f4c704e/2d/photo-1.26bb1638",
         "widths": [
           640,
           1280
@@ -3860,7 +3859,7 @@
         "height": 720
       },
       {
-        "base": "/items/herdr-6f4c704e/2d/photo-2.b57002c4",
+        "base": "/items/herdr-6f4c704e/2d/photo-2.26bb1638",
         "widths": [
           640,
           1280
@@ -3869,7 +3868,7 @@
         "height": 720
       }
     ],
-    "key": "b57002c4ebe5"
+    "key": "26bb1638a4ef"
   },
   "wisprflow-348a38f4": {
     "hero": {

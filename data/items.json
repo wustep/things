@@ -2216,11 +2216,11 @@
       "kind": "procedural",
       "shape": "card",
       "texture": "/items/retro-698ad7be/primary.png",
-      "aspect": 1,
+      "aspect": 0.9967,
       "palette": [
-        "#8d8d8d",
-        "#4f4f4f",
-        "#161616",
+        "#8c8c8c",
+        "#afafaf",
+        "#2d2d2d",
         "#ffffff"
       ]
     },
@@ -2328,11 +2328,11 @@
       "kind": "procedural",
       "shape": "card",
       "texture": "/items/herdr-6f4c704e/primary.png",
-      "aspect": 1,
+      "aspect": 0.9967,
       "palette": [
-        "#6b6f70",
-        "#373b3e",
-        "#adafae",
+        "#6b6d6f",
+        "#383b3e",
+        "#b1b1b1",
         "#d6d6d6"
       ]
     },

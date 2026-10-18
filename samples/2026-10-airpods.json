@@ -1,0 +1,17 @@
+[
+  {
+    "url": "https://www.amazon.com/dp/B0FQFB8FMG",
+    "title": "AirPods Pro 3",
+    "brand": "Apple",
+    "price": "$249",
+    "section": "Carry",
+    "image": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/airpods-pro-3-gallery-3-202509?wid=2000&hei=2000&fmt=jpeg&qlt=95",
+    "images": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/airpods-pro-3-gallery-1-202509?wid=2000&hei=2000&fmt=jpeg&qlt=95",
+      "https://m.media-amazon.com/images/I/61solmQSSlL._AC_SL1500_.jpg",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/airpods-pro-3-gallery-2-202509?wid=2000&hei=2000&fmt=jpeg&qlt=95",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/airpods-pro-3-gallery-4-202509?wid=2000&hei=2000&fmt=jpeg&qlt=95"
+    ],
+    "maxRefs": 5
+  }
+]

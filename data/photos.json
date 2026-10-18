@@ -52,6 +52,7 @@
   "anker-2866be47": { "hero": "ref-0.png", "gallery": ["ref-4.jpg", { "file": "ref-3.jpg", "crop": [0, 0.17, 1, 0.66] }] },
   "etsy-57abe791": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-2.jpg", "ref-3.jpg", "ref-4.jpg"] },
   "amazon-fb682f1c": { "hero": { "file": "ref-0.jpg", "holes": "through" }, "gallery": ["ref-1.jpg", "ref-2.jpg", "ref-3.jpg", "ref-4.jpg"] },
+  "amazon-504463c3": { "hero": { "file": "ref-0.jpg", "crop": [0, 0.076, 1, 0.848] }, "gallery": [{ "file": "ref-1.jpg", "crop": [0, 0.076, 1, 0.848] }, "ref-2.jpg", { "file": "ref-3.jpg", "crop": [0.012, 0.206, 0.976, 0.588] }, { "file": "ref-4.jpg", "crop": [0.012, 0.206, 0.976, 0.588] }] },
   "boss-1b124b07": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-2.jpg", "ref-5.jpg", "ref-6.jpg", "ref-7.jpg", "ref-8.jpg"] },
   "ergonofis-b544e709": { "hero": { "file": "ref-1.png", "crop": [0.215, 0.176, 0.547, 0.66] }, "gallery": ["ref-0.png", { "file": "ref-2.png", "crop": [0, 0, 1, 0.9] }, { "file": "ref-3.jpg", "crop": [0.42, 0, 0.58, 1] }] },
   "etsy-55c9006b": { "hero": { "file": "ref-0.jpg", "frame": true }, "gallery": ["ref-3.jpg", "ref-1.jpg", "ref-2.jpg"] },

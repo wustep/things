@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Things: a quiet, dark shelf of objects you drop in by URL.",
+  "description": "Things: a dark shelf of objects you drop in by URL.",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit -p tsconfig.json && vite build",
@@ -14,7 +14,8 @@
     "test": "node --import tsx --test tests/*.test.ts",
     "test:e2e": "npm run build && node --import tsx --test --test-concurrency=1 tests/e2e/*.test.ts",
     "refine": "tsx scripts/refine.ts",
-    "images": "npm --prefix tools/images install --no-audit --no-fund --silent && tsx tools/images/build.ts && tsx tools/images/share.ts"
+    "images": "npm --prefix tools/images install --no-audit --no-fund --silent && tsx tools/images/build.ts && tsx tools/images/share.ts",
+    "og": "npm --prefix tools/images install --no-audit --no-fund --silent && tsx tools/images/home-card.ts"
   },
   "dependencies": {
     "three": "^0.170.0"

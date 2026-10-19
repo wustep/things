@@ -1,6 +1,6 @@
 # Things
 
-A quiet, dark shelf of objects. Each thing stands on a lit shelf at a believable size next to
+A dark shelf of objects. Each thing stands on a lit shelf at a believable size next to
 the others, with a small tag on the edge below it. Open one to see it up close, with photos
 from its shop, what it costs, a link back to where it came from, and Stephen's notes on it.
 
@@ -30,7 +30,10 @@ reloaded, and Back returns to the shelf.
 A shared link unfurls with the thing's name, a line about it (maker, price and shop, then the
 note or the shop's words) and a share card: the cut-out standing on a shelf in the same dark
 room. The build writes one page per thing for this (`scripts/lib/share-pages.ts`; the app inside
-is the same), and `npm run images` makes the cards (`tools/images/share.ts`).
+is the same), and `npm run images` makes the cards (`tools/images/share.ts`). The shelf's own link
+(the home page) unfurls with its card, `public/og/home.<hash>.jpg`: a few real cut-outs standing on one lit shelf
+lip at their relative sizes, with "Things" in Spectral below. `npm run og` remakes it (`tools/images/home-card.ts`);
+the hash in the name changes with the picture, so previews never keep a stale one.
 
 ## Notes
 

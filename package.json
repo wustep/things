@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Things: a dark shelf of objects you drop in by URL.",
+  "description": "Things: a shelf of my favorite things.",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit -p tsconfig.json && vite build",

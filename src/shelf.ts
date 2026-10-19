@@ -113,8 +113,9 @@ export class Shelf {
       if (link) this.hoverTimer = window.setTimeout(() => this.intent(link), HOVER_INTENT_MS);
     });
     root.addEventListener('pointerout', () => clearTimeout(this.hoverTimer));
-    // iOS Safari only applies :active (the press lift in style.css) where a touch listener exists.
-    root.addEventListener('touchstart', () => {}, { passive: true });
+    // iOS Safari only applies :active (the press lift in style.css) where a touch listener exists;
+    // a touch is also the earliest sign of intent on a phone, so it warms the big picture too.
+    root.addEventListener('touchstart', (e) => this.intent((e.target as Element).closest<HTMLAnchorElement>('a.thing-link')), { passive: true });
     root.addEventListener('pointerdown', (e) => this.intent((e.target as Element).closest<HTMLAnchorElement>('a.thing-link')));
   }
 

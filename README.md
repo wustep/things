@@ -1,6 +1,6 @@
 # Things
 
-A dark shelf of objects. Each thing stands on a lit shelf at a believable size next to
+A shelf of my favorite things. Each thing stands on a lit shelf at a believable size next to
 the others, with a small tag on the edge below it. Open one to see it up close, with photos
 from its shop, what it costs, a link back to where it came from, and Stephen's notes on it.
 

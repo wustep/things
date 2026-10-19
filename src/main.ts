@@ -8,6 +8,7 @@ import { setMedia } from './media.ts';
 import { groupItems, isSoftware } from './sections.ts';
 import { currentKey, homePath, itemPath, resolveKey, slugsFor } from './route.ts';
 import { Shelf } from './shelf.ts';
+import { decoded, standIn } from './glide.ts';
 
 let items: Item[] = initialItems;
 let slugs = slugsFor(items);
@@ -128,13 +129,40 @@ window.addEventListener('popstate', () => applyRoute(true));
  * image file, so the morph runs between their exact boxes, and only the sharper of the two (the
  * stage's) is drawn on the way: no cross-fade ghost, no small picture blown up. Without the API,
  * or with reduced motion, the view just swaps.
+ *
+ * On a slow network the big picture may not be here when the new frame is taken: the shelf's own
+ * picture then stands in for it on the stage (standIn), so the glide is the same every time, and
+ * the sharp one replaces it once decoded. Closing first makes sure the shelf picture it lands on
+ * has loaded (it may never have, lazy and off screen), so nothing blinks on arrival.
  */
+let closeQueued = false;
 function transition(dir: 'open' | 'close', update: () => void, shelfImg: HTMLImageElement | null) {
   const doc = document as Document & { startViewTransition?: (cb: () => Promise<void>) => ViewTransitionLike };
   if (!doc.startViewTransition || reduceMotion.matches || !shelfImg) {
     update();
     return;
   }
+  if (dir === 'close' && !(shelfImg.complete && shelfImg.naturalWidth)) {
+    if (closeQueued) return;
+    closeQueued = true;
+    shelfImg.loading = 'eager';
+    // A short wait, with the view still open; past it, it closes anyway.
+    void decoded(shelfImg, 200).then(() => {
+      closeQueued = false;
+      if (detail.isOpen) glide(doc, dir, update, shelfImg);
+    });
+    return;
+  }
+  glide(doc, dir, update, shelfImg);
+}
+
+function glide(
+  doc: Document & { startViewTransition?: (cb: () => Promise<void>) => ViewTransitionLike },
+  dir: 'open' | 'close',
+  update: () => void,
+  shelfImg: HTMLImageElement,
+) {
+  if (!doc.startViewTransition) return update();
   const html = document.documentElement;
   const NAME = 'thing-hero';
   const run = ++transitions;
@@ -144,6 +172,7 @@ function transition(dir: 'open' | 'close', update: () => void, shelfImg: HTMLIma
   html.classList.add(dir === 'open' ? 'is-opening' : 'is-closing');
   opening = dir === 'open';
   let to: HTMLImageElement | null = null;
+  let stand: HTMLElement | null = null;
   const t = doc.startViewTransition(async () => {
     if (from) from.style.viewTransitionName = '';
     // Only now, with the old frame captured as it was (a tapped thing half-lifted, say).
@@ -156,12 +185,9 @@ function transition(dir: 'open' | 'close', update: () => void, shelfImg: HTMLIma
     if (dir === 'open') to.dataset.arrived = '';
     // The new frame is captured once this resolves, so the picture it lands on is decoded first
     // (usually at once: hovering or touching a thing started loading it). The page holds still
-    // meanwhile, so the wait is short; past it, the two pictures cross-fade as before.
+    // meanwhile, so the wait is short; past it, the shelf picture stands in for the big one.
     if (dir === 'close') to.loading = 'eager';
-    if (!(await decoded(to, 150)) && dir === 'open') {
-      html.classList.add('is-unready');
-      delete to.dataset.arrived; // it fades in on its own once it's here
-    }
+    if (!(await decoded(to, 150)) && dir === 'open') stand = standIn(to, shelfImg);
   });
   t.ready.catch(() => {}); // skipped by the next one: nothing to do
   void t.updateCallbackDone.then(() => {
@@ -171,6 +197,7 @@ function transition(dir: 'open' | 'close', update: () => void, shelfImg: HTMLIma
   });
   void t.finished.finally(() => {
     if (to) to.style.viewTransitionName = '';
+    if (stand) stand.style.viewTransitionName = '';
     // A transition cut short by the next one (Esc mid-flight) leaves the classes to that one.
     if (run === transitions) html.classList.remove(...MOTION_CLASSES);
   });
@@ -198,7 +225,7 @@ document.addEventListener('keydown', (e) => {
 
 /** Bumped by each transition, so only the latest one tidies up after itself. */
 let transitions = 0;
-const MOTION_CLASSES = ['is-morphing', 'is-opening', 'is-closing', 'is-unready', 'is-stepping'];
+const MOTION_CLASSES = ['is-morphing', 'is-opening', 'is-closing', 'is-stepping'];
 
 /**
  * Stepping to the next thing with the arrows: the sheet cross-fades, the new picture already
@@ -228,14 +255,6 @@ function crossfade(update: () => void) {
   });
 }
 
-/** True once the image is decoded, false if that takes longer than `ms` or fails. */
-function decoded(img: HTMLImageElement, ms: number): Promise<boolean> {
-  // decode() even when complete: an async-decoded image can be loaded and still not paintable.
-  return Promise.race([
-    img.decode().then(() => true, () => false),
-    new Promise<boolean>((done) => setTimeout(() => done(false), ms)),
-  ]);
-}
 
 function show(next: Item[]) {
   items = next;

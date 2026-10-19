@@ -20,19 +20,19 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '.
 const PUBLIC = path.join(ROOT, 'public');
 const MANIFEST_FILE = path.join(ROOT, 'data', 'media.json');
 
-const W = 1200, H = 630;
+export const W = 1200, H = 630;
 /** The shelf line, and the box the thing must fit in above it. */
-const LIP = 520;
+export const LIP = 520;
 const FIT = { w: 900, h: 400 };
 
-interface Hero {
+export interface Hero {
   base: string;
   widths: number[];
   subject: [number, number, number, number];
 }
 
 /** The room, as on the site (style.css: --night, --lamp, the shelf lip), drawn once. */
-const room = sharp(
+export const room = sharp(
   Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">
   <defs>
     <radialGradient id="pool">

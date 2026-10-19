@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { clip, metaFor, plain, sharePage } from '../scripts/lib/share-pages.ts';
+import { clip, homeCard, metaFor, plain, sharePage, shelfTags } from '../scripts/lib/share-pages.ts';
+import path from 'node:path';
+import { existsSync } from 'node:fs';
 import type { Item } from '../shared/types.ts';
 
 const template = `<!doctype html><html><head>
@@ -68,4 +70,22 @@ test('long text is cut at a word, never mid-word', () => {
 
 test('markdown is flattened to one line', () => {
   assert.equal(plain('# Head\n\n- one\n- _two_\n\n> quote `code`'), 'Head one two quote code');
+});
+
+test('the shelf unfurls with its own card: absolute og:image, 1200x630, a large Twitter card', () => {
+  const tags = shelfTags('https://things.wustep.me', 'Things: a dark shelf of objects, and notes on them.', '/og/home.abc12345.jpg').join('\n');
+  assert.match(tags, /<meta property="og:image" content="https:\/\/things\.wustep\.me\/og\/home\.abc12345\.jpg" \/>/);
+  assert.match(tags, /og:image:width" content="1200"/);
+  assert.match(tags, /og:image:height" content="630"/);
+  assert.match(tags, /<meta name="twitter:card" content="summary_large_image" \/>/);
+  assert.match(tags, /og:url" content="https:\/\/things\.wustep\.me\/"/);
+  const bare = shelfTags('https://things.wustep.me', 'x', null).join('\n');
+  assert.doesNotMatch(bare, /og:image/);
+  assert.match(bare, /twitter:card" content="summary"/);
+});
+
+test('the repo has a hashed home card for the build to use', () => {
+  const card = homeCard(path.resolve('public'));
+  assert.ok(card && /^\/og\/home\.[0-9a-f]{8}\.jpg$/.test(card), String(card));
+  assert.ok(existsSync(path.join('public', card!)));
 });

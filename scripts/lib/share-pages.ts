@@ -10,7 +10,7 @@
  * A key with no page (a thing since removed) falls through to the app, which says so. The item id
  * path (/t/<id>) gets the same page, since those links work too.
  */
-import { existsSync } from 'node:fs';
+import { existsSync, readdirSync } from 'node:fs';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import type { Plugin } from 'vite';
@@ -92,6 +92,38 @@ export function sharePage(template: string, meta: ShareMeta): string {
     .replace('</head>', `    ${tags.join('\n    ')}\n  </head>`);
 }
 
+/** The shelf's own card (tools/images/home-card.ts, `npm run og`), if one has been made: /og/home.<hash>.jpg. */
+export function homeCard(publicDir: string): string | null {
+  const dir = path.join(publicDir, 'og');
+  if (!existsSync(dir)) return null;
+  const f = readdirSync(dir).filter((n) => /^home\.[0-9a-f]+\.jpg$/.test(n)).sort()[0];
+  return f ? `/og/${f}` : null;
+}
+
+/** The home page's Open Graph tags: the shelf's description and, when there is one, its card. */
+export function shelfTags(site: string, about: string, card: string | null): string[] {
+  const tags = [
+    `<meta property="og:type" content="website" />`,
+    `<meta property="og:site_name" content="Things" />`,
+    `<meta property="og:title" content="Things" />`,
+    `<meta property="og:description" content="${about}" />`,
+    `<meta property="og:url" content="${esc(site)}/" />`,
+  ];
+  if (card) {
+    tags.push(
+      `<meta property="og:image" content="${esc(site + card)}" />`,
+      `<meta property="og:image:width" content="1200" />`,
+      `<meta property="og:image:height" content="630" />`,
+      `<meta property="og:image:alt" content="Things on a lit shelf in a dark room" />`,
+      `<meta name="twitter:card" content="summary_large_image" />`,
+      `<meta name="twitter:image" content="${esc(site + card)}" />`,
+    );
+  } else {
+    tags.push(`<meta name="twitter:card" content="summary" />`);
+  }
+  return tags;
+}
+
 /** The share card for an item, if `npm run images` has made one (see tools/images/share.ts). */
 function shareCard(publicDir: string, heroBase: string | undefined): string | null {
   const m = heroBase?.match(/^\/items\/([^/]+)\/2d\/hero\.([0-9a-f]+)$/);
@@ -119,16 +151,10 @@ export function thingsSharePages(): Plugin {
       const media = JSON.parse(await readFile(path.join(root, 'data', 'media.json'), 'utf8')) as Record<string, { hero?: { base: string } }>;
       const slugs = slugsFor(items);
 
-      // The shelf itself: a description for previews, no picture.
+      // The shelf itself: its description and its own card (a few things on a lit shelf).
       const about = template.match(/<meta name="description" content="([^"]*)"/)?.[1] ?? '';
-      const shelfTags = [
-        `<meta property="og:type" content="website" />`,
-        `<meta property="og:site_name" content="Things" />`,
-        `<meta property="og:title" content="Things" />`,
-        `<meta property="og:description" content="${about}" />`,
-        `<meta property="og:url" content="${esc(site)}/" />`,
-      ];
-      await writeFile(path.join(outDir, 'index.html'), template.replace('</head>', `  ${shelfTags.join('\n    ')}\n  </head>`));
+      const home = shelfTags(site, about, homeCard(path.join(root, 'public')));
+      await writeFile(path.join(outDir, 'index.html'), template.replace('</head>', `  ${home.join('\n    ')}\n  </head>`));
 
       let pages = 0;
       for (const item of items) {

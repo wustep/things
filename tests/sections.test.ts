@@ -44,10 +44,10 @@ test('the Mac mini stands next to its Wokyis dock in Office, linked to Apple at 
   assert.equal((sizes as Record<string, unknown>)[mini.id], 12.7);
 });
 
-test('the Hart rug links to the 6\' x 9\' I have, and the shoe rack to a store that sells it', () => {
+test('the Hart rug links to the 6\' x 9\' I have, and the shoe rack to my Amazon link', () => {
   const link = (id: string) => shelf.find((it) => it.id === id)?.url ?? '';
   assert.ok(link('revivalrugs-86802fd7').endsWith('/products/hart-colorways?Style=Hart+in+Olive&Size=6%27+x+9%27'));
-  assert.match(link('amazon-1fd6380c'), /^https:\/\/www\.homedepot\.com\/p\/.*SR1309/);
+  assert.equal(link('amazon-1fd6380c'), 'https://link.amazon/B0hYS2364');
 });
 
 test('the Journey wallet and stand is gone, with its pictures', () => {

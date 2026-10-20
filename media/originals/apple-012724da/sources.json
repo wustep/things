@@ -1,0 +1,40 @@
+[
+  {
+    "file": "ref-0.png",
+    "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mac-mini-chip-unselect-202608-gallery-1?wid=3000&hei=3000&fmt=png-alpha",
+    "width": 3000,
+    "height": 3000
+  },
+  {
+    "file": "ref-1.png",
+    "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mac-mini-chip-unselect-202608-gallery-4?wid=3000&hei=3000&fmt=png-alpha",
+    "width": 3000,
+    "height": 3000
+  },
+  {
+    "file": "ref-2.png",
+    "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mac-mini-chip-unselect-202608-gallery-5?wid=3000&hei=3000&fmt=png-alpha",
+    "width": 3000,
+    "height": 3000
+  },
+  {
+    "file": "ref-3.jpg",
+    "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mac-mini-chip-unselect-202608-gallery-1?wid=5120&hei=3280&fmt=jpeg&qlt=90&.v=1785998455498",
+    "width": 5120,
+    "height": 3280
+  },
+  {
+    "file": "ref-4.jpg",
+    "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mac-mini-chip-unselect-202608-gallery-2?wid=3000&hei=3000&fmt=jpeg&qlt=90",
+    "width": 3000,
+    "height": 3000,
+    "note": "back, ports (apple.com store gallery)"
+  },
+  {
+    "file": "ref-5.jpg",
+    "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mac-mini-chip-unselect-202608-gallery-3?wid=3000&hei=3000&fmt=jpeg&qlt=90",
+    "width": 3000,
+    "height": 3000,
+    "note": "top (apple.com store gallery)"
+  }
+]

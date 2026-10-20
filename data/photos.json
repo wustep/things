@@ -76,5 +76,6 @@
   "strongboxsafe-81c39099": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.png", "shot-2.png", "shot-3.png"] },
   "strong-ce183fe2": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.png", "shot-2.png", "shot-3.png"] },
   "mimestream-f56ebd89": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.png", "shot-2.png", "shot-3.png"] },
-  "beeminder-1b3144b7": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.png", "shot-2.png", "shot-3.png"] }
+  "beeminder-1b3144b7": { "hero": { "file": "icon.png", "icon": true }, "gallery": ["shot-1.png", "shot-2.png", "shot-3.png"] },
+  "apple-012724da": { "hero": "ref-3.jpg", "gallery": ["ref-4.jpg", "ref-5.jpg", "ref-1.png", "ref-2.png"] }
 }

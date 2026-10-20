@@ -1099,7 +1099,7 @@
     "domain": "amazon.com",
     "title": "Weekender Fairfield",
     "brand": "Timex",
-    "price": "$60",
+    "price": "$70",
     "section": "Carry",
     "description": "Buy Timex 'Weekender Fairfield' Quartz Brass and Nylon Casual Watch, Color:Blue (Model: TW2P908009J) and other Wrist Watches at Amazon.com. Our wide selection is eligible for free shipping and free returns.",
     "images": [
@@ -1553,6 +1553,35 @@
     "commentary": "Now my agents talk to my M5 mini at home… this gives the mini a cute hat."
   },
   {
+    "id": "apple-012724da",
+    "url": "https://www.apple.com/shop/buy-mac/mac-mini",
+    "domain": "apple.com",
+    "title": "Mac mini, M5 Pro, 64GB, 2TB",
+    "brand": "Apple",
+    "price": "$3,699",
+    "section": "Office",
+    "description": "Do it all with the ultracompact Mac mini with M6 or M5 Pro. A powerful platform for AI. Front and back ports. Wi-Fi 7 and Bluetooth 6.",
+    "images": [
+      "/items/apple-012724da/ref-0.jpg",
+      "/items/apple-012724da/ref-1.jpg",
+      "/items/apple-012724da/ref-2.jpg",
+      "/items/apple-012724da/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/apple-012724da/primary.png",
+      "aspect": 2.4976,
+      "palette": [
+        "#a8a9ab",
+        "#cecfd1",
+        "#f5f5f7",
+        "#0d0d0d"
+      ]
+    },
+    "addedAt": "2026-10-20T03:25:15.636Z"
+  },
+  {
     "id": "amazon-f9715de1",
     "url": "https://link.amazon/B0136FXBk",
     "domain": "amazon.com",
@@ -1642,7 +1671,7 @@
   },
   {
     "id": "revivalrugs-86802fd7",
-    "url": "https://www.revivalrugs.com/products/jute-rug-hart-in-olive",
+    "url": "https://www.revivalrugs.com/products/hart-colorways?Style=Hart+in+Olive&Size=6%27+x+9%27",
     "domain": "revivalrugs.com",
     "title": "Hart in Olive Jute Rug",
     "brand": "Revival Rugs",
@@ -1698,13 +1727,13 @@
   },
   {
     "id": "amazon-1fd6380c",
-    "url": "https://link.amazon/B07Q4gVcT",
+    "url": "https://link.amazon/B0hYS2364",
     "domain": "amazon.com",
     "title": "2-Tier Bamboo Shoe Rack",
     "brand": "Oceanstar",
-    "price": "$50",
+    "price": "$33",
     "section": "Home",
-    "description": "Buy Oceanstar 2-Tier Bamboo Shoe Rack, Brown, SR1309 | Lightweight: Free Standing Shoe Racks - Amazon.com ✓ FREE DELIVERY possible on eligible purchases",
+    "description": "Keep your shoes organized with the modern and elegantly designed Oceanstar 2-Tier Bamboo Shoe Rack. The open slat on each tier allows air passage between the shoes to minimize odor from shoes.",
     "images": [
       "/items/amazon-1fd6380c/ref-0.jpg",
       "/items/amazon-1fd6380c/ref-1.jpg",
@@ -2020,7 +2049,7 @@
     "domain": "amazon.com",
     "title": "Experience 2 Plus Earplugs, Silver",
     "brand": "Loop",
-    "price": "$40",
+    "price": "$45",
     "section": "Carry",
     "description": "Reusable high-fidelity earplugs: 17 dB (SNR) of noise reduction that keeps music crisp, plus Loop Mute for extra coverage. For concerts, festivals, sports, DJs and nightlife.",
     "images": [

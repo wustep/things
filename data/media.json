@@ -2478,6 +2478,65 @@
     ],
     "key": "6f479088fe1b"
   },
+  "apple-012724da": {
+    "hero": {
+      "base": "/items/apple-012724da/2d/hero.9f81ac67",
+      "widths": [
+        480,
+        960,
+        1544
+      ],
+      "width": 1544,
+      "height": 702,
+      "mode": "cutout",
+      "subject": [
+        0.0453,
+        0.0997,
+        0.9093,
+        0.8006
+      ],
+      "tone": "#babbbb"
+    },
+    "gallery": [
+      {
+        "base": "/items/apple-012724da/2d/photo-1.9f81ac67",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/apple-012724da/2d/photo-2.9f81ac67",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/apple-012724da/2d/photo-3.9f81ac67",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/apple-012724da/2d/photo-4.9f81ac67",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "9f81ac6785bc"
+  },
   "amazon-f9715de1": {
     "hero": {
       "base": "/items/amazon-f9715de1/2d/hero.544c871d",

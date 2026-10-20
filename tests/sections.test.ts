@@ -34,6 +34,22 @@ test('Beeminder takes Claude Code\'s place in Software, and Claude Code is gone 
   assert.equal(apps[apps.indexOf('Claude') + 1], 'Beeminder');
 });
 
+test('the Mac mini stands next to its Wokyis dock in Office, linked to Apple at its configured price', () => {
+  const at = (id: string) => shelf.findIndex((it) => it.id === id);
+  const mini = shelf[at('apple-012724da')];
+  assert.equal(mini?.section, 'Office');
+  assert.equal(at('apple-012724da'), at('amazon-534aae5e') + 1);
+  assert.equal(mini.domain, 'apple.com');
+  assert.equal(mini.price, '$3,699');
+  assert.equal((sizes as Record<string, unknown>)[mini.id], 12.7);
+});
+
+test('the Hart rug links to the 6\' x 9\' I have, and the shoe rack to my Amazon link', () => {
+  const link = (id: string) => shelf.find((it) => it.id === id)?.url ?? '';
+  assert.ok(link('revivalrugs-86802fd7').endsWith('/products/hart-colorways?Style=Hart+in+Olive&Size=6%27+x+9%27'));
+  assert.equal(link('amazon-1fd6380c'), 'https://link.amazon/B0hYS2364');
+});
+
 test('the Journey wallet and stand is gone, with its pictures', () => {
   const gone = 'journeyofficial-67ef95f6';
   assert.ok(!shelf.some((it) => it.id === gone));

@@ -25,6 +25,15 @@ test('the Satechi wallet stand travels in Carry', () => {
   assert.equal(stand?.section, 'Carry');
 });
 
+test('Beeminder takes Claude Code\'s place in Software, and Claude Code is gone with its pictures', () => {
+  const gone = 'claude-49e6ac3e';
+  assert.ok(!shelf.some((it) => it.id === gone || it.title === 'Claude Code'));
+  for (const table of [photos, sizes, media]) assert.ok(!(gone in table));
+  assert.ok(!existsSync(new URL(`../public/items/${gone}`, import.meta.url)));
+  const apps = shelf.filter(isSoftware).map((it) => it.title);
+  assert.equal(apps[apps.indexOf('Claude') + 1], 'Beeminder');
+});
+
 test('the Journey wallet and stand is gone, with its pictures', () => {
   const gone = 'journeyofficial-67ef95f6';
   assert.ok(!shelf.some((it) => it.id === gone));
@@ -42,14 +51,14 @@ test('renaming the case keeps every /t/ link: slugs come from maker and name, no
 
 test('every app says where it runs, and only apps do', () => {
   for (const it of shelf) {
-    if (isSoftware(it)) assert.ok(it.platforms?.length && it.platforms.every((p) => p === 'macOS' || p === 'iOS' || p === 'CLI'), `${it.id} platforms`);
+    if (isSoftware(it)) assert.ok(it.platforms?.length && it.platforms.every((p) => p === 'macOS' || p === 'iOS' || p === 'Web' || p === 'CLI'), `${it.id} platforms`);
     else assert.equal(it.platforms, undefined, `${it.id} is a thing, not an app`);
   }
   const runs = (title: string) => shelf.find((it) => it.title === title)?.platforms;
   assert.deepEqual(runs('Strong'), ['iOS']);
   assert.deepEqual(runs('Retro'), ['iOS']);
   assert.deepEqual(runs('Mimestream'), ['macOS']);
-  assert.deepEqual(runs('Claude Code'), ['CLI']);
+  assert.deepEqual(runs('Beeminder'), ['Web', 'iOS']);
   assert.deepEqual(runs('Herdr'), ['CLI']);
   for (const both of ['Notion', 'Notion Calendar', 'Claude', 'Grok Bot', 'Raycast', 'Arc', 'Strongbox', 'Wispr Flow']) {
     assert.deepEqual(runs(both), ['macOS', 'iOS'], both);

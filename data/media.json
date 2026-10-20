@@ -3478,9 +3478,9 @@
     ],
     "key": "03a298e6b57e"
   },
-  "claude-49e6ac3e": {
+  "beeminder-1b3144b7": {
     "hero": {
-      "base": "/items/claude-49e6ac3e/2d/hero.254daa9d",
+      "base": "/items/beeminder-1b3144b7/2d/hero.4a688819",
       "widths": [
         480,
         906
@@ -3494,38 +3494,38 @@
         0.9095,
         0.9095
       ],
-      "tone": "#4f3d36"
+      "tone": "#c8bd9b"
     },
     "gallery": [
       {
-        "base": "/items/claude-49e6ac3e/2d/photo-1.254daa9d",
+        "base": "/items/beeminder-1b3144b7/2d/photo-1.4a688819",
         "widths": [
           640,
-          1280
+          1242
         ],
-        "width": 1280,
-        "height": 818
+        "width": 1242,
+        "height": 2208
       },
       {
-        "base": "/items/claude-49e6ac3e/2d/photo-2.254daa9d",
+        "base": "/items/beeminder-1b3144b7/2d/photo-2.4a688819",
         "widths": [
           640,
-          1280
+          1242
         ],
-        "width": 1280,
-        "height": 818
+        "width": 1242,
+        "height": 2208
       },
       {
-        "base": "/items/claude-49e6ac3e/2d/photo-3.254daa9d",
+        "base": "/items/beeminder-1b3144b7/2d/photo-3.4a688819",
         "widths": [
           640,
-          920
+          1242
         ],
-        "width": 920,
-        "height": 920
+        "width": 1242,
+        "height": 2208
       }
     ],
-    "key": "254daa9d9a82"
+    "key": "4a68881915b1"
   },
   "notion-4bad20c5": {
     "hero": {

@@ -51,7 +51,7 @@ export interface ModelAsset {
 
 export type Asset = ProceduralAsset | ModelAsset;
 
-export type Platform = 'macOS' | 'iOS' | 'CLI';
+export type Platform = 'macOS' | 'iOS' | 'Web' | 'CLI';
 
 export interface Item {
   id: string;

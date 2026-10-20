@@ -108,6 +108,7 @@ export function shelfTags(site: string, about: string, card: string | null): str
     `<meta property="og:title" content="Things" />`,
     `<meta property="og:description" content="${about}" />`,
     `<meta property="og:url" content="${esc(site)}/" />`,
+    `<meta name="twitter:description" content="${about}" />`,
   ];
   if (card) {
     tags.push(

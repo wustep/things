@@ -73,12 +73,14 @@ test('markdown is flattened to one line', () => {
 });
 
 test('the shelf unfurls with its own card: absolute og:image, 1200x630, a large Twitter card', () => {
-  const tags = shelfTags('https://things.wustep.me', 'Things: a dark shelf of objects, and notes on them.', '/og/home.abc12345.jpg').join('\n');
+  const tags = shelfTags('https://things.wustep.me', 'Things: a shelf of my favorite things.', '/og/home.abc12345.jpg').join('\n');
   assert.match(tags, /<meta property="og:image" content="https:\/\/things\.wustep\.me\/og\/home\.abc12345\.jpg" \/>/);
   assert.match(tags, /og:image:width" content="1200"/);
   assert.match(tags, /og:image:height" content="630"/);
   assert.match(tags, /<meta name="twitter:card" content="summary_large_image" \/>/);
   assert.match(tags, /og:url" content="https:\/\/things\.wustep\.me\/"/);
+  assert.match(tags, /<meta property="og:description" content="Things: a shelf of my favorite things\." \/>/);
+  assert.match(tags, /<meta name="twitter:description" content="Things: a shelf of my favorite things\." \/>/);
   const bare = shelfTags('https://things.wustep.me', 'x', null).join('\n');
   assert.doesNotMatch(bare, /og:image/);
   assert.match(bare, /twitter:card" content="summary"/);

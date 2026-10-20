@@ -54,28 +54,22 @@
     "price": "Free · Pro $20/mo · Max from $100/mo"
   },
   {
-    "url": "https://claude.com/product/claude-code",
-    "title": "Claude Code",
+    "url": "https://www.beeminder.com",
+    "title": "Beeminder",
     "platforms": [
-      "CLI"
+      "Web",
+      "iOS"
     ],
-    "price": "Pro $20/mo · Max from $100/mo",
-    "description": "Claude Code is an agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster by executing routine tasks, explaining complex code, and handling git workflows — all through natural language commands.",
+    "price": "Free · Infinibee $8/mo · Bee Plus $16/mo · Beemium $81/mo",
+    "description": "Your goals can be anything quantifiable — weight, pushups, minutes spent on Facebook, points on Duolingo. Answer with your number when Beeminder asks — or connect a device/app to auto-report — and we'll show your progress and a Bright Red Line to follow to stay on track. If you cross the line, we charge your payment method!",
     "icon": {
-      "mark": "https://claude.com/favicon.svg",
-      "plate": "#30302E",
-      "scale": 0.7
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/58/aa/3f/58aa3f22-2a82-63be-9c9c-c3162f1e4369/AppIcon-0-0-1x_U007epad-0-11-0-85-220.png/1024x1024bb.png",
+      "inset": true
     },
     "shots": [
-      {
-        "video": "https://raw.githubusercontent.com/anthropics/claude-code/main/demo.gif",
-        "at": 13
-      },
-      {
-        "video": "https://raw.githubusercontent.com/anthropics/claude-code/main/demo.gif",
-        "at": 28
-      },
-      "https://assets.claude.com/d4645137a0c197beee5313fedbf9417d035452fc.webp"
+      "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource116/v4/8f/4d/68/8f4d6839-2a2f-0f9e-12d5-04cfefe1160f/3e8f6748-22e9-4e51-a098-7cf1b7484fb9_Simulator_Screenshot_-_Store._iPhone_8_Plus_-_5.5_U0022_Display_-_2023-06-25_at_15.54.36.png/1290x0w.png",
+      "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource116/v4/2a/da/8e/2ada8e00-e41a-9b44-4a8d-59fc1929b905/0e4d64e9-ba3d-4c22-bc2c-9bd87baaf2fc_Simulator_Screenshot_-_Store._iPhone_8_Plus_-_5.5_U0022_Display_-_2023-06-25_at_15.54.30.png/1290x0w.png",
+      "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource116/v4/76/6a/c0/766ac08e-2fef-e081-4040-36dbabf247d2/92d1069e-1220-4838-b923-ce7ea1eaff82_Simulator_Screenshot_-_Store._iPhone_8_Plus_-_5.5_U0022_Display_-_2023-06-25_at_15.54.56.png/1290x0w.png"
     ]
   },
   {

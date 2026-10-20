@@ -906,19 +906,19 @@ html.is-closing::view-transition-group(thing-hero) {
 /*
  * Both ends are the same image file, in boxes of the same shape. Only the sharper one is drawn on
  * the way, the stage's big picture scaled down, so nothing cross-fades into a ghost and the
- * shelf's small picture is never blown up. (If the big picture wasn't ready in time, the two
- * cross-fade as usual.)
+ * shelf's small picture is never blown up. (If the big picture wasn't ready in time, the shelf's
+ * picture stands in for it on the stage, so this still holds; see standIn in glide.ts.)
  */
 ::view-transition-old(thing-hero),
 ::view-transition-new(thing-hero) {
   height: 100%;
 }
-html.is-opening:not(.is-unready)::view-transition-old(thing-hero),
+html.is-opening::view-transition-old(thing-hero),
 html.is-closing::view-transition-new(thing-hero) {
   animation: none;
   opacity: 0;
 }
-html.is-opening:not(.is-unready)::view-transition-new(thing-hero),
+html.is-opening::view-transition-new(thing-hero),
 html.is-closing::view-transition-old(thing-hero) {
   animation: none;
   opacity: 1;
@@ -964,6 +964,10 @@ html.is-morphing .thing-pic img {
 }
 .stage-pic img[data-arrived] {
   animation: none;
+}
+/* Standing in for a big picture still on its way: the shelf's copy, drawn in the big one's box. */
+.stage-pic .stand-in {
+  display: block;
 }
 /* Stepping with the arrows: one quick cross-fade from this thing to the next. */
 html.is-stepping::view-transition-old(root),

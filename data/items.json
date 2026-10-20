@@ -2130,31 +2130,34 @@
     "price": "Free · Pro $20/mo · Max from $100/mo"
   },
   {
-    "id": "claude-49e6ac3e",
-    "url": "https://claude.com/product/claude-code",
-    "domain": "claude.com",
-    "title": "Claude Code",
-    "price": "Pro $20/mo · Max from $100/mo",
-    "description": "Claude Code is an agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster by executing routine tasks, explaining complex code, and handling git workflows — all through natural language commands.",
+    "id": "beeminder-1b3144b7",
+    "url": "https://www.beeminder.com",
+    "domain": "beeminder.com",
+    "title": "Beeminder",
+    "price": "Free · Infinibee $8/mo · Bee Plus $16/mo · Beemium $81/mo",
+    "description": "Your goals can be anything quantifiable — weight, pushups, minutes spent on Facebook, points on Duolingo. Answer with your number when Beeminder asks — or connect a device/app to auto-report — and we'll show your progress and a Bright Red Line to follow to stay on track. If you cross the line, we charge your payment method!",
     "section": "Software",
     "platforms": [
-      "CLI"
+      "Web",
+      "iOS"
     ],
     "images": [
-      "/items/claude-49e6ac3e/primary.png"
+      "/items/beeminder-1b3144b7/primary.png"
     ],
     "asset": {
       "kind": "procedural",
       "shape": "card",
-      "texture": "/items/claude-49e6ac3e/primary.png",
+      "texture": "/items/beeminder-1b3144b7/primary.png",
       "aspect": 0.9967,
       "palette": [
-        "#d97757",
-        "#6c493c",
-        "#30302e"
+        "#ffcc2a",
+        "#8c7941",
+        "#4d4c4e",
+        "#ffffff"
       ]
     },
-    "addedAt": "2026-10-18T07:52:59.245Z"
+    "addedAt": "2026-10-20T00:14:57.009Z",
+    "commentary": "One of the stranger thing that I do is that I set up these habit goals that I get fined if I don't complete them. Like exercising, journaling, writing. It really works!"
   },
   {
     "id": "notion-4bad20c5",
@@ -2269,7 +2272,8 @@
         "#ffffff"
       ]
     },
-    "addedAt": "2026-10-18T04:06:43.469Z"
+    "addedAt": "2026-10-18T04:06:43.469Z",
+    "commentary": "Yes, I still use Arc and find its spaces system and router better than other browsers. And it still gets updates!"
   },
   {
     "id": "onorca-267b72a1",

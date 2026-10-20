@@ -9,6 +9,18 @@
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "headers": [
-    { "source": "/t/:key", "headers": [{ "key": "Content-Type", "value": "text/html; charset=utf-8" }] }
+    { "source": "/t/:key", "headers": [{ "key": "Content-Type", "value": "text/html; charset=utf-8" }] },
+    {
+      "source": "/items/:id/2d/:file((?:hero|photo-\\d+)\\.[0-9a-f]{8}-\\d+\\.(?:avif|webp))",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/items/:id/:file(share\\.[0-9a-f]{8}\\.jpg)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/og/:file(home\\.[0-9a-f]{8}\\.jpg)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    }
   ]
 }

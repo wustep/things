@@ -132,6 +132,24 @@ export class Detail {
     this.root.querySelector<HTMLElement>('#detail-title')?.focus({ preventScroll: true });
   }
 
+  /**
+   * Before the glide back to the shelf: the thing's own picture on the stage again (not a shop photo
+   * from the strip), and no closer look, so the picture that flies back is the one that lands.
+   * True if the picture changed (the new one may still be decoding).
+   */
+  homeFrame(): boolean {
+    const img = this.stageImage();
+    if (this.loupe?.zoomed && img) {
+      img.style.transition = 'none'; // out at once: the glide starts from the picture at rest
+      this.loupe.set(false);
+    }
+    if (this.frameIndex === 0) return false;
+    this.showFrame(0);
+    const hero = this.stageImage();
+    if (hero) hero.dataset.arrived = ''; // no fade-in of its own: it's captured as it is
+    return true;
+  }
+
   /** The picture the shelf's morphs into: the image itself, so both ends have its exact box. */
   stageImage(): HTMLImageElement | null {
     return this.root.querySelector('.stage-pic img');

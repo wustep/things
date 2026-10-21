@@ -142,16 +142,35 @@ function transition(dir: 'open' | 'close', update: () => void, shelfImg: HTMLIma
     update();
     return;
   }
-  if (dir === 'close' && !(shelfImg.complete && shelfImg.naturalWidth)) {
+  // Esc while the picture is still flying in: starting the close now would cut the open short and
+  // lose the picture it flies back from, so the view would just blink shut. The open is hurried to
+  // its landing instead, and the picture glides back from there.
+  if (dir === 'close' && flight?.dir === 'open') {
     if (closeQueued) return;
     closeQueued = true;
-    shelfImg.loading = 'eager';
-    // A short wait, with the view still open; past it, it closes anyway.
-    void decoded(shelfImg, 200).then(() => {
+    hurry();
+    void flight.done.then(() => {
       closeQueued = false;
-      if (detail.isOpen) glide(doc, dir, update, shelfImg);
+      if (detail.isOpen) transition(dir, update, shelfImg);
     });
     return;
+  }
+  if (dir === 'close') {
+    if (closeQueued) return;
+    // What flies back is the thing's own picture, as it sits on the shelf: not a shop photo picked
+    // from the strip, nor a closer look.
+    const swapped = detail.homeFrame();
+    const stage = detail.stageImage();
+    if (swapped || !(shelfImg.complete && shelfImg.naturalWidth)) {
+      closeQueued = true;
+      shelfImg.loading = 'eager';
+      // A short wait, with the view still open; past it, it closes anyway.
+      void Promise.all([decoded(shelfImg, 200), stage && swapped ? decoded(stage, 200) : true]).then(() => {
+        closeQueued = false;
+        if (detail.isOpen) glide(doc, dir, update, shelfImg);
+      });
+      return;
+    }
   }
   glide(doc, dir, update, shelfImg);
 }
@@ -164,10 +183,12 @@ function glide(
 ) {
   if (!doc.startViewTransition) return update();
   const html = document.documentElement;
-  const NAME = 'thing-hero';
   const run = ++transitions;
   const from = dir === 'open' ? shelfImg : detail.stageImage();
-  if (from) from.style.viewTransitionName = NAME;
+  // One picture carries the name at a time: a name left behind by a glide that was cut short
+  // would leave two, and the browser skips a transition with a name twice over.
+  unname();
+  if (from) name(from);
   html.classList.remove(...MOTION_CLASSES);
   html.classList.add(dir === 'open' ? 'is-opening' : 'is-closing');
   opening = dir === 'open';
@@ -181,7 +202,7 @@ function glide(
     opening = false;
     to = dir === 'open' ? detail.stageImage() : shelfImg;
     if (!to) return;
-    to.style.viewTransitionName = NAME;
+    name(to);
     if (dir === 'open') to.dataset.arrived = '';
     // The new frame is captured once this resolves, so the picture it lands on is decoded first
     // (usually at once: hovering or touching a thing started loading it). The page holds still
@@ -190,16 +211,42 @@ function glide(
     if (!(await decoded(to, 150)) && dir === 'open') stand = standIn(to, shelfImg);
   });
   t.ready.catch(() => {}); // skipped by the next one: nothing to do
+  const done = t.finished.then(() => {}, () => {});
+  flight = { dir, run, done };
   void t.updateCallbackDone.then(() => {
     if (!escWhileOpening) return;
     escWhileOpening = false;
     closeDetail();
   });
-  void t.finished.finally(() => {
+  void done.then(() => {
+    // A glide cut short by the next transition leaves the names and classes to that one: clearing
+    // them now would take the name off the picture the next one is about to fly.
+    if (flight?.run === run) flight = null;
+    if (run !== transitions) return;
     if (to) to.style.viewTransitionName = '';
     if (stand) stand.style.viewTransitionName = '';
-    // A transition cut short by the next one (Esc mid-flight) leaves the classes to that one.
-    if (run === transitions) html.classList.remove(...MOTION_CLASSES);
+    html.classList.remove(...MOTION_CLASSES);
+  });
+}
+
+/** The glide in the air, if any: which way it's going, and when it lands. */
+let flight: { dir: 'open' | 'close'; run: number; done: Promise<void> } | null = null;
+
+/** Brings a glide in the air to its landing quickly (Esc while it flies in). */
+function hurry() {
+  for (const a of document.getAnimations()) {
+    if ((a.effect as KeyframeEffect | null)?.pseudoElement?.startsWith('::view-transition')) a.updatePlaybackRate(4);
+  }
+}
+
+const NAME = 'thing-hero';
+/** Whatever carries the glide's name right now (the picture, or the stand-in drawn for it). */
+function name(node: HTMLElement) {
+  node.style.viewTransitionName = NAME;
+}
+function unname() {
+  document.querySelectorAll<HTMLElement>('.thing-pic img, .stage-pic img, .stage-pic .stand-in').forEach((n) => {
+    if (n.style.viewTransitionName === NAME) n.style.viewTransitionName = '';
   });
 }
 

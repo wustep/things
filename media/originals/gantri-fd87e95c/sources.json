@@ -1,0 +1,32 @@
+[
+  {
+    "file": "ref-2.jpg",
+    "url": "https://res.cloudinary.com/gantri/image/upload/dynamic-assets/gantri/products/10142/10142-sm-0/dimming-photos/10142-sm-0--dimming-photos-ca98e86a-a719-4c2a-957a-125a8c4cb539_1747211344794.jpg",
+    "width": 4000,
+    "height": 4000
+  },
+  {
+    "file": "ref-0.jpg",
+    "url": "https://res.cloudinary.com/gantri/image/upload/dynamic-assets/gantri/products/10142/10142-sm-0/product-photos/10142-sm-0--product-photos-fe4b1af7-f730-4140-b2de-057477f54a3a_1745603867360.jpg",
+    "width": 2500,
+    "height": 2500
+  },
+  {
+    "file": "ref-1.jpg",
+    "url": "https://res.cloudinary.com/gantri/image/upload/dynamic-assets/gantri/products/10142/10142-sm-0/product-photos/10142-sm-0--product-photos-a0b2a62c-b989-4c4c-abb0-14f0147751e0_1747211255221.jpg",
+    "width": 4000,
+    "height": 4000
+  },
+  {
+    "file": "ref-3.jpg",
+    "url": "https://res.cloudinary.com/gantri/image/upload/dynamic-assets/gantri/products/10142/10142-sm-0/product-photos/10142-sm-0--product-photos-53bba331-4f20-4f44-a6d4-537a4f3f5931_1747211251474.jpg",
+    "width": 4000,
+    "height": 4000
+  },
+  {
+    "file": "ref-4.jpg",
+    "url": "https://res.cloudinary.com/gantri/image/upload/dynamic-assets/gantri/products/10142/10142-sm-0/product-photos/10142-sm-0--product-photos-686d6323-9f4c-4b64-a29d-117e935a7ec8_1745603867360.jpg",
+    "width": 2500,
+    "height": 2500
+  }
+]

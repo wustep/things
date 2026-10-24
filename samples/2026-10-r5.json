@@ -1,0 +1,46 @@
+[
+  {
+    "url": "https://www.gantri.com/products/10142/word-table-light-by-studio-word",
+    "title": "Word Table Light",
+    "brand": "Gantri",
+    "price": "$248",
+    "section": "Home",
+    "image": "https://res.cloudinary.com/gantri/image/upload/dynamic-assets/gantri/products/10142/10142-sm-0/product-photos/10142-sm-0--product-photos-fe4b1af7-f730-4140-b2de-057477f54a3a_1745603867360.jpg",
+    "images": [
+      "https://res.cloudinary.com/gantri/image/upload/dynamic-assets/gantri/products/10142/10142-sm-0/product-photos/10142-sm-0--product-photos-3128deb9-c328-4ab9-9a37-aa4f217ace92_1745603867360.jpg",
+      "https://res.cloudinary.com/gantri/image/upload/dynamic-assets/gantri/products/10142/10142-sm-0/product-photos/10142-sm-0--product-photos-686d6323-9f4c-4b64-a29d-117e935a7ec8_1745603867360.jpg",
+      "https://res.cloudinary.com/gantri/image/upload/dynamic-assets/gantri/products/10142/10142-sm-0/product-photos/10142-sm-0--product-photos-a0b2a62c-b989-4c4c-abb0-14f0147751e0_1747211255221.jpg",
+      "https://res.cloudinary.com/gantri/image/upload/dynamic-assets/gantri/products/10142/10142-sm-0/dimming-photos/10142-sm-0--dimming-photos-ca98e86a-a719-4c2a-957a-125a8c4cb539_1747211344794.jpg"
+    ],
+    "maxRefs": 5
+  },
+  {
+    "url": "https://topatoco.com/products/kcg-tfdog-plush?variant=31171799941231",
+    "title": "This is Fine Plush Dog",
+    "brand": "KC Green",
+    "price": "$35",
+    "section": "Home",
+    "image": "https://cdn.shopify.com/s/files/1/1829/4817/products/kcg-tifandson-plush.jpg",
+    "images": [
+      "https://cdn.shopify.com/s/files/1/1829/4817/products/kcg-tif-plush.jpg",
+      "https://cdn.shopify.com/s/files/1/1829/4817/products/kcg-minidog-front.jpg",
+      "https://cdn.shopify.com/s/files/1/1829/4817/products/kcg-minidog-back.jpg"
+    ],
+    "maxRefs": 4
+  },
+  {
+    "url": "https://roli.com/us/product/seaboard-m",
+    "title": "Seaboard M",
+    "brand": "ROLI",
+    "price": "$349",
+    "section": "Music",
+    "image": "https://a.storyblok.com/f/278825/2048x938/2f3b15ff83/seaboard-m.png",
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0811/0105/files/sbb_cart_c9ea1972-9f0c-4160-8906-98b9d66ee5ec.png",
+      "https://d30pueezughrda.cloudfront.net/roli.com/storyblok/sbm_beauty_l-2x.17185730.jpg",
+      "https://d30pueezughrda.cloudfront.net/roli.com/storyblok/sbm_perfectfit-2x.17185753.jpg",
+      "https://d30pueezughrda.cloudfront.net/roli.com/storyblok/sbm_performance_l.17185726.jpg"
+    ],
+    "maxRefs": 5
+  }
+]

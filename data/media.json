@@ -4241,5 +4241,171 @@
       }
     ],
     "key": "079eb98621c1"
+  },
+  "gantri-fd87e95c": {
+    "hero": {
+      "base": "/items/gantri-fd87e95c/2d/hero.43ed69ac",
+      "widths": [
+        480,
+        946
+      ],
+      "width": 946,
+      "height": 1329,
+      "mode": "cutout",
+      "subject": [
+        0.0634,
+        0.0451,
+        0.8732,
+        0.9097
+      ],
+      "tone": "#e4dfd9"
+    },
+    "gallery": [
+      {
+        "base": "/items/gantri-fd87e95c/2d/photo-1.43ed69ac",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/gantri-fd87e95c/2d/photo-2.43ed69ac",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/gantri-fd87e95c/2d/photo-3.43ed69ac",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      },
+      {
+        "base": "/items/gantri-fd87e95c/2d/photo-4.43ed69ac",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1280
+      }
+    ],
+    "key": "43ed69acb8c1"
+  },
+  "topatoco-4ac86879": {
+    "hero": {
+      "base": "/items/topatoco-4ac86879/2d/hero.2322aca2",
+      "widths": [
+        480,
+        762
+      ],
+      "width": 762,
+      "height": 1059,
+      "mode": "cutout",
+      "subject": [
+        0.063,
+        0.0453,
+        0.874,
+        0.9093
+      ],
+      "tone": "#8d6c4b"
+    },
+    "gallery": [
+      {
+        "base": "/items/topatoco-4ac86879/2d/photo-1.2322aca2",
+        "widths": [
+          640,
+          1000
+        ],
+        "width": 1000,
+        "height": 1000
+      },
+      {
+        "base": "/items/topatoco-4ac86879/2d/photo-2.2322aca2",
+        "widths": [
+          640,
+          1000
+        ],
+        "width": 1000,
+        "height": 1000
+      },
+      {
+        "base": "/items/topatoco-4ac86879/2d/photo-3.2322aca2",
+        "widths": [
+          640,
+          1000
+        ],
+        "width": 1000,
+        "height": 1000
+      }
+    ],
+    "key": "2322aca24933"
+  },
+  "roli-709bf7fd": {
+    "hero": {
+      "base": "/items/roli-709bf7fd/2d/hero.e1f6a80b",
+      "widths": [
+        480,
+        960,
+        1090
+      ],
+      "width": 1090,
+      "height": 370,
+      "mode": "cutout",
+      "subject": [
+        0.0459,
+        0.1351,
+        0.9083,
+        0.7297
+      ],
+      "tone": "#3a3a39"
+    },
+    "gallery": [
+      {
+        "base": "/items/roli-709bf7fd/2d/photo-1.e1f6a80b",
+        "widths": [
+          640,
+          1100
+        ],
+        "width": 1100,
+        "height": 814
+      },
+      {
+        "base": "/items/roli-709bf7fd/2d/photo-2.e1f6a80b",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1189
+      },
+      {
+        "base": "/items/roli-709bf7fd/2d/photo-3.e1f6a80b",
+        "widths": [
+          640,
+          1104
+        ],
+        "width": 1104,
+        "height": 1200
+      },
+      {
+        "base": "/items/roli-709bf7fd/2d/photo-4.e1f6a80b",
+        "widths": [
+          640,
+          1280
+        ],
+        "width": 1280,
+        "height": 1189
+      }
+    ],
+    "key": "e1f6a80b38c6"
   }
 }

@@ -2557,5 +2557,94 @@
       ]
     },
     "addedAt": "2026-10-18T17:51:18.310Z"
+  },
+  {
+    "id": "gantri-fd87e95c",
+    "url": "https://www.gantri.com/products/10142/word-table-light-by-studio-word",
+    "domain": "gantri.com",
+    "title": "Word Table Light",
+    "brand": "Gantri",
+    "price": "$248",
+    "section": "Home",
+    "description": "Word Table Light draws inspiration from the Greek “Doric” columns, known for their simple yet elegant design. Using a cylindrical shape and modern fluting, this elegant light creates a natural and rhythmic glow and offers unique details made possible by 3D printing. During the day, the light stands tall like a column, and at night, it glows to brighten the space, making it both functional and visually striking.",
+    "images": [
+      "/items/gantri-fd87e95c/ref-0.jpg",
+      "/items/gantri-fd87e95c/ref-1.jpg",
+      "/items/gantri-fd87e95c/ref-2.jpg",
+      "/items/gantri-fd87e95c/ref-3.jpg",
+      "/items/gantri-fd87e95c/ref-4.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/gantri-fd87e95c/primary.png",
+      "aspect": 1,
+      "palette": [
+        "#b49470",
+        "#d7bea2",
+        "#4d474e",
+        "#ebe3d3"
+      ]
+    },
+    "addedAt": "2026-10-24T06:08:48.612Z"
+  },
+  {
+    "id": "topatoco-4ac86879",
+    "url": "https://topatoco.com/products/kcg-tfdog-plush?variant=31171799941231",
+    "domain": "topatoco.com",
+    "title": "This is Fine Plush Dog",
+    "brand": "KC Green",
+    "price": "$35",
+    "section": "Home",
+    "description": "You've seen Question Hound all over the internet, eternally burning for our sins. Now you can buy him and have a friend that you can hug whenever you have that sudden flash of clarity about how perpetually near the precipice of devastation we all are.",
+    "images": [
+      "/items/topatoco-4ac86879/ref-0.jpg",
+      "/items/topatoco-4ac86879/ref-1.jpg",
+      "/items/topatoco-4ac86879/ref-2.jpg",
+      "/items/topatoco-4ac86879/ref-3.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/topatoco-4ac86879/primary.png",
+      "aspect": 0.753,
+      "palette": [
+        "#8e5928",
+        "#b38752",
+        "#cccdce",
+        "#0f0e0e"
+      ]
+    },
+    "addedAt": "2026-10-24T06:08:51.974Z"
+  },
+  {
+    "id": "roli-709bf7fd",
+    "url": "https://roli.com/us/product/seaboard-m",
+    "domain": "roli.com",
+    "title": "Seaboard M",
+    "brand": "ROLI",
+    "price": "$349",
+    "section": "Music",
+    "description": "Discover the Seaboard M, a compact, expressive wireless MIDI keyboard controller featuring 24 miniature Keywaves and five dimensions of touch for ultimate musical freedom. Ideal for music production anywhere, it offers authentic instrument emulation, seamless integration with ROLI Studio, and a durable, portable design. Connect via USB-C, MIDI, or Bluetooth, with up to 10 hours of battery life.",
+    "images": [
+      "/items/roli-709bf7fd/ref-0.jpg",
+      "/items/roli-709bf7fd/ref-1.jpg",
+      "/items/roli-709bf7fd/ref-2.jpg",
+      "/items/roli-709bf7fd/ref-3.jpg",
+      "/items/roli-709bf7fd/ref-4.jpg"
+    ],
+    "asset": {
+      "kind": "procedural",
+      "shape": "card",
+      "texture": "/items/roli-709bf7fd/primary.png",
+      "aspect": 3.0909,
+      "palette": [
+        "#979592",
+        "#696866",
+        "#cdccc8",
+        "#313130"
+      ]
+    },
+    "addedAt": "2026-10-24T06:08:54.696Z"
   }
 ]

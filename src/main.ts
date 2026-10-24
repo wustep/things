@@ -99,7 +99,13 @@ function applyRoute(animate: boolean) {
     // An earlier slug (a renamed thing) moves on to the current one, keeping the history entry.
     const slug = slugs.get(item.id);
     if (slug && key !== slug && key !== item.id) history.replaceState(history.state, '', itemPath(slug));
-    if (detail.openId !== item.id) openItem(item);
+    if (detail.openId === item.id) return;
+    // Forward onto a thing opened from the shelf: it glides out again, and closing goes Back again.
+    // A first load (a shared link) just opens it.
+    if (animate && history.state?.thing === item.id) openedFromShelf = true;
+    const from = animate && !detail.isOpen ? shelf.linkFor(item.id)?.querySelector<HTMLImageElement>('.thing-pic img') ?? null : null;
+    if (from) transition('open', () => openItem(item), from);
+    else openItem(item);
     return;
   }
   if (!detail.isOpen) return;

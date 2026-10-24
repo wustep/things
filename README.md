@@ -29,8 +29,11 @@ reloaded, and Back returns to the shelf.
 
 A shared link unfurls with the thing's name, a line about it (maker, price and shop, then the
 note or the shop's words) and a share card: the cut-out standing on a shelf in the same dark
-room. The build writes one page per thing for this (`scripts/lib/share-pages.ts`; the app inside
-is the same), and `npm run images` makes the cards (`tools/images/share.ts`). The shelf's own link
+room, with its maker and name on the shelf's face. The build writes one page per thing for this
+(`scripts/lib/share-pages.ts`; the app inside is the same, with the thing's own title, canonical
+URL and Open Graph and Twitter tags), and makes the cards there too, at `/og/<id>.<hash>.jpg`
+(`scripts/lib/og-card.ts`, with sharp; the text is drawn from the site's own fonts with
+opentype.js, so it looks the same on any machine). The shelf's own link
 (the home page) unfurls with its card, `public/og/home.<hash>.jpg`: a few real cut-outs standing on one lit shelf
 lip at their relative sizes, with "Things" in Spectral below. `npm run og` remakes it (`tools/images/home-card.ts`);
 the hash in the name changes with the picture, so previews never keep a stale one.

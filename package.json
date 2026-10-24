@@ -14,7 +14,7 @@
     "test": "node --import tsx --test tests/*.test.ts",
     "test:e2e": "npm run build && node --import tsx --test --test-concurrency=1 tests/e2e/*.test.ts",
     "refine": "tsx scripts/refine.ts",
-    "images": "npm --prefix tools/images install --no-audit --no-fund --silent && tsx tools/images/build.ts && tsx tools/images/share.ts",
+    "images": "npm --prefix tools/images install --no-audit --no-fund --silent && tsx tools/images/build.ts",
     "og": "npm --prefix tools/images install --no-audit --no-fund --silent && tsx tools/images/home-card.ts"
   },
   "dependencies": {
@@ -34,7 +34,9 @@
     "@types/three": "^0.170.0",
     "cheerio": "^1.0.0",
     "jimp": "^1.6.0",
+    "opentype.js": "^2.0.0",
     "playwright": "^1.64.0",
+    "sharp": "^0.35.5",
     "tsx": "^4.19.2",
     "typescript": "^5.7.0",
     "vite": "^8.3.5"

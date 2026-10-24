@@ -38,7 +38,6 @@ export function thingsDevIngest(): Plugin {
       const tsxCli = createRequire(path.join(root, 'package.json')).resolve('tsx/cli');
       const script = path.join(root, 'scripts', 'ingest.ts');
       const imagesTool = path.join(root, 'tools', 'images', 'build.ts');
-      const shareTool = path.join(root, 'tools', 'images', 'share.ts');
       const dataFile = path.join(root, 'data', 'items.json');
       let running = false;
 
@@ -152,7 +151,7 @@ export function thingsDevIngest(): Plugin {
           const imagesReady = existsSync(path.join(root, 'tools', 'images', 'node_modules', '@huggingface'));
           if (code === 0 && imagesReady) {
             res.write('\nbuilding 2D images…\n');
-            // Then their share cards (link previews). A failure in either still leaves a usable item.
+            // (Their share cards are made by the build.) A failure still leaves a usable item.
             const run = (tool: string) =>
               new Promise<void>((resolve) => {
                 const child = spawn(process.execPath, [tsxCli, tool], { cwd: root, env: process.env, stdio: ['ignore', 'pipe', 'pipe'] });
@@ -162,7 +161,6 @@ export function thingsDevIngest(): Plugin {
                 child.on('close', () => resolve());
               });
             await run(imagesTool);
-            await run(shareTool);
             code = 0;
           } else if (code === 0) {
             res.write('\nrun `npm run images` to give the new things their 2D cut-outs\n');

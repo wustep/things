@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import { thingsDevIngest } from './scripts/lib/dev-ingest.ts';
-import { thingsSharePages } from './scripts/lib/share-pages.ts';
+import { thingsSharePages, thingsSharePagesPreview } from './scripts/lib/share-pages.ts';
 
 const page = (p: string) => fileURLToPath(new URL(p, import.meta.url));
 
@@ -9,7 +9,7 @@ const page = (p: string) => fileURLToPath(new URL(p, import.meta.url));
 export default defineConfig({
   base: process.env.BASE_PATH ?? '/',
   // Share pages: one HTML page per thing, so a shared link unfurls with its name and picture.
-  plugins: [thingsDevIngest(), thingsSharePages()],
+  plugins: [thingsDevIngest(), thingsSharePages(), thingsSharePagesPreview()],
   build: {
     target: 'es2022',
     // Two pages: the 2D collection at / and the archived three.js shelf at /3d. They share no

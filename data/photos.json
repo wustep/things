@@ -80,5 +80,5 @@
   "apple-012724da": { "hero": "ref-3.jpg", "gallery": ["ref-4.jpg", "ref-5.jpg", "ref-1.png", "ref-2.png"] },
   "gantri-fd87e95c": { "hero": { "file": "ref-0.jpg", "crop": [0.29, 0.2, 0.42, 0.56], "floor": [[0, 0.87], [0.268, 0.87], [0.27, 0.973], [0.488, 0.982], [0.706, 0.973], [0.708, 0.87], [1, 0.87]] }, "gallery": ["ref-4.jpg", "ref-1.jpg", "ref-2.jpg", "ref-3.jpg"] },
   "topatoco-4ac86879": { "hero": "ref-0.jpg", "gallery": ["ref-1.jpg", "ref-2.jpg", "ref-3.jpg"] },
-  "roli-709bf7fd": { "hero": "ref-0.png", "gallery": ["ref-1.png", "ref-2.jpg", "ref-3.jpg", "ref-4.jpg"] }
+  "roli-709bf7fd": { "hero": "ref-0.png", "gallery": ["ref-2.jpg", "ref-3.jpg", "ref-4.jpg", "ref-1.png"] }
 }

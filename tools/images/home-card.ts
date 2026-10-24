@@ -1,6 +1,6 @@
 /**
  * The shelf's own link-preview card (what https://things.wustep.me unfurls with): a few real
- * cut-outs standing side by side on one shelf lip in the share cards' dark room, at the same
+ * cut-outs standing side by side on one shelf lip in the share cards' dark room (scripts/lib/og-card.ts), at the same
  * believable relative sizes as on the site (largest real dimension, square-root scaled), with the
  * word "Things" in Spectral on the shelf's face below them. No chrome, nothing else.
  *
@@ -16,7 +16,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import { chromium } from 'playwright';
-import { H, LIP, room, W, type Hero } from './share.ts';
+import { H, LIP, room, W, type Hero } from '../../scripts/lib/og-card.ts';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const PUBLIC = path.join(ROOT, 'public');

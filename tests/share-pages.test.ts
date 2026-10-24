@@ -45,12 +45,16 @@ test('the page keeps the app and swaps the head', () => {
     title: 'Sway "Standing" Desk & co',
     description: 'A desk <b>.',
     url: 'https://things.wustep.me/t/x',
-    image: { url: 'https://things.wustep.me/items/x/share.1.jpg', width: 1200, height: 630, alt: 'ergonofis desk' },
+    image: { url: 'https://things.wustep.me/og/x.0123abcd.jpg', width: 1200, height: 630, alt: 'ergonofis desk' },
   });
   assert.match(html, /<title>Sway &quot;Standing&quot; Desk &amp; co · Things<\/title>/);
   assert.match(html, /<meta name="description" content="A desk &lt;b&gt;\." \/>/);
-  assert.match(html, /<meta property="og:image" content="https:\/\/things\.wustep\.me\/items\/x\/share\.1\.jpg" \/>/);
+  assert.match(html, /<meta property="og:image" content="https:\/\/things\.wustep\.me\/og\/x\.0123abcd\.jpg" \/>/);
   assert.match(html, /twitter:card" content="summary_large_image"/);
+  assert.match(html, /<meta name="twitter:image" content="https:\/\/things\.wustep\.me\/og\/x\.0123abcd\.jpg" \/>/);
+  assert.match(html, /<meta name="twitter:title" content="Sway &quot;Standing&quot; Desk &amp; co" \/>/);
+  assert.match(html, /<meta name="twitter:description" content="A desk &lt;b&gt;\." \/>/);
+  assert.match(html, /<link rel="canonical" href="https:\/\/things\.wustep\.me\/t\/x" \/>/);
   assert.equal(html.match(/<title>/g)?.length, 1);
   assert.ok(html.indexOf('og:title') < html.indexOf('</head>'));
 });

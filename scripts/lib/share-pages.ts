@@ -9,11 +9,19 @@
  * match for /t/<key> is exact (it is checked before the SPA rewrite; vercel.json sends it as HTML).
  * A key with no page (a thing since removed) falls through to the app, which says so. The item id
  * path (/t/<id>) gets the same page, since those links work too.
+ *
+ * Each thing's card (its cut-out on the shelf, with its maker and name; scripts/lib/og-card.ts) is
+ * made here too, at dist/og/<id>.<hash>.jpg, the hash being of the image so a changed card is a new
+ * URL. Cards are kept in node_modules/.cache/things-og by their inputs, so a rebuild only makes
+ * the ones whose cut-out, name or drawing changed.
  */
+import { createHash } from 'node:crypto';
 import { existsSync, readdirSync } from 'node:fs';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type { Plugin } from 'vite';
+import { H, heroFile, itemCard, W, type Hero } from './og-card.ts';
 import { slugsFor } from '../../shared/slug.ts';
 import { plans, shopText, titleWithoutBrand, wholeDollars } from '../../shared/text.ts';
 import type { Item } from '../../shared/types.ts';
@@ -79,12 +87,16 @@ export function sharePage(template: string, meta: ShareMeta): string {
       `<meta property="og:image" content="${esc(meta.image.url)}" />`,
       `<meta property="og:image:width" content="${meta.image.width}" />`,
       `<meta property="og:image:height" content="${meta.image.height}" />`,
+      `<meta property="og:image:type" content="image/jpeg" />`,
       `<meta property="og:image:alt" content="${esc(meta.image.alt)}" />`,
       `<meta name="twitter:card" content="summary_large_image" />`,
+      `<meta name="twitter:image" content="${esc(meta.image.url)}" />`,
+      `<meta name="twitter:image:alt" content="${esc(meta.image.alt)}" />`,
     );
   } else {
     tags.push(`<meta name="twitter:card" content="summary" />`);
   }
+  tags.push(`<meta name="twitter:title" content="${esc(meta.title)}" />`, `<meta name="twitter:description" content="${esc(meta.description)}" />`);
   if (!/<title>[^<]*<\/title>/.test(template) || !template.includes('</head>')) throw new Error('index.html has no <title> or </head>');
   return template
     .replace(/<title>[^<]*<\/title>/, `<title>${esc(meta.title)} · Things</title>`)
@@ -125,12 +137,19 @@ export function shelfTags(site: string, about: string, card: string | null): str
   return tags;
 }
 
-/** The share card for an item, if `npm run images` has made one (see tools/images/share.ts). */
-function shareCard(publicDir: string, heroBase: string | undefined): string | null {
-  const m = heroBase?.match(/^\/items\/([^/]+)\/2d\/hero\.([0-9a-f]+)$/);
-  if (!m) return null;
-  const rel = `/items/${m[1]}/share.${m[2]}.jpg`;
-  return existsSync(path.join(publicDir, rel)) ? rel : null;
+const sha = (b: Buffer | string) => createHash('sha1').update(b).digest('hex');
+const OG_SOURCE = fileURLToPath(new URL('./og-card.ts', import.meta.url));
+
+/** A thing's card, from the cache when its inputs (cut-out, label, the drawing code) are unchanged. */
+async function cachedCard(cacheDir: string, publicDir: string, hero: Hero, label: { brand?: string; name: string }, drawing: string): Promise<Buffer> {
+  const src = await readFile(heroFile(publicDir, hero));
+  const key = sha(JSON.stringify([drawing, sha(src), hero.subject, label.brand ?? '', label.name]));
+  const hit = path.join(cacheDir, `${key}.jpg`);
+  if (existsSync(hit)) return readFile(hit);
+  const jpg = await itemCard(src, hero, label);
+  await mkdir(cacheDir, { recursive: true });
+  await writeFile(hit, jpg);
+  return jpg;
 }
 
 export function thingsSharePages(): Plugin {
@@ -149,7 +168,7 @@ export function thingsSharePages(): Plugin {
       const site = (process.env.SITE_URL ?? SITE_URL).replace(/\/$/, '') + base.replace(/\/$/, '');
       const template = await readFile(path.join(outDir, 'index.html'), 'utf8');
       const items = JSON.parse(await readFile(path.join(root, 'data', 'items.json'), 'utf8')) as Item[];
-      const media = JSON.parse(await readFile(path.join(root, 'data', 'media.json'), 'utf8')) as Record<string, { hero?: { base: string } }>;
+      const media = JSON.parse(await readFile(path.join(root, 'data', 'media.json'), 'utf8')) as Record<string, { hero?: Hero }>;
       const slugs = slugsFor(items);
 
       // The shelf itself: its description and its own card (a few things on a lit shelf).
@@ -157,14 +176,34 @@ export function thingsSharePages(): Plugin {
       const home = shelfTags(site, about, homeCard(path.join(root, 'public')));
       await writeFile(path.join(outDir, 'index.html'), template.replace('</head>', `  ${home.join('\n    ')}\n  </head>`));
 
+      // Every thing's card, a few at a time (each one keeps sharp's threads busy).
+      const publicDir = path.join(root, 'public');
+      const cacheDir = path.join(root, 'node_modules', '.cache', 'things-og');
+      const drawing = sha(await readFile(OG_SOURCE));
+      await mkdir(path.join(outDir, 'og'), { recursive: true });
+      const cards = new Map<string, string>();
+      let made = 0;
+      const queue = items.filter((item) => media[item.id]?.hero);
+      await Promise.all(
+        Array.from({ length: 6 }, async () => {
+          for (let item; (item = queue.shift()); ) {
+            const jpg = await cachedCard(cacheDir, publicDir, media[item.id]!.hero!, { brand: item.brand, name: titleWithoutBrand(item.title, item.brand) }, drawing);
+            const rel = `/og/${item.id}.${sha(jpg).slice(0, 8)}.jpg`;
+            await writeFile(path.join(outDir, rel), jpg);
+            cards.set(item.id, rel);
+            made++;
+          }
+        }),
+      );
+
       let pages = 0;
       for (const item of items) {
         const slug = slugs.get(item.id) ?? item.id;
-        const card = shareCard(path.join(root, 'public'), media[item.id]?.hero?.base);
+        const card = cards.get(item.id);
         const name = titleWithoutBrand(item.title, item.brand);
         const meta = metaFor(item, {
           url: `${site}/t/${encodeURIComponent(slug)}`,
-          image: card ? { url: `${site}${card}`, width: 1200, height: 630, alt: [item.brand, name].filter(Boolean).join(' ') } : undefined,
+          image: card ? { url: `${site}${card}`, width: W, height: H, alt: [item.brand, name].filter(Boolean).join(' ') } : undefined,
         });
         const html = sharePage(template, meta);
         await mkdir(path.join(outDir, 't'), { recursive: true });
@@ -173,7 +212,27 @@ export function thingsSharePages(): Plugin {
           pages++;
         }
       }
-      this.info?.(`${pages} share pages`);
+      this.info?.(`${pages} share pages for ${items.length} things, ${made} cards`);
+    },
+  };
+}
+
+/**
+ * `vite preview` serves the built site as the host does: a share page (an extensionless file at
+ * dist/t/<key>) goes out as HTML, as vercel.json's header for /t/:key makes it there, so a shared
+ * link opens the same way in the end-to-end tests as in production.
+ */
+export function thingsSharePagesPreview(): Plugin {
+  return {
+    name: 'things-share-pages-preview',
+    apply: (_config, env) => !!env.isPreview,
+    configurePreviewServer(server) {
+      const base = server.config.base.replace(/\/$/, '');
+      server.middlewares.use((req, res, next) => {
+        const p = (req.url ?? '').split('?')[0];
+        if (p.startsWith(`${base}/t/`)) res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        next();
+      });
     },
   };
 }

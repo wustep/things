@@ -42,11 +42,16 @@ function files(dir: string, rel = ''): string[] {
 }
 const all = files('public');
 
-test('hashed images are served immutable: every 2D cut-out and photo, share card and home card', () => {
-  assert.ok(immutable.length >= 3);
-  const hashed = all.filter((f) => /\/2d\/|\/share\.[0-9a-f]+\.jpg$|^\/og\//.test(f));
+test('hashed images are served immutable: every 2D cut-out and photo, and the home card', () => {
+  assert.ok(immutable.length >= 2);
+  const hashed = all.filter((f) => /\/2d\/|^\/og\//.test(f));
   assert.ok(hashed.length > 300, String(hashed.length));
   for (const f of hashed) assert.ok(isImmutable(f), f);
+});
+
+test("the build's share cards (dist/og/<id>.<hash>.jpg) are served immutable", () => {
+  for (const f of ['/og/ugmonk-5117191f.0123abcd.jpg', '/og/home.4288f4cc.jpg']) assert.ok(isImmutable(f), f);
+  for (const f of ['/og/ugmonk-5117191f.jpg', '/og/x/y.0123abcd.jpg']) assert.ok(!isImmutable(f), f);
 });
 
 test('nothing without a content hash in its name is made immutable', () => {

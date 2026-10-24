@@ -15,11 +15,7 @@
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
     },
     {
-      "source": "/items/:id/:file(share\\.[0-9a-f]{8}\\.jpg)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
-    },
-    {
-      "source": "/og/:file(home\\.[0-9a-f]{8}\\.jpg)",
+      "source": "/og/:file([a-z0-9-]+\\.[0-9a-f]{8}\\.jpg)",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
     }
   ]

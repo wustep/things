@@ -4410,26 +4410,26 @@
   },
   "pauseyourphone-848d9a45": {
     "hero": {
-      "base": "/items/pauseyourphone-848d9a45/2d/hero.f4025bf0",
+      "base": "/items/pauseyourphone-848d9a45/2d/hero.54fb7ada",
       "widths": [
         480,
         960,
-        1479
+        1159
       ],
-      "width": 1479,
-      "height": 1945,
+      "width": 1159,
+      "height": 1760,
       "mode": "cutout",
       "subject": [
-        0.0595,
-        0.0452,
-        0.881,
-        0.9095
+        0.069,
+        0.0455,
+        0.8619,
+        0.9091
       ],
-      "tone": "#5e5250"
+      "tone": "#494849"
     },
     "gallery": [
       {
-        "base": "/items/pauseyourphone-848d9a45/2d/photo-1.f4025bf0",
+        "base": "/items/pauseyourphone-848d9a45/2d/photo-1.54fb7ada",
         "widths": [
           640,
           1280
@@ -4438,7 +4438,7 @@
         "height": 2616
       },
       {
-        "base": "/items/pauseyourphone-848d9a45/2d/photo-2.f4025bf0",
+        "base": "/items/pauseyourphone-848d9a45/2d/photo-2.54fb7ada",
         "widths": [
           640,
           1280
@@ -4447,7 +4447,7 @@
         "height": 1280
       },
       {
-        "base": "/items/pauseyourphone-848d9a45/2d/photo-3.f4025bf0",
+        "base": "/items/pauseyourphone-848d9a45/2d/photo-3.54fb7ada",
         "widths": [
           640,
           1280
@@ -4456,7 +4456,7 @@
         "height": 1280
       },
       {
-        "base": "/items/pauseyourphone-848d9a45/2d/photo-4.f4025bf0",
+        "base": "/items/pauseyourphone-848d9a45/2d/photo-4.54fb7ada",
         "widths": [
           640,
           1280
@@ -4465,6 +4465,6 @@
         "height": 1280
       }
     ],
-    "key": "f4025bf0dd26"
+    "key": "54fb7adaf933"
   }
 }

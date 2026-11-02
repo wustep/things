@@ -2651,9 +2651,9 @@
     "id": "pauseyourphone-848d9a45",
     "url": "https://pauseyourphone.com/",
     "domain": "pauseyourphone.com",
-    "title": "(pause) Screen Timer",
+    "title": "Screen Timer",
     "brand": "(pause)",
-    "price": "$99",
+    "price": "$79",
     "section": "Carry",
     "description": "The first physical screen timer. Pause covers your screen and stops you from scrolling until your time is up. No apps, subscriptions, or workarounds. Calls, texts, and Siri still work.",
     "images": [
@@ -2668,12 +2668,12 @@
       "kind": "procedural",
       "shape": "card",
       "texture": "/items/pauseyourphone-848d9a45/primary.png",
-      "aspect": 0.7604,
+      "aspect": 0.703125,
       "palette": [
-        "#91736d",
-        "#120e13",
-        "#504b51",
-        "#b5acb1"
+        "#6d6a6c",
+        "#b6adad",
+        "#313032",
+        "#e3d8d7"
       ]
     },
     "addedAt": "2026-11-02T02:27:24.557Z"

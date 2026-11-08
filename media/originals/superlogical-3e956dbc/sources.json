@@ -1,0 +1,20 @@
+[
+  {
+    "file": "icon.png",
+    "url": "Rex Beta.app: the icon macOS shows for it (default style), 1024 px",
+    "width": 1024,
+    "height": 1024
+  },
+  {
+    "file": "shot-1.webp",
+    "url": "https://www.superlogical.com/rex-screenshot@2x.webp",
+    "width": 2114,
+    "height": 1278
+  },
+  {
+    "file": "shot-2.webp",
+    "url": "https://www.superlogical.com/rex-screenshot-dark@2x.webp",
+    "width": 2114,
+    "height": 1278
+  }
+]

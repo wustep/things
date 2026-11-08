@@ -26,3 +26,12 @@ test('notes can never inject markup or script links', () => {
   assert.equal(renderMarkdown('[click](javascript:void)'), '<p>click</p>');
   assert.doesNotMatch(renderMarkdown('[x](https://a.com/"onmouseover="alert(1))'), /"onmouseover/);
 });
+
+test('a note can link several names in one line', () => {
+  assert.equal(
+    renderMarkdown('[Rex](https://www.superlogical.com/) is in closed beta. [Herdr](https://herdr.dev) + [Moshi](https://getmoshi.app/) is also a good setup.'),
+    '<p><a href="https://www.superlogical.com/" target="_blank" rel="noopener noreferrer">Rex</a> is in closed beta. ' +
+      '<a href="https://herdr.dev" target="_blank" rel="noopener noreferrer">Herdr</a> + ' +
+      '<a href="https://getmoshi.app/" target="_blank" rel="noopener noreferrer">Moshi</a> is also a good setup.</p>',
+  );
+});

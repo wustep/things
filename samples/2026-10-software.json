@@ -182,23 +182,19 @@
     ]
   },
   {
-    "url": "https://herdr.dev",
-    "title": "Herdr",
+    "url": "https://www.superlogical.com/",
+    "title": "Rex",
     "platforms": [
-      "CLI"
+      "macOS"
     ],
     "price": "Free",
-    "description": "Herdr is the runtime your coding agents live on. It holds real terminals open on your laptop, your desktop or a box you rent, so the work survives the lid closing — and you can attach again from anything with a keyboard.",
+    "description": "Rex is a drop-in replacement for whichever terminal you use today and you will feel an instant upgrade in user experience, quality, and capabilities such as persistent sessions, performant and responsive remote connections, program activity status, and more. Plus, it's simply beautiful.",
     "icon": {
-      "url": "https://raw.githubusercontent.com/herdrdev/herdr/master/assets/logo.png",
-      "inset": true
+      "app": "/Applications/Rex Beta.app"
     },
     "shots": [
-      "https://raw.githubusercontent.com/herdrdev/herdr/master/assets/screenshot.png",
-      {
-        "video": "https://github.com/user-attachments/assets/043ec09f-4bdd-41d5-aee0-8fda6b83e267",
-        "at": 21.5
-      }
+      "https://www.superlogical.com/rex-screenshot@2x.webp",
+      "https://www.superlogical.com/rex-screenshot-dark@2x.webp"
     ]
   },
   {

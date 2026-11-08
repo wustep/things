@@ -3889,9 +3889,9 @@
     ],
     "key": "022b0e66cd63"
   },
-  "herdr-6f4c704e": {
+  "superlogical-3e956dbc": {
     "hero": {
-      "base": "/items/herdr-6f4c704e/2d/hero.26bb1638",
+      "base": "/items/superlogical-3e956dbc/2d/hero.2fc8b440",
       "widths": [
         480,
         906
@@ -3905,29 +3905,29 @@
         0.9095,
         0.9095
       ],
-      "tone": "#97999a"
+      "tone": "#de9db7"
     },
     "gallery": [
       {
-        "base": "/items/herdr-6f4c704e/2d/photo-1.26bb1638",
+        "base": "/items/superlogical-3e956dbc/2d/photo-1.2fc8b440",
         "widths": [
           640,
           1280
         ],
         "width": 1280,
-        "height": 720
+        "height": 774
       },
       {
-        "base": "/items/herdr-6f4c704e/2d/photo-2.26bb1638",
+        "base": "/items/superlogical-3e956dbc/2d/photo-2.2fc8b440",
         "widths": [
           640,
           1280
         ],
         "width": 1280,
-        "height": 720
+        "height": 774
       }
     ],
-    "key": "26bb1638a4ef"
+    "key": "2fc8b440bbee"
   },
   "wisprflow-348a38f4": {
     "hero": {

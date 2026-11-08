@@ -2360,32 +2360,33 @@
     "addedAt": "2026-10-18T04:06:45.578Z"
   },
   {
-    "id": "herdr-6f4c704e",
-    "url": "https://herdr.dev",
-    "domain": "herdr.dev",
-    "title": "Herdr",
+    "id": "superlogical-3e956dbc",
+    "url": "https://www.superlogical.com/",
+    "domain": "superlogical.com",
+    "title": "Rex",
     "price": "Free",
-    "description": "Herdr is the runtime your coding agents live on. It holds real terminals open on your laptop, your desktop or a box you rent, so the work survives the lid closing \u2014 and you can attach again from anything with a keyboard.",
+    "description": "Rex is a drop-in replacement for whichever terminal you use today and you will feel an instant upgrade in user experience, quality, and capabilities such as persistent sessions, performant and responsive remote connections, program activity status, and more. Plus, it's simply beautiful.",
     "section": "Software",
     "platforms": [
-      "CLI"
+      "macOS"
     ],
     "images": [
-      "/items/herdr-6f4c704e/primary.png"
+      "/items/superlogical-3e956dbc/primary.png"
     ],
     "asset": {
       "kind": "procedural",
       "shape": "card",
-      "texture": "/items/herdr-6f4c704e/primary.png",
-      "aspect": 0.9967,
+      "texture": "/items/superlogical-3e956dbc/primary.png",
+      "aspect": 0.9956,
       "palette": [
-        "#6b6d6f",
-        "#383b3e",
-        "#b1b1b1",
-        "#d6d6d6"
+        "#fe9003",
+        "#ca67f4",
+        "#eeb1d2",
+        "#f7efed"
       ]
     },
-    "addedAt": "2026-10-18T04:06:47.668Z"
+    "addedAt": "2026-11-08T20:01:15.083Z",
+    "commentary": "[Rex](https://www.superlogical.com/) is in closed beta. [Herdr](https://herdr.dev) + [Moshi](https://getmoshi.app/) is also a good setup."
   },
   {
     "id": "wisprflow-348a38f4",

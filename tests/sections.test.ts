@@ -75,7 +75,7 @@ test('every app says where it runs, and only apps do', () => {
   assert.deepEqual(runs('Retro'), ['iOS']);
   assert.deepEqual(runs('Mimestream'), ['macOS']);
   assert.deepEqual(runs('Beeminder'), ['Web', 'iOS']);
-  assert.deepEqual(runs('Herdr'), ['CLI']);
+  assert.deepEqual(runs('Rex'), ['macOS']);
   for (const both of ['Notion', 'Notion Calendar', 'Claude', 'Grok Bot', 'Raycast', 'Arc', 'Strongbox', 'Wispr Flow']) {
     assert.deepEqual(runs(both), ['macOS', 'iOS'], both);
   }
